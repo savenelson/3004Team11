@@ -1,0 +1,60 @@
+Scenario 1: Setup
+
+Determine number of players
+	Case: 3 players
+
+Shuffle story deck
+
+Shuffle adventure deck
+
+Give squires to all players
+
+Give shields to all players
+
+Choose random dealer
+	Case: Player 3 is dealer
+
+Deal 12 cards to each player
+	Case:
+	
+		Player 1 Hand:
+			Weapons:
+				Lance * 2
+				Sword * 2
+				Horse * 1
+				Excalibur * 1
+			Amour:
+				Amour * 3
+			Foes:
+				Green Knight * 1
+				Thieves * 1
+				Black Knight * 1
+				
+		Player 2 Hand:
+			Weapons:
+				Lance * 1
+				Sword * 3
+				Dagger * 2
+			Foes:
+				Saxon Knight * 1
+				Thieves * 3
+				Robber Knight * 1
+				Black Knight * 1
+				
+		Player 3 Hand:
+			Weapons:
+				Horse * 4
+				Sword * 1
+			Amour:
+				Amour * 2
+			Foes:
+				Thieves * 1
+				Evil Knight * 1
+				Black Knight * 1
+			Allies:
+				King Pellinore * 1
+				King Arthur * 1
+				
+
+				
+			
