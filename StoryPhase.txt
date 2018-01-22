@@ -1,0 +1,81 @@
+Story Phase
+
+Player to left of dealer flips story card
+	Case:
+		Player to left of dealer (player 3) is player 1 *Note: treating player order as continuous loop
+	
+	Player 1 is sponsoring quest * Note: player 1 must decide to sponsor, if declined subsequent players have the option to sponsor	
+																		       if no player sponsors
+																		            then next player flips story card
+		Case:
+			Quest: Repel the Saxon Raiders (2 stage quest)
+			
+		Player 1 must decide stages of quest *Note: Quest stages must be arranged in ascending order of total battle points
+			Case:
+				Stage 1 chosen to be Thieves
+				Stage 2 chosen to be Green Knight
+								
+		Player 2 decides to join
+		Player 3 decides to join
+		
+		Player 2 draws adventure card: Evil Knight
+		Player 3 draws adventure card: Amour
+						
+		**CHECK hand size and give players opurtunity to make legal play or discard
+		
+		** AMBIGUITY: do players get to pick up a 13th card at the begining of a quest
+						choice: yes but they must play or discard one right away
+						
+		Players 2 and 3 discard theives respectively
+						
+		Player 1 states stage 1 is foe
+						
+		Player 2 queues dagger
+		
+		Player 3 play amour
+		
+		Player 1 reveals stage 1: Thieves
+		
+		Player 2 flips dagger
+			Player 2 battle points >= stage 1 battle points
+				Player 2 passes stage 1
+		
+		Player 3 battle points >= stage 1 battle points
+			Player 3 passes stage 1
+		
+		All weapons played in stage 1 are now discarded 
+		
+		Player 2 draws adventure card: Sword
+		Player 3 draws adventure card: Sword
+			
+		Player 1 states stage 2 is foe
+		
+		Player 2 queues sword 
+		Player 2 queues dagger 
+		
+		Player 3 queues horse
+		
+		Player 1 reveals stage 2: Green Knight
+		
+		Player 2 flips sword
+		Player 2 flips dagger
+
+		Player 3 flips horse
+			
+			Player 2 battle points < stage 2 battle points
+			Player 2 DOES NOT pass stage 2
+			Player 3 battle points >= stage 1 battle points
+			Player 3 passes stage 1
+		
+		All weapons played in stage 1 are now discarded 
+
+		All amour cards discarded b/c end of quest
+		
+		Player 3 recieves 2 shields 
+		
+		Next player flips story card
+		Next player chooses to sponsors quest
+		
+		
+		
+		
