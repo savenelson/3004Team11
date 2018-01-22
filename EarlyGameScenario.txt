@@ -1,4 +1,4 @@
-Story Phase
+Early Game Phase
 
 Player to left of dealer flips story card
 	Case:
