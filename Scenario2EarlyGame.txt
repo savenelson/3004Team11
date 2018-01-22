@@ -1,4 +1,4 @@
-Early Game Phase
+Scenario 2: Early Game
 
 Player to left of dealer flips story card
 	Case:
