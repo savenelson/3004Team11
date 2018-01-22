@@ -1,3 +1,5 @@
+Scenario 1: Setup
+
 Determine number of players
 	Case: 3 players
 
