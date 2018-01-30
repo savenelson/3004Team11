@@ -156,7 +156,7 @@ public class View extends Application {
 		answerTxtBox.setEditable(false);
 		answerTxtBox.relocate(120, row2);
 		
-		setSolnBtnClickHandler();
+		//setSolnBtnClickHandler();
 		
 		//with buttons
 //		canvas.getChildren().addAll(label, leftOperandTxtBox, rightOperandTxtBox, 
@@ -165,23 +165,23 @@ public class View extends Application {
 		canvas.getChildren().addAll(label, solnBtn, answerTxtBox);
 	}
 
-	private void setSolnBtnClickHandler() {
-		solnBtn.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				logger.info("Solving Button clicked");
-				
-				//Double leftOperand = Double.valueOf(leftOperandTxtBox.getText());
-				//Double rightOperand = Double.valueOf(rightOperandTxtBox.getText());
-				//String operator = operatorDropdown.getValue();
-				
-				ModelController solver = new ModelController();
-				//String answer = String.valueOf(solver.solve(operator, leftOperand, rightOperand));
-				
-				answerTxtBox.setText(answer);
-			}
-		});
-	}
+//	private void setSolnBtnClickHandler() {
+//		solnBtn.setOnAction(new EventHandler<ActionEvent>() {
+//
+//			@Override
+//			public void handle(ActionEvent event) {
+//				logger.info("Solving Button clicked");
+//				
+//				//Double leftOperand = Double.valueOf(leftOperandTxtBox.getText());
+//				//Double rightOperand = Double.valueOf(rightOperandTxtBox.getText());
+//				//String operator = operatorDropdown.getValue();
+//				
+//				ModelController solver = new ModelController();
+//				//String answer = String.valueOf(solver.solve(operator, leftOperand, rightOperand));
+//				
+//				answerTxtBox.setText(answer);
+//			}
+//		});
+//	}
 
 }
