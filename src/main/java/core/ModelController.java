@@ -1,6 +1,6 @@
 package core;
 
-public class ArithmeticSolver {
+public class ModelController {
 	
 	public double add(double leftOperand, double rightOperand) {
 		return leftOperand + rightOperand;

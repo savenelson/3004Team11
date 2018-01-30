@@ -31,9 +31,9 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class HomeScreen extends Application {
+public class View extends Application {
 	
-	private static final Logger logger = LogManager.getLogger(HomeScreen.class);
+	private static final Logger logger = LogManager.getLogger(View.class);
 	
 	private Button solnBtn;
 	//private TextField leftOperandTxtBox;
@@ -176,7 +176,7 @@ public class HomeScreen extends Application {
 				//Double rightOperand = Double.valueOf(rightOperandTxtBox.getText());
 				//String operator = operatorDropdown.getValue();
 				
-				ArithmeticSolver solver = new ArithmeticSolver();
+				ModelController solver = new ModelController();
 				//String answer = String.valueOf(solver.solve(operator, leftOperand, rightOperand));
 				
 				answerTxtBox.setText(answer);
