@@ -36,10 +36,10 @@ public class HomeScreen extends Application {
 	private static final Logger logger = LogManager.getLogger(HomeScreen.class);
 	
 	private Button solnBtn;
-	private TextField leftOperandTxtBox;
-	private TextField rightOperandTxtBox;
+	//private TextField leftOperandTxtBox;
+	//private TextField rightOperandTxtBox;
 	private TextField answerTxtBox;
-	private ComboBox<String> operatorDropdown;
+	//private ComboBox<String> operatorDropdown;
 	private Image[] cardsImg;
 	private ImageView imgView;
 	
@@ -61,9 +61,9 @@ public class HomeScreen extends Application {
 		addControlsToCanvas(canvas);
 		setupCardsAnimation(canvas);
 		
-		Scene scene = new Scene(canvas, 420, 400);
+		Scene scene = new Scene(canvas, 1500, 800);
 		primaryStage.setScene(scene);
-		primaryStage.setTitle("Simple Calculator App");
+		primaryStage.setTitle("Quests of the Round Table");
 		primaryStage.show();
 	}
 
@@ -74,7 +74,7 @@ public class HomeScreen extends Application {
 			@Override
 			public boolean accept(File dir, String name) {
 				// TODO Auto-generated method stub
-				return name.toLowerCase().endsWith("jpeg");
+				return name.toLowerCase().startsWith("rank");
 			}
 		};
 		
@@ -94,7 +94,7 @@ public class HomeScreen extends Application {
 		
 		imgView = new ImageView();
 		imgView.setImage(cardsImg[0]);
-		imgView.relocate(20, 120);
+		imgView.relocate(10, 50);
 		imgView.setFitWidth(150);
 		imgView.setFitHeight(200);
 		imgView.setPreserveRatio(true);
@@ -106,7 +106,8 @@ public class HomeScreen extends Application {
 		KeyValue keyValue = new KeyValue(imgView.xProperty(), 200, Interpolator.EASE_BOTH);
 		KeyFrame keyFrame = new KeyFrame(Duration.millis(800), keyValue);
 		
-		timeline.getKeyFrames().add(keyFrame);
+		// this made the card bounce.
+		//timeline.getKeyFrames().add(keyFrame);
 		timeline.play();
 		
 		setCardClickHandler();
@@ -126,38 +127,42 @@ public class HomeScreen extends Application {
 
 	private void addControlsToCanvas(Pane canvas) {
 		int row1 = 20;
-		int row2 = 60;
+		int row2 = 260;
 		int txtBoxWidth = 50;
 		
-		Label label = new Label("Simple Calculator using JavaFX");
+		//Char table
+		Label label = new Label("Character");
 		label.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
-		label.relocate(20, row1);
+		label.relocate(40, row1);
 		
-		leftOperandTxtBox = new TextField();
-		leftOperandTxtBox.setMaxWidth(txtBoxWidth);
-		leftOperandTxtBox.relocate(20, row2);
+//		leftOperandTxtBox = new TextField();
+//		leftOperandTxtBox.setMaxWidth(txtBoxWidth);
+//		leftOperandTxtBox.relocate(20, row2);
 		
-		operatorDropdown = new ComboBox<String>();
-		operatorDropdown.getItems().addAll("+", "-", "x", "/", "%");
-		operatorDropdown.setValue("+");
-		operatorDropdown.relocate(80, row2);
+//		operatorDropdown = new ComboBox<String>();
+//		operatorDropdown.getItems().addAll("+", "-", "x", "/", "%");
+//		operatorDropdown.setValue("+");
+//		operatorDropdown.relocate(80, row2);
+//		
+//		rightOperandTxtBox = new TextField();
+//		rightOperandTxtBox.setMaxWidth(txtBoxWidth);
+//		rightOperandTxtBox.relocate(150, row2);
 		
-		rightOperandTxtBox = new TextField();
-		rightOperandTxtBox.setMaxWidth(txtBoxWidth);
-		rightOperandTxtBox.relocate(150, row2);
-		
-		solnBtn = new Button("=");
-		solnBtn.relocate(210, row2);
+		solnBtn = new Button("Add # of shields");
+		solnBtn.relocate(10, row2);
 		
 		answerTxtBox = new TextField();
 		answerTxtBox.setMaxWidth(txtBoxWidth);
 		answerTxtBox.setEditable(false);
-		answerTxtBox.relocate(250, row2);
+		answerTxtBox.relocate(120, row2);
 		
 		setSolnBtnClickHandler();
 		
-		canvas.getChildren().addAll(label, leftOperandTxtBox, rightOperandTxtBox, 
-				operatorDropdown, solnBtn, answerTxtBox);
+		//with buttons
+//		canvas.getChildren().addAll(label, leftOperandTxtBox, rightOperandTxtBox, 
+//				operatorDropdown, solnBtn, answerTxtBox);
+		
+		canvas.getChildren().addAll(label, solnBtn, answerTxtBox);
 	}
 
 	private void setSolnBtnClickHandler() {
@@ -167,12 +172,12 @@ public class HomeScreen extends Application {
 			public void handle(ActionEvent event) {
 				logger.info("Solving Button clicked");
 				
-				Double leftOperand = Double.valueOf(leftOperandTxtBox.getText());
-				Double rightOperand = Double.valueOf(rightOperandTxtBox.getText());
-				String operator = operatorDropdown.getValue();
+				//Double leftOperand = Double.valueOf(leftOperandTxtBox.getText());
+				//Double rightOperand = Double.valueOf(rightOperandTxtBox.getText());
+				//String operator = operatorDropdown.getValue();
 				
 				ArithmeticSolver solver = new ArithmeticSolver();
-				String answer = String.valueOf(solver.solve(operator, leftOperand, rightOperand));
+				//String answer = String.valueOf(solver.solve(operator, leftOperand, rightOperand));
 				
 				answerTxtBox.setText(answer);
 			}
