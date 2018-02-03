@@ -64,7 +64,7 @@ public class View extends Application {
 	//private TextField leftOperandTxtBox;
 	//private TextField rightOperandTxtBox;
 	private TextField answerTxtBox;
-	//private ComboBox<String> operatorDropdown;
+	private ComboBox<String> numberShieldsToAdd;
 	private Image[] ranksImg, handImg;
 	private ImageView imgViewRank;
 	
@@ -201,6 +201,11 @@ public class View extends Application {
 	}
 
 	private void addControlsToCanvas(Pane canvas) {
+		// our coordinates 
+		
+		int rowRankButtons = 10;
+		int columnRankButtons = 220;
+		
 		int row1 = 10;
 		int row2 = 260;
 		int txtBoxWidth = 45;
@@ -228,20 +233,26 @@ public class View extends Application {
 //		rightOperandTxtBox.relocate(150, row2);
 		
 		solnBtn = new Button("Add # of shields");
-		solnBtn.relocate(10, 220);
-		
+		solnBtn.relocate(rowRankButtons,columnRankButtons);
+		/*
 		answerTxtBox = new TextField();
 		answerTxtBox.setMaxWidth(txtBoxWidth);
 		answerTxtBox.setEditable(false);
 		answerTxtBox.relocate(110, 220);
+		*/
 		
+		// the number of Shields to add 
+		numberShieldsToAdd = new ComboBox<String>();
+		numberShieldsToAdd.getItems().addAll("0","1","2","3","4","5","6","7","8","9","10");
+		numberShieldsToAdd.setValue("0");
+		numberShieldsToAdd.relocate(rowRankButtons+120, columnRankButtons);
 		//setSolnBtnClickHandler();
 		
 		//with buttons
 //		canvas.getChildren().addAll(label, leftOperandTxtBox, rightOperandTxtBox, 
 //				operatorDropdown, solnBtn, answerTxtBox);
 		
-		canvas.getChildren().addAll(labelHand, labelChar, solnBtn, answerTxtBox);
+		canvas.getChildren().addAll(labelHand, labelChar, solnBtn,numberShieldsToAdd);
 	}
 
 //	private void setSolnBtnClickHandler() {
