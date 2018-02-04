@@ -60,8 +60,8 @@ public class View extends Application {
 	
 //	private static final Logger logger = LogManager.getLogger(View.class);
 	
-	private Button solnBtn;
-	//private TextField leftOperandTxtBox;
+	private Button addShieldsButton;
+	private TextField shieldCount;
 	//private TextField rightOperandTxtBox;
 	private TextField answerTxtBox;
 	private ComboBox<String> numberShieldsToAdd;
@@ -86,6 +86,8 @@ public class View extends Application {
 		addControlsToCanvas(canvas);
 		addRankCardsToCanvas(canvas);
 		addHandCard1ToCanvas(canvas);
+		
+		
 
 		
 		
@@ -94,6 +96,8 @@ public class View extends Application {
 		primaryStage.setTitle("Quests of the Round Table");
 		primaryStage.show();
 	}
+	
+	
 
 	private void addRankCardsToCanvas(Pane canvas) {
 		File cardsDir = new File("src/main/resources/core/cards");
@@ -232,8 +236,8 @@ public class View extends Application {
 //		rightOperandTxtBox.setMaxWidth(txtBoxWidth);
 //		rightOperandTxtBox.relocate(150, row2);
 		
-		solnBtn = new Button("Add # of shields");
-		solnBtn.relocate(rowRankButtons,columnRankButtons);
+		addShieldsButton = new Button("Add # of shields");
+		addShieldsButton.relocate(rowRankButtons,columnRankButtons);
 		/*
 		answerTxtBox = new TextField();
 		answerTxtBox.setMaxWidth(txtBoxWidth);
@@ -241,19 +245,43 @@ public class View extends Application {
 		answerTxtBox.relocate(110, 220);
 		*/
 		
+		//shield counter field 
+		shieldCount = new TextField();
+		shieldCount.setMaxWidth(txtBoxWidth);
+		shieldCount.setEditable(false);
+		shieldCount.relocate(rowRankButtons, columnRankButtons+30);
+		shieldCount.setText("0");
+		
+		
 		// the number of Shields to add 
 		numberShieldsToAdd = new ComboBox<String>();
 		numberShieldsToAdd.getItems().addAll("0","1","2","3","4","5","6","7","8","9","10");
 		numberShieldsToAdd.setValue("0");
 		numberShieldsToAdd.relocate(rowRankButtons+120, columnRankButtons);
+		setAddingShieldHandler();
 		//setSolnBtnClickHandler();
 		
 		//with buttons
 //		canvas.getChildren().addAll(label, leftOperandTxtBox, rightOperandTxtBox, 
 //				operatorDropdown, solnBtn, answerTxtBox);
 		
-		canvas.getChildren().addAll(labelHand, labelChar, solnBtn,numberShieldsToAdd);
+		canvas.getChildren().addAll(labelHand, labelChar, addShieldsButton,numberShieldsToAdd, shieldCount);
 	}
+
+	private void setAddingShieldHandler() {
+		// TODO Auto-generated method stub
+		addShieldsButton.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				
+					String shieldToAdd = numberShieldsToAdd.getValue();
+					shieldCount.setText(shieldToAdd);
+					
+				
+				}
+			});
+	}
+	
+		
 
 //	private void setSolnBtnClickHandler() {
 //		solnBtn.setOnAction(new EventHandler<ActionEvent>() {
