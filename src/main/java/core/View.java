@@ -68,6 +68,7 @@ public class View extends Application {
 	private Image[] ranksImg, handImg;
 	private ImageView imgViewRank;
 	
+	@SuppressWarnings("restriction")
 	public static void main(String[] args) {
 //		logger.info("Home Screen booting up ...");
 		
