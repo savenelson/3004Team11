@@ -1,5 +1,6 @@
 package core;
 
+import java.awt.Insets;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,6 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -67,6 +69,8 @@ public class View extends Application {
 	private ComboBox<String> numberShieldsToAdd;
 	private Image[] ranksImg, handImg;
 	private ImageView imgViewRank;
+	
+	
 	
 	public static void main(String[] args) {
 //		logger.info("Home Screen booting up ...");
@@ -168,12 +172,22 @@ public class View extends Application {
 				e.printStackTrace();
 			}
 		}
-		imgViewRank = new ImageView();
-		imgViewRank.setImage(ranksImg[0]);
-		imgViewRank.relocate(colRank, rowHand1);
-		imgViewRank.setFitWidth(cardHandDX);
-		imgViewRank.setFitHeight(cardHandDY);
-		imgViewRank.setPreserveRatio(true);
+		HBox CardHand = new HBox(10); //space between nodes
+		CardHand.relocate(colRank, rowHand1);
+		//CardHand.setPadding(new Insets(5));// Padding betwenn Hboc border
+		
+		for(int i =0; i<rankCardsFile.length; i++) {
+			imgViewRank = new ImageView();
+			imgViewRank.setImage(ranksImg[i]);
+			imgViewRank.relocate(colRank, rowHand1);
+			imgViewRank.setFitWidth(cardHandDX);
+			imgViewRank.setFitHeight(cardHandDY);
+			imgViewRank.setPreserveRatio(true);
+			CardHand.getChildren().addAll(imgViewRank);
+			
+		}
+		
+	
 		
 		Timeline timeline = new Timeline();
 		timeline.setAutoReverse(true);
@@ -188,7 +202,7 @@ public class View extends Application {
 		
 		setCardClickHandler();
 				
-		canvas.getChildren().addAll(imgViewRank);
+		canvas.getChildren().addAll(CardHand);
 	}
 	
 	
@@ -275,6 +289,7 @@ public class View extends Application {
 				
 					String shieldToAdd = numberShieldsToAdd.getValue();
 					shieldCount.setText(shieldToAdd);
+					
 					
 				
 				}
