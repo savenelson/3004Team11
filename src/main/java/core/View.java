@@ -45,18 +45,18 @@ public class View extends Application {
 	int rowPlayerZ = 590;
 	int colRank = 10;
 	int colStage = 195;
-	int cardRankDX;
-	int cardRankDY;
-	int cardHandDX = 120;
-	int cardHandDY = 160;
-	int cardPartyDX;
-	int cardPartyDY;
-	int cardStageDX;
-	int cardStageDY;
-	int cardStoryDX;
-	int cardStoryDY;
-	int cardPlayerDX;
-	int cardPlayerDY;
+	int cardRankX;
+	int cardRankY;
+	int cardHandX = 120;
+	int cardHandY = 160;
+	int cardPartyX;
+	int cardPartyY;
+	int cardStageX;
+	int cardStageY;
+	int cardStoryX;
+	int cardStoryY;
+	int cardPlayerX;
+	int cardPlayerY;
 	
 //	private static final Logger logger = LogManager.getLogger(View.class);
 	
@@ -167,8 +167,8 @@ public class View extends Application {
 		imgViewRank = new ImageView();
 		imgViewRank.setImage(ranksImg[0]);
 		imgViewRank.relocate(colRank, rowHand1);
-		imgViewRank.setFitWidth(cardHandDX);
-		imgViewRank.setFitHeight(cardHandDY);
+		imgViewRank.setFitWidth(cardHandX);
+		imgViewRank.setFitHeight(cardHandY);
 		imgViewRank.setPreserveRatio(true);
 		
 		Timeline timeline = new Timeline();
