@@ -70,12 +70,6 @@ public class View extends Application {
 	private Image[] ranksImg, handImg;
 	private ImageView imgViewRank;
 	
-<<<<<<< HEAD
-	@SuppressWarnings("restriction")
-=======
-	
-	
->>>>>>> 07f53ce954b12aebc7dc45d424abf07cc9f902ba
 	public static void main(String[] args) {
 //		logger.info("Home Screen booting up ...");
 		
@@ -157,7 +151,6 @@ public class View extends Application {
 		File cardsDir = new File("src/main/resources/core/cards");
 		FilenameFilter imgFilter = new FilenameFilter() {
 			
-			@Override
 			public boolean accept(File dir, String name) {
 				// TODO Auto-generated method stub
 				return name.toLowerCase().startsWith("ally");
@@ -214,7 +207,7 @@ public class View extends Application {
 	
 
 	private void setCardClickHandler() {
-		Random rand = new Random();
+		final Random rand = new Random();
 		imgViewRank.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 //			logger.info("Card click detected");
 			Image randomImage = ranksImg[rand.nextInt(ranksImg.length)];
