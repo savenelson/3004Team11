@@ -47,18 +47,18 @@ public class View extends Application {
 	int rowPlayerZ = 590;
 	int colRank = 10;
 	int colStage = 195;
-	int cardRankDX;
-	int cardRankDY;
-	int cardHandDX = 120;
-	int cardHandDY = 160;
-	int cardPartyDX;
-	int cardPartyDY;
-	int cardStageDX;
-	int cardStageDY;
-	int cardStoryDX;
-	int cardStoryDY;
-	int cardPlayerDX;
-	int cardPlayerDY;
+	int cardRankX;
+	int cardRankY;
+	int cardHandX = 120;
+	int cardHandY = 160;
+	int cardPartyX;
+	int cardPartyY;
+	int cardStageX;
+	int cardStageY;
+	int cardStoryX;
+	int cardStoryY;
+	int cardPlayerX;
+	int cardPlayerY;
 	
 //	private static final Logger logger = LogManager.getLogger(View.class);
 	
@@ -70,12 +70,6 @@ public class View extends Application {
 	private Image[] ranksImg, handImg;
 	private ImageView imgViewRank;
 	
-//<<<<<<< HEAD
-//	@SuppressWarnings("restriction")
-//=======
-//	
-//	
-//>>>>>>> 07f53ce954b12aebc7dc45d424abf07cc9f902ba
 	public static void main(String[] args) {
 //		logger.info("Home Screen booting up ...");
 		
@@ -157,7 +151,6 @@ public class View extends Application {
 		File cardsDir = new File("src/main/resources/core/cards");
 		FilenameFilter imgFilter = new FilenameFilter() {
 			
-			@Override
 			public boolean accept(File dir, String name) {
 				// TODO Auto-generated method stub
 				return name.toLowerCase().startsWith("ally");
@@ -176,6 +169,7 @@ public class View extends Application {
 				e.printStackTrace();
 			}
 		}
+
 		HBox CardHand = new HBox(10); //space between nodes
 		CardHand.relocate(colRank, rowHand1);
 		//CardHand.setPadding(new Insets(5));// Padding betwenn Hboc border
@@ -184,15 +178,13 @@ public class View extends Application {
 			imgViewRank = new ImageView();
 			imgViewRank.setImage(ranksImg[i]);
 			imgViewRank.relocate(colRank, rowHand1);
-			imgViewRank.setFitWidth(cardHandDX);
-			imgViewRank.setFitHeight(cardHandDY);
+			imgViewRank.setFitWidth(cardHandX);
+			imgViewRank.setFitHeight(cardHandY);
 			imgViewRank.setPreserveRatio(true);
 			CardHand.getChildren().addAll(imgViewRank);
 			
 		}
-		
-	
-		
+
 		Timeline timeline = new Timeline();
 		timeline.setAutoReverse(true);
 		timeline.setCycleCount(Timeline.INDEFINITE);
@@ -213,12 +205,10 @@ public class View extends Application {
 	
 	
 
-	@SuppressWarnings("restriction")
 	private void setCardClickHandler() {
-		Random rand = new Random();
+		final Random rand = new Random();
 		imgViewRank.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 //			logger.info("Card click detected");
-			@SuppressWarnings("restriction")
 			Image randomImage = ranksImg[rand.nextInt(ranksImg.length)];
 			imgViewRank.setImage(randomImage);
 		});
