@@ -157,10 +157,10 @@ public class View extends Application {
 			}
 		};
 		
-		File[] rankCardsFile = cardsDir.listFiles(imgFilter);
-		ranksImg = new Image[rankCardsFile.length];
+		File[] handCardsFile = cardsDir.listFiles(imgFilter);
+		ranksImg = new Image[handCardsFile.length];
 		int idx = 0;
-		for (File cardFile : rankCardsFile) {
+		for (File cardFile : handCardsFile) {
 			try {
 				ranksImg[idx] = new Image(new FileInputStream(cardFile.getPath()));
 				idx++;
@@ -170,20 +170,40 @@ public class View extends Application {
 			}
 		}
 
-		HBox CardHand = new HBox(10); //space between nodes
-		CardHand.relocate(colRank, rowHand1);
-		//CardHand.setPadding(new Insets(5));// Padding betwenn Hboc border
-		
-		for(int i =0; i<rankCardsFile.length; i++) {
+		//Displays Hand, Row 1, first 6 cards
+		HBox CardHandTop = new HBox(6); //space between nodes
+		CardHandTop.relocate(colRank, rowHand1);
+		//CardHandTop.setPadding(new Insets(5));// Padding betwenn Hboc border
+		for(int i =0; i<6; i++) {
 			imgViewRank = new ImageView();
 			imgViewRank.setImage(ranksImg[i]);
 			imgViewRank.relocate(colRank, rowHand1);
 			imgViewRank.setFitWidth(cardHandX);
 			imgViewRank.setFitHeight(cardHandY);
+			if (i > 5) {
+			}
 			imgViewRank.setPreserveRatio(true);
-			CardHand.getChildren().addAll(imgViewRank);
-			
+			CardHandTop.getChildren().addAll(imgViewRank);
 		}
+		
+		HBox CardHandBottom = new HBox(6); //space between nodes
+		CardHandBottom.relocate(colRank, rowHand2);
+		//CardHandBottom.setPadding(new Insets(5));// Padding betwenn Hboc border
+		//TODO set i<HandCardFile - 6
+		for(int i =0; i<6; i++) {
+			imgViewRank = new ImageView();
+			imgViewRank.setImage(ranksImg[i+2]);
+			imgViewRank.relocate(colRank, rowHand2);
+			imgViewRank.setFitWidth(cardHandX);
+			imgViewRank.setFitHeight(cardHandY);
+			if (i > 5) {
+			}
+			imgViewRank.setPreserveRatio(true);
+			CardHandBottom.getChildren().addAll(imgViewRank);
+		}
+		
+		
+		
 
 		Timeline timeline = new Timeline();
 		timeline.setAutoReverse(true);
@@ -198,7 +218,7 @@ public class View extends Application {
 		
 		setCardClickHandler();
 				
-		canvas.getChildren().addAll(CardHand);
+		canvas.getChildren().addAll(CardHandTop, CardHandBottom);
 	}
 	
 	
