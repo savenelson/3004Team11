@@ -36,29 +36,40 @@ import javafx.util.Duration;
 public class View extends Application {
 	
 	//CONSTS FOR CANVAS LAYOUT
-	int rowRank = 20;
+	int rowPlayer1Rank = 20;
+	int colPlayer1Rank = 10;
+	
 	int rowStage = 40;
-	int rowParty = 230;
-	int rowHand1 = 350;
-	int rowHand2 = 525;
-	int rowDeck = 145;
-	int rowPlayerX = 375;
-	int rowPlayerY = 480;
-	int rowPlayerZ = 590;
-	int colRank = 10;
 	int colStage = 195;
+	
+	int rowPlayer1Party = 230;
+	int colPlayer1Party;
+	
+	int rowHandTop6 = 350;
+	int colHandTop6 = 10;
+	
+	int rowHandBottom6 = 525;
+	int colHandBottom6 = 10;
+	
+	int rowAdventureDeck = 145;
+	int colAdventureDeck;
+	
+	int rowStoryDeck;
+	int colStoryDeck;
+	
+	int rowPlayerARank = 375;
+	int colPlayerARank;
+	int rowPlayerBRank = 480;
+	int colPlayerBRank;
+	int rowPlayerCRank = 590;
+	int colPlayerCRank;
+
+
 	int cardRankX;
 	int cardRankY;
 	int cardHandX = 120;
 	int cardHandY = 160;
-	int cardPartyX;
-	int cardPartyY;
-	int cardStageX;
-	int cardStageY;
-	int cardStoryX;
-	int cardStoryY;
-	int cardPlayerX;
-	int cardPlayerY;
+
 	
 //	private static final Logger logger = LogManager.getLogger(View.class);
 	
@@ -88,6 +99,7 @@ public class View extends Application {
 		addControlsToCanvas(canvas);
 		addRankCardsToCanvas(canvas);
 		addHandCard1ToCanvas(canvas);
+		addPlayerARankToCanvas(canvas);
 		
 		
 
@@ -126,7 +138,7 @@ public class View extends Application {
 		}
 		imgViewRank = new ImageView();
 		imgViewRank.setImage(ranksImg[2]);
-		imgViewRank.relocate(colRank, rowRank);
+		imgViewRank.relocate(colPlayer1Rank, rowPlayer1Rank);
 		imgViewRank.setFitWidth(150);
 		imgViewRank.setFitHeight(200);
 		imgViewRank.setPreserveRatio(true);
@@ -153,7 +165,7 @@ public class View extends Application {
 			
 			public boolean accept(File dir, String name) {
 				// TODO Auto-generated method stub
-				return name.toLowerCase().startsWith("ally");
+				return name.toLowerCase().startsWith("weapon");
 			}
 		};
 		
@@ -172,12 +184,12 @@ public class View extends Application {
 
 		//Displays Hand, Row 1, first 6 cards
 		HBox CardHandTop = new HBox(6); //space between nodes
-		CardHandTop.relocate(colRank, rowHand1);
+		CardHandTop.relocate(colPlayer1Rank, rowHandTop6);
 		//CardHandTop.setPadding(new Insets(5));// Padding betwenn Hboc border
 		for(int i =0; i<6; i++) {
 			imgViewRank = new ImageView();
 			imgViewRank.setImage(ranksImg[i]);
-			imgViewRank.relocate(colRank, rowHand1);
+			imgViewRank.relocate(colPlayer1Rank, rowHandTop6);
 			imgViewRank.setFitWidth(cardHandX);
 			imgViewRank.setFitHeight(cardHandY);
 			if (i > 5) {
@@ -187,13 +199,13 @@ public class View extends Application {
 		}
 		
 		HBox CardHandBottom = new HBox(6); //space between nodes
-		CardHandBottom.relocate(colRank, rowHand2);
+		CardHandBottom.relocate(colPlayer1Rank, rowHandBottom6);
 		//CardHandBottom.setPadding(new Insets(5));// Padding betwenn Hboc border
 		//TODO set i<HandCardFile - 6
 		for(int i =0; i<6; i++) {
 			imgViewRank = new ImageView();
-			imgViewRank.setImage(ranksImg[i+2]);
-			imgViewRank.relocate(colRank, rowHand2);
+			imgViewRank.setImage(ranksImg[i]);
+			imgViewRank.relocate(colPlayer1Rank, rowHandBottom6);
 			imgViewRank.setFitWidth(cardHandX);
 			imgViewRank.setFitHeight(cardHandY);
 			if (i > 5) {
@@ -221,6 +233,53 @@ public class View extends Application {
 		canvas.getChildren().addAll(CardHandTop, CardHandBottom);
 	}
 	
+	private void addPlayerARankToCanvas(Pane canvas) {
+		File cardsDir = new File("src/main/resources/core/cards");
+		FilenameFilter imgFilter = new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				// TODO Auto-generated method stub
+				return name.toLowerCase().startsWith("rank");
+			}
+		};
+		
+		File[] rankCardsFile = cardsDir.listFiles(imgFilter);
+		ranksImg = new Image[rankCardsFile.length];
+		int idx = 0;
+		for (File cardFile : rankCardsFile) {
+			try {
+				ranksImg[idx] = new Image(new FileInputStream(cardFile.getPath()));
+				idx++;
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		imgViewRank = new ImageView();
+		imgViewRank.setImage(ranksImg[1]);
+		imgViewRank.relocate(colPlayer1Rank, rowPlayer1Rank);
+		imgViewRank.setFitWidth(150);
+		imgViewRank.setFitHeight(200);
+		imgViewRank.setPreserveRatio(true);
+		
+		Timeline timeline = new Timeline();
+		timeline.setAutoReverse(true);
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		
+		KeyValue keyValue = new KeyValue(imgViewRank.xProperty(), 200, Interpolator.EASE_BOTH);
+		KeyFrame keyFrame = new KeyFrame(Duration.millis(800), keyValue);
+		
+		// this made the card bounce.
+		//timeline.getKeyFrames().add(keyFrame);
+		timeline.play();
+		
+		setCardClickHandler();
+				
+		canvas.getChildren().addAll(imgViewRank);
+	}
+	
+	
 	
 	
 	
@@ -237,7 +296,7 @@ public class View extends Application {
 	private void addControlsToCanvas(Pane canvas) {
 		// our coordinates 
 		
-		int rowRankButtons = 10;
+		int rowPlayer1RankButtons = 10;
 		int columnRankButtons = 220;
 		
 		int row1 = 10;
@@ -267,7 +326,7 @@ public class View extends Application {
 //		rightOperandTxtBox.relocate(150, row2);
 		
 		addShieldsButton = new Button("Add # of shields");
-		addShieldsButton.relocate(rowRankButtons,columnRankButtons);
+		addShieldsButton.relocate(rowPlayer1RankButtons,columnRankButtons);
 		/*
 		answerTxtBox = new TextField();
 		answerTxtBox.setMaxWidth(txtBoxWidth);
@@ -279,7 +338,7 @@ public class View extends Application {
 		shieldCount = new TextField();
 		shieldCount.setMaxWidth(txtBoxWidth);
 		shieldCount.setEditable(false);
-		shieldCount.relocate(rowRankButtons, columnRankButtons+30);
+		shieldCount.relocate(rowPlayer1RankButtons, columnRankButtons+30);
 		shieldCount.setText("0");
 		
 		
@@ -287,7 +346,7 @@ public class View extends Application {
 		numberShieldsToAdd = new ComboBox<String>();
 		numberShieldsToAdd.getItems().addAll("0","1","2","3","4","5","6","7","8","9","10");
 		numberShieldsToAdd.setValue("0");
-		numberShieldsToAdd.relocate(rowRankButtons+120, columnRankButtons);
+		numberShieldsToAdd.relocate(rowPlayer1RankButtons+120, columnRankButtons);
 		setAddingShieldHandler();
 		//setSolnBtnClickHandler();
 		
