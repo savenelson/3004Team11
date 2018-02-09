@@ -26,8 +26,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
@@ -57,18 +62,26 @@ public class View extends Application {
 	int rowStoryDeck;
 	int colStoryDeck;
 	
-	int rowPlayerARank = 375;
-	int colPlayerARank;
-	int rowPlayerBRank = 480;
-	int colPlayerBRank;
-	int rowPlayerCRank = 590;
-	int colPlayerCRank;
+	int rowPlayerARank = 383;
+	int colPlayerARank = 1200;
+	int rowPlayerBRank = 495;
+	int colPlayerBRank = 1200;
+	int rowPlayerCRank = 608;
+	int colPlayerCRank = 1200;
+	
+	int rowPlayerAParty = 383;
+	int colPlayerAParty = 760;
+	int rowPlayerBParty = 495;
+	int colPlayerBParty = 760;
+	int rowPlayerCParty = 608;
+	int colPlayerCParty = 760;
 
-
-	int cardRankX;
-	int cardRankY;
-	int cardHandX = 120;
-	int cardHandY = 160;
+	int cardSmallHeight = 112;
+	int cardSmallWidth = 80;
+	int cardMediumHeight = 160;
+	int cardMediumWidth = 115;
+	int cardLargeHeight = 200;
+	int cardLargeWidth = 150;
 
 	
 //	private static final Logger logger = LogManager.getLogger(View.class);
@@ -78,7 +91,7 @@ public class View extends Application {
 	//private TextField rightOperandTxtBox;
 	private TextField answerTxtBox;
 	private ComboBox<String> numberShieldsToAdd;
-	private Image[] ranksImg, handImg;
+	private Image[] ranksImg, handImg, partyImg;
 	private ImageView imgViewRank;
 	
 	public static void main(String[] args) {
@@ -94,18 +107,21 @@ public class View extends Application {
 
 	private void initUI(Stage primaryStage) {
 		Pane canvas = new Pane();
-		//canvas.setStyle("-fx-background-color: black");
+		canvas.setId("pane");
 		
 		addControlsToCanvas(canvas);
 		addRankCardsToCanvas(canvas);
 		addHandCard1ToCanvas(canvas);
 		addPlayerARankToCanvas(canvas);
-		
+		addPlayerBRankToCanvas(canvas);
+		addPlayerCRankToCanvas(canvas);
+		addPlayerAPartyToCanvas(canvas);
+		addPlayerBPartyToCanvas(canvas);
+		addPlayerCPartyToCanvas(canvas);
 		
 
-		
-		
 		Scene scene = new Scene(canvas, 1280, 720);
+		scene.getStylesheets().add("style.css");	
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Quests of the Round Table");
 		primaryStage.show();
@@ -139,8 +155,8 @@ public class View extends Application {
 		imgViewRank = new ImageView();
 		imgViewRank.setImage(ranksImg[2]);
 		imgViewRank.relocate(colPlayer1Rank, rowPlayer1Rank);
-		imgViewRank.setFitWidth(150);
-		imgViewRank.setFitHeight(200);
+		imgViewRank.setFitWidth(cardLargeWidth);
+		imgViewRank.setFitHeight(cardLargeHeight);
 		imgViewRank.setPreserveRatio(true);
 		
 		Timeline timeline = new Timeline();
@@ -190,8 +206,8 @@ public class View extends Application {
 			imgViewRank = new ImageView();
 			imgViewRank.setImage(ranksImg[i]);
 			imgViewRank.relocate(colPlayer1Rank, rowHandTop6);
-			imgViewRank.setFitWidth(cardHandX);
-			imgViewRank.setFitHeight(cardHandY);
+			imgViewRank.setFitWidth(cardMediumWidth);
+			imgViewRank.setFitHeight(cardMediumHeight);
 			if (i > 5) {
 			}
 			imgViewRank.setPreserveRatio(true);
@@ -206,16 +222,11 @@ public class View extends Application {
 			imgViewRank = new ImageView();
 			imgViewRank.setImage(ranksImg[i]);
 			imgViewRank.relocate(colPlayer1Rank, rowHandBottom6);
-			imgViewRank.setFitWidth(cardHandX);
-			imgViewRank.setFitHeight(cardHandY);
-			if (i > 5) {
-			}
+			imgViewRank.setFitWidth(cardMediumWidth);
+			imgViewRank.setFitHeight(cardMediumHeight);
 			imgViewRank.setPreserveRatio(true);
 			CardHandBottom.getChildren().addAll(imgViewRank);
 		}
-		
-		
-		
 
 		Timeline timeline = new Timeline();
 		timeline.setAutoReverse(true);
@@ -258,9 +269,9 @@ public class View extends Application {
 		}
 		imgViewRank = new ImageView();
 		imgViewRank.setImage(ranksImg[1]);
-		imgViewRank.relocate(colPlayer1Rank, rowPlayer1Rank);
-		imgViewRank.setFitWidth(150);
-		imgViewRank.setFitHeight(200);
+		imgViewRank.relocate(colPlayerARank, rowPlayerARank);
+		imgViewRank.setFitWidth(cardSmallWidth);
+		imgViewRank.setFitHeight(cardSmallHeight);
 		imgViewRank.setPreserveRatio(true);
 		
 		Timeline timeline = new Timeline();
@@ -279,10 +290,259 @@ public class View extends Application {
 		canvas.getChildren().addAll(imgViewRank);
 	}
 	
+	private void addPlayerBRankToCanvas(Pane canvas) {
+		File cardsDir = new File("src/main/resources/core/cards");
+		FilenameFilter imgFilter = new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				// TODO Auto-generated method stub
+				return name.toLowerCase().startsWith("rank");
+			}
+		};
+		
+		File[] rankCardsFile = cardsDir.listFiles(imgFilter);
+		ranksImg = new Image[rankCardsFile.length];
+		int idx = 0;
+		for (File cardFile : rankCardsFile) {
+			try {
+				ranksImg[idx] = new Image(new FileInputStream(cardFile.getPath()));
+				idx++;
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		imgViewRank = new ImageView();
+		imgViewRank.setImage(ranksImg[1]);
+		imgViewRank.relocate(colPlayerBRank, rowPlayerBRank);
+		imgViewRank.setFitWidth(cardSmallWidth);
+		imgViewRank.setFitHeight(cardSmallHeight);
+		imgViewRank.setPreserveRatio(true);
+		
+		Timeline timeline = new Timeline();
+		timeline.setAutoReverse(true);
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		
+		KeyValue keyValue = new KeyValue(imgViewRank.xProperty(), 200, Interpolator.EASE_BOTH);
+		KeyFrame keyFrame = new KeyFrame(Duration.millis(800), keyValue);
+		
+		// this made the card bounce.
+		//timeline.getKeyFrames().add(keyFrame);
+		timeline.play();
+		
+		setCardClickHandler();
+				
+		canvas.getChildren().addAll(imgViewRank);
+	}
 	
+	private void addPlayerCRankToCanvas(Pane canvas) {
+		File cardsDir = new File("src/main/resources/core/cards");
+		FilenameFilter imgFilter = new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				// TODO Auto-generated method stub
+				return name.toLowerCase().startsWith("rank");
+			}
+		};
+		
+		File[] rankCardsFile = cardsDir.listFiles(imgFilter);
+		ranksImg = new Image[rankCardsFile.length];
+		int idx = 0;
+		for (File cardFile : rankCardsFile) {
+			try {
+				ranksImg[idx] = new Image(new FileInputStream(cardFile.getPath()));
+				idx++;
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		imgViewRank = new ImageView();
+		imgViewRank.setImage(ranksImg[0]);
+		imgViewRank.relocate(colPlayerCRank, rowPlayerCRank);
+		imgViewRank.setFitWidth(cardSmallWidth);
+		imgViewRank.setFitHeight(cardSmallHeight);
+		imgViewRank.setPreserveRatio(true);
+		
+		Timeline timeline = new Timeline();
+		timeline.setAutoReverse(true);
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		
+		KeyValue keyValue = new KeyValue(imgViewRank.xProperty(), 200, Interpolator.EASE_BOTH);
+		KeyFrame keyFrame = new KeyFrame(Duration.millis(800), keyValue);
+		
+		// this made the card bounce.
+		//timeline.getKeyFrames().add(keyFrame);
+		timeline.play();
+		
+		setCardClickHandler();
+				
+		canvas.getChildren().addAll(imgViewRank);
+	}
 	
-	
-	
+	private void addPlayerAPartyToCanvas(Pane canvas) {
+		File cardsDir = new File("src/main/resources/core/cards");
+		FilenameFilter imgFilter = new FilenameFilter() {
+			
+			public boolean accept(File dir, String name) {
+				// TODO Auto-generated method stub
+				return name.toLowerCase().startsWith("ally");
+			}
+		};
+		
+		File[] partyCardsFile = cardsDir.listFiles(imgFilter);
+		ranksImg = new Image[partyCardsFile.length];
+		int idx = 0;
+		for (File cardFile : partyCardsFile) {
+			try {
+				ranksImg[idx] = new Image(new FileInputStream(cardFile.getPath()));
+				idx++;
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		//Displays Hand, Row 1, first 6 cards
+		HBox PlayerAParty = new HBox(5); //space between nodes
+		PlayerAParty.relocate(colPlayerAParty, rowPlayerAParty);
+		//PlayerAParty.setPadding(new Insets(5));// Padding betwenn Hboc border
+		for(int i =0; i<5; i++) {
+			imgViewRank = new ImageView();
+			imgViewRank.setImage(ranksImg[i+1]);
+			imgViewRank.relocate(colPlayerAParty, rowPlayerAParty);
+			imgViewRank.setFitWidth(cardSmallWidth);
+			imgViewRank.setFitHeight(cardSmallHeight);
+
+			imgViewRank.setPreserveRatio(true);
+			PlayerAParty.getChildren().addAll(imgViewRank);
+		}
+
+		Timeline timeline = new Timeline();
+		timeline.setAutoReverse(true);
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		
+		KeyValue keyValue = new KeyValue(imgViewRank.xProperty(), 200, Interpolator.EASE_BOTH);
+		KeyFrame keyFrame = new KeyFrame(Duration.millis(800), keyValue);
+		
+		// this made the card bounce.
+		//timeline.getKeyFrames().add(keyFrame);
+		timeline.play();
+		
+		setCardClickHandler();
+				
+		canvas.getChildren().addAll(PlayerAParty);
+	}
+
+	private void addPlayerBPartyToCanvas(Pane canvas) {
+		File cardsDir = new File("src/main/resources/core/cards");
+		FilenameFilter imgFilter = new FilenameFilter() {
+			
+			public boolean accept(File dir, String name) {
+				// TODO Auto-generated method stub
+				return name.toLowerCase().startsWith("ally");
+			}
+		};
+		
+		File[] partyCardsFile = cardsDir.listFiles(imgFilter);
+		ranksImg = new Image[partyCardsFile.length];
+		int idx = 0;
+		for (File cardFile : partyCardsFile) {
+			try {
+				ranksImg[idx] = new Image(new FileInputStream(cardFile.getPath()));
+				idx++;
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		//Displays Hand, Row 1, first 6 cards
+		HBox PlayerAParty = new HBox(5); //space between nodes
+		PlayerAParty.relocate(colPlayerBParty, rowPlayerBParty);
+		//PlayerAParty.setPadding(new Insets(5));// Padding betwenn Hboc border
+		for(int i =0; i<5; i++) {
+			imgViewRank = new ImageView();
+			imgViewRank.setImage(ranksImg[i+4]);
+			imgViewRank.relocate(colPlayerBParty, rowPlayerBParty);
+			imgViewRank.setFitWidth(cardSmallWidth);
+			imgViewRank.setFitHeight(cardSmallHeight);
+
+			imgViewRank.setPreserveRatio(true);
+			PlayerAParty.getChildren().addAll(imgViewRank);
+		}
+
+		Timeline timeline = new Timeline();
+		timeline.setAutoReverse(true);
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		
+		KeyValue keyValue = new KeyValue(imgViewRank.xProperty(), 200, Interpolator.EASE_BOTH);
+		KeyFrame keyFrame = new KeyFrame(Duration.millis(800), keyValue);
+		
+		// this made the card bounce.
+		//timeline.getKeyFrames().add(keyFrame);
+		timeline.play();
+		
+		setCardClickHandler();
+				
+		canvas.getChildren().addAll(PlayerAParty);
+	}
+
+	private void addPlayerCPartyToCanvas(Pane canvas) {
+		File cardsDir = new File("src/main/resources/core/cards");
+		FilenameFilter imgFilter = new FilenameFilter() {
+			
+			public boolean accept(File dir, String name) {
+				// TODO Auto-generated method stub
+				return name.toLowerCase().startsWith("ally");
+			}
+		};
+		
+		File[] partyCardsFile = cardsDir.listFiles(imgFilter);
+		ranksImg = new Image[partyCardsFile.length];
+		int idx = 0;
+		for (File cardFile : partyCardsFile) {
+			try {
+				ranksImg[idx] = new Image(new FileInputStream(cardFile.getPath()));
+				idx++;
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		//Displays Hand, Row 1, first 6 cards
+		HBox PlayerAParty = new HBox(5); //space between nodes
+		PlayerAParty.relocate(colPlayerCParty, rowPlayerCParty);
+		//PlayerAParty.setPadding(new Insets(5));// Padding betwenn Hboc border
+		for(int i =0; i<5; i++) {
+			imgViewRank = new ImageView();
+			imgViewRank.setImage(ranksImg[i]);
+			imgViewRank.relocate(colPlayerCParty, rowPlayerCParty);
+			imgViewRank.setFitWidth(cardSmallWidth);
+			imgViewRank.setFitHeight(cardSmallHeight);
+
+			imgViewRank.setPreserveRatio(true);
+			PlayerAParty.getChildren().addAll(imgViewRank);
+		}
+
+		Timeline timeline = new Timeline();
+		timeline.setAutoReverse(true);
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		
+		KeyValue keyValue = new KeyValue(imgViewRank.xProperty(), 200, Interpolator.EASE_BOTH);
+		KeyFrame keyFrame = new KeyFrame(Duration.millis(800), keyValue);
+		
+		// this made the card bounce.
+		//timeline.getKeyFrames().add(keyFrame);
+		timeline.play();
+		
+		setCardClickHandler();
+				
+		canvas.getChildren().addAll(PlayerAParty);
+	}
 
 	private void setCardClickHandler() {
 		final Random rand = new Random();
@@ -341,19 +601,12 @@ public class View extends Application {
 		shieldCount.relocate(rowPlayer1RankButtons, columnRankButtons+30);
 		shieldCount.setText("0");
 		
-		
 		// the number of Shields to add 
 		numberShieldsToAdd = new ComboBox<String>();
 		numberShieldsToAdd.getItems().addAll("0","1","2","3","4","5","6","7","8","9","10");
 		numberShieldsToAdd.setValue("0");
 		numberShieldsToAdd.relocate(rowPlayer1RankButtons+120, columnRankButtons);
 		setAddingShieldHandler();
-		//setSolnBtnClickHandler();
-		
-		//with buttons
-//		canvas.getChildren().addAll(label, leftOperandTxtBox, rightOperandTxtBox, 
-//				operatorDropdown, solnBtn, answerTxtBox);
-		
 		canvas.getChildren().addAll(labelHand, labelChar, addShieldsButton,numberShieldsToAdd, shieldCount);
 	}
 
@@ -361,12 +614,8 @@ public class View extends Application {
 		// TODO Auto-generated method stub
 		addShieldsButton.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				
 					String shieldToAdd = numberShieldsToAdd.getValue();
 					shieldCount.setText(shieldToAdd);
-					
-					
-				
 				}
 			});
 	}
