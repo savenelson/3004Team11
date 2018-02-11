@@ -38,14 +38,21 @@ public class FoeCard extends AdventureCard{
 	public static final int NUMBER_GIANT = 2;
 	public static final int NUMBER_DRAGON = 1;
 	
+	private int battlePoints;
+	private int altBattlePoints;
 	private Special specialAbility;
-	
-	//special 
+
 	public void doSpecial(){specialAbility.doSpecial();}
+	
+	public int getBattlePoints(){return this.battlePoints;}
+	
+	public int getAltBattlePoints(){return this.altBattlePoints;}
 	
 	FoeCard(int battlePoints, int altBattlePoints, Special specialAbility) {
 		super(FOE);
 		
+		this.battlePoints = battlePoints;	
+		this.altBattlePoints = altBattlePoints;
 		this.specialAbility = specialAbility;
 		// TODO Auto-generated constructor stub
 	}

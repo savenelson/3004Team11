@@ -133,7 +133,6 @@ public class View extends Application {
 		File cardsDir = new File("src/main/resources/core/cards");
 		FilenameFilter imgFilter = new FilenameFilter() {
 			
-			@Override
 			public boolean accept(File dir, String name) {
 				// TODO Auto-generated method stub
 				return name.toLowerCase().startsWith("rank");
@@ -248,7 +247,6 @@ public class View extends Application {
 		File cardsDir = new File("src/main/resources/core/cards");
 		FilenameFilter imgFilter = new FilenameFilter() {
 			
-			@Override
 			public boolean accept(File dir, String name) {
 				// TODO Auto-generated method stub
 				return name.toLowerCase().startsWith("rank");
@@ -294,7 +292,6 @@ public class View extends Application {
 		File cardsDir = new File("src/main/resources/core/cards");
 		FilenameFilter imgFilter = new FilenameFilter() {
 			
-			@Override
 			public boolean accept(File dir, String name) {
 				// TODO Auto-generated method stub
 				return name.toLowerCase().startsWith("rank");
@@ -340,7 +337,6 @@ public class View extends Application {
 		File cardsDir = new File("src/main/resources/core/cards");
 		FilenameFilter imgFilter = new FilenameFilter() {
 			
-			@Override
 			public boolean accept(File dir, String name) {
 				// TODO Auto-generated method stub
 				return name.toLowerCase().startsWith("rank");
@@ -552,7 +548,7 @@ public class View extends Application {
 			imgViewRank.setImage(randomImage);
 		});
 	}
-
+//
 	private void addControlsToCanvas(Pane canvas) {
 		// our coordinates 
 		
