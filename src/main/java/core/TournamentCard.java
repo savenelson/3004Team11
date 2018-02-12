@@ -9,16 +9,22 @@ public class TournamentCard extends StoryCard{
 	public static final int YORK_SHIELDS = 0;
 
 	
-	public static final int NUMBER_TOURNAMENT = 1;
 	
 	
 	private String subType;
 	public String getSubType() {return this.subType;}
 	
-	TournamentCard(String subType) {
-		super(TOURNAMENT);
-	}
 
+
+	private int numberShield;
+	public int getNumStages(){return this.numberShield;}
+
+	
+	TournamentCard(int numberShield) {
+		super(TOURNAMENT);
+		this.numberShield = numberShield;
+	}
+	
 
 
 	
