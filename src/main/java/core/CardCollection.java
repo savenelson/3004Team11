@@ -15,4 +15,10 @@ public abstract class CardCollection {
 	// returns cards array size after adding 
 	public int add(Card c){cards.add(c); return cards.size();}
 	
+	public int size(){return cards.size();}
+	
+	protected CardCollection(){
+		cards = new ArrayList<Card>();
+	}
+	
 }

@@ -8,8 +8,6 @@ public class StoryDeck extends CardCollection{
 		// Quest
 		cards.add(new QuestCard(QuestCard.HOLY_GRAIL,QuestCard.HOLY_GRAIL_STAGES,QuestCard.HOLY_GRAIL_FOE));
 		cards.add(new QuestCard(QuestCard.GREEN_KNIGHT,QuestCard.GREEN_KNIGHT_STAGES,QuestCard.GREEN_KNIGHT_FOE));
-		cards.add(new QuestCard(QuestCard.GREEN_KNIGHT,QuestCard.GREEN_KNIGHT_STAGES,QuestCard.GREEN_KNIGHT_FOE));
-		cards.add(new QuestCard(QuestCard.QUESTING_BEAST,QuestCard.QUESTING_BEAST_STAGES,QuestCard.QUESTING_BEAST_FOE));
 		cards.add(new QuestCard(QuestCard.QUESTING_BEAST,QuestCard.QUESTING_BEAST_STAGES,QuestCard.QUESTING_BEAST_FOE));
 		cards.add(new QuestCard(QuestCard.QUEENS_HONOR,QuestCard.QUEENS_HONOR_STAGES,QuestCard.QUEENS_HONOR_FOE));
 		cards.add(new QuestCard(QuestCard.FAIR_MAIDEN,QuestCard.FAIR_MAIDEN_STAGES,QuestCard.FAIR_MAIDEN_FOE));
@@ -26,9 +24,6 @@ public class StoryDeck extends CardCollection{
 		
 		// Tournament
 		cards.add(new TournamentCard(TournamentCard.CAMELOT_SHIELDS));
-		cards.add(new TournamentCard(TournamentCard.CAMELOT_SHIELDS));
-		cards.add(new TournamentCard(TournamentCard.CAMELOT_SHIELDS));
-		cards.add(new TournamentCard(TournamentCard.ORKNEY_SHIELDS));
 		cards.add(new TournamentCard(TournamentCard.ORKNEY_SHIELDS));
 		cards.add(new TournamentCard(TournamentCard.TINTAGEL_SHIELDS));
 		cards.add(new TournamentCard(TournamentCard.YORK_SHIELDS));
@@ -53,7 +48,7 @@ public class StoryDeck extends CardCollection{
 	public static void main(String args[]){
 		StoryDeck aD = new StoryDeck();
 		
-		System.out.println("Adventure deck size (no Test Cards): " + aD.size());
+		System.out.println("Story deck size (no Test Cards): " + aD.size());
 	}
 	
 }
