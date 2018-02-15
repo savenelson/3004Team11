@@ -62,18 +62,18 @@ public class View extends Application {
 	int rowStoryDeck;
 	int colStoryDeck;
 	
-	int rowPlayerARank = 383;
+	int rowPlayerARank = 383-35;
 	int colPlayerARank = 1200;
-	int rowPlayerBRank = 495;
+	int rowPlayerBRank = 495-35;
 	int colPlayerBRank = 1200;
-	int rowPlayerCRank = 608;
+	int rowPlayerCRank = 608-35;
 	int colPlayerCRank = 1200;
 	
-	int rowPlayerAParty = 383;
+	int rowPlayerAParty = 383-35;
 	int colPlayerAParty = 760;
-	int rowPlayerBParty = 495;
+	int rowPlayerBParty = 495-35;
 	int colPlayerBParty = 760;
-	int rowPlayerCParty = 608;
+	int rowPlayerCParty = 608-35;
 	int colPlayerCParty = 760;
 
 	int cardSmallHeight = 112;
@@ -620,7 +620,6 @@ public class View extends Application {
 			});
 	}
 	
-		
 
 //	private void setSolnBtnClickHandler() {
 //		solnBtn.setOnAction(new EventHandler<ActionEvent>() {
