@@ -1,3 +1,9 @@
+
+
+//package core;
+//
+//public class AllyCard extends AdventureCard{}
+
 package core;
 
 public class AllyCard extends AdventureCard{

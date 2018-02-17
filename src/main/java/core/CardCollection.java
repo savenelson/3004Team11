@@ -22,3 +22,4 @@ public abstract class CardCollection {
 	}
 	
 }
+>>>>>>> branch 'sammy' of https://github.com/savenelson/3004Team11
