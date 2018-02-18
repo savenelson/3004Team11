@@ -20,12 +20,7 @@ public class EventCard extends StoryCard{
 	public static final String CHIVALROUS_DEED_NAME = "Chivalrous Deed";
 	public static final String PROSPERITY_NAME = "Prosperity";
 	public static final String CALL_ARMS_NAME = "Call Arms";
-	//conditional allowance or removal of shields based on certain conditions being met..don't know to integrate yet
-	
-	
-	private String subType;
-	public String getSubType() {return this.subType;}
-	
+	//conditional allowance or removal of shields based on certain conditions being met..don't know to integrate yet	
 
 	private String name;
 	public String getName(){return this.name;}
@@ -35,10 +30,12 @@ public class EventCard extends StoryCard{
 		this.name=name;
 	}
 
-
-
-	
-	
-
-
+	@Override
+	public String toString() {
+		
+		return "ID: " + this.id 
+			 + ", type: " + this.type 
+			 + ", subtype: " + this.subType 
+			 + ", name: " + this.name;
+	}
 }

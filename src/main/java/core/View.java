@@ -100,6 +100,8 @@ public class View extends Application {
 		launch(args);
 	}
 	
+	public View(String[] args){launch(args);}
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		initUI(primaryStage);

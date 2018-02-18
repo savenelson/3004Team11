@@ -16,4 +16,8 @@ public class BidSpecial implements Special{
 		
 	}
 
+	public String toString(){
+		return "<Bid Special: adds " + this.numBids + " extra bid(s)>";
+	}
+	
 }

@@ -23,10 +23,10 @@ public class StoryDeck extends CardCollection{
 				
 		
 		// Tournament
-		cards.add(new TournamentCard(TournamentCard.CAMELOT_SHIELDS));
-		cards.add(new TournamentCard(TournamentCard.ORKNEY_SHIELDS));
-		cards.add(new TournamentCard(TournamentCard.TINTAGEL_SHIELDS));
-		cards.add(new TournamentCard(TournamentCard.YORK_SHIELDS));
+		cards.add(new TournamentCard(TournamentCard.CAMELOT_NAME, TournamentCard.CAMELOT_SHIELDS));
+		cards.add(new TournamentCard(TournamentCard.ORKNEY_NAME, TournamentCard.ORKNEY_SHIELDS));
+		cards.add(new TournamentCard(TournamentCard.TINTAGEL_NAME, TournamentCard.TINTAGEL_SHIELDS));
+		cards.add(new TournamentCard(TournamentCard.YORK_NAME, TournamentCard.YORK_SHIELDS));
 
 
 		

@@ -22,4 +22,14 @@ public class AmourCard extends AdventureCard{
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String toString() {
+		
+		return "ID: " + this.id 
+				 + ", type: " + this.type 
+				 + ", subtype: " + this.subType 
+				 + ", battle points: " + this.battlePoints
+				 + ", special: " + this.specialAbility.toString();
+	}
+
 }

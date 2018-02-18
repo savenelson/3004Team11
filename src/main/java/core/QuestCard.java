@@ -41,11 +41,11 @@ public class QuestCard extends StoryCard{
 	//foe
 	public static final String HOLY_GRAIL_FOE = "All";	
 	public static final String GREEN_KNIGHT_FOE = "Green Knight";
-	public static final String QUESTING_BEAST_FOE  = "";
+	public static final String QUESTING_BEAST_FOE  = "None";
 	public static final String QUEENS_HONOR_FOE  = "All";
 	public static final String FAIR_MAIDEN_FOE  = "Black Knight";
 	public static final String ENCHANTED_FORST_FOE  = "Evil Knight";
-	public static final String ARTHURS_ENEMIES_FOE  = "";
+	public static final String ARTHURS_ENEMIES_FOE  = "None";
 	public static final String SLAY_DRAGON_FOE  = "Dragon";
 	public static final String BOAR_HUNT_FOE  = "Boar";
 	public static final String SAXON_RAIDERS_FOE  = "All Saxons";
@@ -62,21 +62,21 @@ public class QuestCard extends StoryCard{
 	
 	public String getFoe(){return this.name;}
 	
-	
-	private String subType;
-	public String getSubType() {return this.subType;}
-	
 	QuestCard(String name, int numberStages, String foe) {
 		super(QUEST);
-		this.name=name;
+		this.name = name;
 		this.numberStages = numberStages;
-		this.foe= foe;
+		this.foe = foe;
 	}
 
-
-
-	
-	
-
-
+	@Override
+	public String toString() {
+		
+		return "ID: " + this.id 
+			 + ", type: " + this.type 
+			 + ", subtype: " + this.subType 
+			 + ", name: " + this.name
+			 + ", number of stages: " + this.numberStages
+			 + ", special foe: " + this.foe;
+	}
 }

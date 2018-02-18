@@ -1,6 +1,8 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 public abstract class CardCollection {
 	
@@ -15,11 +17,29 @@ public abstract class CardCollection {
 	// returns cards array size after adding 
 	public int add(Card c){cards.add(c); return cards.size();}
 	
+	// returns cards array size after adding 
+	public void addAll(Collection<? extends Card> c){cards.addAll(c);}
+	
 	public int size(){return cards.size();}
 	
 	protected CardCollection(){
 		cards = new ArrayList<Card>();
 	}
 	
+	public void shuffle(){
+		Collections.shuffle(cards);
+	}
+	
+	public String toString(){
+		
+		String s = "";
+		
+		for (int i = 0; i < cards.size(); ++i){
+			s += cards.get(i).toString();
+			s += "\n";
+		}
+		
+		return s;
+	}
+	
 }
->>>>>>> branch 'sammy' of https://github.com/savenelson/3004Team11
