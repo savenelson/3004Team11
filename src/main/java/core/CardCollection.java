@@ -12,7 +12,11 @@ public abstract class CardCollection {
 	
 	public Card get(int i){return cards.get(i);}
 	
-	public Card pop(){return cards.get(0);}
+	public Card pop(){
+		Card c = cards.get(0);
+		cards.remove(0);
+		return c;
+	}
 	
 	// returns cards array size after adding 
 	public int add(Card c){cards.add(c); return cards.size();}

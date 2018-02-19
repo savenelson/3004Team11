@@ -55,13 +55,11 @@ public class Model {
 		System.out.println("Adventure Deck: \n" + this.adventureDeck.toString());
 
 		System.out.println("Story Deck: \n" + this.storyDeck.toString());
+		
+		System.out.println("Players Hands: \n" + this.storyDeck.toString());
 			
-//		for(int i = 0; i < 12; ++i){
-//			for(int j = 0; j < players.length; ++j){
-//				
-//				players[i].getHand().toString(); 
-//			}
-//		}
-	}
-	
+		for(int i = 0; i < players.length; ++i){
+			System.out.println(players[i].getHand().toString());
+		}
+	}	
 }

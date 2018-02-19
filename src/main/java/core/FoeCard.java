@@ -57,6 +57,8 @@ public class FoeCard extends AdventureCard{
 
 	public void doSpecial(){specialAbility.doSpecial();}
 	
+	public String getName(){return this.name;}
+	
 	public int getBattlePoints(){return this.battlePoints;}
 	
 	public int getAltBattlePoints(){return this.altBattlePoints;}
@@ -82,5 +84,6 @@ public class FoeCard extends AdventureCard{
 			 + ", special: " + this.specialAbility.toString();
 
 	}
+
 
 }
