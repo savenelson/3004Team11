@@ -1,5 +1,6 @@
 package core;
 
+import javafx.application.Application;
 
 public class Control{
 
@@ -16,8 +17,10 @@ public class Control{
 		testString = "I'm the private test string";
 		
 		gameInit(args, control);
-
+		
 		mainLoop();
+		
+		Application.launch(View.class, args);
 		
 		////TEST
 		

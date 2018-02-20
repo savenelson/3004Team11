@@ -19,7 +19,7 @@ public class AmourCard extends AdventureCard{
 		super(AMOUR);
 		
 		this.specialAbility = specialAbility;
-		// TODO Auto-generated constructor stub
+		this.name = "Amour";
 	}
 
 	@Override

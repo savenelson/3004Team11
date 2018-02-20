@@ -6,7 +6,7 @@ public abstract class StoryCard extends Card{
 	public static final String QUEST = "Quest";
 	public static final String TOURNAMENT = "Tournament";
 
-	
+	protected String name;
 	protected String subType;
 	public String getSubType() {return this.subType;}
 	
@@ -16,4 +16,9 @@ public abstract class StoryCard extends Card{
 		this.subType = subType;
 	}
 
+	
+	@Override
+	public String getImgName() {
+		return this.subType + this.name;
+	}
 }

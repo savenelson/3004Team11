@@ -8,6 +8,8 @@ public abstract class AdventureCard extends Card{
 	public static final String FOE = "Foe";
 	public static final String AMOUR = "Amour";
 	
+	protected String name;
+	
 	protected String subType;
 	public String getSubType() {return this.subType;}
 	
@@ -15,5 +17,10 @@ public abstract class AdventureCard extends Card{
 		super(ADVENTURE);
 		
 		this.subType = subType;
+	}
+	
+	@Override
+	public String getImgName() {
+		return this.subType + this.name;
 	}
 }
