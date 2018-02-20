@@ -5,11 +5,11 @@ public class FoeCard extends AdventureCard{
 	public static final String THIEVES_NAME = "Thieves";
 	public static final String BOAR_NAME = "Boar";
 	public static final String SAXONS_NAME = "Saxons";
-	public static final String ROBBER_KNIGHT_NAME = "Robber Knight";
-	public static final String SAXON_KNIGHT_NAME = "Saxon Knight";
-	public static final String EVIL_KNIGHT_NAME = "Evil Knight";
-	public static final String BLACK_KNIGHT_NAME = "Black Knight";
-	public static final String GREEN_KNIGHT_NAME = "Green Knight";	
+	public static final String ROBBER_KNIGHT_NAME = "RobberKnight";
+	public static final String SAXON_KNIGHT_NAME = "SaxonKnight";
+	public static final String EVIL_KNIGHT_NAME = "EvilKnight";
+	public static final String BLACK_KNIGHT_NAME = "BlackKnight";
+	public static final String GREEN_KNIGHT_NAME = "GreenKnight";	
 	public static final String MORDRED_NAME = "Mordred";
 	public static final String GIANT_NAME = "Giant";
 	public static final String DRAGON_NAME = "Dragon";

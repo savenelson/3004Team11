@@ -4,10 +4,10 @@ public class TestCard extends AdventureCard{
 	
 	public static final int NUMBER_TEST = 2;	
 	
-	public static final String TEST_OF_VALOR_NAME = "Test of Valor";
-	public static final String TEST_OF_TEMPTAION_NAME = "Test of Temptation";
-	public static final String TEST_OF_MORGAN_LE_FREY_NAME = "Test of Morgan Le Frey";
-	public static final String TEST_OF_THE_QUESTING_BEAST_NAME = "Test of the Questing Beast";
+	public static final String TEST_OF_VALOR_NAME = "TestOfValor";
+	public static final String TEST_OF_TEMPTAION_NAME = "TestOfTemptation";
+	public static final String TEST_OF_MORGAN_LE_FREY_NAME = "TestOfMorganLeFrey";
+	public static final String TEST_OF_THE_QUESTING_BEAST_NAME = "TestOfTheQuestingBeast";
 	
 	public String getName(){return this.name;}
 	

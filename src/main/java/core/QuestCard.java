@@ -3,16 +3,16 @@ package core;
 
 public class QuestCard extends StoryCard{
 	//name
-	public static final String HOLY_GRAIL = "Holy Grail";
-	public static final String GREEN_KNIGHT = "Green Knight";
-	public static final String QUESTING_BEAST = "Questing Beast ";
-	public static final String QUEENS_HONOR = "Queens Honor";
-	public static final String FAIR_MAIDEN = "Fair Maiden";
-	public static final String ENCHANTED_FORST = "Enchanted Forest";
-	public static final String ARTHURS_ENEMIES = "Arthurs Enemies";
-	public static final String SLAY_DRAGON = "Slay Dragon";
-	public static final String BOAR_HUNT = "Boar Hunt";
-	public static final String SAXON_RAIDERS = "Saxon Raiders";
+	public static final String HOLY_GRAIL = "HolyGrail";
+	public static final String GREEN_KNIGHT = "GreenKnight";
+	public static final String QUESTING_BEAST = "QuestingBeast ";
+	public static final String QUEENS_HONOR = "QueensHonor";
+	public static final String FAIR_MAIDEN = "FairMaiden";
+	public static final String ENCHANTED_FORST = "EnchantedForest";
+	public static final String ARTHURS_ENEMIES = "ArthursEnemies";
+	public static final String SLAY_DRAGON = "SlayDragon";
+	public static final String BOAR_HUNT = "BoarHunt";
+	public static final String SAXON_RAIDERS = "SaxonRaiders";
 	
 	
 	//quantity
