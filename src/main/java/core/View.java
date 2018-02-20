@@ -109,13 +109,7 @@ public class View extends Application {
 	private HBox CardHandBottom;
 	private HBox CardHandTop;
 	
-	
-	// CardstoPlay
-	private HBox CardsToPlay;
-	
-	//Stage 
-	
-	private HBox StageCard;
+	private HBox Stage; 
 	
 	
 	@Override
@@ -128,12 +122,8 @@ public class View extends Application {
 		canvas.setId("pane");
 		
 		addControlsToCanvas(canvas);
-<<<<<<< HEAD
-		addHandCard1ToCanvas(canvas);
-=======
 		addHandToCanvas(canvas);
 		addQueueToCanvas(canvas);
->>>>>>> 37c40f01aaa09772602608e5537406ea5a2b30d0
 		addPlayerARankToCanvas(canvas);
 		addPlayerBRankToCanvas(canvas);
 		addPlayerCRankToCanvas(canvas);
@@ -143,6 +133,7 @@ public class View extends Application {
 		addPlayerCPartyToCanvas(canvas);
 		addPlayerDPartyToCanvas(canvas);
 		addStoryCardToCanvas(canvas);
+		addStage(canvas);
 		
 
 		Scene scene = new Scene(canvas, 1280, 720);
@@ -153,17 +144,12 @@ public class View extends Application {
 	}
 	
 	
-<<<<<<< HEAD
-	
-	private void addHandCard1ToCanvas(Pane canvas) {
-=======
 	private void addHandToCanvas(Pane canvas) {
->>>>>>> 37c40f01aaa09772602608e5537406ea5a2b30d0
 		File cardsDir = new File("src/main/resources/core/cards");
 		FilenameFilter imgFilter = new FilenameFilter() {
 			
 			public boolean accept(File dir, String name) {
-				// TODO Auto-generated method stub	
+				// TODO Auto-generated method stub
 				return name.toLowerCase().startsWith("weapon");
 			}
 		};
@@ -336,29 +322,6 @@ public class View extends Application {
 		canvas.getChildren().addAll(imgViewRank);
 	}
 	
-<<<<<<< HEAD
-	private void setHandCardControl(ImageView anAdventure) {
-		ContextMenu fileMenu = new ContextMenu();
-
-
-		fileMenu.getItems().add(new MenuItem("Discard"));
-		fileMenu.getItems().add(new MenuItem("Play"));
-		fileMenu.getItems().add(new MenuItem("Campaigne"));
-
-
-
-
-		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
-
-
-
-		@Override
-		public void handle(MouseEvent t) {
-			if (t.getButton() == MouseButton.SECONDARY) {
-				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
-				System.out.println("this is the x"+t.getSceneX());
-				System.out.println("this is the y"+t.getSceneY());
-=======
 	private void addPlayerCRankToCanvas(Pane canvas) {
 		File cardsDir = new File("src/main/resources/core/cards");
 		FilenameFilter imgFilter = new FilenameFilter() {
@@ -379,7 +342,6 @@ public class View extends Application {
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
->>>>>>> 37c40f01aaa09772602608e5537406ea5a2b30d0
 			}
 		}
 		imgViewRank = new ImageView();
@@ -680,8 +642,17 @@ public class View extends Application {
 
 		fileMenu.getItems().add(new MenuItem("Discard"));
 		fileMenu.getItems().add(new MenuItem("Play"));
-		fileMenu.getItems().add(new MenuItem("Campaigne"));
-
+		
+		MenuItem campaigne =  new MenuItem("Campaigne");
+		
+		campaigne.setOnAction(new EventHandler<ActionEvent>() {
+		    public void handle(ActionEvent e) {
+		        addCardToStage(Stage, imgViewRank);
+		        System.out.println(e.getSource());
+		    }
+		});
+		
+		fileMenu.getItems().add(campaigne);
 
 
 
@@ -692,6 +663,8 @@ public class View extends Application {
 		@Override
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
+				//System.out.println(t.getSource());
+				//CardHandTop.getChildren().remove(t.getSource());
 				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
 			}
 
@@ -701,6 +674,25 @@ public class View extends Application {
 
 		});
 
+	}
+	
+	private void addStage(Pane canavas) {
+		
+		Stage = new HBox();
+		
+		Stage.relocate(colQueue, rowQueue-100);
+		
+		
+		canavas.getChildren().addAll(Stage);
+		
+	}
+	
+	private void addCardToStage(HBox stage, ImageView newCard) {
+		
+		ImageView cardAdded = new ImageView();
+		cardAdded.setImage(newCard.getImage());
+		cardAdded.setFitHeight(12);  
+		stage.getChildren().add(cardAdded);
 	}
 	
 
