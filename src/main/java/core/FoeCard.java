@@ -2,6 +2,18 @@ package core;
 
 public class FoeCard extends AdventureCard{
 	
+	public static final String THIEVES_NAME = "Thieves";
+	public static final String BOAR_NAME = "Boar";
+	public static final String SAXONS_NAME = "Saxons";
+	public static final String ROBBER_KNIGHT_NAME = "Robber Knight";
+	public static final String SAXON_KNIGHT_NAME = "Saxon Knight";
+	public static final String EVIL_KNIGHT_NAME = "Evil Knight";
+	public static final String BLACK_KNIGHT_NAME = "Black Knight";
+	public static final String GREEN_KNIGHT_NAME = "Green Knight";	
+	public static final String MORDRED_NAME = "Mordred";
+	public static final String GIANT_NAME = "Giant";
+	public static final String DRAGON_NAME = "Dragon";
+	
 	public static final int THIEVES_BATTLE_POINTS = 5;
 	public static final int BOAR_BATTLE_POINTS = 5;
 	public static final int SAXONS_BATTLE_POINTS = 10;
@@ -38,16 +50,40 @@ public class FoeCard extends AdventureCard{
 	public static final int NUMBER_GIANT = 2;
 	public static final int NUMBER_DRAGON = 1;
 	
+	private String name;
+	private int battlePoints;
+	private int altBattlePoints;
 	private Special specialAbility;
-	
-	//special 
+
 	public void doSpecial(){specialAbility.doSpecial();}
 	
-	FoeCard(int battlePoints, int altBattlePoints, Special specialAbility) {
+	public String getName(){return this.name;}
+	
+	public int getBattlePoints(){return this.battlePoints;}
+	
+	public int getAltBattlePoints(){return this.altBattlePoints;}
+	
+	FoeCard(String name, int battlePoints, int altBattlePoints, Special specialAbility) {
 		super(FOE);
 		
+		this.name = name;
+		this.battlePoints = battlePoints;	
+		this.altBattlePoints = altBattlePoints;
 		this.specialAbility = specialAbility;
-		// TODO Auto-generated constructor stub
 	}
+
+	@Override
+	public String toString() {
+		
+		return "ID: " + this.id 
+			 + ", type: " + this.type 
+			 + ", subtype: " + this.subType 
+			 + ", name: " + this.name 
+			 + ", battle points: " + this.battlePoints
+			 + ", alternative battle points: " + this.altBattlePoints
+			 + ", special: " + this.specialAbility.toString();
+
+	}
+
 
 }

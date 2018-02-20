@@ -3,14 +3,14 @@ package core;
 public abstract class Card {
 	private static int nextID = 0001;
 	
-	public static final String ADVENTURE = "adventure";
-	public static final String STORY     = "story";
-	public static final String RANK      = "rank";
+	public static final String ADVENTURE = "Adventure";
+	public static final String STORY     = "Story";
+	public static final String RANK      = "Rank";
 	
-	private int id;
+	protected int id;
 	public int getID() {return this.id;}
 	
-	private String type;
+	protected String type;
 	public String getType() {return this.type;}
 	
 	//private String imgName = "WeaponSword.gif";
@@ -20,4 +20,6 @@ public abstract class Card {
 		
 		this.type = type;
 	}
+	
+	public abstract String toString();
 }
