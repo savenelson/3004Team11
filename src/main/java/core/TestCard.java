@@ -9,7 +9,6 @@ public class TestCard extends AdventureCard{
 	public static final String TEST_OF_MORGAN_LE_FREY_NAME = "Test of Morgan Le Frey";
 	public static final String TEST_OF_THE_QUESTING_BEAST_NAME = "Test of the Questing Beast";
 	
-	private String name;
 	public String getName(){return this.name;}
 	
 	public TestCard(String name){

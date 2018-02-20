@@ -13,7 +13,6 @@ public class TournamentCard extends StoryCard{
 	public static final int TINTAGEL_SHIELDS = 1;
 	public static final int YORK_SHIELDS = 0;
 	
-	private String name;
 
 	private int numberShield;
 	public int getNumShields(){return this.numberShield;}

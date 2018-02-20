@@ -29,9 +29,7 @@ public class WeaponCard extends AdventureCard{
 	private int battlePoints;
 	
 	public int getBattlePoints(){return this.battlePoints;}
-	
-	private String name;
-	
+		
 	public String getName(){return this.name;}
 	
 	WeaponCard(String name, int battlePoints) {
@@ -49,5 +47,7 @@ public class WeaponCard extends AdventureCard{
 				 + ", battle points: " + this.battlePoints;
 
 	}
+
+
 
 }
