@@ -52,10 +52,10 @@ public class View extends Application {
 	int rowPlayer1Party = 230;
 	int colPlayer1Party;
 	
-	int rowHandTop6 = 350;
+	int rowHandTop6 = 390;
 	int colHandTop6 = 10;
 	
-	int rowHandBottom6 = 525;
+	int rowHandBottom6 = 565;
 	int colHandBottom6 = 10;
 	
 	int rowAdventureDeck = 145;
@@ -64,18 +64,20 @@ public class View extends Application {
 	int rowStoryCard = 30;
 	int colStoryCard = 880;
 	
-	int rowPlayerARank = 383-35;
+	int rowPlayerARank = 383;
 	int colPlayerARank = 1200;
-	int rowPlayerBRank = 495-35;
+	int rowPlayerBRank = 495;
 	int colPlayerBRank = 1200;
-	int rowPlayerCRank = 608-35;
+	int rowPlayerCRank = 608;
 	int colPlayerCRank = 1200;
+	int rowPlayerDRank = 608;
+	int colPlayerDRank = 1200;
 	
-	int rowPlayerAParty = 383-35;
+	int rowPlayerAParty = 383;
 	int colPlayerAParty = 760;
-	int rowPlayerBParty = 495-35;
+	int rowPlayerBParty = 495;
 	int colPlayerBParty = 760;
-	int rowPlayerCParty = 608-35;
+	int rowPlayerCParty = 608;
 	int colPlayerCParty = 760;
 
 	int cardSmallHeight = 112;
