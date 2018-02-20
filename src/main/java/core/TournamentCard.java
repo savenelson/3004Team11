@@ -1,0 +1,43 @@
+
+package core;
+
+public class TournamentCard extends StoryCard{
+
+	public static final String CAMELOT_NAME = "Camelot";
+	public static final String ORKNEY_NAME = "Orkney";
+	public static final String TINTAGEL_NAME = "Tintagel";
+	public static final String YORK_NAME = "York";
+	
+	public static final int CAMELOT_SHIELDS = 3;
+	public static final int ORKNEY_SHIELDS = 2;
+	public static final int TINTAGEL_SHIELDS = 1;
+	public static final int YORK_SHIELDS = 0;
+	
+	private String name;
+
+	private int numberShield;
+	public int getNumShields(){return this.numberShield;}
+
+	
+	TournamentCard(String name, int numberShield) {
+		super(TOURNAMENT);
+		this.name = name;
+		this.numberShield = numberShield;
+	}
+
+
+	@Override
+	public String toString() {
+		return "ID: " + this.id 
+			 + ", type: " + this.type 
+			 + ", subtype: " + this.subType 
+			 + ", name: " + this.name;
+	}
+	
+
+
+	
+	
+
+
+}
