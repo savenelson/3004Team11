@@ -1,5 +1,6 @@
 package core;
 
+
 public class Control{
 
 	static Model model;
@@ -83,6 +84,8 @@ public class Control{
 		Player currentPlayer;	
 		Card currentStoryCard;
 	}
+	
+
 	
 	public void printTestString(){System.out.println(testString);}
 
