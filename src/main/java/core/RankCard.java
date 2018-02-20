@@ -4,7 +4,7 @@ public class RankCard extends Card{
 	
 	public static final String SQUIRE = "Squire";
 	public static final String KNIGHT = "Knight";
-	public static final String CHAMPION_KNIGHT = "Champion knight";
+	public static final String CHAMPION_KNIGHT = "ChampionKnight";
 	
 	public static final int SQUIRE_BATTLE_POINTS = 5;
 	public static final int KNIGHT_BATTLE_POINTS = 10;

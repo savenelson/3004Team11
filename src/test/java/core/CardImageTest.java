@@ -13,7 +13,7 @@ public class CardImageTest {
 
 	public static final String GIF = ".gif";
 	
-	public static final String PATH = "src/main/resources/core/cards";
+	public static final String PATH = "src/main/resources/core/cards/";
 	
 	@Test
 	public void test() {

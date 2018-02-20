@@ -12,14 +12,14 @@ public class EventCard extends StoryCard{
 	public static final int PROSPERITY = 1;
 	public static final int CALL_ARMS = 1;
 	
-	public static final String KINGS_RECOGNITION_NAME = "Kings Recognition";
-	public static final String QUEENS_FAVOR_NAME = "Queens Favor";
-	public static final String COURT_CAMELOT_NAME = "Court Camelot";
+	public static final String KINGS_RECOGNITION_NAME = "KingsRecognition";
+	public static final String QUEENS_FAVOR_NAME = "QueensFavor";
+	public static final String COURT_CAMELOT_NAME = "CourtCamelot";
 	public static final String POX_NAME = "Pox";
 	public static final String PLAGUE_NAME = "Plague";
-	public static final String CHIVALROUS_DEED_NAME = "Chivalrous Deed";
+	public static final String CHIVALROUS_DEED_NAME = "ChivalrousDeed";
 	public static final String PROSPERITY_NAME = "Prosperity";
-	public static final String CALL_ARMS_NAME = "Call Arms";
+	public static final String CALL_ARMS_NAME = "CallArms";
 	//conditional allowance or removal of shields based on certain conditions being met..don't know to integrate yet	
 
 	public String getName(){return this.name;}
