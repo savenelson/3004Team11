@@ -98,12 +98,6 @@ public class View extends Application {
 	private Image[] ranksImg, handImg, partyImg;
 	private ImageView imgViewRank, imgViewStory;
 	
-//	public static void main(String[] args) {
-////		logger.info("Home Screen booting up ...");
-//		
-//		launch(args);
-//	}
-	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		initUI(primaryStage);
@@ -573,7 +567,8 @@ public class View extends Application {
 			}
 		}
 		imgViewRank = new ImageView();
-		imgViewRank.setImage(CardPath + state.currentStory.getImgName());
+		imgViewRank.setImage(ranksImg[0]);
+//		imgViewRank.setImage(CardPath + state.currentStory.getImgName());
 		imgViewRank.relocate(colStoryCard, rowStoryCard);
 		imgViewRank.setFitWidth(cardXLargeWidth);
 		imgViewRank.setFitHeight(cardXLargeHeight);
@@ -693,4 +688,5 @@ public class View extends Application {
 //			}
 //		});
 //	}
+
 }
