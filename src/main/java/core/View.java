@@ -40,6 +40,8 @@ import javafx.util.Duration;
 
 public class View extends Application {
 	
+	
+	
 	//CONSTS FOR CANVAS LAYOUT
 	int rowPlayer1Rank = 20;
 	int colPlayer1Rank = 10;
@@ -59,8 +61,8 @@ public class View extends Application {
 	int rowAdventureDeck = 145;
 	int colAdventureDeck;
 	
-	int rowStoryDeck;
-	int colStoryDeck;
+	int rowStoryCard = 30;
+	int colStoryCard = 880;
 	
 	int rowPlayerARank = 383-35;
 	int colPlayerARank = 1200;
@@ -82,6 +84,8 @@ public class View extends Application {
 	int cardMediumWidth = 115;
 	int cardLargeHeight = 200;
 	int cardLargeWidth = 150;
+	int cardXLargeHeight = 260;
+	int cardXLargeWidth = 195;
 
 	
 //	private static final Logger logger = LogManager.getLogger(View.class);
@@ -92,7 +96,7 @@ public class View extends Application {
 	private TextField answerTxtBox;
 	private ComboBox<String> numberShieldsToAdd;
 	private Image[] ranksImg, handImg, partyImg;
-	private ImageView imgViewRank;
+	private ImageView imgViewRank, imgViewStory;
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -112,6 +116,7 @@ public class View extends Application {
 		addPlayerAPartyToCanvas(canvas);
 		addPlayerBPartyToCanvas(canvas);
 		addPlayerCPartyToCanvas(canvas);
+		addStoryCardToCanvas(canvas);
 		
 
 		Scene scene = new Scene(canvas, 1280, 720);
@@ -537,6 +542,55 @@ public class View extends Application {
 				
 		canvas.getChildren().addAll(PlayerAParty);
 	}
+	
+	private void addStoryCardToCanvas(Pane canvas) {
+		File cardsDir = new File("src/main/resources/core/cards");
+		FilenameFilter imgFilter = new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File dir, String name) {
+				// TODO Auto-generated method stub
+				return name.toLowerCase().startsWith("quest");
+			}
+		};
+		
+		File[] rankCardsFile = cardsDir.listFiles(imgFilter);
+		ranksImg = new Image[rankCardsFile.length];
+		int idx = 0;
+		for (File cardFile : rankCardsFile) {
+			try {
+				ranksImg[idx] = new Image(new FileInputStream(cardFile.getPath()));
+				idx++;
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		imgViewRank = new ImageView();
+		imgViewRank.setImage(CardPath + state.currentStory.getImgName());
+		imgViewRank.relocate(colStoryCard, rowStoryCard);
+		imgViewRank.setFitWidth(cardXLargeWidth);
+		imgViewRank.setFitHeight(cardXLargeHeight);
+		imgViewRank.setPreserveRatio(true);
+		
+		Timeline timeline = new Timeline();
+		timeline.setAutoReverse(true);
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		
+		KeyValue keyValue = new KeyValue(imgViewRank.xProperty(), 200, Interpolator.EASE_BOTH);
+		KeyFrame keyFrame = new KeyFrame(Duration.millis(800), keyValue);
+		
+		// this made the card bounce.
+		//timeline.getKeyFrames().add(keyFrame);
+		timeline.play();
+		
+		setCardClickHandler();
+				
+		canvas.getChildren().addAll(imgViewRank);
+	}
+	
+	
+	
 
 	private void setCardClickHandler() {
 		final Random rand = new Random();
