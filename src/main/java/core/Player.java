@@ -19,7 +19,10 @@ public class Player {
 		this.playerNumber = playerNumber;
 		
 		rankCard = new RankCard(RankCard.SQUIRE);
-		
+	}
+	
+	public String toString(){
+		return "Player " + this.playerNumber;
 	}
 	
 	public void pickUp(Card c){

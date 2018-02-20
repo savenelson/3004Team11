@@ -8,8 +8,8 @@ public class AdventureDeck extends CardCollection{
 	
 	public AdventureDeck() {
 		super();
-		// WEAPONS
 		
+		// WEAPONS
 		for(int i = 0; i < WeaponCard.NUMBER_SWORDS; ++i){
 			cards.add(new WeaponCard(WeaponCard.SWORD_NAME, WeaponCard.SWORD_BATTLE_POINTS));
 		}
@@ -75,6 +75,20 @@ public class AdventureDeck extends CardCollection{
 		cards.add(new AllyCard(AllyCard.QUEEN_GUINEVERE_NAME, AllyCard.QUEEN_GUINEVERE_BATTLE_POINTS, new BidSpecial(AllyCard.QUEEN_GUINEVERE_BIDS)));
 		cards.add(new AllyCard(AllyCard.QUEEN_ISEULT_NAME, AllyCard.QUEEN_ISEULT_BATTLE_POINTS, new BidSpecial(AllyCard.QUEEN_ISEULT_BIDS)));
 		cards.add(new AllyCard(AllyCard.MERLIN_NAME, AllyCard.MERLIN_BATTLE_POINTS, new NoSpecial()));
+		
+		// TESTS
+		for(int i = 0; i < TestCard.NUMBER_TEST; ++i){
+			cards.add(new TestCard(TestCard.TEST_OF_VALOR_NAME));
+		}
+		for(int i = 0; i < TestCard.NUMBER_TEST; ++i){
+			cards.add(new TestCard(TestCard.TEST_OF_TEMPTAION_NAME));
+		}
+		for(int i = 0; i < TestCard.NUMBER_TEST; ++i){
+			cards.add(new TestCard(TestCard.TEST_OF_MORGAN_LE_FREY_NAME));
+		}
+		for(int i = 0; i < TestCard.NUMBER_TEST; ++i){
+			cards.add(new TestCard(TestCard.TEST_OF_THE_QUESTING_BEAST_NAME));
+		}
 		
 		// AMOURS
 		for(int i = 0; i < AmourCard.NUMBER_AMOUR; ++i){

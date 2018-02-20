@@ -1,26 +1,39 @@
 package core;
 
+import core.Control.StoryCardAndCurrentPlayer;
+
 public class Model {
 
+	public static Control control;
+	
 	private Player [] players;
+	public Player [] getPlayers(){return players;}
 	
 	private AdventureDeck adventureDeck;
 	public AdventureDeck getAdventureDeck(){return this.adventureDeck;}
 	
-	//private AdventureDeck adventureDeckDiscard = new AdventureDeck();
-	
+	private AdventureDeck adventureDeckDiscard;
+	public AdventureDeck getAdventureDeckDiscard(){return this.adventureDeck;}
+
 	private StoryDeck storyDeck;
 	public StoryDeck getStoryDeck(){return storyDeck;}
 
+	private StoryDeck storyDeckDiscard;
+	public AdventureDeck getStoryDeckDiscard(){return this.adventureDeck;}
 	
-	//private StoryDeck storyDeckDiscard = new StoryDeck();
+	int currentPlayer;
+
+	Model(Control control){
 	
-	Model(int numPlayers){
-	
+		this.control = control;
+		
 		this.adventureDeck = new AdventureDeck();
 		this.storyDeck = new StoryDeck();
 		
-		instantiatePlayers(numPlayers);
+		this.adventureDeckDiscard = new AdventureDeck();
+		this.storyDeckDiscard = new StoryDeck();
+		
+		currentPlayer = 0;
 	}
 	
 	public void instantiatePlayers(int numPlayers){
@@ -50,16 +63,30 @@ public class Model {
 		}
 	}
 	
+	public StoryCardAndCurrentPlayer drawStoryCard(StoryCardAndCurrentPlayer ret){
+		
+		
+		
+		ret.currentStoryCard = storyDeck.pop();
+		
+		//TEST
+		//control.printTestString();
+		
+		ret.currentPlayer = players[currentPlayer];
+		
+		return ret;
+	}
+	
 	public void CardsTest(){
 		
 		System.out.println("Adventure Deck: \n" + this.adventureDeck.toString());
 
 		System.out.println("Story Deck: \n" + this.storyDeck.toString());
 		
-		System.out.println("Players Hands: \n" + this.storyDeck.toString());
+		System.out.println("Players Hands: \n\n");
 			
 		for(int i = 0; i < players.length; ++i){
-			System.out.println(players[i].getHand().toString());
+			System.out.println("Player " + (i+1) + " Hand: \n" + players[i].getHand().toString());
 		}
 	}	
 }

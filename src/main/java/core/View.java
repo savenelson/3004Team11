@@ -38,6 +38,16 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+
+// View constructor
+// getSponsorDecision(StoryCardAndCurrentPlayer) 
+// getQuestPhasesChoice
+// getPlayerPartyChoice
+// getTestDecision
+// getTournamentDecision
+// get
+
+
 public class View extends Application {
 	
 	//CONSTS FOR CANVAS LAYOUT
@@ -94,13 +104,12 @@ public class View extends Application {
 	private Image[] ranksImg, handImg, partyImg;
 	private ImageView imgViewRank;
 	
-//	public static void main(String[] args) {
-////		logger.info("Home Screen booting up ...");
-//		
-//		launch(args);
-//	}
+	public static void main(String[] args) {
+//		logger.info("Home Screen booting up ...");
+		
+		launch(args);
+	}
 	
-	public View(String[] args){}
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
