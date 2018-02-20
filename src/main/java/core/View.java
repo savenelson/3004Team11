@@ -98,6 +98,12 @@ public class View extends Application {
 	private Image[] ranksImg, handImg, partyImg;
 	private ImageView imgViewRank, imgViewStory;
 	
+	public static void main(String[] args) {
+//		logger.info("Home Screen booting up ...");
+		
+		launch(args);
+	}
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		initUI(primaryStage);
@@ -687,5 +693,4 @@ public class View extends Application {
 //			}
 //		});
 //	}
-
 }
