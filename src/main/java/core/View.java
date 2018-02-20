@@ -103,6 +103,14 @@ public class View extends Application {
 	private HBox CardHandTop;
 	
 	
+	// CardstoPlay
+	private HBox CardsToPlay;
+	
+	//Stage 
+	
+	private HBox StageCard;
+	
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		initUI(primaryStage);
@@ -113,7 +121,7 @@ public class View extends Application {
 		canvas.setId("pane");
 		
 		addControlsToCanvas(canvas);
-//		addHandCard1ToCanvas(canvas);
+		addHandCard1ToCanvas(canvas);
 		addPlayerARankToCanvas(canvas);
 		addPlayerBRankToCanvas(canvas);
 		addPlayerCRankToCanvas(canvas);
@@ -131,12 +139,13 @@ public class View extends Application {
 	}
 	
 	
+	
 	private void addHandCard1ToCanvas(Pane canvas) {
 		File cardsDir = new File("src/main/resources/core/cards");
 		FilenameFilter imgFilter = new FilenameFilter() {
 			
 			public boolean accept(File dir, String name) {
-				// TODO Auto-generated method stub
+				// TODO Auto-generated method stub	
 				return name.toLowerCase().startsWith("weapon");
 			}
 		};
@@ -281,6 +290,8 @@ public class View extends Application {
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
 				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
+				System.out.println("this is the x"+t.getSceneX());
+				System.out.println("this is the y"+t.getSceneY());
 			}
 
 		}
