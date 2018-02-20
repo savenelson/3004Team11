@@ -21,10 +21,13 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -97,6 +100,11 @@ public class View extends Application {
 	private ComboBox<String> numberShieldsToAdd;
 	private Image[] ranksImg, handImg, partyImg;
 	private ImageView imgViewRank, imgViewStory;
+	
+	
+	private HBox CardHandBottom;
+	private HBox CardHandTop;
+	
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -198,7 +206,7 @@ public class View extends Application {
 		}
 
 		//Displays Hand, Row 1, first 6 cards
-		HBox CardHandTop = new HBox(6); //space between nodes
+		CardHandTop = new HBox(6); //space between nodes
 		CardHandTop.relocate(colPlayer1Rank, rowHandTop6);
 		//CardHandTop.setPadding(new Insets(5));// Padding betwenn Hboc border
 		for(int i =0; i<6; i++) {
@@ -207,13 +215,14 @@ public class View extends Application {
 			imgViewRank.relocate(colPlayer1Rank, rowHandTop6);
 			imgViewRank.setFitWidth(cardMediumWidth);
 			imgViewRank.setFitHeight(cardMediumHeight);
+			setHandCardControl(imgViewRank);
 			if (i > 5) {
 			}
 			imgViewRank.setPreserveRatio(true);
 			CardHandTop.getChildren().addAll(imgViewRank);
 		}
 		
-		HBox CardHandBottom = new HBox(6); //space between nodes
+		CardHandBottom = new HBox(6); //space between nodes
 		CardHandBottom.relocate(colPlayer1Rank, rowHandBottom6);
 		//CardHandBottom.setPadding(new Insets(5));// Padding betwenn Hboc border
 		//TODO set i<HandCardFile - 6
@@ -224,6 +233,7 @@ public class View extends Application {
 			imgViewRank.setFitWidth(cardMediumWidth);
 			imgViewRank.setFitHeight(cardMediumHeight);
 			imgViewRank.setPreserveRatio(true);
+			setHandCardControl(imgViewRank);
 			CardHandBottom.getChildren().addAll(imgViewRank);
 		}
 
@@ -333,6 +343,37 @@ public class View extends Application {
 		setCardClickHandler();
 				
 		canvas.getChildren().addAll(imgViewRank);
+	}
+	
+	private void setHandCardControl(ImageView anAdventure) {
+		ContextMenu fileMenu = new ContextMenu();
+
+
+		fileMenu.getItems().add(new MenuItem("Discard"));
+		fileMenu.getItems().add(new MenuItem("Play"));
+		fileMenu.getItems().add(new MenuItem("Campaigne"));
+
+
+
+		//anAdventure.setContextMenu(fileMenu);
+		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+
+
+
+		@Override
+		public void handle(MouseEvent t) {
+			if (t.getButton() == MouseButton.SECONDARY) {
+				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
+			}
+
+		}
+
+
+
+			//boolean result= ConfirmCampaigneBox.display("Drawn new card", "Would you like to draw this card?");
+
+		});
+
 	}
 	
 	private void addPlayerCRankToCanvas(Pane canvas) {
