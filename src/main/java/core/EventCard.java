@@ -22,12 +22,11 @@ public class EventCard extends StoryCard{
 	public static final String CALL_ARMS_NAME = "Call Arms";
 	//conditional allowance or removal of shields based on certain conditions being met..don't know to integrate yet	
 
-	private String name;
 	public String getName(){return this.name;}
 	
 	EventCard(String name) {
 		super(EVENT);
-		this.name=name;
+		this.name = name;
 	}
 
 	@Override
@@ -38,4 +37,5 @@ public class EventCard extends StoryCard{
 			 + ", subtype: " + this.subType 
 			 + ", name: " + this.name;
 	}
+	
 }

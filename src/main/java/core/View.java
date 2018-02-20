@@ -113,7 +113,7 @@ public class View extends Application {
 		canvas.setId("pane");
 		
 		addControlsToCanvas(canvas);
-		addHandCard1ToCanvas(canvas);
+//		addHandCard1ToCanvas(canvas);
 		addPlayerARankToCanvas(canvas);
 		addPlayerBRankToCanvas(canvas);
 		addPlayerCRankToCanvas(canvas);
@@ -129,9 +129,6 @@ public class View extends Application {
 		primaryStage.setTitle("Quests of the Round Table");
 		primaryStage.show();
 	}
-	
-	
-
 	
 	
 	private void addHandCard1ToCanvas(Pane canvas) {
@@ -199,7 +196,6 @@ public class View extends Application {
 		File cardsDir = new File("src/main/resources/core/cards");
 		FilenameFilter imgFilter = new FilenameFilter() {
 			
-			@Override
 			public boolean accept(File dir, String name) {
 				// TODO Auto-generated method stub
 				return name.toLowerCase().startsWith("rank");
@@ -235,7 +231,7 @@ public class View extends Application {
 		File cardsDir = new File("src/main/resources/core/cards");
 		FilenameFilter imgFilter = new FilenameFilter() {
 			
-			@Override
+			
 			public boolean accept(File dir, String name) {
 				// TODO Auto-generated method stub
 				return name.toLowerCase().startsWith("rank");
@@ -299,7 +295,6 @@ public class View extends Application {
 		File cardsDir = new File("src/main/resources/core/cards");
 		FilenameFilter imgFilter = new FilenameFilter() {
 			
-			@Override
 			public boolean accept(File dir, String name) {
 				// TODO Auto-generated method stub
 				return name.toLowerCase().startsWith("rank");

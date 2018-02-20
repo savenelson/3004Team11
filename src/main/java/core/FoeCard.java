@@ -50,7 +50,6 @@ public class FoeCard extends AdventureCard{
 	public static final int NUMBER_GIANT = 2;
 	public static final int NUMBER_DRAGON = 1;
 	
-	private String name;
 	private int battlePoints;
 	private int altBattlePoints;
 	private Special specialAbility;

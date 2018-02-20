@@ -10,7 +10,6 @@ public class BidSpecial implements Special{
 	}
 	
 	
-	@Override
 	public void doSpecial() {
 		// TODO Create behavior for extra bids
 		
