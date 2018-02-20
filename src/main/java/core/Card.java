@@ -13,8 +13,9 @@ public abstract class Card {
 	protected String type;
 	public String getType() {return this.type;}
 	
-	//private String imgName = "WeaponSword.gif";
-
+	//private String imgPath = "WeaponSword";
+	public abstract String getImgName();
+	
 	Card(String type){
 		this.id = nextID++;
 		

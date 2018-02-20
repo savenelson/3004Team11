@@ -53,8 +53,6 @@ public class QuestCard extends StoryCard{
 	
 	private int numberStages;
 	public int getNumStages(){return this.numberStages;}
-
-	private String name;
 	
 	public String getName(){return this.name;}
 	

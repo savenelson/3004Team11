@@ -36,7 +36,6 @@ public class AllyCard extends AdventureCard{
 	public static final int QUEEN_GUINEVERE_BIDS = 3;	
 	public static final int QUEEN_ISEULT_BIDS = 2;
 	
-	private String name;
 	private int battlePoints;
 	private Special specialAbility;
 	
