@@ -10,15 +10,15 @@ public class AllyCard extends AdventureCard{
 	
 	public static final int NUMBER_ALLY = 1;
 	
-	public static final String SIR_GALAHAD_NAME = "Sir Galahad";
-	public static final String SIR_LANCELOT_NAME = "Sir Lancelot";
-	public static final String KING_ARTHUR_NAME = "King Arthur";
-	public static final String SIR_TRISTAN_NAME = "Sir Tristan";
-	public static final String SIR_PELLINORE_NAME = "Sir Pellinore";
-	public static final String SIR_GAWAIN_NAME = "Sir Gawain";
-	public static final String SIR_PERCIVAL_NAME = "Sir Percival";
-	public static final String QUEEN_GUINEVERE_NAME = "Queen Guinevere";	
-	public static final String QUEEN_ISEULT_NAME = "Queen Iseult";
+	public static final String SIR_GALAHAD_NAME = "SirGalahad";
+	public static final String SIR_LANCELOT_NAME = "SirLancelot";
+	public static final String KING_ARTHUR_NAME = "KingArthur";
+	public static final String SIR_TRISTAN_NAME = "SirTristan";
+	public static final String SIR_PELLINORE_NAME = "SirPellinore";
+	public static final String SIR_GAWAIN_NAME = "SirGawain";
+	public static final String SIR_PERCIVAL_NAME = "SirPercival";
+	public static final String QUEEN_GUINEVERE_NAME = "QueenGuinevere";	
+	public static final String QUEEN_ISEULT_NAME = "QueenIseult";
 	public static final String MERLIN_NAME = "Merlin";
 	
 	public static final int SIR_GALAHAD_BATTLE_POINTS = 15;
