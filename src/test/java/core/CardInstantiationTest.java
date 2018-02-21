@@ -23,7 +23,7 @@ public class CardInstantiationTest {
 		assertEquals(10, horse.getBattlePoints());
 
 		WeaponCard battle_ax = new WeaponCard(WeaponCard.BATTLE_AX_NAME, WeaponCard.BATTLE_AX_BATTLE_POINTS);
-		assertEquals("Battle-ax", battle_ax.getName());
+		assertEquals("BattleAx", battle_ax.getName());
 		assertEquals(15, battle_ax.getBattlePoints());
 
 		WeaponCard lance = new WeaponCard(WeaponCard.LANCE_NAME, WeaponCard.LANCE_BATTLE_POINTS);
@@ -103,7 +103,7 @@ public class CardInstantiationTest {
 		new AllyCard(AllyCard.SIR_LANCELOT_NAME, AllyCard.SIR_LANCELOT_BATTLE_POINTS, new NoSpecial());
 		new AllyCard(AllyCard.KING_ARTHUR_NAME, AllyCard.KING_ARTHUR_BATTLE_POINTS, new BidSpecial(AllyCard.KING_ARTHUR_BIDS));
 		new AllyCard(AllyCard.SIR_TRISTAN_NAME, AllyCard.SIR_TRISTAN_BATTLE_POINTS, new NoSpecial());
-		new AllyCard(AllyCard.SIR_PELLINORE_NAME, AllyCard.SIR_PELLINORE_BATTLE_POINTS, new NoSpecial());// SOMETIMES SPECIAL and name is different
+		new AllyCard(AllyCard.KING_PELLINORE_NAME, AllyCard.KING_PELLINORE_BATTLE_POINTS, new NoSpecial());// SOMETIMES SPECIAL and name is different
 		new AllyCard(AllyCard.SIR_GAWAIN_NAME, AllyCard.SIR_GAWAIN_BATTLE_POINTS, new NoSpecial());
 		new AllyCard(AllyCard.SIR_PERCIVAL_NAME, AllyCard.SIR_PERCIVAL_BATTLE_POINTS, new NoSpecial());
 		new AllyCard(AllyCard.QUEEN_GUINEVERE_NAME, AllyCard.QUEEN_GUINEVERE_BATTLE_POINTS, new BidSpecial(AllyCard.QUEEN_GUINEVERE_BIDS));
