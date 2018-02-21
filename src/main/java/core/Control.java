@@ -8,8 +8,7 @@ public class Control{
 	static View view;
 	
 	private static String testString;
-	
-	// args[0]: number of players
+
 	public static void main(String args []){
 	
 		Control control = new Control();
@@ -19,11 +18,11 @@ public class Control{
 		gameInit(args, control);
 		
 		mainLoop();
-		
+
 		Application.launch(View.class, args);
 		
 		////TEST
-		
+		 	
 		//model.CardsTest();
 		
 		////END TEST

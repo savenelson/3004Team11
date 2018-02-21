@@ -90,7 +90,19 @@ public class Model {
 		}
 	}
 	
-//	public getState(){
-//		
+	//populates the State Object
+//	public StoryDeck getState(){
+//		private Card currentStoryCard;
+//		currentStoryCard = this.storyDeck.peek;
+//		adventureDeckSize 
+//		storyDeckSize 
+//		player[i].rank 
+//		player[i].shieldCount 
+//		player[i].totalBattlePoints 
+//		player[currentPlayer].hand.card[i]  
+//		player[i].party.card[i] 
+//		player[currentPlayer].queue.card[i] 
+//		currentStoryCard 
+//		currentStage.card[i] 
 //	}
 }
