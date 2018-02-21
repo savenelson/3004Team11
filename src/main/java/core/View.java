@@ -43,7 +43,12 @@ import javafx.util.Duration;
 
 public class View extends Application {
 	
+	private Control control;
+	private State state;
 		
+	public static final String IMG_DIR = "src/main/resources/core/cards/";
+	public static final String GIF = ".gif";
+	
 	//CONSTS FOR CANVAS LAYOUT
 	int rowPlayer1Rank = 80;
 	int colPlayer1Rank = 10;
@@ -66,8 +71,8 @@ public class View extends Application {
 	int rowAdventureDeck = 145;
 	int colAdventureDeck;
 	
-	int rowStoryCard = 30;
-	int colStoryCard = 880;
+	int rowStoryCard = 80;
+	int colStoryCard = 10;
 	
 	int rowPlayerARank = 271;
 	int colPlayerARank = 1200;
@@ -114,7 +119,6 @@ public class View extends Application {
 //		System.out.println("WORKING");
 //	}
 	
-	private Control control;
 	
 	public static void main(String [] args){
 		launch(args);
@@ -122,12 +126,14 @@ public class View extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		initUI(primaryStage);
-		
 		control = new Control(this);
+		initUI(primaryStage);
 	}
 
 	private void initUI(Stage primaryStage) {
+		
+		state = control.getState();
+		
 		Pane canvas = new Pane();
 		canvas.setId("pane");
 		
@@ -214,7 +220,6 @@ public class View extends Application {
 		canvas.getChildren().addAll(CardHandTop, CardHandBottom);
 	}
 	
-	
 	private void addQueueToCanvas(Pane canvas) {
 		File cardsDir = new File("src/main/resources/core/cards");
 		FilenameFilter imgFilter = new FilenameFilter() {
@@ -260,40 +265,22 @@ public class View extends Application {
 		canvas.getChildren().addAll(PlayerAParty);
 	}
 
-	
 	private void addPlayerARankToCanvas(Pane canvas) {
-		File cardsDir = new File("src/main/resources/core/cards");
-		FilenameFilter imgFilter = new FilenameFilter() {
+		try {
+			Image i = new Image(new FileInputStream(IMG_DIR + state.players[state.currentPlayer].getRank().getImgName() + GIF));
+			imgViewRank = new ImageView();
+			imgViewRank.setImage(i);
+			imgViewRank.relocate(colPlayerARank, rowPlayerARank);
+			imgViewRank.setFitWidth(cardSmallWidth);
+			imgViewRank.setFitHeight(cardSmallHeight);
+			imgViewRank.setPreserveRatio(true);
+			setCardClickHandler();
+			canvas.getChildren().addAll(imgViewRank);
 			
-			public boolean accept(File dir, String name) {
-				// TODO Auto-generated method stub
-				return name.toLowerCase().startsWith("rank");
-			}
-		};
-		
-		File[] rankCardsFile = cardsDir.listFiles(imgFilter);
-		ranksImg = new Image[rankCardsFile.length];
-		int idx = 0;
-		for (File cardFile : rankCardsFile) {
-			try {
-				ranksImg[idx] = new Image(new FileInputStream(cardFile.getPath()));
-				idx++;
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		imgViewRank = new ImageView();
-		imgViewRank.setImage(ranksImg[1]);
-		imgViewRank.relocate(colPlayerARank, rowPlayerARank);
-		imgViewRank.setFitWidth(cardSmallWidth);
-		imgViewRank.setFitHeight(cardSmallHeight);
-		imgViewRank.setPreserveRatio(true);
-	
-		
-		setCardClickHandler();
-				
-		canvas.getChildren().addAll(imgViewRank);
 	}
 	
 	private void addPlayerBRankToCanvas(Pane canvas) {
@@ -354,7 +341,7 @@ public class View extends Application {
 			}
 		}
 		imgViewRank = new ImageView();
-		imgViewRank.setImage(ranksImg[0]);
+		imgViewRank.setImage(ranksImg[1]);
 		imgViewRank.relocate(colPlayerCRank, rowPlayerCRank);
 		imgViewRank.setFitWidth(cardSmallWidth);
 		imgViewRank.setFitHeight(cardSmallHeight);
@@ -400,7 +387,6 @@ public class View extends Application {
 				
 		canvas.getChildren().addAll(imgViewRank);
 	}
-	
 	
 	private void addPlayerAPartyToCanvas(Pane canvas) {
 		File cardsDir = new File("src/main/resources/core/cards");
@@ -545,8 +531,6 @@ public class View extends Application {
 		canvas.getChildren().addAll(PlayerAParty);
 	}
 	
-
-	
 	private void addPlayerDPartyToCanvas(Pane canvas) {
 		File cardsDir = new File("src/main/resources/core/cards");
 		FilenameFilter imgFilter = new FilenameFilter() {
@@ -594,43 +578,26 @@ public class View extends Application {
 	
 	
 	private void addStoryCardToCanvas(Pane canvas) {
-		File cardsDir = new File("src/main/resources/core/cards");
-		FilenameFilter imgFilter = new FilenameFilter() {
+		
+		System.out.println(state.currStoryCard.getImgName());
+		try {
+			Image i = new Image(new FileInputStream(IMG_DIR + state.currStoryCard.getImgName() + GIF));
+			imgViewRank = new ImageView();
+			imgViewRank.setImage(i);
+			imgViewRank.relocate(colStoryCard, rowStoryCard);
+			imgViewRank.setFitWidth(cardXLargeWidth);
+			imgViewRank.setFitHeight(cardXLargeHeight);
+			imgViewRank.setPreserveRatio(true);
+			setCardClickHandler();
+			canvas.getChildren().addAll(imgViewRank);
 			
-			@Override
-			public boolean accept(File dir, String name) {
-				// TODO Auto-generated method stub
-				return name.toLowerCase().startsWith("quest");
-			}
-		};
-		
-		File[] rankCardsFile = cardsDir.listFiles(imgFilter);
-		ranksImg = new Image[rankCardsFile.length];
-		int idx = 0;
-		for (File cardFile : rankCardsFile) {
-			try {
-				ranksImg[idx] = new Image(new FileInputStream(cardFile.getPath()));
-				idx++;
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		imgViewRank = new ImageView();
-		imgViewRank.setImage(ranksImg[0]);
-//		imgViewRank.setImage(CardPath + state.currentStory.getImgName());
-		imgViewRank.relocate(colPlayer1Rank, rowPlayer1Rank);
-		imgViewRank.setFitWidth(cardXLargeWidth);
-		imgViewRank.setFitHeight(cardXLargeHeight);
-		imgViewRank.setPreserveRatio(true);
-		
-		
-
-		
-		setCardClickHandler();
+		//setCardClickHandler();
 				
-		canvas.getChildren().addAll(imgViewRank);
+		//canvas.getChildren().addAll(imgViewRank);
 	}
 	
 	
