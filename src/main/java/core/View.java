@@ -178,11 +178,11 @@ public class View extends Application {
 		String[] cardHandNames = new String[20];
 
 		String[] handCardNames = new String[state.players[state.currentPlayer].getHand().size()];
-		
+
 		for(int i=0;i<state.players[state.currentPlayer].getHand().size();i++) {
 			handCardNames[i] = state.players[state.currentPlayer].getHand().get(i).getImgName();
 		}
-		
+
 		File[] handCardsFile = cardsDir.listFiles(imgFilter);
 		ranksImg = new Image[state.players[state.currentPlayer].getHand().size()];
 		System.out.println(state.players[state.currentPlayer].getHand().size());
