@@ -229,7 +229,6 @@ public class View extends Application {
 		}
 
 		CardHandOverflow = new HBox(6); //space between nodes
-		
 		//TODO This needs to show, when our hand has exceded 12.
 //		CardHandOverflow.relocate(colPlayer1Rank, rowHandOverflow);
 //		for(int i =0; i<6; i++) {
