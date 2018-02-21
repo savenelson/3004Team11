@@ -7,18 +7,21 @@ public class Player {
 	private RankCard rankCard;
 	public RankCard getRank(){return rankCard;}
 	
-	private Hand hand;
-	public Hand getHand(){return hand;}
+	private CardCollection hand;
+	public CardCollection getHand(){return hand;}
 	
-	private Hand party;
-	public Hand getParty() {return party;}
+	private CardCollection party;
+	public CardCollection getParty() {return party;}
+	
+	private CardCollection queue;
+	public CardCollection getQueue() {return party;}
 	
 	private int battlePoints;
 	public int getBattlePoints() {return battlePoints;}
 	
 	public Player(int playerNumber){
 		
-		hand = new Hand();
+		hand = new CardCollection();
 		
 		this.playerNumber = playerNumber;
 		

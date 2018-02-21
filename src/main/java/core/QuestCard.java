@@ -4,7 +4,7 @@ package core;
 public class QuestCard extends StoryCard{
 	//name
 	public static final String HOLY_GRAIL = "SearchForTheHolyGrail";
-	public static final String GREEN_KNIGHT = "GreenKnight";
+	public static final String GREEN_KNIGHT = "TestOfTheGreenKnight";
 	public static final String QUESTING_BEAST = "SearchForTheQuestingBeast";
 	public static final String QUEENS_HONOR = "DefendTheQueensHonor";
 	public static final String FAIR_MAIDEN = "RescueTheFairMaiden";

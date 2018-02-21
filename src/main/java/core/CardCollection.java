@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-public abstract class CardCollection {
+public class CardCollection {
 	
 	public static final int DISTICT_ADV_CARDS = 32;
 

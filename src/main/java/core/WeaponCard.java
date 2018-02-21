@@ -6,7 +6,7 @@ public class WeaponCard extends AdventureCard{
 	public static final String SWORD_NAME = "Sword";
 	public static final String DAGGER_NAME = "Dagger";
 	public static final String HORSE_NAME = "Horse";
-	public static final String BATTLE_AX_NAME = "Battle-ax";
+	public static final String BATTLE_AX_NAME = "BattleAx";
 	public static final String LANCE_NAME = "Lance";
 	public static final String EXCALIBUR_NAME = "Excalibur";
 	
