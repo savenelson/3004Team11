@@ -88,5 +88,9 @@ public class Model {
 		for(int i = 0; i < players.length; ++i){
 			System.out.println("Player " + (i+1) + " Hand: \n" + players[i].getHand().toString());
 		}
-	}	
+	}
+	
+//	public getState(){
+//		
+//	}
 }
