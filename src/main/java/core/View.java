@@ -66,6 +66,8 @@ public class View extends Application {
 	int rowHandBottom6 = 565;
 	int colHandBottom6 = 10;
 	
+	int rowHandOverflow = 215;
+	
 	int rowQueue = 271;
 	int colQueue = 230;
 	
@@ -112,8 +114,7 @@ public class View extends Application {
 	private ImageView imgViewRank, imgViewStory;
 	
 	//Hands
-	private HBox CardHandBottom;
-	private HBox CardHandTop;
+	private HBox CardHandTop, CardHandBottom, CardHandOverflow;
 	
 	public View () {
 		
@@ -142,7 +143,6 @@ public class View extends Application {
 		canvas.setId("pane");
 		
 		addControlsToCanvas(canvas);
-		addHandToCanvas(canvas);
 		addQueueToCanvas(canvas);
 		addPlayerARankToCanvas(canvas);
 		addPlayerBRankToCanvas(canvas);
@@ -153,6 +153,7 @@ public class View extends Application {
 		addPlayerCPartyToCanvas(canvas);
 		addPlayerDPartyToCanvas(canvas);
 		addStoryCardToCanvas(canvas);
+		addHandToCanvas(canvas);
 		
 
 		Scene scene = new Scene(canvas, 1280, 720);
@@ -177,19 +178,30 @@ public class View extends Application {
 			}
 		};
 		
+		for(int i=0;i<state.players[state.currentPlayer].getHand().size();i++) {
+			System.out.println(state.players[state.currentPlayer].getHand().get(i).getImgName());
+		}
+		
+		String[] handCardNames = new String[state.players[state.currentPlayer].getHand().size()];
+		
+		for(int i=0;i<state.players[state.currentPlayer].getHand().size();i++) {
+			handCardNames[i] = state.players[state.currentPlayer].getHand().get(i).getImgName();
+		}
+		
 		File[] handCardsFile = cardsDir.listFiles(imgFilter);
-		ranksImg = new Image[handCardsFile.length];
+		ranksImg = new Image[state.players[state.currentPlayer].getHand().size()];
+		System.out.println(state.players[state.currentPlayer].getHand().size());
 		int idx = 0;
-		for (File cardFile : handCardsFile) {
+		for (String cardFile : handCardNames) {
 			try {
-				ranksImg[idx] = new Image(new FileInputStream(cardFile.getPath()));
+				ranksImg[idx] = new Image(new FileInputStream(IMG_DIR + state.players[state.currentPlayer].getHand().get(idx).getImgName() + GIF));
 				idx++;
+				System.out.println(idx);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
 		//Displays Hand, Row 1, first 6 cards
 		CardHandTop = new HBox(6); //space between nodes
 		CardHandTop.relocate(colPlayer1Rank, rowHandTop6);
@@ -213,7 +225,7 @@ public class View extends Application {
 		//TODO set i<HandCardFile - 6
 		for(int i =0; i<6; i++) {
 			imgViewRank = new ImageView();
-			imgViewRank.setImage(ranksImg[i]);
+			imgViewRank.setImage(ranksImg[i+6]);
 			imgViewRank.relocate(colPlayer1Rank, rowHandBottom6);
 			imgViewRank.setFitWidth(cardMediumWidth);
 			imgViewRank.setFitHeight(cardMediumHeight);
@@ -221,11 +233,24 @@ public class View extends Application {
 			setHandCardControl(imgViewRank);
 			CardHandBottom.getChildren().addAll(imgViewRank);
 		}
+		
+		CardHandOverflow = new HBox(6); //space between nodes
+		CardHandOverflow.relocate(colPlayer1Rank, rowHandOverflow);
+		for(int i =0; i<6; i++) {
+			imgViewRank = new ImageView();
+			imgViewRank.setImage(ranksImg[i+6]);
+			imgViewRank.relocate(colPlayer1Rank, rowHandOverflow);
+			imgViewRank.setFitWidth(cardMediumWidth);
+			imgViewRank.setFitHeight(cardMediumHeight);
+			imgViewRank.setPreserveRatio(true);
+			setHandCardControl(imgViewRank);
+			CardHandOverflow.getChildren().addAll(imgViewRank);
+		}
 
 		
 		setCardClickHandler();
 				
-		canvas.getChildren().addAll(CardHandTop, CardHandBottom);
+		canvas.getChildren().addAll(CardHandTop, CardHandBottom, CardHandOverflow);
 	}
 	
 	private void addQueueToCanvas(Pane canvas) {
