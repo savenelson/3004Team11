@@ -23,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -177,19 +178,12 @@ public class View extends Application {
 			}
 		};
 		
-//		String[] cardHandNames = new String[20];
-//		
-		for(int i=0;i<state.players[state.currentPlayer].getHand().size();i++) {
-			System.out.println(state.players[state.currentPlayer].getHand().get(i).getImgName());
-		}
-		
-		
 		File[] handCardsFile = cardsDir.listFiles(imgFilter);
 		ranksImg = new Image[handCardsFile.length];
 		int idx = 0;
 		for (File cardFile : handCardsFile) {
 			try {
-				ranksImg[idx] = new Image(new FileInputStream(IMG_DIR + state.players[state.currentPlayer].getHand().get(idx).getImgName() + GIF));
+				ranksImg[idx] = new Image(new FileInputStream(cardFile.getPath()));
 				idx++;
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -628,18 +622,44 @@ public class View extends Application {
 	
 	private void setHandCardControl(ImageView anAdventure) {
 		ContextMenu fileMenu = new ContextMenu();
+		
+		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
 
-		fileMenu.getItems().add(new MenuItem("Play"));
-		fileMenu.getItems().add(new MenuItem("Discard"));
-		fileMenu.getItems().add(new MenuItem("Stage"));
-		fileMenu.getItems().add(new MenuItem("Queue"));
+			@Override
+			public void handle(ActionEvent event) {
+				System.out.println(((MenuItem) event.getSource()).getText());
+				System.out.println(anAdventure.toString());
+
+			}
+			
+		};
+		
+		MenuItem playItem = new MenuItem("Play");
+		playItem.setOnAction(eh);
+		fileMenu.getItems().add(playItem);
+		
+		MenuItem discardItem = new MenuItem("Discard");
+		discardItem.setOnAction(eh);
+		fileMenu.getItems().add(discardItem);
+		
+		MenuItem stageItem = new MenuItem("Stage");
+		stageItem.setOnAction(eh);
+		fileMenu.getItems().add(stageItem);
+		
+		MenuItem queueItem = new MenuItem("Queue");
+		queueItem.setOnAction(eh);
+		fileMenu.getItems().add(queueItem);
 
 		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
 		@Override
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
+				
+				//System.out.println(fileMenu.getItems().get(0).getText());
 				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
+				
+				;
 			}
 		}
 			//boolean result= ConfirmCampaigneBox.display("Drawn new card", "Would you like to draw this card?");

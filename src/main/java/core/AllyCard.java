@@ -42,6 +42,7 @@ public class AllyCard extends AdventureCard{
 	public void doSpecial(){specialAbility.doSpecial();}
 	
 	public int getBattlePoints(){return this.battlePoints;}
+	public String getName(){return this.name;}
 	
 	public AllyCard(String name, int battlePoints, Special specialAbility) {
 		super(ALLY);
