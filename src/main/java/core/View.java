@@ -43,7 +43,7 @@ import javafx.util.Duration;
 
 public class View extends Application {
 	
-	
+		
 	//CONSTS FOR CANVAS LAYOUT
 	int rowPlayer1Rank = 80;
 	int colPlayer1Rank = 10;
@@ -110,9 +110,21 @@ public class View extends Application {
 	private HBox CardHandTop;
 	
 	
+//	View(){
+//		System.out.println("WORKING");
+//	}
+	
+	private Control control;
+	
+	public static void main(String [] args){
+		launch(args);
+	}
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		initUI(primaryStage);
+		
+		control = new Control(this);
 	}
 
 	private void initUI(Stage primaryStage) {
@@ -662,6 +674,7 @@ public class View extends Application {
 
 	}
 	
+	static Label labelHand;
 
 	private void addControlsToCanvas(Pane canvas) {
 		// our coordinates 
@@ -675,9 +688,9 @@ public class View extends Application {
 		
 		
 		
-		Label labelHand = new Label("Hand");
+		labelHand = new Label("Hand");
 		labelHand.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
-		labelHand.relocate(30, 330);
+		labelHand.relocate(0, 0);
 
 		canvas.getChildren().addAll(labelHand);
 		}

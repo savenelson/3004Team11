@@ -10,7 +10,8 @@ public class Player {
 	
 	private Hand party;
 	
-	public int battlePoints;
+	private int battlePoints;
+	
 	
 	public Player(int playerNumber){
 		

@@ -52,27 +52,27 @@ public class CardInstantiationTest {
 		assertEquals(20, saxons.getAltBattlePoints());
 		
 		FoeCard robberKnight = new FoeCard(FoeCard.ROBBER_KNIGHT_NAME, FoeCard.ROBBER_KNIGHT_BATTLE_POINTS, FoeCard.ROBBER_KNIGHT_ALT_BATTLE_POINTS, new NoSpecial());
-		assertEquals("Robber Knight", robberKnight.getName());
+		assertEquals("RobberKnight", robberKnight.getName());
 		assertEquals(15, robberKnight.getBattlePoints());
 		assertEquals(15, robberKnight.getAltBattlePoints());
 
 		FoeCard saxonKnight = new FoeCard(FoeCard.SAXON_KNIGHT_NAME, FoeCard.SAXON_KNIGHT_BATTLE_POINTS, FoeCard.SAXON_KNIGHT_ALT_BATTLE_POINTS, new NoSpecial());
-		assertEquals("Saxon Knight", saxonKnight.getName());
+		assertEquals("SaxonKnight", saxonKnight.getName());
 		assertEquals(15, saxonKnight.getBattlePoints());
 		assertEquals(25, saxonKnight.getAltBattlePoints());
 
 		FoeCard evilKnight = new FoeCard(FoeCard.EVIL_KNIGHT_NAME, FoeCard.EVIL_KNIGHT_BATTLE_POINTS, FoeCard.EVIL_KNIGHT_ALT_BATTLE_POINTS, new NoSpecial());
-		assertEquals("Evil Knight", evilKnight.getName());
+		assertEquals("EvilKnight", evilKnight.getName());
 		assertEquals(20, evilKnight.getBattlePoints());
 		assertEquals(30, evilKnight.getAltBattlePoints());
 
 		FoeCard blackKnight = new FoeCard(FoeCard.BLACK_KNIGHT_NAME, FoeCard.BLACK_KNIGHT_BATTLE_POINTS, FoeCard.BLACK_KNIGHT_ALT_BATTLE_POINTS, new NoSpecial());
-		assertEquals("Black Knight", blackKnight.getName());
+		assertEquals("BlackKnight", blackKnight.getName());
 		assertEquals(25, blackKnight.getBattlePoints());
 		assertEquals(35, blackKnight.getAltBattlePoints());
 
 		FoeCard greenKnight = new FoeCard(FoeCard.GREEN_KNIGHT_NAME, FoeCard.GREEN_KNIGHT_BATTLE_POINTS, FoeCard.GREEN_KNIGHT_ALT_BATTLE_POINTS, new NoSpecial());
-		assertEquals("Green Knight", greenKnight.getName());
+		assertEquals("GreenKnight", greenKnight.getName());
 		assertEquals(25, greenKnight.getBattlePoints());
 		assertEquals(40, greenKnight.getAltBattlePoints());
 
