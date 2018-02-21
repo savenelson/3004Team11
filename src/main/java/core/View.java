@@ -163,11 +163,6 @@ public class View extends Application {
 		primaryStage.show();
 	}
 	
-//	private void initModel(Model model) {
-//		model = this.model;
-//	}
-//	
-	
 	private void addHandToCanvas(Pane canvas) {
 		File cardsDir = new File("src/main/resources/core/cards");
 		FilenameFilter imgFilter = new FilenameFilter() {
@@ -178,23 +173,14 @@ public class View extends Application {
 			}
 		};
 		
-<<<<<<< HEAD
-=======
-//		String[] cardHandNames = new String[20];
-//		
->>>>>>> Hand updating based on model!
-		for(int i=0;i<state.players[state.currentPlayer].getHand().size();i++) {
-			System.out.println(state.players[state.currentPlayer].getHand().get(i).getImgName());
-		}
-		
-<<<<<<< HEAD
+
+		String[] cardHandNames = new String[20];
+
 		String[] handCardNames = new String[state.players[state.currentPlayer].getHand().size()];
 		
 		for(int i=0;i<state.players[state.currentPlayer].getHand().size();i++) {
 			handCardNames[i] = state.players[state.currentPlayer].getHand().get(i).getImgName();
 		}
-=======
->>>>>>> Hand updating based on model!
 		
 		File[] handCardsFile = cardsDir.listFiles(imgFilter);
 		ranksImg = new Image[state.players[state.currentPlayer].getHand().size()];
@@ -241,19 +227,21 @@ public class View extends Application {
 			setHandCardControl(imgViewRank);
 			CardHandBottom.getChildren().addAll(imgViewRank);
 		}
-		
+
 		CardHandOverflow = new HBox(6); //space between nodes
-		CardHandOverflow.relocate(colPlayer1Rank, rowHandOverflow);
-		for(int i =0; i<6; i++) {
-			imgViewRank = new ImageView();
-			imgViewRank.setImage(ranksImg[i+6]);
-			imgViewRank.relocate(colPlayer1Rank, rowHandOverflow);
-			imgViewRank.setFitWidth(cardMediumWidth);
-			imgViewRank.setFitHeight(cardMediumHeight);
-			imgViewRank.setPreserveRatio(true);
-			setHandCardControl(imgViewRank);
-			CardHandOverflow.getChildren().addAll(imgViewRank);
-		}
+		
+		//TODO This needs to show, when our hand has exceded 12.
+//		CardHandOverflow.relocate(colPlayer1Rank, rowHandOverflow);
+//		for(int i =0; i<6; i++) {
+//			imgViewRank = new ImageView();
+//			imgViewRank.setImage(ranksImg[i+6]);
+//			imgViewRank.relocate(colPlayer1Rank, rowHandOverflow);
+//			imgViewRank.setFitWidth(cardMediumWidth);
+//			imgViewRank.setFitHeight(cardMediumHeight);
+//			imgViewRank.setPreserveRatio(true);
+//			setHandCardControl(imgViewRank);
+//			CardHandOverflow.getChildren().addAll(imgViewRank);
+//		}
 
 		
 		setCardClickHandler();
