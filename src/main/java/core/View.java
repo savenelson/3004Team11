@@ -189,7 +189,7 @@ public class View extends Application {
 		int idx = 0;
 		for (String cardFile : handCardNames) {
 			try {
-				ranksImg[idx] = new Image(new FileInputStream(cardFile.getPath()));
+				ranksImg[idx] = new Image(new FileInputStream(IMG_DIR + state.players[state.currentPlayer].getHand().get(idx).getImgName() + GIF));
 				idx++;
 				System.out.println(idx);
 			} catch (FileNotFoundException e) {
