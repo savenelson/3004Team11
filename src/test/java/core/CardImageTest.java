@@ -34,7 +34,18 @@ public class CardImageTest {
 			
 			image = new File(s);
 			
-			assertEquals((image instanceof File), true);
+			assertEquals(image.getAbsolutePath() instanceof String, true);
+		}
+		
+		for (int i = 0; i < stoDeck.size(); ++i){
+			
+			String s = PATH + stoDeck.get(i).getImgName() + GIF;
+			
+			System.out.println(s);
+			
+			image = new File(s);
+			
+			assertEquals(image.getAbsolutePath() instanceof String, true);
 		}
 		
 	}
