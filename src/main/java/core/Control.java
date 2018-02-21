@@ -7,7 +7,6 @@ public class Control{
 	
 	private static String testString;
 	
-	
 	public Control(View view) {
 		
 		this.view = view;
@@ -15,9 +14,10 @@ public class Control{
 		gameInit(null);
 		
 		mainLoop();
+
 		
 		//TEST
-		
+  
 		//model.CardsTest();
 		
 		//END TEST
