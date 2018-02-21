@@ -177,12 +177,19 @@ public class View extends Application {
 			}
 		};
 		
+//		String[] cardHandNames = new String[20];
+//		
+		for(int i=0;i<state.players[state.currentPlayer].getHand().size();i++) {
+			System.out.println(state.players[state.currentPlayer].getHand().get(i).getImgName());
+		}
+		
+		
 		File[] handCardsFile = cardsDir.listFiles(imgFilter);
 		ranksImg = new Image[handCardsFile.length];
 		int idx = 0;
 		for (File cardFile : handCardsFile) {
 			try {
-				ranksImg[idx] = new Image(new FileInputStream(cardFile.getPath()));
+				ranksImg[idx] = new Image(new FileInputStream(IMG_DIR + state.players[state.currentPlayer].getHand().get(idx).getImgName() + GIF));
 				idx++;
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
