@@ -1,7 +1,5 @@
 package core;
 
-import core.Control.StoryCardAndCurrentPlayer;
-
 public class Model {
 
 	public static Control control;
@@ -23,6 +21,8 @@ public class Model {
 	
 	int currentPlayer;
 
+	Card currStoryCard;
+	
 	Model(Control control){
 	
 		this.control = control;
@@ -42,6 +42,8 @@ public class Model {
 		for(int i = 0; i < numPlayers; ++i){
 			players[i] = new Player(i+1);
 		}
+		
+		currentPlayer = 0;
 	}
 	
 	public void initialShuffle(){
@@ -60,21 +62,9 @@ public class Model {
 				players[j].pickUp(this.adventureDeck.pop()); 
 			}
 			
+			this.currStoryCard = storyDeck.pop();
+			
 		}
-	}
-	
-	public StoryCardAndCurrentPlayer drawStoryCard(StoryCardAndCurrentPlayer ret){
-		
-		
-		
-		ret.currentStoryCard = storyDeck.pop();
-		
-		//TEST
-		//control.printTestString();
-		
-		ret.currentPlayer = players[currentPlayer];
-		
-		return ret;
 	}
 	
 	public void CardsTest(){
@@ -90,19 +80,17 @@ public class Model {
 		}
 	}
 	
-	//populates the State Object
-//	public StoryDeck getState(){
-//		private Card currentStoryCard;
-//		currentStoryCard = this.storyDeck.peek;
-//		adventureDeckSize 
-//		storyDeckSize 
-//		player[i].rank 
-//		player[i].shieldCount 
-//		player[i].totalBattlePoints 
-//		player[currentPlayer].hand.card[i]  
-//		player[i].party.card[i] 
-//		player[currentPlayer].queue.card[i] 
-//		currentStoryCard 
-//		currentStage.card[i] 
-//	}
+
+	public State getState(){
+		
+		State state = new State();
+		
+		state.players = this.players;
+		
+		state.currentPlayer = this.currentPlayer;
+		
+		state.currStoryCard = this.currStoryCard;
+		
+		return state;
+	}
 }

@@ -44,8 +44,6 @@ import javafx.util.Duration;
 
 public class View extends Application {
 	
-	private Control control;
-
 	//CONSTS FOR CANVAS LAYOUT
 	int rowPlayer1Rank = 80;
 	int colPlayer1Rank = 10;
@@ -115,9 +113,21 @@ public class View extends Application {
 		
 	}
 	
+//	View(){
+//		System.out.println("WORKING");
+//	}
+	
+	private Control control;
+	
+	public static void main(String [] args){
+		launch(args);
+	}
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		initUI(primaryStage);
+		
+		control = new Control(this);
 	}
 
 	private void initUI(Stage primaryStage) {
@@ -658,7 +668,10 @@ public class View extends Application {
 			//boolean result= ConfirmCampaigneBox.display("Drawn new card", "Would you like to draw this card?");
 		});
 	}
+  
+  static Label labelHand;
 	
+
 	private void setMorgaineCardControl(ImageView anAlly) {
 		ContextMenu fileMenu = new ContextMenu();
 
@@ -685,10 +698,11 @@ public class View extends Application {
 		int row1 = 10;
 		int row2 = 260;
 		int txtBoxWidth = 45;
-		
+
 		Label labelHand = new Label("Hand");
+
 		labelHand.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
-		labelHand.relocate(30, 330);
+		labelHand.relocate(0, 0);
 
 		canvas.getChildren().addAll(labelHand);
 	}
