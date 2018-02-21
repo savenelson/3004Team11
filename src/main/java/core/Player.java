@@ -5,13 +5,16 @@ public class Player {
 	private int playerNumber;
 	
 	private RankCard rankCard;
+	public RankCard getRank(){return rankCard;}
 	
 	private Hand hand;
+	public Hand getHand(){return hand;}
 	
 	private Hand party;
+	public Hand getParty() {return party;}
 	
 	private int battlePoints;
-	
+	public int getBattlePoints() {return battlePoints;}
 	
 	public Player(int playerNumber){
 		
@@ -30,5 +33,4 @@ public class Player {
 		hand.add(c);
 	}
 	
-	public Hand getHand(){return hand;}
 }

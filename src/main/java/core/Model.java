@@ -2,7 +2,7 @@ package core;
 
 public class Model {
 
-	public static Control control;
+	public Control control;
 	
 	private Player [] players;
 	public Player [] getPlayers(){return players;}
@@ -40,7 +40,7 @@ public class Model {
 		players = new Player[numPlayers];
 		
 		for(int i = 0; i < numPlayers; ++i){
-			players[i] = new Player(i+1);
+			players[i] = new Player(i);
 		}
 		
 		currentPlayer = 0;

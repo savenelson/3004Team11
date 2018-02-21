@@ -1,14 +1,9 @@
 package core;
 
-import java.util.concurrent.TimeUnit;
-
-import javafx.application.Application;
-import javafx.scene.control.Label;
-
 public class Control{
 
-	static Model model;
-	static View view;
+	Model model;
+	View view;
 	
 	private static String testString;
 	
