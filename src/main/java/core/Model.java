@@ -80,6 +80,7 @@ public class Model {
 		}
 	}
 	
+
 	public State getState(){
 		
 		State state = new State();

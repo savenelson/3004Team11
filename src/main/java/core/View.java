@@ -41,9 +41,9 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+
 public class View extends Application {
 	
-		
 	//CONSTS FOR CANVAS LAYOUT
 	int rowPlayer1Rank = 80;
 	int colPlayer1Rank = 10;
@@ -109,6 +109,9 @@ public class View extends Application {
 	private HBox CardHandBottom;
 	private HBox CardHandTop;
 	
+	public View () {
+		
+	}
 	
 //	View(){
 //		System.out.println("WORKING");
@@ -152,6 +155,10 @@ public class View extends Application {
 		primaryStage.show();
 	}
 	
+//	private void initModel(Model model) {
+//		model = this.model;
+//	}
+//	
 	
 	private void addHandToCanvas(Pane canvas) {
 		File cardsDir = new File("src/main/resources/core/cards");
@@ -435,7 +442,7 @@ public class View extends Application {
 			imgViewRank.relocate(colPlayerAParty, rowPlayerAParty);
 			imgViewRank.setFitWidth(cardSmallWidth);
 			imgViewRank.setFitHeight(cardSmallHeight);
-
+			setMorgaineCardControl(imgViewRank);
 			imgViewRank.setPreserveRatio(true);
 			PlayerAParty.getChildren().addAll(imgViewRank);
 		}
@@ -480,7 +487,7 @@ public class View extends Application {
 			imgViewRank.relocate(colPlayerBParty, rowPlayerBParty);
 			imgViewRank.setFitWidth(cardSmallWidth);
 			imgViewRank.setFitHeight(cardSmallHeight);
-
+			setMorgaineCardControl(imgViewRank);
 			imgViewRank.setPreserveRatio(true);
 			PlayerAParty.getChildren().addAll(imgViewRank);
 		}
@@ -534,7 +541,7 @@ public class View extends Application {
 			imgViewRank.relocate(colPlayerCParty, rowPlayerCParty);
 			imgViewRank.setFitWidth(cardSmallWidth);
 			imgViewRank.setFitHeight(cardSmallHeight);
-
+			setMorgaineCardControl(imgViewRank);
 			imgViewRank.setPreserveRatio(true);
 			PlayerAParty.getChildren().addAll(imgViewRank);
 		}
@@ -580,7 +587,7 @@ public class View extends Application {
 			imgViewRank.relocate(colPlayerDParty, rowPlayerDParty);
 			imgViewRank.setFitWidth(cardSmallWidth);
 			imgViewRank.setFitHeight(cardSmallHeight);
-
+			setMorgaineCardControl(imgViewRank);
 			imgViewRank.setPreserveRatio(true);
 			PlayerDParty.getChildren().addAll(imgViewRank);
 		}
@@ -625,9 +632,6 @@ public class View extends Application {
 		imgViewRank.setFitHeight(cardXLargeHeight);
 		imgViewRank.setPreserveRatio(true);
 		
-		
-
-		
 		setCardClickHandler();
 				
 		canvas.getChildren().addAll(imgViewRank);
@@ -648,34 +652,43 @@ public class View extends Application {
 	private void setHandCardControl(ImageView anAdventure) {
 		ContextMenu fileMenu = new ContextMenu();
 
-
-		fileMenu.getItems().add(new MenuItem("Discard"));
 		fileMenu.getItems().add(new MenuItem("Play"));
-		fileMenu.getItems().add(new MenuItem("Campaigne"));
-
-
-
+		fileMenu.getItems().add(new MenuItem("Discard"));
+		fileMenu.getItems().add(new MenuItem("Stage"));
+		fileMenu.getItems().add(new MenuItem("Queue"));
 
 		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
-
-
 
 		@Override
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
 				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
 			}
-
 		}
-
 			//boolean result= ConfirmCampaigneBox.display("Drawn new card", "Would you like to draw this card?");
-
 		});
+	}
+  
+  static Label labelHand;
+	
 
+	private void setMorgaineCardControl(ImageView anAlly) {
+		ContextMenu fileMenu = new ContextMenu();
+
+		fileMenu.getItems().add(new MenuItem("Assassinate"));
+
+		anAlly.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+
+		@Override
+		public void handle(MouseEvent t) {
+			if (t.getButton() == MouseButton.SECONDARY) {
+				fileMenu.show(anAlly,t.getScreenX(),t.getScreenY());
+			}
+		}
+			//boolean result= ConfirmCampaigneBox.display("Drawn new card", "Would you like to draw this card?");
+		});
 	}
 	
-	static Label labelHand;
-
 	private void addControlsToCanvas(Pane canvas) {
 		// our coordinates 
 		
@@ -685,13 +698,12 @@ public class View extends Application {
 		int row1 = 10;
 		int row2 = 260;
 		int txtBoxWidth = 45;
-		
-		
-		
-		labelHand = new Label("Hand");
+
+		Label labelHand = new Label("Hand");
+
 		labelHand.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 		labelHand.relocate(0, 0);
 
 		canvas.getChildren().addAll(labelHand);
-		}
+	}
 }
