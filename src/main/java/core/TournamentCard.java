@@ -3,10 +3,10 @@ package core;
 
 public class TournamentCard extends StoryCard{
 
-	public static final String CAMELOT_NAME = "Camelot";
-	public static final String ORKNEY_NAME = "Orkney";
-	public static final String TINTAGEL_NAME = "Tintagel";
-	public static final String YORK_NAME = "York";
+	public static final String CAMELOT_NAME = "AtCamelot";
+	public static final String ORKNEY_NAME = "AtOrkney";
+	public static final String TINTAGEL_NAME = "AtTintagel";
+	public static final String YORK_NAME = "AtYork";
 	
 	public static final int CAMELOT_SHIELDS = 3;
 	public static final int ORKNEY_SHIELDS = 2;
