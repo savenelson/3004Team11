@@ -60,7 +60,7 @@ public class Model {
 		for(int i = 0; i < 12; ++i){
 			for(int j = 0; j < players.length; ++j){
 				
-				players[j].pickUp(this.adventureDeck.pop()); 
+				players[j].addToHand(this.adventureDeck.pop()); 
 			}
 			
 			this.currStoryCard = storyDeck.pop();
@@ -95,7 +95,11 @@ public class Model {
 	}
 
 	public void play(String iD) {
-		//this.
+		System.out.println("IN PARTY");
+		CardCollection hand = this.players[this.currentPlayer].getHand();
+		Card c = hand.getByID(iD);
+		hand.remove(c);
+		players[currentPlayer].addToParty(c);
 	}
 
 	public void discard(String iD) {
@@ -108,18 +112,18 @@ public class Model {
 	}
 	
 	public void queue(String iD) {
-		System.out.println("IN DISCARD");
+		System.out.println("IN QUEUE");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
 		hand.remove(c);
-		players[currentPlayer].queueUp(c);
+		players[currentPlayer].addToQueue(c);
 	}
 	public void dequeue(String iD) {
-		System.out.println("IN DISCARD");
+		System.out.println("IN HAND");
 		CardCollection hand = this.players[this.currentPlayer].getQueue();
 		Card c = hand.getByID(iD);
 		hand.remove(c);
-		players[currentPlayer].pickUp(c);
+		players[currentPlayer].addToHand(c);
 	}
 	
 	public void setScenario1() {
@@ -130,10 +134,10 @@ public class Model {
 		for(int i = 0; i < 12; ++i){
 			for(int j = 0; j < players.length; ++j){
 				
-				players[j].pickUp(this.adventureDeck.pop()); 
+				players[j].addToHand(this.adventureDeck.pop()); 
 			}
 			
-			this.currStoryCard = storyDeck.popByID(126);
+			this.currStoryCard = storyDeck.popByID("126");
 			System.out.println(this.currStoryCard.toString());
 			
 		}

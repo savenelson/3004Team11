@@ -225,7 +225,7 @@ public class View extends Application {
 					imgView.setFitWidth(cardSmallWidth);
 					imgView.setFitHeight(cardSmallHeight);
 					imgView.setPreserveRatio(true);
-					setQueueCardControl1(imgView);
+					setQueueCardControl(imgView);
 					tile.getChildren().add(imgView);
 
 				} catch (FileNotFoundException e) {
@@ -291,7 +291,7 @@ public class View extends Application {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	} 	
 	
 	private void addPlayerDRankToCanvas(Pane canvas) {
 		try {
@@ -531,7 +531,7 @@ public class View extends Application {
 		});
 	}
 	
-	private void setQueueCardControl1(ImageView anAdventure) {
+	private void setQueueCardControl(ImageView anAdventure) {
 		ContextMenu fileMenu = new ContextMenu();
 		
 		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){

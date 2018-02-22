@@ -36,12 +36,16 @@ public class Player {
 		return "Player " + this.playerNumber;
 	}
 	
-	public void pickUp(Card c){
+	public void addToHand(Card c){
 		hand.add(c);
 	}
 	
-	public void queueUp(Card c){
+	public void addToQueue(Card c){
 		queue.add(c);
+	}
+	
+	public void addToParty(Card c){
+		party.add(c);
 	}
 	
 }
