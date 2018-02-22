@@ -74,4 +74,10 @@ public class Control{
 	
 	public void printTestString(){System.out.println(testString);}
 
+
+	public void handClick(String clickTypre, String ID) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
