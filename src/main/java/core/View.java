@@ -697,6 +697,7 @@ public class View extends Application {
 	}
 	
 
+
 	private void addStage(Pane canavas) {
 		
 		Stage = new HBox();
@@ -782,6 +783,9 @@ public class View extends Application {
 		        control.buttonClick(ENDTURN);
 				state = control.getState();
 				initUI(stage);
+				System.out.println("was pressed");
+				ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");
+				
 		    }
 		});
 
