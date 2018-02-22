@@ -49,6 +49,12 @@ import javafx.util.Duration;
 
 public class View extends Application {
 	
+	public static final String PLAY = "Play";
+	public static final String DISCARD = "Discard";
+	public static final String STAGE = "Stage";
+	public static final String QUEUE = "Queue";
+	public static final String DEQUEUE = "Dequeue";
+	
 	private Control control;
 	private State state;
 		
@@ -121,6 +127,10 @@ public class View extends Application {
 	//Hands
 	private HBox CardHandTop, CardHandBottom, CardHandOverflow;
 	
+	private Stage stage;
+	private Pane canvas;
+	private TilePane tile;
+	
 	public View () {
 		
 	}
@@ -137,6 +147,7 @@ public class View extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		control = new Control(this);
+		stage = primaryStage;
 		initUI(primaryStage);
 	}
 
@@ -144,7 +155,7 @@ public class View extends Application {
 		
 		state = control.getState();
 		
-		Pane canvas = new Pane();
+		canvas = new Pane();
 		canvas.setId("pane");
 		
 		addControlsToCanvas(canvas);
@@ -169,12 +180,33 @@ public class View extends Application {
 		primaryStage.show();
 	}
 	
+	
+	
+	
+	private void updateUI(Stage stage) {
+		addControlsToCanvas(canvas);
+		addQueueToCanvas(canvas);
+		addPlayerARankToCanvas(canvas);
+		addPlayerBRankToCanvas(canvas);
+		addPlayerCRankToCanvas(canvas);
+		addPlayerDRankToCanvas(canvas);
+		addPlayerAPartyToCanvas(canvas);
+		addPlayerBPartyToCanvas(canvas);
+		addPlayerCPartyToCanvas(canvas);
+		addPlayerDPartyToCanvas(canvas);
+		addStoryCardToCanvas(canvas);
+		addHandToCanvas(canvas);
+		
+		stage.show();
+		
+	}
+	
 	private void addHandToCanvas(Pane canvas) {
 		CardCollection hand = state.players[state.currentPlayer].getHand();
 		
-		TilePane tile = new TilePane();
+		tile = new TilePane();
 		tile.setPrefRows(2);
-		tile.setPrefColumns(Math.floorDiv(hand.size(), 2));
+		tile.setPrefColumns(6);
 		tile.setVgap(10);
 		tile.setHgap(10);
 
@@ -188,7 +220,7 @@ public class View extends Application {
 				imgView.setFitWidth(cardMediumWidth);
 				imgView.setFitHeight(cardMediumHeight);
 				imgView.setPreserveRatio(true);
-				setHandCardControl(imgView);
+				setHandCardControl1(imgView);
 				tile.getChildren().add(imgView);
 
 			} catch (FileNotFoundException e) {
@@ -201,50 +233,42 @@ public class View extends Application {
 		canvas.getChildren().add(tile);
 	}
 	
+
 	private void addQueueToCanvas(Pane canvas) {
-		File cardsDir = new File("src/main/resources/core/cards");
-		FilenameFilter imgFilter = new FilenameFilter() {
+		CardCollection queue = state.players[state.currentPlayer].getQueue();
+		
+		tile = new TilePane();
+		tile.setPrefRows(1);
+		tile.setPrefColumns(6);
+		tile.setVgap(10);
+		tile.setHgap(10);
+		
+		if (state.players[state.currentPlayer].getQueue() != null) {
+			for (int i = 0; i < queue.size(); ++i){
+				try {
+					Image img = new Image(new FileInputStream(IMG_DIR + queue.get(i).getImgName() + GIF));
+					imgView = new ImageView();
+					imgView.setId(queue.get(i).getID());
+					imgView.setImage(img);
+					imgView.relocate(colQueue, rowQueue);
+					imgView.setFitWidth(cardSmallWidth);
+					imgView.setFitHeight(cardSmallHeight);
+					imgView.setPreserveRatio(true);
+					setQueueCardControl1(imgView);
+					tile.getChildren().add(imgView);
+
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+	
+			tile.relocate(colQueue, rowQueue);
 			
-			public boolean accept(File dir, String name) {
-				// TODO Auto-generated method stub
-				return name.toLowerCase().startsWith("amour");
-			}
-		};
-		
-		File[] partyCardsFile = cardsDir.listFiles(imgFilter);
-		ranksImg = new Image[partyCardsFile.length];
-		int idx = 0;
-		for (File cardFile : partyCardsFile) {
-			try {
-				ranksImg[idx] = new Image(new FileInputStream(cardFile.getPath()));
-				idx++;
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			canvas.getChildren().add(tile);
 		}
-
-		//Displays Hand, Row 1, first 6 cards
-		HBox PlayerAParty = new HBox(6); //space between nodes
-		PlayerAParty.relocate(colQueue, rowQueue);
-		//PlayerAParty.setPadding(new Insets(5));// Padding betwenn Hboc border
-		for(int i =0; i<6; i++) {
-			imgView = new ImageView();
-			imgView.setImage(ranksImg[i-i]);
-			imgView.relocate(colQueue, rowQueue);
-			imgView.setFitWidth(cardSmallWidth);
-			imgView.setFitHeight(cardSmallHeight);
-
-			imgView.setPreserveRatio(true);
-			PlayerAParty.getChildren().addAll(imgView);
-		}
-
-		
-		
-		setCardClickHandler();
-				
-		canvas.getChildren().addAll(PlayerAParty);
 	}
+	
+		
 
 	private void addPlayerARankToCanvas(Pane canvas) {
 		try {
@@ -592,7 +616,7 @@ public class View extends Application {
 		});
 	}
 	
-	private void setHandCardControl(ImageView anAdventure) {
+	private void setHandCardControl1(ImageView anAdventure) {
 		ContextMenu fileMenu = new ContextMenu();
 		
 		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
@@ -602,23 +626,27 @@ public class View extends Application {
 				System.out.println(((MenuItem) event.getSource()).getText());					
 				System.out.println(anAdventure.getId());
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
+				state = control.getState();
+				
+				initUI(stage);
+
+				//addHandToCanvas(canvas);
 			}
-			
 		};
-		
-		MenuItem playItem = new MenuItem("Play");
+
+		MenuItem playItem = new MenuItem(PLAY);
 		playItem.setOnAction(eh);
 		fileMenu.getItems().add(playItem);
 		
-		MenuItem discardItem = new MenuItem("Discard");
+		MenuItem discardItem = new MenuItem(DISCARD);
 		discardItem.setOnAction(eh);
 		fileMenu.getItems().add(discardItem);
 		
-		MenuItem stageItem = new MenuItem("Stage");
+		MenuItem stageItem = new MenuItem(STAGE);
 		stageItem.setOnAction(eh);
 		fileMenu.getItems().add(stageItem);
 		
-		MenuItem queueItem = new MenuItem("Queue");
+		MenuItem queueItem = new MenuItem(QUEUE);
 		queueItem.setOnAction(eh);
 		fileMenu.getItems().add(queueItem);
 
@@ -627,18 +655,94 @@ public class View extends Application {
 		@Override
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
-				
-				//System.out.println(fileMenu.getItems().get(0).getText());
 				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
-				
-				;
 			}
 		}
-			//boolean result= ConfirmCampaigneBox.display("Drawn new card", "Would you like to draw this card?");
 		});
 	}
-  
 	
+	private void setQueueCardControl1(ImageView anAdventure) {
+		ContextMenu fileMenu = new ContextMenu();
+		
+		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent event) {
+				System.out.println(((MenuItem) event.getSource()).getText());					
+				System.out.println(anAdventure.getId());
+				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
+				state = control.getState();
+				
+				initUI(stage);
+
+				//addHandToCanvas(canvas);
+			}
+		};
+
+		MenuItem discardItem = new MenuItem(DISCARD);
+		discardItem.setOnAction(eh);
+		fileMenu.getItems().add(discardItem);
+		
+		MenuItem queueItem = new MenuItem(DEQUEUE);
+		queueItem.setOnAction(eh);
+		fileMenu.getItems().add(queueItem);
+
+		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+
+		@Override
+		public void handle(MouseEvent t) {
+			if (t.getButton() == MouseButton.SECONDARY) {
+				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
+			}
+		}
+		});
+	}
+	
+
+	private void setHandCardControl(ImageView anAdventure) {
+		ContextMenu fileMenu = new ContextMenu();
+		
+		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
+	
+			@Override
+			public void handle(ActionEvent event) {
+				System.out.println(((MenuItem) event.getSource()).getText());					
+				System.out.println(anAdventure.getId());
+				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
+				state = control.getState();
+				
+				updateUI(stage);
+	
+				//addHandToCanvas(canvas);
+			}
+		};
+	
+		MenuItem playItem = new MenuItem(PLAY);
+		playItem.setOnAction(eh);
+		fileMenu.getItems().add(playItem);
+		
+		MenuItem discardItem = new MenuItem(DISCARD);
+		discardItem.setOnAction(eh);
+		fileMenu.getItems().add(discardItem);
+		
+		MenuItem stageItem = new MenuItem(STAGE);
+		stageItem.setOnAction(eh);
+		fileMenu.getItems().add(stageItem);
+		
+		MenuItem queueItem = new MenuItem(QUEUE);
+		queueItem.setOnAction(eh);
+		fileMenu.getItems().add(queueItem);
+	
+		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+	
+		@Override
+		public void handle(MouseEvent t) {
+			if (t.getButton() == MouseButton.SECONDARY) {
+				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
+			}
+		}
+		});
+	}
 
 	private void setMorgaineCardControl(ImageView anAlly) {
 		ContextMenu fileMenu = new ContextMenu();

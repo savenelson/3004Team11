@@ -93,6 +93,34 @@ public class Model {
 		
 		return state;
 	}
+
+	public void play(String iD) {
+		//this.
+	}
+
+	public void discard(String iD) {
+		
+		System.out.println("IN DISCARD");
+		CardCollection hand = this.players[this.currentPlayer].getHand();
+		Card c = hand.getByID(iD);
+		hand.remove(c);
+		adventureDeckDiscard.add(c);
+	}
+	
+	public void queue(String iD) {
+		System.out.println("IN DISCARD");
+		CardCollection hand = this.players[this.currentPlayer].getHand();
+		Card c = hand.getByID(iD);
+		hand.remove(c);
+		players[currentPlayer].queueUp(c);
+	}
+	public void dequeue(String iD) {
+		System.out.println("IN DISCARD");
+		CardCollection hand = this.players[this.currentPlayer].getQueue();
+		Card c = hand.getByID(iD);
+		hand.remove(c);
+		players[currentPlayer].pickUp(c);
+	}
 	
 	public void setScenario1() {
 		

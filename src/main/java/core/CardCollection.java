@@ -48,6 +48,35 @@ public class CardCollection {
 		Collections.shuffle(cards);
 	}
 	
+	public Card getByID(String ID){
+		for (int i = 0; i < cards.size(); ++i){
+			if(ID.equals(cards.get(i).getID())){
+				return cards.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public void remove(String ID){
+		for (int i = 0; i < cards.size(); ++i){
+			if(ID.equals(cards.get(i).getID())){
+				cards.remove(i);
+			}
+		}	
+		
+	}
+	public void remove(Card c){
+		for (int i = 0; i < cards.size(); ++i){
+			if(c.equals(cards.get(i))){
+				cards.remove(i);
+			}
+		}	
+		
+	}
+	public void remove(int index){
+		cards.remove(index);
+	}
+	
 	public String toString(){
 		
 		String s = "";

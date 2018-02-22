@@ -74,9 +74,17 @@ public class Control{
 	public void printTestString(){System.out.println(testString);}
 
 
-	public void handClick(String clickTypre, String ID) {
-		// TODO Auto-generated method stub
-		
+	public void handClick(String clickType, String ID) {
+		if(clickType.equals(View.PLAY)){
+			model.play(ID);
+		} else if (clickType.equals(View.QUEUE)) {
+			model.queue(ID);
+		} else if (clickType.equals(View.DEQUEUE)) {
+			model.dequeue(ID);
+		}
+		else if(clickType.equals(View.DISCARD)){
+			model.discard(ID);
+		}
 	}
 
 }
