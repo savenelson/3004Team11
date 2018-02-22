@@ -175,6 +175,7 @@ public class View extends Application {
 		Scene scene = new Scene(canvas, 1280, 720);
 		scene.getStylesheets().add("style.css");	
 		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
 		primaryStage.setTitle("Quests of the Round Table");
 		primaryStage.show();
 	}
