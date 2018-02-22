@@ -62,58 +62,58 @@ public class View extends Application {
 	public static final String GIF = ".gif";
 
 	//CONSTS FOR CANVAS LAYOUT
-	int rowPlayer1Rank = 80;
-	int colPlayer1Rank = 10;
+	public static final int rowPlayer1Rank = 80;
+	public static final int colPlayer1Rank = 10;
 	
-	int rowStage = 40;
-	int colStage = 195;
+	public static final int rowPlayer1Party = 230;
+//	public static final int colPlayer1Party;
 	
-	int rowPlayer1Party = 230;
-	int colPlayer1Party;
+	public static final int rowHandTop6 = 390;
+	public static final int colHandTop6 = 10;
 	
-	int rowHandTop6 = 390;
-	int colHandTop6 = 10;
+	public static final int rowHandBottom6 = 565;
+	public static final int colHandBottom6 = 10;
 	
-	int rowHandBottom6 = 565;
-	int colHandBottom6 = 10;
+	public static final int rowHandOverflow = 215;
 	
-	int rowHandOverflow = 215;
+	public static final int rowQueue = 271;
+	public static final int colQueue = 230;
 	
-	int rowQueue = 271;
-	int colQueue = 230;
+	public static final int rowAdventureDeck = 145;
+//	public static final int colAdventureDeck;
 	
-	int rowAdventureDeck = 145;
-	int colAdventureDeck;
+	public static final int rowStoryCard = 80;
+	public static final int colStoryCard = 10;
 	
-	int rowStoryCard = 80;
-	int colStoryCard = 10;
+	public static final int rowStage = 80;
+	public static final int colStage = 110;
 	
-	int rowPlayerARank = 271;
-	int colPlayerARank = 1200;
-	int rowPlayerBRank = 383;
-	int colPlayerBRank = 1200;
-	int rowPlayerCRank = 495;
-	int colPlayerCRank = 1200;
-	int rowPlayerDRank = 608;
-	int colPlayerDRank = 1200;
+	public static final int rowPlayerARank = 271;
+	public static final int colPlayerARank = 1200;
+	public static final int rowPlayerBRank = 383;
+	public static final int colPlayerBRank = 1200;
+	public static final int rowPlayerCRank = 495;
+	public static final int colPlayerCRank = 1200;
+	public static final int rowPlayerDRank = 608;
+	public static final int colPlayerDRank = 1200;
 	
-	int rowPlayerAParty = 271; //271
-	int colPlayerAParty = 760;
-	int rowPlayerBParty = 383; //383
-	int colPlayerBParty = 760;
-	int rowPlayerCParty = 495; //495
-	int colPlayerCParty = 760;
-	int rowPlayerDParty = 608; //608
-	int colPlayerDParty = 760;
+	public static final int rowPlayerAParty = 271; //271
+	public static final int colPlayerAParty = 760;
+	public static final int rowPlayerBParty = 383; //383
+	public static final int colPlayerBParty = 760;
+	public static final int rowPlayerCParty = 495; //495
+	public static final int colPlayerCParty = 760;
+	public static final int rowPlayerDParty = 608; //608
+	public static final int colPlayerDParty = 760;
 
-	int cardSmallHeight = 112;
-	int cardSmallWidth = 80;
-	int cardMediumHeight = 160;
-	int cardMediumWidth = 115;
-	int cardLargeHeight = 200;
-	int cardLargeWidth = 150;
-	int cardXLargeHeight = 300;
-	int cardXLargeWidth = 225;
+	public static final int cardSmallHeight = 112;
+	public static final int cardSmallWidth = 80;
+	public static final int cardMediumHeight = 160;
+	public static final int cardMediumWidth = 115;
+	public static final int cardLargeHeight = 200;
+	public static final	int cardLargeWidth = 150;
+	public static final	int cardXLargeHeight = 300;
+	public static final	int cardXLargeWidth = 225;
 
 	
 	//	private static final Logger logger = LogManager.getLogger(View.class);
@@ -163,8 +163,8 @@ public class View extends Application {
 		addPlayerDPartyToCanvas(canvas);
 		addStoryCardToCanvas(canvas);
 		addHandToCanvas(canvas);
+		addStageToCanvas(canvas);
 		
-
 		Scene scene = new Scene(canvas, 1280, 720);
 		scene.getStylesheets().add("style.css");	
 		primaryStage.setScene(scene);
@@ -204,6 +204,39 @@ public class View extends Application {
 		
 		canvas.getChildren().add(tile);
 	}
+	
+	private void addStageToCanvas(Pane canvas) {
+		CardCollection stage = state.stage;
+		
+		tile = new TilePane();
+		tile.setPrefRows(1);
+		tile.setPrefColumns(8);
+		tile.setVgap(10);
+		tile.setHgap(10);
+
+		for (int i = 0; i < stage.size(); ++i){
+			try {
+				Image img = new Image(new FileInputStream(IMG_DIR + stage.get(i).getImgName() + GIF));
+				imgView = new ImageView();
+				imgView.setId(stage.get(i).getID());
+				imgView.setImage(img);
+				imgView.relocate(colStage, rowStage);
+				imgView.setFitWidth(cardMediumWidth);
+				imgView.setFitHeight(cardMediumHeight);
+				imgView.setPreserveRatio(true);
+				setHandCardControl(imgView);
+				tile.getChildren().add(imgView);
+
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		tile.relocate(colStage, rowStage);
+		
+		canvas.getChildren().add(tile);
+	}
+	
 	
 	private void addQueueToCanvas(Pane canvas) {
 		CardCollection queue = state.players[state.currentPlayer].getQueue();

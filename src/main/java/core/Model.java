@@ -23,6 +23,8 @@ public class Model {
 
 	Card currStoryCard;
 	
+	CardCollection stage = new CardCollection();
+	
 	Model(Control control){
 	
 		this.control = control;
@@ -90,6 +92,8 @@ public class Model {
 		state.currentPlayer = this.currentPlayer;
 		
 		state.currStoryCard = this.currStoryCard;
+		
+		state.stage = this.stage;
 		
 		return state;
 	}
