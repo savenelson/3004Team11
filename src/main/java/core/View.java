@@ -137,12 +137,16 @@ public class View extends Application {
 	private Stage stage;
 	private Pane canvas;
 	private TilePane tile;
-	
+
 	public View () {}
 
 	public static void main(String [] args){
 		launch(args);
 	}
+
+	private HBox Stage; 
+	
+
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -169,8 +173,12 @@ public class View extends Application {
 		addPlayerCPartyToCanvas(canvas);
 		addPlayerDPartyToCanvas(canvas);
 		addStoryCardToCanvas(canvas);
+
 		addHandToCanvas(canvas);
 		addStageToCanvas(canvas);
+
+		addStage(canvas);
+
 		
 		Scene scene = new Scene(canvas, 1280, 720);
 		scene.getStylesheets().add("style.css");	
@@ -368,7 +376,7 @@ public class View extends Application {
 					imgView = new ImageView();
 					imgView.setId(party.get(i).getID());
 					imgView.setImage(img);
-					imgView.relocate(colQueue, rowQueue);
+					imgView.relocate(colPlayerAParty, rowPlayerAParty);
 					imgView.setFitWidth(cardSmallWidth);
 					imgView.setFitHeight(cardSmallHeight);
 					imgView.setPreserveRatio(true);
@@ -380,7 +388,7 @@ public class View extends Application {
 				}
 			}
 	
-			tile.relocate(colPlayerBParty, rowPlayerBParty);
+			tile.relocate(colPlayerAParty, rowPlayerAParty);
 			
 			canvas.getChildren().add(tile);
 		}
@@ -494,9 +502,9 @@ public class View extends Application {
 	
 	private void addStoryCardToCanvas(Pane canvas) {
 		
-		System.out.println(state.currStoryCard.getImgName());
+		System.out.println(state.currentStoryCard.getImgName());
 		try {
-			Image i = new Image(new FileInputStream(IMG_DIR + state.currStoryCard.getImgName() + GIF));
+			Image i = new Image(new FileInputStream(IMG_DIR + state.currentStoryCard.getImgName() + GIF));
 			imgView = new ImageView();
 			imgView.setImage(i);
 			imgView.relocate(colStoryCard, rowStoryCard);
@@ -540,6 +548,7 @@ public class View extends Application {
 				
 				initUI(stage);
 
+
 				//addHandToCanvas(canvas);
 			}
 		};
@@ -559,6 +568,21 @@ public class View extends Application {
 		MenuItem queueItem = new MenuItem(QUEUE);
 		queueItem.setOnAction(eh);
 		fileMenu.getItems().add(queueItem);
+
+		fileMenu.getItems().add(new MenuItem("Discard"));
+		fileMenu.getItems().add(new MenuItem("Play"));
+		
+		MenuItem campaigne =  new MenuItem("Campaigne");
+		
+		campaigne.setOnAction(new EventHandler<ActionEvent>() {
+		    public void handle(ActionEvent e) {
+		        addCardToStage(Stage, imgView);
+		        System.out.println(e.getSource());
+		    }
+		});
+		
+		fileMenu.getItems().add(campaigne);
+
 
 		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
@@ -610,6 +634,8 @@ public class View extends Application {
 		@Override
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
+				//System.out.println(t.getSource());
+				//CardHandTop.getChildren().remove(t.getSource());
 				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
 			}
 		}
@@ -670,6 +696,28 @@ public class View extends Application {
 		});
 	}
 	
+
+
+	private void addStage(Pane canavas) {
+		
+		Stage = new HBox();
+		
+		Stage.relocate(colQueue, rowQueue-100);
+		
+		
+		canavas.getChildren().addAll(Stage);
+		
+	}
+	
+	private void addCardToStage(HBox stage, ImageView newCard) {
+		
+		ImageView cardAdded = new ImageView();
+		cardAdded.setImage(newCard.getImage());
+		cardAdded.setFitHeight(12);  
+		stage.getChildren().add(cardAdded);
+	}
+	
+
 	private void addControlsToCanvas(Pane canvas) {
 		// our coordinates 
 
@@ -735,11 +783,12 @@ public class View extends Application {
 		        control.buttonClick(ENDTURN);
 				state = control.getState();
 				initUI(stage);
+				System.out.println("was pressed");
+				ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");
+				
 		    }
 		});
 
 		canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
 	}
-
-	
 }
