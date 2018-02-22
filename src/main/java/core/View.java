@@ -587,20 +587,31 @@ public class View extends Application {
 	
 	private void addControlsToCanvas(Pane canvas) {
 		// our coordinates 
+
+//		Label labelHand = new Label("Hand");
+//		labelHand.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
+//		labelHand.relocate(0, 0);
 		
-		int rowPlayer1RankButtons = 10;
-		int columnRankButtons = 220;
-		
-		int row1 = 10;
-		int row2 = 260;
-		int txtBoxWidth = 45;
+		Button stage1 = new Button ("Stage 1 ");
+		stage1.relocate(240,80);
+		stage1.setMinWidth(80);
+		Button stage2 = new Button ("Stage 2 ");
+		stage2.relocate(240,110);
+		stage2.setMinWidth(80);
+		Button stage3 = new Button ("Stage 3 ");
+		stage3.relocate(240,140);
+		stage3.setMinWidth(80);
+		Button stage4 = new Button ("Stage 4 ");
+		stage4.relocate(240,170);
+		stage4.setMinWidth(80);
+		Button stage5 = new Button ("Stage 5 ");
+		stage5.relocate(240,200);
+		stage5.setMinWidth(80);
+		Button endTurn = new Button ("End Turn");
+		endTurn.relocate(240,230);
+		endTurn.setMinWidth(80);
 
-		Label labelHand = new Label("Hand");
-
-		labelHand.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
-		labelHand.relocate(0, 0);
-
-		canvas.getChildren().addAll(labelHand);
+		canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
 	}
 
 	
