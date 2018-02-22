@@ -45,6 +45,8 @@ public class Control{
 		
 		model.instantiatePlayers(numPlayers);
 		
+		model.instantiateStages(5); //TODO set properly
+		
 		model.initialShuffle();
 		
 		model.deal();
@@ -86,6 +88,22 @@ public class Control{
 		}
 		else if(clickType.equals(View.DISCARD)){
 			model.discard(ID);
+		}
+	}
+	
+	public void buttonClick(String clickType) {
+		if(clickType.equals(View.STAGE1)){
+			model.setCurrentStage(0);
+		} else if (clickType.equals(View.STAGE2)) {
+			model.setCurrentStage(1);
+		} else if (clickType.equals(View.STAGE3)) {
+			model.setCurrentStage(2);
+		} else if (clickType.equals(View.STAGE4)) {
+			model.setCurrentStage(3);
+		} else if (clickType.equals(View.STAGE5)) {
+			model.setCurrentStage(4);
+		} else if(clickType.equals(View.ENDTURN)){
+			model.endTurn();
 		}
 	}
 

@@ -55,6 +55,13 @@ public class View extends Application {
 	public static final String QUEUE = "Queue";
 	public static final String DEQUEUE = "Dequeue";
 	
+	public static final String STAGE1 = "Stage 1";
+	public static final String STAGE2 = "Stage 2";
+	public static final String STAGE3 = "Stage 3";
+	public static final String STAGE4 = "Stage 4";
+	public static final String STAGE5 = "Stage 5";
+	public static final String ENDTURN = "End Turn";
+	
 	private Control control;
 	private State state;
 		
@@ -670,24 +677,66 @@ public class View extends Application {
 //		labelHand.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 //		labelHand.relocate(0, 0);
 		
-		Button stage1 = new Button ("Stage 1 ");
+		Button stage1 = new Button (STAGE1);
 		stage1.relocate(240,80);
 		stage1.setMinWidth(80);
-		Button stage2 = new Button ("Stage 2 ");
+		stage1.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		        control.buttonClick(STAGE1);
+				state = control.getState();
+				initUI(stage);
+		    }
+		});
+		Button stage2 = new Button (STAGE2);
 		stage2.relocate(240,110);
 		stage2.setMinWidth(80);
-		Button stage3 = new Button ("Stage 3 ");
+		stage2.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		        control.buttonClick(STAGE2);
+				state = control.getState();
+				initUI(stage);
+		    }
+		});
+		Button stage3 = new Button (STAGE3);
 		stage3.relocate(240,140);
 		stage3.setMinWidth(80);
-		Button stage4 = new Button ("Stage 4 ");
+		stage3.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		        control.buttonClick(STAGE3);
+				state = control.getState();
+				initUI(stage);
+		    }
+		});
+		Button stage4 = new Button (STAGE4);
 		stage4.relocate(240,170);
 		stage4.setMinWidth(80);
-		Button stage5 = new Button ("Stage 5 ");
+		stage4.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		        control.buttonClick(STAGE4);
+				state = control.getState();
+				initUI(stage);
+		    }
+		});
+		Button stage5 = new Button (STAGE5);
 		stage5.relocate(240,200);
 		stage5.setMinWidth(80);
-		Button endTurn = new Button ("End Turn");
+		stage5.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		        control.buttonClick(STAGE5);
+				state = control.getState();
+				initUI(stage);
+		    }
+		});
+		Button endTurn = new Button (ENDTURN);
 		endTurn.relocate(240,230);
 		endTurn.setMinWidth(80);
+		endTurn.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		        control.buttonClick(ENDTURN);
+				state = control.getState();
+				initUI(stage);
+		    }
+		});
 
 		canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
 	}
