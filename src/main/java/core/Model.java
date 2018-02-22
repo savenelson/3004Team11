@@ -108,8 +108,6 @@ public class Model {
 		
 		if (stages[currentStage]!=null) {
 			state.stage = this.stages[currentStage];
-			System.out.println(currentStage);
-			System.out.println(state.stage.toString());
 		}
 		
 		return state;
@@ -128,6 +126,7 @@ public class Model {
 		Card c = hand.getByID(iD);
 		hand.remove(c);
 		stages[currentStage].add(c);
+		System.out.println(stages[currentStage].toString());
 	}
 	public void discard(String iD) {
 		System.out.println("Model: IN DISCARD");
