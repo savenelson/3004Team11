@@ -14,7 +14,7 @@ public class Player {
 	public CardCollection getParty() {return party;}
 	
 	private CardCollection queue;
-	public CardCollection getQueue() {return party;}
+	public CardCollection getQueue() {return queue;}
 	
 	private int battlePoints;
 	public int getBattlePoints() {return battlePoints;}
@@ -22,6 +22,10 @@ public class Player {
 	public Player(int playerNumber){
 		
 		hand = new CardCollection();
+		
+		queue = new CardCollection();
+		
+		party = new CardCollection();
 		
 		this.playerNumber = playerNumber;
 		
@@ -34,6 +38,10 @@ public class Player {
 	
 	public void pickUp(Card c){
 		hand.add(c);
+	}
+	
+	public void queueUp(Card c){
+		queue.add(c);
 	}
 	
 }
