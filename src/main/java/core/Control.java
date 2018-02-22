@@ -77,6 +77,8 @@ public class Control{
 	public void handClick(String clickType, String ID) {
 		if(clickType.equals(View.PLAY)){
 			model.play(ID);
+		} else if (clickType.equals(View.STAGE)) {
+			model.stage(ID);
 		} else if (clickType.equals(View.QUEUE)) {
 			model.queue(ID);
 		} else if (clickType.equals(View.DEQUEUE)) {

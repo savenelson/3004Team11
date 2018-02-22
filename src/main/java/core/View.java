@@ -486,6 +486,51 @@ public class View extends Application {
 		});
 	}
 	
+	private void setStageCardControl(ImageView anAdventure) {
+		ContextMenu fileMenu = new ContextMenu();
+		
+		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent event) {
+				System.out.println(((MenuItem) event.getSource()).getText());					
+				System.out.println(anAdventure.getId());
+				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
+				state = control.getState();
+				
+				initUI(stage);
+
+				//addHandToCanvas(canvas);
+			}
+		};
+
+		MenuItem playItem = new MenuItem(PLAY);
+		playItem.setOnAction(eh);
+		fileMenu.getItems().add(playItem);
+		
+		MenuItem discardItem = new MenuItem(DISCARD);
+		discardItem.setOnAction(eh);
+		fileMenu.getItems().add(discardItem);
+		
+		MenuItem stageItem = new MenuItem(STAGE);
+		stageItem.setOnAction(eh);
+		fileMenu.getItems().add(stageItem);
+		
+		MenuItem queueItem = new MenuItem(QUEUE);
+		queueItem.setOnAction(eh);
+		fileMenu.getItems().add(queueItem);
+
+		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
+
+		@Override
+		public void handle(MouseEvent t) {
+			if (t.getButton() == MouseButton.SECONDARY) {
+				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
+			}
+		}
+		});
+	}
+	
 	private void setHandCardControl(ImageView anAdventure) {
 		ContextMenu fileMenu = new ContextMenu();
 		

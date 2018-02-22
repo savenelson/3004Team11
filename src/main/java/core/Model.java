@@ -101,16 +101,20 @@ public class Model {
 		hand.remove(c);
 		players[currentPlayer].addToParty(c);
 	}
-
+	public void stage(String iD) {
+		System.out.println("IN QUEUE");
+		CardCollection hand = this.players[this.currentPlayer].getHand();
+		Card c = hand.getByID(iD);
+		hand.remove(c);
+		stage.addToStage(c);
+	}
 	public void discard(String iD) {
-		
 		System.out.println("IN DISCARD");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
 		hand.remove(c);
 		adventureDeckDiscard.add(c);
 	}
-	
 	public void queue(String iD) {
 		System.out.println("IN QUEUE");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
