@@ -47,13 +47,13 @@ public class Control{
 		
 		model.instantiateStages(5); //TODO set properly
 		
-		model.initialShuffle();
+		model.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
+
+		model.deal(); 			//COMMENT OUT FOR SET SCENEARIOS
 		
-		model.deal();
+//		model.setScenario1();	//UNCOMMENT FOR SCEN 1
 		
-		//model.setScenario1();
-		
-		//model.setScenario2();
+//		model.setScenario2();	//UNCOMMENT FOR SCEN 2
 	}
 
 	public void mainLoop(){
