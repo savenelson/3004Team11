@@ -49,6 +49,10 @@ public class Control{
 		model.initialShuffle();
 		
 		model.deal();
+		
+		//model.setScenario1();
+		
+		//model.setScenario2();
 	}
 
 	public void mainLoop(){
@@ -60,7 +64,6 @@ public class Control{
 			
 			win = !win;
 			
-
 		}
 	}
 	

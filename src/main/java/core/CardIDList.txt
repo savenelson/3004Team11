@@ -1,0 +1,153 @@
+ID: 1, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
+ID: 2, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
+ID: 3, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
+ID: 4, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
+ID: 5, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
+ID: 6, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
+ID: 7, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
+ID: 8, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
+ID: 9, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
+ID: 10, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
+ID: 11, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
+ID: 12, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
+ID: 13, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
+ID: 14, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
+ID: 15, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
+ID: 16, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
+ID: 17, type: Adventure, subtype: Weapon, name: Dagger, battle points: 5
+ID: 18, type: Adventure, subtype: Weapon, name: Dagger, battle points: 5
+ID: 19, type: Adventure, subtype: Weapon, name: Dagger, battle points: 5
+ID: 20, type: Adventure, subtype: Weapon, name: Dagger, battle points: 5
+ID: 21, type: Adventure, subtype: Weapon, name: Dagger, battle points: 5
+ID: 22, type: Adventure, subtype: Weapon, name: Dagger, battle points: 5
+ID: 23, type: Adventure, subtype: Weapon, name: Horse, battle points: 10
+ID: 24, type: Adventure, subtype: Weapon, name: Horse, battle points: 10
+ID: 25, type: Adventure, subtype: Weapon, name: Horse, battle points: 10
+ID: 26, type: Adventure, subtype: Weapon, name: Horse, battle points: 10
+ID: 27, type: Adventure, subtype: Weapon, name: Horse, battle points: 10
+ID: 28, type: Adventure, subtype: Weapon, name: Horse, battle points: 10
+ID: 29, type: Adventure, subtype: Weapon, name: Horse, battle points: 10
+ID: 30, type: Adventure, subtype: Weapon, name: Horse, battle points: 10
+ID: 31, type: Adventure, subtype: Weapon, name: Horse, battle points: 10
+ID: 32, type: Adventure, subtype: Weapon, name: Horse, battle points: 10
+ID: 33, type: Adventure, subtype: Weapon, name: Horse, battle points: 10
+ID: 34, type: Adventure, subtype: Weapon, name: BattleAx, battle points: 15
+ID: 35, type: Adventure, subtype: Weapon, name: BattleAx, battle points: 15
+ID: 36, type: Adventure, subtype: Weapon, name: BattleAx, battle points: 15
+ID: 37, type: Adventure, subtype: Weapon, name: BattleAx, battle points: 15
+ID: 38, type: Adventure, subtype: Weapon, name: BattleAx, battle points: 15
+ID: 39, type: Adventure, subtype: Weapon, name: BattleAx, battle points: 15
+ID: 40, type: Adventure, subtype: Weapon, name: BattleAx, battle points: 15
+ID: 41, type: Adventure, subtype: Weapon, name: BattleAx, battle points: 15
+ID: 42, type: Adventure, subtype: Weapon, name: Lance, battle points: 20
+ID: 43, type: Adventure, subtype: Weapon, name: Lance, battle points: 20
+ID: 44, type: Adventure, subtype: Weapon, name: Lance, battle points: 20
+ID: 45, type: Adventure, subtype: Weapon, name: Lance, battle points: 20
+ID: 46, type: Adventure, subtype: Weapon, name: Lance, battle points: 20
+ID: 47, type: Adventure, subtype: Weapon, name: Lance, battle points: 20
+ID: 48, type: Adventure, subtype: Weapon, name: Excalibur, battle points: 30
+ID: 49, type: Adventure, subtype: Weapon, name: Excalibur, battle points: 30
+ID: 50, type: Adventure, subtype: Foe, name: Thieves, battle points: 5, alternative battle points: 5, special: <NO SPECIAL>
+ID: 51, type: Adventure, subtype: Foe, name: Thieves, battle points: 5, alternative battle points: 5, special: <NO SPECIAL>
+ID: 52, type: Adventure, subtype: Foe, name: Thieves, battle points: 5, alternative battle points: 5, special: <NO SPECIAL>
+ID: 53, type: Adventure, subtype: Foe, name: Thieves, battle points: 5, alternative battle points: 5, special: <NO SPECIAL>
+ID: 54, type: Adventure, subtype: Foe, name: Thieves, battle points: 5, alternative battle points: 5, special: <NO SPECIAL>
+ID: 55, type: Adventure, subtype: Foe, name: Thieves, battle points: 5, alternative battle points: 5, special: <NO SPECIAL>
+ID: 56, type: Adventure, subtype: Foe, name: Thieves, battle points: 5, alternative battle points: 5, special: <NO SPECIAL>
+ID: 57, type: Adventure, subtype: Foe, name: Thieves, battle points: 5, alternative battle points: 5, special: <NO SPECIAL>
+ID: 58, type: Adventure, subtype: Foe, name: Boar, battle points: 5, alternative battle points: 15, special: <NO SPECIAL>
+ID: 59, type: Adventure, subtype: Foe, name: Boar, battle points: 5, alternative battle points: 15, special: <NO SPECIAL>
+ID: 60, type: Adventure, subtype: Foe, name: Boar, battle points: 5, alternative battle points: 15, special: <NO SPECIAL>
+ID: 61, type: Adventure, subtype: Foe, name: Boar, battle points: 5, alternative battle points: 15, special: <NO SPECIAL>
+ID: 62, type: Adventure, subtype: Foe, name: Saxons, battle points: 10, alternative battle points: 20, special: <NO SPECIAL>
+ID: 63, type: Adventure, subtype: Foe, name: Saxons, battle points: 10, alternative battle points: 20, special: <NO SPECIAL>
+ID: 64, type: Adventure, subtype: Foe, name: Saxons, battle points: 10, alternative battle points: 20, special: <NO SPECIAL>
+ID: 65, type: Adventure, subtype: Foe, name: Saxons, battle points: 10, alternative battle points: 20, special: <NO SPECIAL>
+ID: 66, type: Adventure, subtype: Foe, name: Saxons, battle points: 10, alternative battle points: 20, special: <NO SPECIAL>
+ID: 67, type: Adventure, subtype: Foe, name: RobberKnight, battle points: 15, alternative battle points: 15, special: <NO SPECIAL>
+ID: 68, type: Adventure, subtype: Foe, name: RobberKnight, battle points: 15, alternative battle points: 15, special: <NO SPECIAL>
+ID: 69, type: Adventure, subtype: Foe, name: RobberKnight, battle points: 15, alternative battle points: 15, special: <NO SPECIAL>
+ID: 70, type: Adventure, subtype: Foe, name: RobberKnight, battle points: 15, alternative battle points: 15, special: <NO SPECIAL>
+ID: 71, type: Adventure, subtype: Foe, name: RobberKnight, battle points: 15, alternative battle points: 15, special: <NO SPECIAL>
+ID: 72, type: Adventure, subtype: Foe, name: RobberKnight, battle points: 15, alternative battle points: 15, special: <NO SPECIAL>
+ID: 73, type: Adventure, subtype: Foe, name: RobberKnight, battle points: 15, alternative battle points: 15, special: <NO SPECIAL>
+ID: 74, type: Adventure, subtype: Foe, name: SaxonKnight, battle points: 15, alternative battle points: 25, special: <NO SPECIAL>
+ID: 75, type: Adventure, subtype: Foe, name: SaxonKnight, battle points: 15, alternative battle points: 25, special: <NO SPECIAL>
+ID: 76, type: Adventure, subtype: Foe, name: SaxonKnight, battle points: 15, alternative battle points: 25, special: <NO SPECIAL>
+ID: 77, type: Adventure, subtype: Foe, name: SaxonKnight, battle points: 15, alternative battle points: 25, special: <NO SPECIAL>
+ID: 78, type: Adventure, subtype: Foe, name: SaxonKnight, battle points: 15, alternative battle points: 25, special: <NO SPECIAL>
+ID: 79, type: Adventure, subtype: Foe, name: SaxonKnight, battle points: 15, alternative battle points: 25, special: <NO SPECIAL>
+ID: 80, type: Adventure, subtype: Foe, name: SaxonKnight, battle points: 15, alternative battle points: 25, special: <NO SPECIAL>
+ID: 81, type: Adventure, subtype: Foe, name: SaxonKnight, battle points: 15, alternative battle points: 25, special: <NO SPECIAL>
+ID: 82, type: Adventure, subtype: Foe, name: EvilKnight, battle points: 20, alternative battle points: 30, special: <NO SPECIAL>
+ID: 83, type: Adventure, subtype: Foe, name: EvilKnight, battle points: 20, alternative battle points: 30, special: <NO SPECIAL>
+ID: 84, type: Adventure, subtype: Foe, name: EvilKnight, battle points: 20, alternative battle points: 30, special: <NO SPECIAL>
+ID: 85, type: Adventure, subtype: Foe, name: EvilKnight, battle points: 20, alternative battle points: 30, special: <NO SPECIAL>
+ID: 86, type: Adventure, subtype: Foe, name: EvilKnight, battle points: 20, alternative battle points: 30, special: <NO SPECIAL>
+ID: 87, type: Adventure, subtype: Foe, name: EvilKnight, battle points: 20, alternative battle points: 30, special: <NO SPECIAL>
+ID: 88, type: Adventure, subtype: Foe, name: BlackKnight, battle points: 25, alternative battle points: 35, special: <NO SPECIAL>
+ID: 89, type: Adventure, subtype: Foe, name: BlackKnight, battle points: 25, alternative battle points: 35, special: <NO SPECIAL>
+ID: 90, type: Adventure, subtype: Foe, name: BlackKnight, battle points: 25, alternative battle points: 35, special: <NO SPECIAL>
+ID: 91, type: Adventure, subtype: Foe, name: GreenKnight, battle points: 25, alternative battle points: 40, special: <NO SPECIAL>
+ID: 92, type: Adventure, subtype: Foe, name: GreenKnight, battle points: 25, alternative battle points: 40, special: <NO SPECIAL>
+ID: 93, type: Adventure, subtype: Foe, name: Mordred, battle points: 30, alternative battle points: 30, special: <NO SPECIAL>
+ID: 94, type: Adventure, subtype: Foe, name: Mordred, battle points: 30, alternative battle points: 30, special: <NO SPECIAL>
+ID: 95, type: Adventure, subtype: Foe, name: Mordred, battle points: 30, alternative battle points: 30, special: <NO SPECIAL>
+ID: 96, type: Adventure, subtype: Foe, name: Mordred, battle points: 30, alternative battle points: 30, special: <NO SPECIAL>
+ID: 97, type: Adventure, subtype: Foe, name: Giant, battle points: 40, alternative battle points: 40, special: <NO SPECIAL>
+ID: 98, type: Adventure, subtype: Foe, name: Giant, battle points: 40, alternative battle points: 40, special: <NO SPECIAL>
+ID: 99, type: Adventure, subtype: Foe, name: Dragon, battle points: 50, alternative battle points: 70, special: <NO SPECIAL>
+ID: 100, type: Adventure, subtype: Ally, name: SirGalahad, battle points: 15, special: <NO SPECIAL>
+ID: 101, type: Adventure, subtype: Ally, name: SirLancelot, battle points: 15, special: <NO SPECIAL>
+ID: 102, type: Adventure, subtype: Ally, name: KingArthur, battle points: 10, special: <Bid Special: adds 4 extra bid(s)>
+ID: 103, type: Adventure, subtype: Ally, name: SirTristan, battle points: 10, special: <NO SPECIAL>
+ID: 104, type: Adventure, subtype: Ally, name: KingPellinore, battle points: 10, special: <NO SPECIAL>
+ID: 105, type: Adventure, subtype: Ally, name: SirGawain, battle points: 10, special: <NO SPECIAL>
+ID: 106, type: Adventure, subtype: Ally, name: SirPercival, battle points: 5, special: <NO SPECIAL>
+ID: 107, type: Adventure, subtype: Ally, name: QueenGuinevere, battle points: 0, special: <Bid Special: adds 3 extra bid(s)>
+ID: 108, type: Adventure, subtype: Ally, name: QueenIseult, battle points: 0, special: <Bid Special: adds 2 extra bid(s)>
+ID: 109, type: Adventure, subtype: Ally, name: Merlin, battle points: 0, special: <NO SPECIAL>
+ID: 110, type: Adventure, subtype: Test, name: TestOfValor
+ID: 111, type: Adventure, subtype: Test, name: TestOfValor
+ID: 112, type: Adventure, subtype: Test, name: TestOfTemptation
+ID: 113, type: Adventure, subtype: Test, name: TestOfTemptation
+ID: 114, type: Adventure, subtype: Test, name: TestOfMorganLeFrey
+ID: 115, type: Adventure, subtype: Test, name: TestOfMorganLeFrey
+ID: 116, type: Adventure, subtype: Test, name: TestOfTheQuestingBeast
+ID: 117, type: Adventure, subtype: Test, name: TestOfTheQuestingBeast
+ID: 118, type: Adventure, subtype: Amour, battle points: 10, special: <Bid Special: adds 1 extra bid(s)>
+ID: 119, type: Adventure, subtype: Amour, battle points: 10, special: <Bid Special: adds 1 extra bid(s)>
+ID: 120, type: Adventure, subtype: Amour, battle points: 10, special: <Bid Special: adds 1 extra bid(s)>
+ID: 121, type: Adventure, subtype: Amour, battle points: 10, special: <Bid Special: adds 1 extra bid(s)>
+ID: 122, type: Adventure, subtype: Amour, battle points: 10, special: <Bid Special: adds 1 extra bid(s)>
+ID: 123, type: Adventure, subtype: Amour, battle points: 10, special: <Bid Special: adds 1 extra bid(s)>
+ID: 124, type: Adventure, subtype: Amour, battle points: 10, special: <Bid Special: adds 1 extra bid(s)>
+ID: 125, type: Adventure, subtype: Amour, battle points: 10, special: <Bid Special: adds 1 extra bid(s)>
+ID: 126, type: Story, subtype: Quest, name: BoarHunt, number of stages: 2, special foe: Boar
+ID: 127, type: Story, subtype: Quest, name: BoarHunt, number of stages: 2, special foe: Boar
+ID: 128, type: Story, subtype: Quest, name: SearchForTheHolyGrail, number of stages: 5, special foe: All
+ID: 129, type: Story, subtype: Quest, name: TestOfTheGreenKnight, number of stages: 4, special foe: Green Knight
+ID: 130, type: Story, subtype: Quest, name: SearchForTheQuestingBeast, number of stages: 4, special foe: None
+ID: 131, type: Story, subtype: Quest, name: DefendTheQueensHonor, number of stages: 4, special foe: All
+ID: 132, type: Story, subtype: Quest, name: RescueTheFairMaiden, number of stages: 3, special foe: Black Knight
+ID: 133, type: Story, subtype: Quest, name: JourneyThroughTheEnchantedForest, number of stages: 3, special foe: Evil Knight
+ID: 134, type: Story, subtype: Quest, name: VanquishKingArthursEnemies, number of stages: 3, special foe: None
+ID: 135, type: Story, subtype: Quest, name: VanquishKingArthursEnemies, number of stages: 3, special foe: None
+ID: 136, type: Story, subtype: Quest, name: SlayTheDragon, number of stages: 3, special foe: Dragon
+ID: 137, type: Story, subtype: Quest, name: RepelTheSaxonRaiders, number of stages: 2, special foe: All Saxons
+ID: 138, type: Story, subtype: Quest, name: RepelTheSaxonRaiders, number of stages: 2, special foe: All Saxons
+ID: 139, type: Story, subtype: Tournament, name: AtCamelot
+ID: 140, type: Story, subtype: Tournament, name: AtOrkney
+ID: 141, type: Story, subtype: Tournament, name: AtTintagel
+ID: 142, type: Story, subtype: Tournament, name: AtYork
+ID: 143, type: Story, subtype: Event, name: KingsRecognition
+ID: 144, type: Story, subtype: Event, name: KingsRecognition
+ID: 145, type: Story, subtype: Event, name: QueensFavor
+ID: 146, type: Story, subtype: Event, name: QueensFavor
+ID: 147, type: Story, subtype: Event, name: CourtCalled
+ID: 148, type: Story, subtype: Event, name: CourtCalled
+ID: 149, type: Story, subtype: Event, name: Pox
+ID: 150, type: Story, subtype: Event, name: Plague
+ID: 151, type: Story, subtype: Event, name: ChivalrousDeed
+ID: 152, type: Story, subtype: Event, name: ProsperityThroughoutTheRealm
+ID: 153, type: Story, subtype: Event, name: KingsCallToArms

@@ -160,6 +160,7 @@ public class View extends Application {
 		Scene scene = new Scene(canvas, 1280, 720);
 		scene.getStylesheets().add("style.css");	
 		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
 		primaryStage.setTitle("Quests of the Round Table");
 		primaryStage.show();
 	}
@@ -173,9 +174,6 @@ public class View extends Application {
 				return name.toLowerCase().startsWith("weapon");
 			}
 		};
-		
-
-		String[] cardHandNames = new String[20];
 
 		String[] handCardNames = new String[state.players[state.currentPlayer].getHand().size()];
 

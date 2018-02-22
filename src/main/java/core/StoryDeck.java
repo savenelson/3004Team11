@@ -6,6 +6,8 @@ public class StoryDeck extends CardCollection{
 	public StoryDeck() {
 		super();
 		// Quest
+		cards.add(new QuestCard(QuestCard.BOAR_HUNT,QuestCard.BOAR_HUNT_STAGES,QuestCard.BOAR_HUNT_FOE));
+		cards.add(new QuestCard(QuestCard.BOAR_HUNT,QuestCard.BOAR_HUNT_STAGES,QuestCard.BOAR_HUNT_FOE));
 		cards.add(new QuestCard(QuestCard.HOLY_GRAIL,QuestCard.HOLY_GRAIL_STAGES,QuestCard.HOLY_GRAIL_FOE));
 		cards.add(new QuestCard(QuestCard.GREEN_KNIGHT,QuestCard.GREEN_KNIGHT_STAGES,QuestCard.GREEN_KNIGHT_FOE));
 		cards.add(new QuestCard(QuestCard.QUESTING_BEAST,QuestCard.QUESTING_BEAST_STAGES,QuestCard.QUESTING_BEAST_FOE));
@@ -15,12 +17,8 @@ public class StoryDeck extends CardCollection{
 		cards.add(new QuestCard(QuestCard.ARTHURS_ENEMIES,QuestCard.ARTHURS_ENEMIES_STAGES,QuestCard.ARTHURS_ENEMIES_FOE));
 		cards.add(new QuestCard(QuestCard.ARTHURS_ENEMIES,QuestCard.ARTHURS_ENEMIES_STAGES,QuestCard.ARTHURS_ENEMIES_FOE));
 		cards.add(new QuestCard(QuestCard.SLAY_DRAGON,QuestCard.SLAY_DRAGON_STAGES,QuestCard.SLAY_DRAGON_FOE));
-		cards.add(new QuestCard(QuestCard.BOAR_HUNT,QuestCard.BOAR_HUNT_STAGES,QuestCard.BOAR_HUNT_FOE));
 		cards.add(new QuestCard(QuestCard.SAXON_RAIDERS,QuestCard.SAXON_RAIDERS_STAGES,QuestCard.SAXON_RAIDERS_FOE));
-		cards.add(new QuestCard(QuestCard.BOAR_HUNT,QuestCard.BOAR_HUNT_STAGES,QuestCard.BOAR_HUNT_FOE));
 		cards.add(new QuestCard(QuestCard.SAXON_RAIDERS,QuestCard.SAXON_RAIDERS_STAGES,QuestCard.SAXON_RAIDERS_FOE));
-		
-				
 		
 		// Tournament
 		cards.add(new TournamentCard(TournamentCard.CAMELOT_NAME, TournamentCard.CAMELOT_SHIELDS));
@@ -28,8 +26,6 @@ public class StoryDeck extends CardCollection{
 		cards.add(new TournamentCard(TournamentCard.TINTAGEL_NAME, TournamentCard.TINTAGEL_SHIELDS));
 		cards.add(new TournamentCard(TournamentCard.YORK_NAME, TournamentCard.YORK_SHIELDS));
 
-
-		
 		// Event
 		cards.add(new EventCard(EventCard.KINGS_RECOGNITION_NAME));
 		cards.add(new EventCard(EventCard.KINGS_RECOGNITION_NAME));
