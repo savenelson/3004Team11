@@ -20,10 +20,13 @@ public class Model {
 	public AdventureDeck getStoryDeckDiscard(){return this.adventureDeck;}
 	
 	int currentPlayer;
+	int currentStage;
 
 	Card currStoryCard;
 	
-	CardCollection stage = new CardCollection();
+	
+	CardCollection [] stages;
+	CardCollection [] getStages() {return stages;}
 	
 	Model(Control control){
 	
@@ -46,6 +49,16 @@ public class Model {
 		}
 		
 		currentPlayer = 0;
+	}
+	
+	public void instantiateStages(int numStages){
+		stages = new CardCollection[numStages];
+		
+		for(int i = 0; i < numStages; ++i){
+			stages[i] = new CardCollection();
+		}
+		
+		currentStage = 0;
 	}
 	
 	public void initialShuffle(){
@@ -93,45 +106,59 @@ public class Model {
 		
 		state.currStoryCard = this.currStoryCard;
 		
-		state.stage = this.stage;
+		if (stages[currentStage]!=null) {
+			state.stage = this.stages[currentStage];
+		}
 		
 		return state;
 	}
 
 	public void play(String iD) {
-		System.out.println("IN PARTY");
+		System.out.println("Model: IN PARTY");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
 		hand.remove(c);
 		players[currentPlayer].addToParty(c);
 	}
 	public void stage(String iD) {
-		System.out.println("IN QUEUE");
+		System.out.println("Model: IN STAGE");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
 		hand.remove(c);
-		stage.add(c);
+		stages[currentStage].add(c);
+		System.out.println(stages[currentStage].toString());
 	}
 	public void discard(String iD) {
-		System.out.println("IN DISCARD");
+		System.out.println("Model: IN DISCARD");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
 		hand.remove(c);
 		adventureDeckDiscard.add(c);
 	}
 	public void queue(String iD) {
-		System.out.println("IN QUEUE");
+		System.out.println("Model: IN QUEUE");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
 		hand.remove(c);
 		players[currentPlayer].addToQueue(c);
 	}
 	public void dequeue(String iD) {
-		System.out.println("IN HAND");
+		System.out.println("Model: IN HAND");
 		CardCollection hand = this.players[this.currentPlayer].getQueue();
 		Card c = hand.getByID(iD);
 		hand.remove(c);
 		players[currentPlayer].addToHand(c);
+	}
+	
+	public void setCurrentStage(int num) {
+		currentStage = num;
+		System.out.println("Model: Current Stage set to: "+ (currentStage+1));
+	}
+	
+	public void endTurn() {
+		//this will be how a player can chose to pass his turn to the next player
+		//also where we'll intercept the call at the Control to POPUP a blocker
+		// so that the previous and next players can't peek eachothers hands
 	}
 	
 	public void setScenario1() {
@@ -160,8 +187,6 @@ public class Model {
 		
 		System.out.println("Adventure Deck: \n" + this.storyDeck.toString());
 		//set current StoryCard to SearchForHolyGrail
-		
-		
 		
 	}
 }

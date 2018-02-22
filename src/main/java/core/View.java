@@ -55,6 +55,13 @@ public class View extends Application {
 	public static final String QUEUE = "Queue";
 	public static final String DEQUEUE = "Dequeue";
 	
+	public static final String STAGE1 = "Stage 1";
+	public static final String STAGE2 = "Stage 2";
+	public static final String STAGE3 = "Stage 3";
+	public static final String STAGE4 = "Stage 4";
+	public static final String STAGE5 = "Stage 5";
+	public static final String ENDTURN = "End Turn";
+	
 	private Control control;
 	private State state;
 		
@@ -130,12 +137,16 @@ public class View extends Application {
 	private Stage stage;
 	private Pane canvas;
 	private TilePane tile;
-	
+
 	public View () {}
 
 	public static void main(String [] args){
 		launch(args);
 	}
+
+	private HBox Stage; 
+	
+
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -162,8 +173,12 @@ public class View extends Application {
 		addPlayerCPartyToCanvas(canvas);
 		addPlayerDPartyToCanvas(canvas);
 		addStoryCardToCanvas(canvas);
+
 		addHandToCanvas(canvas);
 		addStageToCanvas(canvas);
+
+		addStage(canvas);
+
 		
 		Scene scene = new Scene(canvas, 1280, 720);
 		scene.getStylesheets().add("style.css");	
@@ -533,6 +548,7 @@ public class View extends Application {
 				
 				initUI(stage);
 
+
 				//addHandToCanvas(canvas);
 			}
 		};
@@ -552,6 +568,21 @@ public class View extends Application {
 		MenuItem queueItem = new MenuItem(QUEUE);
 		queueItem.setOnAction(eh);
 		fileMenu.getItems().add(queueItem);
+
+		fileMenu.getItems().add(new MenuItem("Discard"));
+		fileMenu.getItems().add(new MenuItem("Play"));
+		
+		MenuItem campaigne =  new MenuItem("Campaigne");
+		
+		campaigne.setOnAction(new EventHandler<ActionEvent>() {
+		    public void handle(ActionEvent e) {
+		        addCardToStage(Stage, imgView);
+		        System.out.println(e.getSource());
+		    }
+		});
+		
+		fileMenu.getItems().add(campaigne);
+
 
 		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
@@ -603,6 +634,8 @@ public class View extends Application {
 		@Override
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
+				//System.out.println(t.getSource());
+				//CardHandTop.getChildren().remove(t.getSource());
 				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
 			}
 		}
@@ -663,6 +696,27 @@ public class View extends Application {
 		});
 	}
 	
+
+	private void addStage(Pane canavas) {
+		
+		Stage = new HBox();
+		
+		Stage.relocate(colQueue, rowQueue-100);
+		
+		
+		canavas.getChildren().addAll(Stage);
+		
+	}
+	
+	private void addCardToStage(HBox stage, ImageView newCard) {
+		
+		ImageView cardAdded = new ImageView();
+		cardAdded.setImage(newCard.getImage());
+		cardAdded.setFitHeight(12);  
+		stage.getChildren().add(cardAdded);
+	}
+	
+
 	private void addControlsToCanvas(Pane canvas) {
 		// our coordinates 
 
@@ -670,24 +724,66 @@ public class View extends Application {
 //		labelHand.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
 //		labelHand.relocate(0, 0);
 		
-		Button stage1 = new Button ("Stage 1 ");
+		Button stage1 = new Button (STAGE1);
 		stage1.relocate(240,80);
 		stage1.setMinWidth(80);
-		Button stage2 = new Button ("Stage 2 ");
+		stage1.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		        control.buttonClick(STAGE1);
+				state = control.getState();
+				initUI(stage);
+		    }
+		});
+		Button stage2 = new Button (STAGE2);
 		stage2.relocate(240,110);
 		stage2.setMinWidth(80);
-		Button stage3 = new Button ("Stage 3 ");
+		stage2.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		        control.buttonClick(STAGE2);
+				state = control.getState();
+				initUI(stage);
+		    }
+		});
+		Button stage3 = new Button (STAGE3);
 		stage3.relocate(240,140);
 		stage3.setMinWidth(80);
-		Button stage4 = new Button ("Stage 4 ");
+		stage3.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		        control.buttonClick(STAGE3);
+				state = control.getState();
+				initUI(stage);
+		    }
+		});
+		Button stage4 = new Button (STAGE4);
 		stage4.relocate(240,170);
 		stage4.setMinWidth(80);
-		Button stage5 = new Button ("Stage 5 ");
+		stage4.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		        control.buttonClick(STAGE4);
+				state = control.getState();
+				initUI(stage);
+		    }
+		});
+		Button stage5 = new Button (STAGE5);
 		stage5.relocate(240,200);
 		stage5.setMinWidth(80);
-		Button endTurn = new Button ("End Turn");
+		stage5.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		        control.buttonClick(STAGE5);
+				state = control.getState();
+				initUI(stage);
+		    }
+		});
+		Button endTurn = new Button (ENDTURN);
 		endTurn.relocate(240,230);
 		endTurn.setMinWidth(80);
+		endTurn.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override public void handle(ActionEvent e) {
+		        control.buttonClick(ENDTURN);
+				state = control.getState();
+				initUI(stage);
+		    }
+		});
 
 		canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
 	}
