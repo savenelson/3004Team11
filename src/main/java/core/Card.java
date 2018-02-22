@@ -7,8 +7,8 @@ public abstract class Card {
 	public static final String STORY     = "Story";
 	public static final String RANK      = "Rank";
 	
-	protected int id;
-	public int getID() {return this.id;}
+	protected String id;
+	public String getID() {return this.id;}
 	
 	protected String type;
 	public String getType() {return this.type;}
@@ -17,7 +17,7 @@ public abstract class Card {
 	public abstract String getImgName();
 	
 	Card(String type){
-		this.id = nextID++;
+		this.id = String.valueOf(nextID++);
 		
 		this.type = type;
 	}
