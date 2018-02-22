@@ -22,7 +22,7 @@ public class Model {
 	int currentPlayer;
 	int currentStage;
 
-	Card currStoryCard;
+	Card currentStoryCard;
 	
 	
 	CardCollection [] stages;
@@ -78,7 +78,7 @@ public class Model {
 				players[j].addToHand(this.adventureDeck.pop()); 
 			}
 			
-			this.currStoryCard = storyDeck.pop();
+			this.currentStoryCard = storyDeck.pop();
 		}
 	}
 	
@@ -104,7 +104,7 @@ public class Model {
 		
 		state.currentPlayer = this.currentPlayer;
 		
-		state.currStoryCard = this.currStoryCard;
+		state.currentStoryCard = this.currentStoryCard;
 		
 		if (stages[currentStage]!=null) {
 			state.stage = this.stages[currentStage];
@@ -114,11 +114,11 @@ public class Model {
 	}
 
 	public void play(String iD) {
-		System.out.println("Model: IN PARTY");
+		System.out.println("Model: playing to party");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
 		hand.remove(c);
-		players[currentPlayer].addToParty(c);
+		this.players[this.currentPlayer].addToParty(c);
 	}
 	public void stage(String iD) {
 		System.out.println("Model: IN STAGE");
@@ -159,26 +159,80 @@ public class Model {
 		//this will be how a player can chose to pass his turn to the next player
 		//also where we'll intercept the call at the Control to POPUP a blocker
 		// so that the previous and next players can't peek eachothers hands
+		this.currentPlayer = ((currentPlayer+1) %4);
+		System.out.println("Current Player: " + (currentPlayer+1));
 	}
 	
 	public void setScenario1() {
-		
-		initialShuffle();
-		
-		//deal the hands to each player
-		for(int i = 0; i < 12; ++i){
-			for(int j = 0; j < players.length; ++j){
-				
-				players[j].addToHand(this.adventureDeck.pop()); 
-			}
-			
-			this.currStoryCard = storyDeck.popByID("126");
-			System.out.println(this.currStoryCard.toString());
-			
-		}
-		System.out.println(this.currStoryCard.toString());
-		//set current StoryCard to BoarHunt
-		
+		/**
+		 * Scenario 1
+		 * Story Card: 			Board Hunt
+		 * Number of Players: 	2
+		 * Current Player: 		Player 1
+		 * Rules that need to be implimented:
+		 * -	Only 1 Foe per stage
+		 * -	No repeated weapon/type in a stage
+		 * -	UI notification of above No repeated weapon/type in a stage
+		 * -	(stageN's BP) < (stageN+1's BP)
+		 * -	UI notification of above (stageN's BP) < (stageN+1's BP)
+		 * -	After stages set, ask players 2,3,4 if they will play
+		 * -	Each participant draw card
+		 * -	Hand size limitation
+		 * -	Hotseat play popup "Is this player 2?"
+		 * -	Revealing stages (line 38 of grid)
+		 * -	
+		 * -	
+		 */
+		this.currentPlayer = 0;
+		this.currentStoryCard = this.storyDeck.getByID("126");
+		this.players[0].addToHand(this.adventureDeck.getByID("42"));
+		this.players[0].addToHand(this.adventureDeck.getByID("43"));
+		this.players[0].addToHand(this.adventureDeck.getByID("1"));
+		this.players[0].addToHand(this.adventureDeck.getByID("2"));
+		this.players[0].addToHand(this.adventureDeck.getByID("23"));
+		this.players[0].addToHand(this.adventureDeck.getByID("48"));
+		this.players[0].addToHand(this.adventureDeck.getByID("118"));
+		this.players[0].addToHand(this.adventureDeck.getByID("119"));
+		this.players[0].addToHand(this.adventureDeck.getByID("120"));
+		this.players[0].addToHand(this.adventureDeck.getByID("91"));
+		this.players[0].addToHand(this.adventureDeck.getByID("50"));
+		this.players[0].addToHand(this.adventureDeck.getByID("88"));
+		this.players[1].addToHand(this.adventureDeck.getByID("44"));
+		this.players[1].addToHand(this.adventureDeck.getByID("3"));
+		this.players[1].addToHand(this.adventureDeck.getByID("4"));
+		this.players[1].addToHand(this.adventureDeck.getByID("5"));
+		this.players[1].addToHand(this.adventureDeck.getByID("17"));
+		this.players[1].addToHand(this.adventureDeck.getByID("18"));
+		this.players[1].addToHand(this.adventureDeck.getByID("62"));
+		this.players[1].addToHand(this.adventureDeck.getByID("51"));
+		this.players[1].addToHand(this.adventureDeck.getByID("52"));
+		this.players[1].addToHand(this.adventureDeck.getByID("53"));
+		this.players[1].addToHand(this.adventureDeck.getByID("67"));
+		this.players[1].addToHand(this.adventureDeck.getByID("89"));
+		this.players[2].addToHand(this.adventureDeck.getByID("24"));
+		this.players[2].addToHand(this.adventureDeck.getByID("25"));
+		this.players[2].addToHand(this.adventureDeck.getByID("26"));
+		this.players[2].addToHand(this.adventureDeck.getByID("27"));
+		this.players[2].addToHand(this.adventureDeck.getByID("6"));
+		this.players[2].addToHand(this.adventureDeck.getByID("121"));
+		this.players[2].addToHand(this.adventureDeck.getByID("122"));
+		this.players[2].addToHand(this.adventureDeck.getByID("54"));
+		this.players[2].addToHand(this.adventureDeck.getByID("82"));
+		this.players[2].addToHand(this.adventureDeck.getByID("90"));
+		this.players[2].addToHand(this.adventureDeck.getByID("104"));
+		this.players[2].addToHand(this.adventureDeck.getByID("102"));
+		this.players[3].addToHand(this.adventureDeck.getByID("34"));
+		this.players[3].addToHand(this.adventureDeck.getByID("28"));
+		this.players[3].addToHand(this.adventureDeck.getByID("19"));
+		this.players[3].addToHand(this.adventureDeck.getByID("7"));
+		this.players[3].addToHand(this.adventureDeck.getByID("8"));
+		this.players[3].addToHand(adventureDeck.getByID("9"));
+		this.players[3].addToHand(this.adventureDeck.getByID("123"));
+		this.players[3].addToHand(this.adventureDeck.getByID("68"));
+		this.players[3].addToHand(this.adventureDeck.getByID("63"));
+		this.players[3].addToHand(this.adventureDeck.getByID("93"));
+		this.players[3].addToHand(this.adventureDeck.getByID("100"));
+		this.players[3].addToHand(this.adventureDeck.getByID("101"));
 	}
 	
 	public void setScenario2() {
