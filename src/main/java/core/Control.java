@@ -15,7 +15,6 @@ public class Control{
 		
 		mainLoop();
 
-		
 		//TEST
   
 		//model.CardsTest();
