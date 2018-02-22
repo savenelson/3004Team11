@@ -47,10 +47,11 @@ public class Model {
 	}
 	
 	public void initialShuffle(){
-		
+
 		this.adventureDeck.shuffle();
 		
 		this.storyDeck.shuffle();
+		
 	}
 	
 	public void deal(){
@@ -63,7 +64,6 @@ public class Model {
 			}
 			
 			this.currStoryCard = storyDeck.pop();
-			
 		}
 	}
 	
@@ -92,5 +92,36 @@ public class Model {
 		state.currStoryCard = this.currStoryCard;
 		
 		return state;
+	}
+	
+	public void setScenario1() {
+		
+		initialShuffle();
+		
+		//deal the hands to each player
+		for(int i = 0; i < 12; ++i){
+			for(int j = 0; j < players.length; ++j){
+				
+				players[j].pickUp(this.adventureDeck.pop()); 
+			}
+			
+			this.currStoryCard = storyDeck.popByID(126);
+			System.out.println(this.currStoryCard.toString());
+			
+		}
+		System.out.println(this.currStoryCard.toString());
+		//set current StoryCard to BoarHunt
+		
+	}
+	
+	public void setScenario2() {
+		
+		initialShuffle();
+		
+		System.out.println("Adventure Deck: \n" + this.storyDeck.toString());
+		//set current StoryCard to SearchForHolyGrail
+		
+		
+		
 	}
 }
