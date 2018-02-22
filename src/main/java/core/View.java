@@ -126,6 +126,10 @@ public class View extends Application {
 	//Hands
 	private HBox CardHandTop, CardHandBottom, CardHandOverflow;
 	
+	private Stage stage;
+	private Pane canvas;
+	private TilePane tile;
+	
 	public View () {
 		
 	}
@@ -142,6 +146,7 @@ public class View extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		control = new Control(this);
+		stage = primaryStage;
 		initUI(primaryStage);
 	}
 
@@ -149,7 +154,7 @@ public class View extends Application {
 		
 		state = control.getState();
 		
-		Pane canvas = new Pane();
+		canvas = new Pane();
 		canvas.setId("pane");
 		
 		addControlsToCanvas(canvas);
@@ -176,9 +181,9 @@ public class View extends Application {
 	private void addHandToCanvas(Pane canvas) {
 		CardCollection hand = state.players[state.currentPlayer].getHand();
 		
-		TilePane tile = new TilePane();
+		tile = new TilePane();
 		tile.setPrefRows(2);
-		tile.setPrefColumns(Math.floorDiv(hand.size(), 2));
+		tile.setPrefColumns(6);
 		tile.setVgap(10);
 		tile.setHgap(10);
 
@@ -606,6 +611,12 @@ public class View extends Application {
 				System.out.println(((MenuItem) event.getSource()).getText());					
 				System.out.println(anAdventure.getId());
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
+				state = control.getState();
+				
+				canvas.requestFocus();
+				//initUI(stage);
+
+				//addHandToCanvas(canvas);
 			}
 			
 		};

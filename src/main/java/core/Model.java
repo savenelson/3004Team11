@@ -99,8 +99,11 @@ public class Model {
 	}
 
 	public void discard(String iD) {
+		
+		System.out.println("IN DISCARD");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
 		hand.remove(c);
+		adventureDeckDiscard.add(c);
 	}
 }
