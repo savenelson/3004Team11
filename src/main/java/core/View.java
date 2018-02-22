@@ -137,6 +137,8 @@ public class View extends Application {
 	private Stage stage;
 	private Pane canvas;
 	private TilePane tile;
+	
+	MainMenu menu = new MainMenu(this,null);
 
 	public View () {}
 
@@ -152,7 +154,7 @@ public class View extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		control = new Control(this);
 		stage = primaryStage;
-		initUI(primaryStage);
+		initUI2(primaryStage);
 	}
 
 	private void initUI(Stage primaryStage) {
@@ -178,7 +180,7 @@ public class View extends Application {
 		addStageToCanvas(canvas);
 
 		addStage(canvas);
-
+		
 		
 		Scene scene = new Scene(canvas, 1280, 720);
 		scene.getStylesheets().add("style.css");	
@@ -186,6 +188,72 @@ public class View extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.setTitle("Quests of the Round Table");
 		primaryStage.show();
+	}
+private void initUI2(Stage primaryStage) {
+		
+		state = control.getState();
+		
+		canvas = new Pane();
+		canvas.setId("pane");
+		
+		addControlsToCanvas(canvas);
+		addQueueToCanvas(canvas);
+		addPlayerARankToCanvas(canvas);
+		addPlayerBRankToCanvas(canvas);
+		addPlayerCRankToCanvas(canvas);
+		addPlayerDRankToCanvas(canvas);
+		addPlayerAPartyToCanvas(canvas);
+		addPlayerBPartyToCanvas(canvas);
+		addPlayerCPartyToCanvas(canvas);
+		addPlayerDPartyToCanvas(canvas);
+		addStoryCardToCanvas(canvas);
+
+		addHandToCanvas(canvas);
+		addStageToCanvas(canvas);
+
+		addStage(canvas);
+		
+		MainMenu menu = new MainMenu(this,canvas);
+		
+		this.menu = menu;
+
+		
+		Scene scene = new Scene(menu, 1280, 720);
+		scene.getStylesheets().add("style.css");	
+		
+		System.out.println("Should be nice back");
+		
+		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		primaryStage.setTitle("Quests of the Round Table");
+		primaryStage.show();
+	}
+	private void addButton(MainMenu menu) {
+		Button human2 = new Button("2 Humans");
+		human2.setOnAction(new EventHandler<ActionEvent>() {
+		    public void handle(ActionEvent e) {
+		        sceneChange(canvas);
+		        
+		    }
+		});
+		Button human3 = new Button("3 Humans");
+		human3.setOnAction(new EventHandler<ActionEvent>() {
+		    public void handle(ActionEvent e) {
+		        sceneChange(canvas);
+		        
+		    }
+		});
+		Button human4 = new Button("4 Humans");
+		human4.setOnAction(new EventHandler<ActionEvent>() {
+		    public void handle(ActionEvent e) {
+		        sceneChange(canvas);
+		        
+		    }
+		});
+		
+		menu.addButtons(human2);
+		menu.addButtons(human3);
+		menu.addButtons(human4);
 	}
 	
 	private void addHandToCanvas(Pane canvas) {
@@ -784,11 +852,23 @@ public class View extends Application {
 				state = control.getState();
 				initUI(stage);
 				System.out.println("was pressed");
-				ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");
+				
+			
+				
+				stage.setScene(ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?", canvas));
+				
 				
 		    }
 		});
 
 		canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
+	}
+	
+	
+	
+	public void sceneChange(Pane newScreen) {
+		Scene scene = new Scene(newScreen);
+		scene.getStylesheets().add("style.css");	
+		stage.setScene(scene);
 	}
 }
