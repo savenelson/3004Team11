@@ -19,18 +19,18 @@ public class CardCollection {
 	}
 	
 	// get a card from the deck by name
-	public Card popByID(String ID){
-		int cardIndex = 0;
-		for (int i = 0; i<cards.size();i++) {
-			if(cards.get(i).getID() == ID ) {
-				cardIndex = i;
-				break;
-			}
-		}
-		Card c = cards.get(cardIndex);
-		cards.remove(cardIndex);
-		return c;
-	}
+//	public Card popByID(String ID){
+//		int cardIndex = 0;
+//		for (int i = 0; i<cards.size();i++) {
+//			if(cards.get(i).getID() == ID ) {
+//				cardIndex = i;
+//				break;
+//			}
+//		}
+//		Card c = cards.get(cardIndex);
+//		cards.remove(cardIndex);
+//		return c;
+//	}
 	
 	// returns cards array size after adding 
 	public int add(Card c){cards.add(c); return cards.size();}
