@@ -137,12 +137,16 @@ public class View extends Application {
 	private Stage stage;
 	private Pane canvas;
 	private TilePane tile;
-	
+
 	public View () {}
 
 	public static void main(String [] args){
 		launch(args);
 	}
+
+	private HBox Stage; 
+	
+
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -169,8 +173,12 @@ public class View extends Application {
 		addPlayerCPartyToCanvas(canvas);
 		addPlayerDPartyToCanvas(canvas);
 		addStoryCardToCanvas(canvas);
+
 		addHandToCanvas(canvas);
 		addStageToCanvas(canvas);
+
+		addStage(canvas);
+
 		
 		Scene scene = new Scene(canvas, 1280, 720);
 		scene.getStylesheets().add("style.css");	
@@ -540,6 +548,7 @@ public class View extends Application {
 				
 				initUI(stage);
 
+
 				//addHandToCanvas(canvas);
 			}
 		};
@@ -559,6 +568,21 @@ public class View extends Application {
 		MenuItem queueItem = new MenuItem(QUEUE);
 		queueItem.setOnAction(eh);
 		fileMenu.getItems().add(queueItem);
+
+		fileMenu.getItems().add(new MenuItem("Discard"));
+		fileMenu.getItems().add(new MenuItem("Play"));
+		
+		MenuItem campaigne =  new MenuItem("Campaigne");
+		
+		campaigne.setOnAction(new EventHandler<ActionEvent>() {
+		    public void handle(ActionEvent e) {
+		        addCardToStage(Stage, imgView);
+		        System.out.println(e.getSource());
+		    }
+		});
+		
+		fileMenu.getItems().add(campaigne);
+
 
 		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
@@ -610,6 +634,8 @@ public class View extends Application {
 		@Override
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
+				//System.out.println(t.getSource());
+				//CardHandTop.getChildren().remove(t.getSource());
 				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
 			}
 		}
@@ -670,6 +696,27 @@ public class View extends Application {
 		});
 	}
 	
+
+	private void addStage(Pane canavas) {
+		
+		Stage = new HBox();
+		
+		Stage.relocate(colQueue, rowQueue-100);
+		
+		
+		canavas.getChildren().addAll(Stage);
+		
+	}
+	
+	private void addCardToStage(HBox stage, ImageView newCard) {
+		
+		ImageView cardAdded = new ImageView();
+		cardAdded.setImage(newCard.getImage());
+		cardAdded.setFitHeight(12);  
+		stage.getChildren().add(cardAdded);
+	}
+	
+
 	private void addControlsToCanvas(Pane canvas) {
 		// our coordinates 
 
