@@ -49,6 +49,11 @@ import javafx.util.Duration;
 
 public class View extends Application {
 	
+	public static final String PLAY = "Play";
+	public static final String DISCARD = "Discard";
+	public static final String STAGE = "Stage";
+	public static final String QUEUE = "Queue";
+	
 	private Control control;
 	private State state;
 		
@@ -604,20 +609,20 @@ public class View extends Application {
 			}
 			
 		};
-		
-		MenuItem playItem = new MenuItem("Play");
+
+		MenuItem playItem = new MenuItem(PLAY);
 		playItem.setOnAction(eh);
 		fileMenu.getItems().add(playItem);
 		
-		MenuItem discardItem = new MenuItem("Discard");
+		MenuItem discardItem = new MenuItem(DISCARD);
 		discardItem.setOnAction(eh);
 		fileMenu.getItems().add(discardItem);
 		
-		MenuItem stageItem = new MenuItem("Stage");
+		MenuItem stageItem = new MenuItem(STAGE);
 		stageItem.setOnAction(eh);
 		fileMenu.getItems().add(stageItem);
 		
-		MenuItem queueItem = new MenuItem("Queue");
+		MenuItem queueItem = new MenuItem(QUEUE);
 		queueItem.setOnAction(eh);
 		fileMenu.getItems().add(queueItem);
 
@@ -626,14 +631,9 @@ public class View extends Application {
 		@Override
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
-				
-				//System.out.println(fileMenu.getItems().get(0).getText());
 				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
-				
-				;
 			}
 		}
-			//boolean result= ConfirmCampaigneBox.display("Drawn new card", "Would you like to draw this card?");
 		});
 	}
   

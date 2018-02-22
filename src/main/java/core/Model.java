@@ -93,4 +93,14 @@ public class Model {
 		
 		return state;
 	}
+
+	public void play(String iD) {
+		//this.
+	}
+
+	public void discard(String iD) {
+		CardCollection hand = this.players[this.currentPlayer].getHand();
+		Card c = hand.getByID(iD);
+		hand.remove(c);
+	}
 }
