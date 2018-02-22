@@ -2,9 +2,11 @@ package core;
 
 public class State {
 	
-	Player [] players;	
+	public Player [] players;	
 	
-	Card currStoryCard;
+	public Card currStoryCard;
 	
-	int currentPlayer;
+	public int currentPlayer;
+
+	public CardCollection stage;
 }
