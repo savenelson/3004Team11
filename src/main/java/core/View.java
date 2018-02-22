@@ -289,7 +289,7 @@ public class View extends Application {
 	
 	private void addPlayerARankToCanvas(Pane canvas) {
 		try {
-			Image i = new Image(new FileInputStream(IMG_DIR + state.players[state.currentPlayer].getRank().getImgName() + GIF));
+			Image i = new Image(new FileInputStream(IMG_DIR + state.players[0].getRank().getImgName() + GIF));
 			imgView = new ImageView();
 			imgView.setImage(i);
 			imgView.relocate(colPlayerARank, rowPlayerARank);
@@ -307,7 +307,7 @@ public class View extends Application {
 	
 	private void addPlayerBRankToCanvas(Pane canvas) {
 		try {
-			Image i = new Image(new FileInputStream(IMG_DIR + state.players[state.currentPlayer].getRank().getImgName() + GIF));
+			Image i = new Image(new FileInputStream(IMG_DIR + state.players[1].getRank().getImgName() + GIF));
 			imgView = new ImageView();
 			imgView.setImage(i);
 			imgView.relocate(colPlayerBRank, rowPlayerBRank);
@@ -325,7 +325,7 @@ public class View extends Application {
 	
 	private void addPlayerCRankToCanvas(Pane canvas) {
 		try {
-			Image i = new Image(new FileInputStream(IMG_DIR + state.players[state.currentPlayer].getRank().getImgName() + GIF));
+			Image i = new Image(new FileInputStream(IMG_DIR + state.players[2].getRank().getImgName() + GIF));
 			imgView = new ImageView();
 			imgView.setImage(i);
 			imgView.relocate(colPlayerCRank, rowPlayerCRank);
@@ -343,7 +343,7 @@ public class View extends Application {
 	
 	private void addPlayerDRankToCanvas(Pane canvas) {
 		try {
-			Image i = new Image(new FileInputStream(IMG_DIR + state.players[state.currentPlayer].getRank().getImgName() + GIF));
+			Image i = new Image(new FileInputStream(IMG_DIR + state.players[3].getRank().getImgName() + GIF));
 			imgView = new ImageView();
 			imgView.setImage(i);
 			imgView.relocate(colPlayerDRank, rowPlayerDRank);

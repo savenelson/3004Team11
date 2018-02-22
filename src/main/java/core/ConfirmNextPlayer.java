@@ -14,8 +14,8 @@ public class ConfirmNextPlayer {
 	public static void display(String display, String message) {
 		Stage window = new Stage();
 		window.initModality(Modality.WINDOW_MODAL);
-		window.setHeight(800);
-		window.setWidth(1200);
+		window.setHeight(720);
+		window.setWidth(1280);
 		
 		Label label = new Label(message);
 		
@@ -35,5 +35,7 @@ public class ConfirmNextPlayer {
 		window.showAndWait();
 		
 	}
+	
+	
 
 }
