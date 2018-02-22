@@ -613,8 +613,7 @@ public class View extends Application {
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
 				state = control.getState();
 				
-				canvas.requestFocus();
-				//initUI(stage);
+				initUI(stage);
 
 				//addHandToCanvas(canvas);
 			}
