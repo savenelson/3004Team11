@@ -19,7 +19,7 @@ public class CardCollection {
 	}
 	
 	// get a card from the deck by name
-	public Card popByID(int ID){
+	public Card popByID(String ID){
 		int cardIndex = 0;
 		for (int i = 0; i<cards.size();i++) {
 			if(cards.get(i).getID() == ID ) {
