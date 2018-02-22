@@ -376,7 +376,7 @@ public class View extends Application {
 					imgView = new ImageView();
 					imgView.setId(party.get(i).getID());
 					imgView.setImage(img);
-					imgView.relocate(colQueue, rowQueue);
+					imgView.relocate(colPlayerAParty, rowPlayerAParty);
 					imgView.setFitWidth(cardSmallWidth);
 					imgView.setFitHeight(cardSmallHeight);
 					imgView.setPreserveRatio(true);
@@ -388,7 +388,7 @@ public class View extends Application {
 				}
 			}
 	
-			tile.relocate(colPlayerBParty, rowPlayerBParty);
+			tile.relocate(colPlayerAParty, rowPlayerAParty);
 			
 			canvas.getChildren().add(tile);
 		}
@@ -502,9 +502,9 @@ public class View extends Application {
 	
 	private void addStoryCardToCanvas(Pane canvas) {
 		
-		System.out.println(state.currStoryCard.getImgName());
+		System.out.println(state.currentStoryCard.getImgName());
 		try {
-			Image i = new Image(new FileInputStream(IMG_DIR + state.currStoryCard.getImgName() + GIF));
+			Image i = new Image(new FileInputStream(IMG_DIR + state.currentStoryCard.getImgName() + GIF));
 			imgView = new ImageView();
 			imgView.setImage(i);
 			imgView.relocate(colStoryCard, rowStoryCard);
@@ -791,6 +791,4 @@ public class View extends Application {
 
 		canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
 	}
-
-	
 }
