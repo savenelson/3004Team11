@@ -4,7 +4,7 @@ public class State {
 	
 	public Player [] players;	
 	
-	public Card currStoryCard;
+	public Card currentStoryCard;
 	
 	public int currentPlayer;
 
