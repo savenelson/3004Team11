@@ -576,7 +576,7 @@ public class View extends Application {
 		
 		campaigne.setOnAction(new EventHandler<ActionEvent>() {
 		    public void handle(ActionEvent e) {
-		        addCardToStage(Stage, imgViewRank);
+		        addCardToStage(Stage, imgView);
 		        System.out.println(e.getSource());
 		    }
 		});
@@ -697,7 +697,6 @@ public class View extends Application {
 	}
 	
 
-=======
 	private void addStage(Pane canavas) {
 		
 		Stage = new HBox();
