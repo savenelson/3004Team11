@@ -784,7 +784,7 @@ public class View extends Application {
 				state = control.getState();
 				initUI(stage);
 				System.out.println("was pressed");
-				ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");
+			//	ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");
 				
 		    }
 		});
