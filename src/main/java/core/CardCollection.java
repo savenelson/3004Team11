@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-public abstract class CardCollection {
+public class CardCollection {
 	
 	public static final int DISTICT_ADV_CARDS = 32;
 
@@ -15,6 +15,20 @@ public abstract class CardCollection {
 	public Card pop(){
 		Card c = cards.get(0);
 		cards.remove(0);
+		return c;
+	}
+	
+	// get a card from the deck by name
+	public Card popByID(String ID){
+		int cardIndex = 0;
+		for (int i = 0; i<cards.size();i++) {
+			if(cards.get(i).getID() == ID ) {
+				cardIndex = i;
+				break;
+			}
+		}
+		Card c = cards.get(cardIndex);
+		cards.remove(cardIndex);
 		return c;
 	}
 	
@@ -32,6 +46,35 @@ public abstract class CardCollection {
 	
 	public void shuffle(){
 		Collections.shuffle(cards);
+	}
+	
+	public Card getByID(String ID){
+		for (int i = 0; i < cards.size(); ++i){
+			if(ID.equals(cards.get(i).getID())){
+				return cards.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public void remove(String ID){
+		for (int i = 0; i < cards.size(); ++i){
+			if(ID.equals(cards.get(i).getID())){
+				cards.remove(i);
+			}
+		}	
+		
+	}
+	public void remove(Card c){
+		for (int i = 0; i < cards.size(); ++i){
+			if(c.equals(cards.get(i))){
+				cards.remove(i);
+			}
+		}	
+		
+	}
+	public void remove(int index){
+		cards.remove(index);
 	}
 	
 	public String toString(){

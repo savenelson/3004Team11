@@ -14,7 +14,7 @@ public class AllyCard extends AdventureCard{
 	public static final String SIR_LANCELOT_NAME = "SirLancelot";
 	public static final String KING_ARTHUR_NAME = "KingArthur";
 	public static final String SIR_TRISTAN_NAME = "SirTristan";
-	public static final String SIR_PELLINORE_NAME = "SirPellinore";
+	public static final String KING_PELLINORE_NAME = "KingPellinore";
 	public static final String SIR_GAWAIN_NAME = "SirGawain";
 	public static final String SIR_PERCIVAL_NAME = "SirPercival";
 	public static final String QUEEN_GUINEVERE_NAME = "QueenGuinevere";	
@@ -25,7 +25,7 @@ public class AllyCard extends AdventureCard{
 	public static final int SIR_LANCELOT_BATTLE_POINTS = 15;
 	public static final int KING_ARTHUR_BATTLE_POINTS = 10;
 	public static final int SIR_TRISTAN_BATTLE_POINTS = 10;
-	public static final int SIR_PELLINORE_BATTLE_POINTS = 10;
+	public static final int KING_PELLINORE_BATTLE_POINTS = 10;
 	public static final int SIR_GAWAIN_BATTLE_POINTS = 10;
 	public static final int SIR_PERCIVAL_BATTLE_POINTS = 5;
 	public static final int QUEEN_GUINEVERE_BATTLE_POINTS = 0;	
@@ -42,6 +42,7 @@ public class AllyCard extends AdventureCard{
 	public void doSpecial(){specialAbility.doSpecial();}
 	
 	public int getBattlePoints(){return this.battlePoints;}
+	public String getName(){return this.name;}
 	
 	public AllyCard(String name, int battlePoints, Special specialAbility) {
 		super(ALLY);

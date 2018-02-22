@@ -1,39 +1,33 @@
 package core;
 
-import javafx.application.Application;
-
 public class Control{
 
-	static Model model;
-	static View view;
+	Model model;
+	View view;
 	
 	private static String testString;
 	
-	// args[0]: number of players
-	public static void main(String args []){
-	
-		Control control = new Control();
+	public Control(View view) {
 		
-		testString = "I'm the private test string";
+		this.view = view;
 		
-		gameInit(args, control);
+		gameInit(null);
 		
 		mainLoop();
-		
-		Application.launch(View.class, args);
-		
-		////TEST
-		
+
+		//TEST
+  
 		//model.CardsTest();
 		
-		////END TEST
+		//END TEST
 	}
 	
-	public static void gameInit(String args [], Control control){
+
+	public void gameInit(String args []){
 		
 		int numPlayers;
 		
-		if(args.length == 0){
+		if(args == null || args.length == 0){
 			numPlayers = 4;
 		}
 		else{
@@ -41,9 +35,8 @@ public class Control{
 		}
 		if(numPlayers >= 2 && numPlayers <= 4)
 		{
-			//View view = new View(null);
 
-			model = new Model(control);
+			model = new Model(this);
 		}
 		else{// Maybe make a view constructor that displays invalid number of players type thing...??????????????
 			 // POP UP MESSAGE????? from control?
@@ -52,44 +45,66 @@ public class Control{
 		
 		model.instantiatePlayers(numPlayers);
 		
+		model.instantiateStages(5); //TODO set properly
+		
 		model.initialShuffle();
 		
 		model.deal();
+		
+		//model.setScenario1();
+		
+		//model.setScenario2();
 	}
 
-	public static void mainLoop(){
+	public void mainLoop(){
 		
 		boolean win = false;
 		
-		StoryCardAndCurrentPlayer curr = new StoryCardAndCurrentPlayer();
 		
 		while(!win){
 			
-			curr = model.drawStoryCard(curr);
-			
-			System.out.println("Current player: " + curr.currentPlayer.toString() + ", Current story card: " + curr.currentStoryCard.toString());
-			
 			win = !win;
-			
-//			int i;
-//			for(i = 0; i < model.getPlayers().length; ++i){
-//				if(i == 2){
-//					win = true;
-//					break;
-//				}
-//				System.out.println(i);
-//			}
 			
 		}
 	}
 	
-	public static class StoryCardAndCurrentPlayer{
-		Player currentPlayer;	
-		Card currentStoryCard;
+	public State getState(){
+		State state = model.getState();
+		return state;
 	}
 	
-
-	
 	public void printTestString(){System.out.println(testString);}
+
+
+	public void handClick(String clickType, String ID) {
+		if(clickType.equals(View.PLAY)){
+			model.play(ID);
+		} else if (clickType.equals(View.STAGE)) {
+			model.stage(ID);
+		} else if (clickType.equals(View.QUEUE)) {
+			model.queue(ID);
+		} else if (clickType.equals(View.DEQUEUE)) {
+			model.dequeue(ID);
+		}
+		else if(clickType.equals(View.DISCARD)){
+			model.discard(ID);
+		}
+	}
+	
+	public void buttonClick(String clickType) {
+		if(clickType.equals(View.STAGE1)){
+			model.setCurrentStage(0);
+		} else if (clickType.equals(View.STAGE2)) {
+			model.setCurrentStage(1);
+		} else if (clickType.equals(View.STAGE3)) {
+			model.setCurrentStage(2);
+		} else if (clickType.equals(View.STAGE4)) {
+			model.setCurrentStage(3);
+		} else if (clickType.equals(View.STAGE5)) {
+			model.setCurrentStage(4);
+		} else if(clickType.equals(View.ENDTURN)){
+			model.endTurn();
+		}
+	}
 
 }

@@ -1,10 +1,8 @@
 package core;
 
-import core.Control.StoryCardAndCurrentPlayer;
-
 public class Model {
 
-	public static Control control;
+	public Control control;
 	
 	private Player [] players;
 	public Player [] getPlayers(){return players;}
@@ -22,7 +20,14 @@ public class Model {
 	public AdventureDeck getStoryDeckDiscard(){return this.adventureDeck;}
 	
 	int currentPlayer;
+	int currentStage;
 
+	Card currStoryCard;
+	
+	
+	CardCollection [] stages;
+	CardCollection [] getStages() {return stages;}
+	
 	Model(Control control){
 	
 		this.control = control;
@@ -40,15 +45,28 @@ public class Model {
 		players = new Player[numPlayers];
 		
 		for(int i = 0; i < numPlayers; ++i){
-			players[i] = new Player(i+1);
+			players[i] = new Player(i);
 		}
+		
+		currentPlayer = 0;
+	}
+	
+	public void instantiateStages(int numStages){
+		stages = new CardCollection[numStages];
+		
+		for(int i = 0; i < numStages; ++i){
+			stages[i] = new CardCollection();
+		}
+		
+		currentStage = 0;
 	}
 	
 	public void initialShuffle(){
-		
+
 		this.adventureDeck.shuffle();
 		
 		this.storyDeck.shuffle();
+		
 	}
 	
 	public void deal(){
@@ -57,24 +75,11 @@ public class Model {
 		for(int i = 0; i < 12; ++i){
 			for(int j = 0; j < players.length; ++j){
 				
-				players[j].pickUp(this.adventureDeck.pop()); 
+				players[j].addToHand(this.adventureDeck.pop()); 
 			}
 			
+			this.currStoryCard = storyDeck.pop();
 		}
-	}
-	
-	public StoryCardAndCurrentPlayer drawStoryCard(StoryCardAndCurrentPlayer ret){
-		
-		
-		
-		ret.currentStoryCard = storyDeck.pop();
-		
-		//TEST
-		//control.printTestString();
-		
-		ret.currentPlayer = players[currentPlayer];
-		
-		return ret;
 	}
 	
 	public void CardsTest(){
@@ -90,7 +95,98 @@ public class Model {
 		}
 	}
 	
-//	public getState(){
-//		
-//	}
+
+	public State getState(){
+		
+		State state = new State();
+		
+		state.players = this.players;
+		
+		state.currentPlayer = this.currentPlayer;
+		
+		state.currStoryCard = this.currStoryCard;
+		
+		if (stages[currentStage]!=null) {
+			state.stage = this.stages[currentStage];
+		}
+		
+		return state;
+	}
+
+	public void play(String iD) {
+		System.out.println("Model: IN PARTY");
+		CardCollection hand = this.players[this.currentPlayer].getHand();
+		Card c = hand.getByID(iD);
+		hand.remove(c);
+		players[currentPlayer].addToParty(c);
+	}
+	public void stage(String iD) {
+		System.out.println("Model: IN STAGE");
+		CardCollection hand = this.players[this.currentPlayer].getHand();
+		Card c = hand.getByID(iD);
+		hand.remove(c);
+		stages[currentStage].add(c);
+		System.out.println(stages[currentStage].toString());
+	}
+	public void discard(String iD) {
+		System.out.println("Model: IN DISCARD");
+		CardCollection hand = this.players[this.currentPlayer].getHand();
+		Card c = hand.getByID(iD);
+		hand.remove(c);
+		adventureDeckDiscard.add(c);
+	}
+	public void queue(String iD) {
+		System.out.println("Model: IN QUEUE");
+		CardCollection hand = this.players[this.currentPlayer].getHand();
+		Card c = hand.getByID(iD);
+		hand.remove(c);
+		players[currentPlayer].addToQueue(c);
+	}
+	public void dequeue(String iD) {
+		System.out.println("Model: IN HAND");
+		CardCollection hand = this.players[this.currentPlayer].getQueue();
+		Card c = hand.getByID(iD);
+		hand.remove(c);
+		players[currentPlayer].addToHand(c);
+	}
+	
+	public void setCurrentStage(int num) {
+		currentStage = num;
+		System.out.println("Model: Current Stage set to: "+ (currentStage+1));
+	}
+	
+	public void endTurn() {
+		//this will be how a player can chose to pass his turn to the next player
+		//also where we'll intercept the call at the Control to POPUP a blocker
+		// so that the previous and next players can't peek eachothers hands
+	}
+	
+	public void setScenario1() {
+		
+		initialShuffle();
+		
+		//deal the hands to each player
+		for(int i = 0; i < 12; ++i){
+			for(int j = 0; j < players.length; ++j){
+				
+				players[j].addToHand(this.adventureDeck.pop()); 
+			}
+			
+			this.currStoryCard = storyDeck.popByID("126");
+			System.out.println(this.currStoryCard.toString());
+			
+		}
+		System.out.println(this.currStoryCard.toString());
+		//set current StoryCard to BoarHunt
+		
+	}
+	
+	public void setScenario2() {
+		
+		initialShuffle();
+		
+		System.out.println("Adventure Deck: \n" + this.storyDeck.toString());
+		//set current StoryCard to SearchForHolyGrail
+		
+	}
 }

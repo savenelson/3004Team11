@@ -5,16 +5,27 @@ public class Player {
 	private int playerNumber;
 	
 	private RankCard rankCard;
+	public RankCard getRank(){return rankCard;}
 	
-	private Hand hand;
+	private CardCollection hand;
+	public CardCollection getHand(){return hand;}
 	
-	private Hand party;
+	private CardCollection party;
+	public CardCollection getParty() {return party;}
 	
-	public int battlePoints;
+	private CardCollection queue;
+	public CardCollection getQueue() {return queue;}
+	
+	private int battlePoints;
+	public int getBattlePoints() {return battlePoints;}
 	
 	public Player(int playerNumber){
 		
-		hand = new Hand();
+		hand = new CardCollection();
+		
+		queue = new CardCollection();
+		
+		party = new CardCollection();
 		
 		this.playerNumber = playerNumber;
 		
@@ -25,9 +36,16 @@ public class Player {
 		return "Player " + this.playerNumber;
 	}
 	
-	public void pickUp(Card c){
+	public void addToHand(Card c){
 		hand.add(c);
 	}
 	
-	public Hand getHand(){return hand;}
+	public void addToQueue(Card c){
+		queue.add(c);
+	}
+	
+	public void addToParty(Card c){
+		party.add(c);
+	}
+	
 }

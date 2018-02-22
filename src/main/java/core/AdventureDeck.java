@@ -69,7 +69,7 @@ public class AdventureDeck extends CardCollection{
 		cards.add(new AllyCard(AllyCard.SIR_LANCELOT_NAME, AllyCard.SIR_LANCELOT_BATTLE_POINTS, new NoSpecial()));
 		cards.add(new AllyCard(AllyCard.KING_ARTHUR_NAME, AllyCard.KING_ARTHUR_BATTLE_POINTS, new BidSpecial(AllyCard.KING_ARTHUR_BIDS)));
 		cards.add(new AllyCard(AllyCard.SIR_TRISTAN_NAME, AllyCard.SIR_TRISTAN_BATTLE_POINTS, new NoSpecial()));
-		cards.add(new AllyCard(AllyCard.SIR_PELLINORE_NAME, AllyCard.SIR_PELLINORE_BATTLE_POINTS, new NoSpecial()));// SOMETIMES SPECIAL and name is different
+		cards.add(new AllyCard(AllyCard.KING_PELLINORE_NAME, AllyCard.KING_PELLINORE_BATTLE_POINTS, new NoSpecial()));// SOMETIMES SPECIAL and name is different
 		cards.add(new AllyCard(AllyCard.SIR_GAWAIN_NAME, AllyCard.SIR_GAWAIN_BATTLE_POINTS, new NoSpecial()));
 		cards.add(new AllyCard(AllyCard.SIR_PERCIVAL_NAME, AllyCard.SIR_PERCIVAL_BATTLE_POINTS, new NoSpecial()));
 		cards.add(new AllyCard(AllyCard.QUEEN_GUINEVERE_NAME, AllyCard.QUEEN_GUINEVERE_BATTLE_POINTS, new BidSpecial(AllyCard.QUEEN_GUINEVERE_BIDS)));
