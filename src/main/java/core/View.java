@@ -18,6 +18,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -784,7 +785,9 @@ public class View extends Application {
 				state = control.getState();
 				initUI(stage);
 				System.out.println("was pressed");
-				ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");
+				
+
+				//ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");
 				
 		    }
 		});

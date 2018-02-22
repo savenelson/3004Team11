@@ -95,7 +95,6 @@ public class Model {
 		}
 	}
 	
-
 	public State getState(){
 		
 		State state = new State();
@@ -120,6 +119,7 @@ public class Model {
 		hand.remove(c);
 		players[currentPlayer].addToParty(c);
 	}
+	
 	public void stage(String iD) {
 		System.out.println("Model: IN STAGE");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
@@ -128,6 +128,7 @@ public class Model {
 		stages[currentStage].add(c);
 		System.out.println(stages[currentStage].toString());
 	}
+	
 	public void discard(String iD) {
 		System.out.println("Model: IN DISCARD");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
@@ -135,6 +136,7 @@ public class Model {
 		hand.remove(c);
 		adventureDeckDiscard.add(c);
 	}
+	
 	public void queue(String iD) {
 		System.out.println("Model: IN QUEUE");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
@@ -142,6 +144,7 @@ public class Model {
 		hand.remove(c);
 		players[currentPlayer].addToQueue(c);
 	}
+	
 	public void dequeue(String iD) {
 		System.out.println("Model: IN HAND");
 		CardCollection hand = this.players[this.currentPlayer].getQueue();
@@ -189,4 +192,5 @@ public class Model {
 		//set current StoryCard to SearchForHolyGrail
 		
 	}
+
 }
