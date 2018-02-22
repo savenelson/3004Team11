@@ -86,7 +86,7 @@ public class View extends Application {
 	public static final int colStoryCard = 10;
 	
 	public static final int rowStage = 80;
-	public static final int colStage = 110;
+	public static final int colStage = 340;
 	
 	public static final int rowPlayerARank = 271;
 	public static final int colPlayerARank = 1200;
