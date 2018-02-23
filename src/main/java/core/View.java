@@ -197,27 +197,32 @@ public class View extends Application {
 		
 		addPlayerARankToCanvas(canvas);
 		addPlayerBRankToCanvas(canvas);
+		addShieldsAToCanvas(canvas);
 		addPlayerAPartyToCanvas(canvas);
 		addPlayerBPartyToCanvas(canvas);
+		addShieldsBToCanvas(canvas);
+		
 		
 		if(state.getNumPlayers() == 3){
 			addPlayerCRankToCanvas(canvas);
 			addPlayerCPartyToCanvas(canvas);
+			addShieldsCToCanvas(canvas);
 		}
 
 
 		if(state.getNumPlayers() == 4){
+			addPlayerCRankToCanvas(canvas);
+			addPlayerCPartyToCanvas(canvas);
+			addShieldsCToCanvas(canvas);
 			addPlayerDRankToCanvas(canvas);
 			addPlayerDPartyToCanvas(canvas);
+			addShieldsDToCanvas(canvas);
 		}
 
 		
-		addShieldsToCanvas(canvas);
+		
 		addStoryCardToCanvas(canvas);
-		addShieldsAToCanvas(canvas);
-		addShieldsBToCanvas(canvas);
-		addShieldsCToCanvas(canvas);
-		addShieldsDToCanvas(canvas);
+		
 
 		addHandToCanvas(canvas);
 		addStageToCanvas(canvas);
