@@ -305,7 +305,8 @@ public class Model {
 		 * -	
 		 */
 		this.currentPlayer = 0;
-		this.currentStoryCard = this.storyDeck.getByID("126");
+		this.currentStoryCard = this.storyDeck.getByID("126"); //BOAR  hUNT
+		this.currentStoryCard = this.storyDeck.getByID("129"); //Quest of the green knight
 		this.players[0].addToHand(this.adventureDeck.getByID("42"));
 		this.players[0].addToHand(this.adventureDeck.getByID("43"));
 		this.players[0].addToHand(this.adventureDeck.getByID("1"));
