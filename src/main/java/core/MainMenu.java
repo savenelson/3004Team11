@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 
 public class MainMenu extends Pane{
 	private VBox buttonRow;
@@ -18,26 +19,18 @@ public class MainMenu extends Pane{
 	public MainMenu(View aView,Pane toChange) {
 		
 		view = aView;
-		mainPane = toChange;
-		
-		
+		mainPane = toChange;		
+
+	
+		Label  label = new Label("Pick one of the following the options below to begin your quest");
+		label.setPrefHeight(10);
+		label.setTextAlignment(TextAlignment.CENTER);
+		label.setFont(new Font("Ariel", 30));
 		
 		VBox col = new VBox();
-		
-		Label  label = new Label("Pick one of the following the options below to begin your quest");
-		label.setPrefHeight(100);
-		
-		label.setFont(new Font("Arial", 30));
-		
-		
-		
-		
 		VBox row = new VBox(75);
 		row.setAlignment(Pos.CENTER_RIGHT);
 		this.buttonRow = row;
-		
-		
-	
 		
 		Button human2 = new Button("2 Humans");
 		human2.setPrefSize(500, 150);

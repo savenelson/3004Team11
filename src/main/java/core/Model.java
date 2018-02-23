@@ -124,6 +124,18 @@ public class Model {
 		System.out.println("Model: IN STAGE");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
+		System.out.println("c=" + c.getImgName());
+		System.out.println("containsFoe = " + containsFoe(this.stages[currentStage]));
+		System.out.println("containsWeapon = " + containsWeapon(this.stages[currentStage], c.getImgName()));
+		if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
+				&& containsFoe(this.stages[currentStage])) {
+			//TODO control.alert
+			return;
+		}
+		if(containsWeapon(this.stages[currentStage], c.getImgName())) {
+			//TODO control.alert
+			return;
+		}
 		hand.remove(c);
 		stages[currentStage].add(c);
 		System.out.println(stages[currentStage].toString());
@@ -163,6 +175,33 @@ public class Model {
 		System.out.println("Current Player: " + (currentPlayer+1));
 	}
 	
+	public boolean containsFoe(CardCollection collection) {
+		
+		for (int i=0; i<collection.size(); i++) {
+			System.out.println(((AdventureCard) collection.get(i)).getSubType().toString());
+			System.out.println(((AdventureCard) collection.get(i)).getSubType().equals(AdventureCard.FOE));
+			if(((AdventureCard) collection.get(i)).getSubType().equals(AdventureCard.FOE)) {
+				//TODO need to ALERT the View
+
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean containsWeapon(CardCollection collection, String cardName) {
+		
+		for (int i=0; i<collection.size(); i++) {
+			if(collection.get(i).getImgName().equals(cardName)) {
+				//TODO need to ALERT the View
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	public void setScenario1() {
 		/**
 		 * Scenario 1
@@ -170,8 +209,8 @@ public class Model {
 		 * Number of Players: 	2
 		 * Current Player: 		Player 1
 		 * Rules that need to be implimented:
-		 * -	Only 1 Foe per stage
-		 * -	No repeated weapon/type in a stage
+		 * -	Only 1 Foe per stage - Nelson
+		 * -	No repeated weapon/type in a stage - Nelson
 		 * -	UI notification of above No repeated weapon/type in a stage
 		 * -	(stageN's BP) < (stageN+1's BP)
 		 * -	UI notification of above (stageN's BP) < (stageN+1's BP)
