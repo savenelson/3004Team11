@@ -15,9 +15,9 @@ public class CardPassingTest {
 		
 		Card [] cards= {d.pop(), d.pop(), d.pop()};
 		
-		p.pickUp(cards[0]);
-		p.pickUp(cards[1]);
-		p.pickUp(cards[2]);
+		p.addToHand(cards[0]);
+		p.addToHand(cards[1]);
+		p.addToHand(cards[2]);
 		
 		String s = "";
 		

@@ -112,8 +112,8 @@ public class Model {
 		return state;
 	}
 
-	public void play(String iD) {
-		System.out.println("Model: playing to party");
+	public void party(String iD) {
+		System.out.println("Model: playing to party");		
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
 		hand.remove(c);
@@ -124,8 +124,8 @@ public class Model {
 		System.out.println("Model: IN STAGE");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
-		hand.remove(c);
 		stages[currentStage].add(c);
+		hand.remove(c);		
 		System.out.println(stages[currentStage].toString());
 	}
 	
@@ -229,7 +229,7 @@ public class Model {
 		this.players[3].addToHand(this.adventureDeck.getByID("19"));
 		this.players[3].addToHand(this.adventureDeck.getByID("7"));
 		this.players[3].addToHand(this.adventureDeck.getByID("8"));
-		this.players[3].addToHand(adventureDeck.getByID("9"));
+		this.players[3].addToHand(this.adventureDeck.getByID("9"));
 		this.players[3].addToHand(this.adventureDeck.getByID("123"));
 		this.players[3].addToHand(this.adventureDeck.getByID("68"));
 		this.players[3].addToHand(this.adventureDeck.getByID("63"));
@@ -244,6 +244,20 @@ public class Model {
 		
 		System.out.println("Adventure Deck: \n" + this.storyDeck.toString());
 		//set current StoryCard to SearchForHolyGrail
+		
+	}
+	
+	public String getSubType(String ID, int currentPlayer){
+		Card c = players[currentPlayer].getHand().getByID(ID);
+		
+		
+		// THE MOST DISGUSTING SOLUTION TO A BUG EVER
+		if(c == null){
+			return AdventureCard.FOE;
+		}
+
+		
+		return ((AdventureCard) players[currentPlayer].getHand().getByID(ID)).getSubType();
 		
 	}
 

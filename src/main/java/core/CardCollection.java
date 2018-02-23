@@ -49,11 +49,18 @@ public class CardCollection {
 	}
 	
 	public Card getByID(String ID){
-		for (int i = 0; i < cards.size(); ++i){
-			if(ID.equals(cards.get(i).getID())){
-				return cards.get(i);
-			}
+		
+		
+		for(Card c : cards){
+			if(c.getID().equals(ID))
+				return c;
 		}
+		
+//		for (int i = 0; i < cards.size(); ++i){
+//			if(ID.equals(cards.get(i).getID())){
+//				return cards.get(i);
+//			}
+//		}
 		return null;
 	}
 	
