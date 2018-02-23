@@ -23,11 +23,11 @@ public class Model {
 	
 	int currentPlayer;
 	int currentStage;
+	int currentSponsor;
 
 	Card currentStoryCard;
 	
-	
-	private int numPlayers;
+	int numPlayers;
 	
 	CardCollection [] stages;
 	CardCollection [] getStages() {return stages;}
@@ -45,6 +45,7 @@ public class Model {
 		state = new State();
 		
 		currentPlayer = 0;
+		currentSponsor = 0;
 	}
 	
 	public void instantiatePlayers(int numPlayers){
@@ -107,13 +108,15 @@ public class Model {
 		
 		state.currentPlayer = this.currentPlayer;
 		
+		state.currentSponsor = this.currentSponsor;
+		
 		state.currentStoryCard = this.currentStoryCard;
 		
 		if (stages[currentStage]!=null) {
 			state.stage = this.stages[currentStage];
 		}
 		
-		state.setNumPlayers(control.view.menu.numberSelected());
+		state.numPlayers = this.numPlayers;
 		
 		return state;
 	}
@@ -191,14 +194,13 @@ public class Model {
 		//this will be how a player can chose to pass his turn to the next player
 		//also where we'll intercept the call at the Control to POPUP a blocker
 		// so that the previous and next players can't peek eachothers hands
-		this.currentPlayer = ((currentPlayer+1) % getState().getNumPlayers());
+		this.currentPlayer = ((currentPlayer+1) % getState().numPlayers);
 		
 		
 		
-		System.out.println("\n\n\nNum players: " + state.getNumPlayers());
+		System.out.println("\n\n\nNum players: " + state.numPlayers);
 		System.out.println("Current Player: " + (currentPlayer+1));
 	}
-	
 	
 	public int resolveQuest(){
 		return 0;
@@ -328,6 +330,41 @@ public class Model {
 	
 	public String getSubType(String ID, int currentPlayer){
 		return ((AdventureCard) players[currentPlayer].getHand().getByID(ID)).getSubType();
+	}
+
+	
+	public void playGame() {
+		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
+			
+			System.out.println("currentPlayer: " + this.currentPlayer);
+			System.out.println("currentSponsor: " + this.currentSponsor);
+			System.out.println("numPlayers: " + this.numPlayers);
+			
+			if(this.control.getSponsorDecision()){
+				//TODO play through quest
+			}
+			
+			else{
+				if(this.currentSponsor == this.numPlayers - 1){
+					this.currentSponsor = 0;
+					
+					nextPlayer();
+				}
+				else{
+					this.currentSponsor++;
+				}
+			}	
+		}
+	}
+	
+	
+	private void nextPlayer(){
+		if(this.currentPlayer == numPlayers - 1){
+			this.currentPlayer = 0;
+		}
+		else{
+			this.currentPlayer++;
+		}
 	}
 
 }
