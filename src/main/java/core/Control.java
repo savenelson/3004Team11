@@ -13,7 +13,6 @@ public class Control{
 		
 		gameInit(null);
 		
-		mainLoop();
 
 		//TEST
   
@@ -64,18 +63,27 @@ public class Control{
 		
 		while(!win){
 			
+			model.playGame();
+			
 			win = !win;
 			
 		}
 	}
+
+	public boolean getSponsorDecision(){
+		return view.popup("Would you like to sponsor this quest?");
+	}
 	
 	public State getState(){
-		State state = model.getState();
-		return state;
+		return model.getState();
+		
+	}
+	
+	public void setNumPlayers(int i){
+		model.numPlayers = i;
 	}
 	
 	public void printTestString(){System.out.println(testString);}
-
 
 	public void handClick(String clickType, String ID) {
 		if(clickType.equals(View.PARTY)){
