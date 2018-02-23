@@ -230,7 +230,7 @@ private void initUI2(Stage primaryStage) {
 		primaryStage.show();
 	}
 	
-	
+	 
 	private void addHandToCanvas(Pane canvas) {
 		CardCollection hand = state.players[state.currentPlayer].getHand();
 		
@@ -282,7 +282,7 @@ private void initUI2(Stage primaryStage) {
 				imgView.setFitWidth(cardMediumWidth);
 				imgView.setFitHeight(cardMediumHeight);
 				imgView.setPreserveRatio(true);
-				setHandCardControl(imgView);
+				setStageCardControl(imgView);
 				tile.getChildren().add(imgView);
 
 			} catch (FileNotFoundException e) {
@@ -339,7 +339,6 @@ private void initUI2(Stage primaryStage) {
 			imgView.setFitWidth(cardSmallWidth);
 			imgView.setFitHeight(cardSmallHeight);
 			imgView.setPreserveRatio(true);
-			setCardClickHandler();
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
@@ -357,7 +356,6 @@ private void initUI2(Stage primaryStage) {
 			imgView.setFitWidth(cardSmallWidth);
 			imgView.setFitHeight(cardSmallHeight);
 			imgView.setPreserveRatio(true);
-			setCardClickHandler();
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
@@ -375,7 +373,6 @@ private void initUI2(Stage primaryStage) {
 			imgView.setFitWidth(cardSmallWidth);
 			imgView.setFitHeight(cardSmallHeight);
 			imgView.setPreserveRatio(true);
-			setCardClickHandler();
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
@@ -393,7 +390,6 @@ private void initUI2(Stage primaryStage) {
 			imgView.setFitWidth(cardSmallWidth);
 			imgView.setFitHeight(cardSmallHeight);
 			imgView.setPreserveRatio(true);
-			setCardClickHandler();
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
@@ -827,16 +823,8 @@ private void initUI2(Stage primaryStage) {
 				state = control.getState();
 				initUI(stage);
 				System.out.println("was pressed");
-<<<<<<< HEAD
 			//	ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");
-=======
-				
-			
-				
 				stage.setScene(ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?", canvas));
-				
->>>>>>> 5276e20d2bf43503df627a936009074522933976
-				
 		    }
 		});
 
