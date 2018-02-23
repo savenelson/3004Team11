@@ -9,4 +9,11 @@ public class State {
 	public int currentPlayer;
 
 	public CardCollection stage;
+	
+	public int currentSponsor;
+	
+	private int numPlayers;
+	
+	public void setNumPlayers(int i){this.numPlayers = i;}
+	public int getNumPlayers(){return this.numPlayers;}
 }
