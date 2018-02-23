@@ -124,7 +124,7 @@ public class Model {
 		System.out.println("Model: IN STAGE");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
-		stages[currentStage].add(c);
+		//stages[currentStage].add(c);
 		hand.remove(c);		
 		System.out.println(stages[currentStage].toString());
 	}
@@ -239,26 +239,19 @@ public class Model {
 	}
 	
 	public void setScenario2() {
-		
 		initialShuffle();
-		
 		System.out.println("Adventure Deck: \n" + this.storyDeck.toString());
 		//set current StoryCard to SearchForHolyGrail
-		
 	}
 	
 	public String getSubType(String ID, int currentPlayer){
+		
 		Card c = players[currentPlayer].getHand().getByID(ID);
-		
-		
 		// THE MOST DISGUSTING SOLUTION TO A BUG EVER
-		if(c == null){
-			return AdventureCard.FOE;
-		}
-
-		
+//		if(c == null){
+//			return AdventureCard.FOE;
+//		}
 		return ((AdventureCard) players[currentPlayer].getHand().getByID(ID)).getSubType();
-		
 	}
 
 }
