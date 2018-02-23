@@ -24,7 +24,8 @@ public class Model {
 	int currentPlayer;
 	int currentStage;
 	int currentSponsor;
-
+	boolean currentPlayerNotSponsoring;
+	
 	Card currentStoryCard;
 	
 	int numPlayers;
@@ -46,6 +47,7 @@ public class Model {
 		
 		currentPlayer = 0;
 		currentSponsor = 0;
+		currentPlayerNotSponsoring = false;
 	}
 	
 	public void instantiatePlayers(int numPlayers){
@@ -54,7 +56,6 @@ public class Model {
 		for(int i = 0; i < numPlayers; ++i){
 			players[i] = new Player(i);
 		}
-		
 		currentPlayer = 0;
 	}
 	
@@ -118,6 +119,8 @@ public class Model {
 		
 		state.numPlayers = this.numPlayers;
 		
+		state.currentPlayerNotSponsoring = this.currentPlayerNotSponsoring; 
+		
 		return state;
 	}
 
@@ -145,11 +148,8 @@ public class Model {
 		System.out.println("containsWeapon = " + containsWeapon(this.stages[currentStage], c.getImgName()));
 		if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
 				&& containsFoe(this.stages[currentStage])) {
-<<<<<<< HEAD
-			control.alert("More than one FoE");
-=======
+
 			control.alert("Cannot stage more than one foe per quest stage.");
->>>>>>> cbbdfae2a7db6db1e3a184fff2887483f3eba872
 			return;
 		}
 		if(containsWeapon(this.stages[currentStage], c.getImgName())) {
@@ -194,7 +194,7 @@ public class Model {
 		//this will be how a player can chose to pass his turn to the next player
 		//also where we'll intercept the call at the Control to POPUP a blocker
 		// so that the previous and next players can't peek eachothers hands
-		this.currentPlayer = ((currentPlayer+1) % getState().numPlayers);
+		nextPlayer();
 		
 		
 		
@@ -347,10 +347,12 @@ public class Model {
 			else{
 				if(this.currentSponsor == this.numPlayers - 1){
 					this.currentSponsor = 0;
-					
 					nextPlayer();
+					this.currentPlayerNotSponsoring = false;
 				}
 				else{
+
+					this.currentPlayerNotSponsoring = true;
 					this.currentSponsor++;
 				}
 			}	
@@ -364,6 +366,7 @@ public class Model {
 		}
 		else{
 			this.currentPlayer++;
+			this.currentSponsor = this.currentPlayer;
 		}
 	}
 

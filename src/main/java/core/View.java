@@ -44,6 +44,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
@@ -927,8 +928,38 @@ public class View extends Application {
 				state = control.getState();
 				update(stage);
 				System.out.println("was pressed");
-			//	ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");
-				stage.setScene(ConfirmNextPlayer.display("On to the next person", state.currentPlayer, canvas));
+
+
+			//	ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");'''
+				
+
+				Label label = new Label("Click on the ready button when ready?");
+				
+				Button readyButton = new Button("Ready");
+				
+				readyButton.setOnAction(new EventHandler<ActionEvent>() {
+
+
+					@Override
+					public void handle(ActionEvent event) {
+						System.out.println("NOT BROKEN");
+						update(stage);
+					}
+				});
+				
+				
+				VBox layout = new VBox(5);
+				
+				layout.getChildren().addAll(label,readyButton);
+				Scene scene = new Scene(layout);
+				
+				scene.getStylesheets().add("style.css");
+				
+				//return scene;
+				
+				stage.setScene(scene);
+
+
 
 		    }
 		});
