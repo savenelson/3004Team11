@@ -928,7 +928,7 @@ public class View extends Application {
 				update(stage);
 				System.out.println("was pressed");
 			//	ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");
-				stage.setScene(ConfirmNextPlayer.display("On to the next person", state.currentPlayer, canvas, this));
+				stage.setScene(ConfirmNextPlayer.display("On to the next person", state.currentPlayer, canvas));
 
 		    }
 		});
