@@ -827,11 +827,15 @@ private void initUI2(Stage primaryStage) {
 				state = control.getState();
 				initUI(stage);
 				System.out.println("was pressed");
+<<<<<<< HEAD
+			//	ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");
+=======
 				
 			
 				
 				stage.setScene(ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?", canvas));
 				
+>>>>>>> 5276e20d2bf43503df627a936009074522933976
 				
 		    }
 		});
