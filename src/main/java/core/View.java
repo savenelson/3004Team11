@@ -174,9 +174,12 @@ public class View extends Application {
 		addPlayerBPartyToCanvas(canvas);
 		addPlayerCPartyToCanvas(canvas);
 		addPlayerDPartyToCanvas(canvas);
-		addShieldsToCanvas(canvas);
+		
+		
+	
 		addStoryCardToCanvas(canvas);
-
+		
+		
 		addHandToCanvas(canvas);
 		addStageToCanvas(canvas);
 
@@ -208,6 +211,10 @@ private void initUI2(Stage primaryStage) {
 		addPlayerCPartyToCanvas(canvas);
 		addPlayerDPartyToCanvas(canvas);
 		addStoryCardToCanvas(canvas);
+		addShieldsAToCanvas(canvas);
+		addShieldsBToCanvas(canvas);
+		addShieldsCToCanvas(canvas);
+		addShieldsDToCanvas(canvas);
 
 		addHandToCanvas(canvas);
 		addStageToCanvas(canvas);
@@ -561,14 +568,54 @@ private void initUI2(Stage primaryStage) {
 		//canvas.getChildren().addAll(imgView);
 	}
 	
-	private void addShieldsToCanvas(Pane canvas) {
+	private void addShieldsAToCanvas(Pane canvas) {
 		String playerA = Integer.toString(state.players[0].getShieldCount());
-		Label shieldsPlayerA = new Label("TEST");
+		//System.out.println(playerA);
+		Label shieldsPlayerA = new Label(playerA);
 		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
-		shieldsPlayerA.relocate(10, 10);
+		shieldsPlayerA.relocate(colPlayerARank+11,rowPlayerARank+72	);
+		
+		
 		
 		canvas.getChildren().addAll(shieldsPlayerA);
 	}
+	
+	private void addShieldsBToCanvas(Pane canvas) {
+		String playerA = Integer.toString(state.players[1].getShieldCount());
+		//System.out.println(playerA);
+		Label shieldsPlayerA = new Label(playerA);
+		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
+		shieldsPlayerA.relocate(colPlayerBRank+11,rowPlayerBRank+72	);
+		
+		
+		
+		canvas.getChildren().addAll(shieldsPlayerA);
+	}
+	private void addShieldsCToCanvas(Pane canvas) {
+		String playerA = Integer.toString(state.players[2].getShieldCount());
+		//System.out.println(playerA);
+		Label shieldsPlayerA = new Label(playerA);
+		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
+		shieldsPlayerA.relocate(colPlayerCRank+11,rowPlayerCRank+72	);
+		
+		
+		
+		canvas.getChildren().addAll(shieldsPlayerA);
+	}
+	private void addShieldsDToCanvas(Pane canvas) {
+		String playerA = Integer.toString(state.players[3].getShieldCount());
+		//System.out.println(playerA);
+		Label shieldsPlayerA = new Label(playerA);
+		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
+		shieldsPlayerA.relocate(colPlayerDRank+11,rowPlayerDRank+72	);
+		
+		
+		
+		canvas.getChildren().addAll(shieldsPlayerA);
+	}
+	
+	
+	
 	
 	private void setCardClickHandler() {
 		final Random rand = new Random();
