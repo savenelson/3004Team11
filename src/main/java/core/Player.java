@@ -4,8 +4,9 @@ public class Player {
 
 	private int playerNumber;
 
-	public boolean passedStage = true;
-	public boolean passedQuest = true;
+	public boolean passedStage = false;
+	public boolean passedQuest = false;
+	public boolean isSponsor = false;
 	
 	private RankCard rankCard;
 	public RankCard getRank(){return rankCard;}

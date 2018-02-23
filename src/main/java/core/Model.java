@@ -29,6 +29,7 @@ public class Model {
 	Card currentStoryCard;
 	
 	int numPlayers;
+	int numStages;
 	
 	CardCollection [] stages;
 	CardCollection [] getStages() {return stages;}
@@ -140,24 +141,26 @@ public class Model {
 	}
 	
 	public void stage(String iD) {
-		System.out.println("Model: IN STAGE");
-		CardCollection hand = this.players[this.currentPlayer].getHand();
-		Card c = hand.getByID(iD);
-		System.out.println("c=" + c.getImgName());
-		System.out.println("containsFoe = " + containsFoe(this.stages[currentStage]));
-		System.out.println("containsWeapon = " + containsWeapon(this.stages[currentStage], c.getImgName()));
-		if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
-				&& containsFoe(this.stages[currentStage])) {
-			control.alert("Cannot stage more than one foe per quest stage.");
-			return;
+		if(state.players[currentPlayer].isSponsor) {
+			System.out.println("Model: IN STAGE");
+			CardCollection hand = this.players[this.currentPlayer].getHand();
+			Card c = hand.getByID(iD);
+			System.out.println("c=" + c.getImgName());
+			System.out.println("containsFoe = " + containsFoe(this.stages[currentStage]));
+			System.out.println("containsWeapon = " + containsWeapon(this.stages[currentStage], c.getImgName()));
+			if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
+					&& containsFoe(this.stages[currentStage])) {
+				control.alert("Cannot stage more than one foe per quest stage.");
+				return;
+			}
+			if(containsWeapon(this.stages[currentStage], c.getImgName())) {
+				control.alert("Cannot stage duplicate weapons.");
+				return;
+			}
+			hand.remove(c);
+			stages[currentStage].add(c);
+			System.out.println(stages[currentStage].toString());
 		}
-		if(containsWeapon(this.stages[currentStage], c.getImgName())) {
-			control.alert("Cannot stage duplicate weapons.");
-			return;
-		}
-		hand.remove(c);
-		stages[currentStage].add(c);
-		System.out.println(stages[currentStage].toString());
 	}
 	
 	public void discard(String iD) {
@@ -205,25 +208,41 @@ public class Model {
 		return 0;
 	}
 	
-//	private int resolveStage(){
-//		/**
-//		 * To resolve a stage, we need to count the following data structures:
-//		 *    - players Queue
-//		 *    - players Party
-//		 *    - players Rank
-//		 *    vs
-//		 */
-//		int stageTotal = 0;
-//		
-//		//count BP's in the stage
-//		for (int i=0;i<this.stages[currentStage].size(); i++) {
-//			stageTotal += ((AdventureCard)this.stages[currentStage].get(i)).getBattlePoints();
-//		}
-//		
-//		for (int i=0; i<this.numPlayers; i++)
-//		
-//		return 0;
-//	}
+	private void resolveStage(){
+		/**
+		 * To resolve a stage, we need to count the following data structures:
+		 *    - players Queue
+		 *    - players Party
+		 *    - players Rank
+		 *    vs
+		 */
+		int stageTotal = 0;
+		
+		//count BP's in the stage
+		for (int i=0;i<this.stages[currentStage].size(); i++) {
+			stageTotal += ((AdventureCard)this.stages[currentStage].get(i)).getBattlePoints();
+		}
+		
+		int playerTotal = 0;
+		
+		for(int j=0;j<this.numPlayers;j++) {
+			for (int i=0; i<this.state.players[j].getParty().size(); i++) {
+				playerTotal += ((AdventureCard) this.state.players[j].getParty().get(i)).getBattlePoints();
+			}
+			for (int i=0; i<this.state.players[j].getQueue().size(); i++) {
+				playerTotal += ((AdventureCard) this.state.players[j].getQueue().get(i)).getBattlePoints();
+			}
+			for (int i=0; i<this.state.players[j].getQueue().size(); i++) {
+				playerTotal += (this.state.players[j].getRank()).getBattlePoints();
+			}
+			if(playerTotal>=stageTotal) {
+				this.state.players[j].passedStage = true;
+			}
+			playerTotal = 0;
+		}
+		
+		//TODO CALL THE RESOLVE SCREEN FOR VIEW
+	}
 	
 	public boolean containsFoe(CardCollection collection) {
 		
@@ -356,7 +375,17 @@ public class Model {
 			System.out.println("numPlayers: " + this.numPlayers);
 			
 			if(this.control.getSponsorDecision()){
+				state.players[currentPlayer].isSponsor = true;
+				
+				numStages = ((QuestCard)state.currentStoryCard).getNumStages();
+				System.out.println("NUMSTAGES" + numStages);
+				instantiateStages(numStages);
+				
 				//TODO play through quest
+				/**
+				 * - sponsor populates stages
+				 * - 
+				 */ 
 			}
 			
 			else{
