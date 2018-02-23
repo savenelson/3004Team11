@@ -129,7 +129,7 @@ public class Model {
 		System.out.println("containsWeapon = " + containsWeapon(this.stages[currentStage], c.getImgName()));
 		if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
 				&& containsFoe(this.stages[currentStage])) {
-			//TODO control.alert
+			control.alert("More than one FoE");
 			return;
 		}
 		if(containsWeapon(this.stages[currentStage], c.getImgName())) {
