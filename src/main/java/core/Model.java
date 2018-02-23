@@ -124,15 +124,17 @@ public class Model {
 		System.out.println("Model: IN STAGE");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
-		//check if there's already a Foe in the stage
-		if(containsFoe(stages[currentStage])) {
+		System.out.println("c=" + c.getImgName());
+		System.out.println("containsFoe = " + containsFoe(this.stages[currentStage]));
+		System.out.println("containsWeapon = " + containsWeapon(this.stages[currentStage], c.getImgName()));
+		if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
+				&& containsFoe(this.stages[currentStage])) {
+			//TODO control.alert
 			return;
 		}
-		//check if there's a duplicate weapon
-		if (((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) {
-			if (containsWeapon(hand, c.getImgName())) {
-				return;
-			}
+		if(containsWeapon(this.stages[currentStage], c.getImgName())) {
+			//TODO control.alert
+			return;
 		}
 		hand.remove(c);
 		stages[currentStage].add(c);
@@ -176,8 +178,8 @@ public class Model {
 	public boolean containsFoe(CardCollection collection) {
 		
 		for (int i=0; i<collection.size(); i++) {
-			System.out.println(((AdventureCard) collection.get(i)).getSubType());
-			System.out.println(AdventureCard.FOE);
+			System.out.println(((AdventureCard) collection.get(i)).getSubType().toString());
+			System.out.println(((AdventureCard) collection.get(i)).getSubType().equals(AdventureCard.FOE));
 			if(((AdventureCard) collection.get(i)).getSubType().equals(AdventureCard.FOE)) {
 				//TODO need to ALERT the View
 
