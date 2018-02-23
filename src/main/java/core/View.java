@@ -137,6 +137,8 @@ public class View extends Application {
 	private Stage stage;
 	private Pane canvas;
 	private TilePane tile;
+	
+	MainMenu menu = new MainMenu(this,null);
 
 	public View () {}
 
@@ -152,7 +154,7 @@ public class View extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		control = new Control(this);
 		stage = primaryStage;
-		initUI(primaryStage);
+		initUI2(primaryStage);
 	}
 
 	private void initUI(Stage primaryStage) {
@@ -178,7 +180,7 @@ public class View extends Application {
 		addStageToCanvas(canvas);
 
 		addStage(canvas);
-
+		
 		
 		Scene scene = new Scene(canvas, 1280, 720);
 		scene.getStylesheets().add("style.css");	
@@ -187,6 +189,47 @@ public class View extends Application {
 		primaryStage.setTitle("Quests of the Round Table");
 		primaryStage.show();
 	}
+private void initUI2(Stage primaryStage) {
+		
+		state = control.getState();
+		
+		canvas = new Pane();
+		canvas.setId("pane");
+		
+		addControlsToCanvas(canvas);
+		addQueueToCanvas(canvas);
+		addPlayerARankToCanvas(canvas);
+		addPlayerBRankToCanvas(canvas);
+		addPlayerCRankToCanvas(canvas);
+		addPlayerDRankToCanvas(canvas);
+		addPlayerAPartyToCanvas(canvas);
+		addPlayerBPartyToCanvas(canvas);
+		addPlayerCPartyToCanvas(canvas);
+		addPlayerDPartyToCanvas(canvas);
+		addStoryCardToCanvas(canvas);
+
+		addHandToCanvas(canvas);
+		addStageToCanvas(canvas);
+
+		addStage(canvas);
+		
+		MainMenu menu = new MainMenu(this,canvas);
+		
+		this.menu = menu;
+
+		menu.setId("pane");
+		
+		Scene scene = new Scene(menu, 1280, 720);
+		scene.getStylesheets().add("style.css");	
+		
+		System.out.println("Should be nice back");
+		
+		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		primaryStage.setTitle("Quests of the Round Table");
+		primaryStage.show();
+	}
+	
 	
 	private void addHandToCanvas(Pane canvas) {
 		CardCollection hand = state.players[state.currentPlayer].getHand();
@@ -289,7 +332,7 @@ public class View extends Application {
 	
 	private void addPlayerARankToCanvas(Pane canvas) {
 		try {
-			Image i = new Image(new FileInputStream(IMG_DIR + state.players[state.currentPlayer].getRank().getImgName() + GIF));
+			Image i = new Image(new FileInputStream(IMG_DIR + state.players[0].getRank().getImgName() + GIF));
 			imgView = new ImageView();
 			imgView.setImage(i);
 			imgView.relocate(colPlayerARank, rowPlayerARank);
@@ -307,7 +350,7 @@ public class View extends Application {
 	
 	private void addPlayerBRankToCanvas(Pane canvas) {
 		try {
-			Image i = new Image(new FileInputStream(IMG_DIR + state.players[state.currentPlayer].getRank().getImgName() + GIF));
+			Image i = new Image(new FileInputStream(IMG_DIR + state.players[1].getRank().getImgName() + GIF));
 			imgView = new ImageView();
 			imgView.setImage(i);
 			imgView.relocate(colPlayerBRank, rowPlayerBRank);
@@ -325,7 +368,7 @@ public class View extends Application {
 	
 	private void addPlayerCRankToCanvas(Pane canvas) {
 		try {
-			Image i = new Image(new FileInputStream(IMG_DIR + state.players[state.currentPlayer].getRank().getImgName() + GIF));
+			Image i = new Image(new FileInputStream(IMG_DIR + state.players[2].getRank().getImgName() + GIF));
 			imgView = new ImageView();
 			imgView.setImage(i);
 			imgView.relocate(colPlayerCRank, rowPlayerCRank);
@@ -343,7 +386,7 @@ public class View extends Application {
 	
 	private void addPlayerDRankToCanvas(Pane canvas) {
 		try {
-			Image i = new Image(new FileInputStream(IMG_DIR + state.players[state.currentPlayer].getRank().getImgName() + GIF));
+			Image i = new Image(new FileInputStream(IMG_DIR + state.players[3].getRank().getImgName() + GIF));
 			imgView = new ImageView();
 			imgView.setImage(i);
 			imgView.relocate(colPlayerDRank, rowPlayerDRank);
@@ -784,11 +827,23 @@ public class View extends Application {
 				state = control.getState();
 				initUI(stage);
 				System.out.println("was pressed");
-				ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");
+				
+			
+				
+				stage.setScene(ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?", canvas));
+				
 				
 		    }
 		});
 
 		canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
+	}
+	
+	
+	
+	public void sceneChange(Pane newScreen) {
+		Scene scene = new Scene(newScreen);
+		scene.getStylesheets().add("style.css");	
+		stage.setScene(scene);
 	}
 }
