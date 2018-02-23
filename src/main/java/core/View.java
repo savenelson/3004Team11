@@ -831,7 +831,7 @@ public class View extends Application {
 				fileMenu.show(anAlly,t.getScreenX(),t.getScreenY());
 			}
 		}
-			//boolean result= ConfirmCampaigneBox.display("Drawn new card", "Would you like to draw this card?");
+		
 		});
 	}
 	
@@ -917,7 +917,7 @@ public class View extends Application {
 				update(stage);
 				System.out.println("was pressed");
 			//	ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");
-				stage.setScene(ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?", canvas));
+				stage.setScene(ConfirmNextPlayer.display("On to the next person", state.currentPlayer, canvas, this));
 
 		    }
 		});
