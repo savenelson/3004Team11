@@ -14,5 +14,5 @@ public class State {
 	
 	public int numPlayers;
 	
-
+	public boolean currentPlayerNotSponsoring;
 }

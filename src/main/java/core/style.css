@@ -4,3 +4,10 @@
     -fx-background-size: 1280 720;
     -fx-background-position: center center;
 }
+
+#nextPlayer{
+    -fx-background-image: url("tableNextPlayer.gif");
+    -fx-background-repeat: stretch;   
+    -fx-background-size: 1280 720;
+    -fx-background-position: center center;
+}
