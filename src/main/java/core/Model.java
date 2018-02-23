@@ -452,37 +452,45 @@ public class Model {
 			System.out.println("currentSponsor: " + this.currentSponsor);
 			System.out.println("numPlayers: " + this.numPlayers);
 			
-			while((!((QuestCard) currentStoryCard).hasSponsor) && !(state.players[currentPlayer].declinedToSponsor)) {
+			int declineCount = 0;
+			
+			
+			/**
+			 * p1 sponsor?
+			 * 
+			 */
+			if(this.control.getSponsorDecision()){
+				state.players[currentPlayer].isSponsor = true;
+				((QuestCard) currentStoryCard).hasSponsor = true;
 				
-				if(this.control.getSponsorDecision()){
-					state.players[currentPlayer].isSponsor = true;
-					((QuestCard) currentStoryCard).hasSponsor = true;
-					
-					numStages = ((QuestCard)state.currentStoryCard).getNumStages();
-					System.out.println("NUMSTAGES" + numStages);
-					instantiateStages(numStages);
-					
-				}
-				
-				else{
-					state.players[currentPlayer].declinedToSponsor = true;
-					if(this.currentSponsor == this.numPlayers - 1){
-						this.currentSponsor = 0;
-						nextPlayer();
-						this.currentPlayerNotSponsoring = false;
-					}
-					else{
-
-						this.currentPlayerNotSponsoring = true;
-						this.currentSponsor++;
-					}
-				}	
-				
+				numStages = ((QuestCard)state.currentStoryCard).getNumStages();
+				System.out.println("NUMSTAGES" + numStages);
+				instantiateStages(numStages);
+			} else {
+				state.players[currentPlayer].declinedToSponsor = true;
 			}
 			
 			
-			
-			
+			while((!((QuestCard) currentStoryCard).hasSponsor) 
+					&& !(state.players[currentPlayer].declinedToSponsor) 
+					&& (declineCount < this.numPlayers)) {
+			}
+			//TODO PULL NEXT STORY CARD
+
+//			else{
+//				state.players[currentPlayer].declinedToSponsor = true;
+//				declineCount++;
+//				if(this.currentSponsor == this.numPlayers - 1){
+//					this.currentSponsor = 0;
+//					nextPlayer();
+//					this.currentPlayerNotSponsoring = false;
+//				}
+//				else{
+//
+//					this.currentPlayerNotSponsoring = true;
+//					this.currentSponsor++;
+//				}
+//			}
 		}
 	}
 	
