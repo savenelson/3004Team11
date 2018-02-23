@@ -4,6 +4,9 @@ public class Player {
 
 	private int playerNumber;
 
+	public boolean passedStage = false;
+	public boolean passedQuest = false;
+	public boolean isSponsor = false;
 	
 	private RankCard rankCard;
 	public RankCard getRank(){return rankCard;}
@@ -16,9 +19,6 @@ public class Player {
 	
 	private CardCollection queue;
 	public CardCollection getQueue() {return queue;}
-	
-	private int battlePoints;
-	public int getBattlePoints() {return battlePoints;}
 	
 	private int shieldCount;
 	public int getShieldCount() {return shieldCount;}

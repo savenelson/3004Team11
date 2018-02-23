@@ -19,6 +19,8 @@ public abstract class AdventureCard extends Card{
 		this.subType = subType;
 	}
 	
+	public abstract int getBattlePoints();
+	
 	@Override
 	public String getImgName() {
 		return this.subType + this.name;
