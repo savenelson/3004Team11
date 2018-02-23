@@ -12,16 +12,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
 public class MainMenu extends Pane{
-	private VBox buttonRow;
-	private View view;
-	private Pane mainPane;
 	public int numberPlayers;
-	public MainMenu(View aView,Pane toChange) {
-		
-		view = aView;
-		mainPane = toChange;		
+	public MainMenu(View aView, Pane toChange) {
 
-	
 		Label  label = new Label("Pick one of the following the options below to begin your quest");
 		label.setPrefHeight(10);
 		label.setTextAlignment(TextAlignment.CENTER);
@@ -30,53 +23,46 @@ public class MainMenu extends Pane{
 		VBox col = new VBox();
 		VBox row = new VBox(75);
 		row.setAlignment(Pos.CENTER_RIGHT);
-		this.buttonRow = row;
 		
 		Button human2 = new Button("2 Humans");
 		human2.setPrefSize(500, 150);
 		human2.setOnAction(new EventHandler<ActionEvent>() {
 			
 		    public void handle(ActionEvent e) {
-		        aView.sceneChange(toChange);
 		        numberPlayers = 2;
-		        
+		    	aView.update();
 		    }
 		});
+		
 		Button human3 = new Button("3 Humans");
 		human3.setPrefSize(500, 150);
 		human3.setOnAction(new EventHandler<ActionEvent>() {
 		    public void handle(ActionEvent e) {
-		    	aView.sceneChange(toChange);
 		    	numberPlayers = 3;
-		        
+		    	aView.update();
 		    }
 		});
+		
 		Button human4 = new Button("4 Humans");
 		human4.setPrefSize(500, 150);
 		human4.setOnAction(new EventHandler<ActionEvent>() {
 		    public void handle(ActionEvent e) {
-		    	aView.sceneChange(toChange);
 		    	numberPlayers = 4;
-		        
+		    	aView.update();	        
 		    }
 		});
 		
-		
-		
 		row.getChildren().addAll(human2,human3,human4);
-		
-	
-		
 		col.getChildren().addAll(label,row);
-
 		this.getChildren().add(col);
-		
+
 	}
 	
 	public int numberSelected() {
 		return numberPlayers;
 	}
-	}
+	
+}
 	
 	
 	

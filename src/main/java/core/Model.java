@@ -4,6 +4,8 @@ public class Model {
 
 	public Control control;
 	
+	State state;
+	
 	private Player [] players;
 	public Player [] getPlayers(){return players;}
 	
@@ -25,6 +27,8 @@ public class Model {
 	Card currentStoryCard;
 	
 	
+	private int numPlayers;
+	
 	CardCollection [] stages;
 	CardCollection [] getStages() {return stages;}
 	
@@ -37,6 +41,8 @@ public class Model {
 		
 		this.adventureDeckDiscard = new AdventureDeck();
 		this.storyDeckDiscard = new StoryDeck();
+		
+		state = new State();
 		
 		currentPlayer = 0;
 	}
@@ -95,10 +101,7 @@ public class Model {
 		}
 	}
 	
-
 	public State getState(){
-		
-		State state = new State();
 		
 		state.players = this.players;
 		
@@ -110,16 +113,19 @@ public class Model {
 			state.stage = this.stages[currentStage];
 		}
 		
+		state.setNumPlayers(control.view.menu.numberSelected());
+		
 		return state;
 	}
 
-	public void play(String iD) {
-		System.out.println("Model: playing to party");
+	public void party(String iD) {
+		System.out.println("Model: playing to party");		
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
 		hand.remove(c);
 		this.players[this.currentPlayer].addToParty(c);
 	}
+	
 	public void stage(String iD) {
 		System.out.println("Model: IN STAGE");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
@@ -129,17 +135,18 @@ public class Model {
 		System.out.println("containsWeapon = " + containsWeapon(this.stages[currentStage], c.getImgName()));
 		if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
 				&& containsFoe(this.stages[currentStage])) {
-			//TODO control.alert
+			control.alert("Cannot Stage More Than One Foe Per Quest Stage");
 			return;
 		}
 		if(containsWeapon(this.stages[currentStage], c.getImgName())) {
-			//TODO control.alert
+			control.alert("Cannot Stage Duplicate Weapons");
 			return;
 		}
 		hand.remove(c);
 		stages[currentStage].add(c);
 		System.out.println(stages[currentStage].toString());
 	}
+	
 	public void discard(String iD) {
 		System.out.println("Model: IN DISCARD");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
@@ -147,6 +154,7 @@ public class Model {
 		hand.remove(c);
 		adventureDeckDiscard.add(c);
 	}
+	
 	public void queue(String iD) {
 		System.out.println("Model: IN QUEUE");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
@@ -154,6 +162,7 @@ public class Model {
 		hand.remove(c);
 		players[currentPlayer].addToQueue(c);
 	}
+	
 	public void dequeue(String iD) {
 		System.out.println("Model: IN HAND");
 		CardCollection hand = this.players[this.currentPlayer].getQueue();
@@ -171,8 +180,21 @@ public class Model {
 		//this will be how a player can chose to pass his turn to the next player
 		//also where we'll intercept the call at the Control to POPUP a blocker
 		// so that the previous and next players can't peek eachothers hands
-		this.currentPlayer = ((currentPlayer+1) %4);
+		this.currentPlayer = ((currentPlayer+1) % getState().getNumPlayers());
+		
+		
+		
+		System.out.println("\n\n\nNum players: " + state.getNumPlayers());
 		System.out.println("Current Player: " + (currentPlayer+1));
+	}
+	
+	
+	public int resolveQuest(){
+		return 0;
+	}
+	
+	private int resolveStage(){
+		return 0;
 	}
 	
 	public boolean containsFoe(CardCollection collection) {
@@ -265,7 +287,7 @@ public class Model {
 		this.players[3].addToHand(this.adventureDeck.getByID("19"));
 		this.players[3].addToHand(this.adventureDeck.getByID("7"));
 		this.players[3].addToHand(this.adventureDeck.getByID("8"));
-		this.players[3].addToHand(adventureDeck.getByID("9"));
+		this.players[3].addToHand(this.adventureDeck.getByID("9"));
 		this.players[3].addToHand(this.adventureDeck.getByID("123"));
 		this.players[3].addToHand(this.adventureDeck.getByID("68"));
 		this.players[3].addToHand(this.adventureDeck.getByID("63"));
@@ -275,11 +297,13 @@ public class Model {
 	}
 	
 	public void setScenario2() {
-		
 		initialShuffle();
-		
 		System.out.println("Adventure Deck: \n" + this.storyDeck.toString());
 		//set current StoryCard to SearchForHolyGrail
-		
 	}
+	
+	public String getSubType(String ID, int currentPlayer){
+		return ((AdventureCard) players[currentPlayer].getHand().getByID(ID)).getSubType();
+	}
+
 }
