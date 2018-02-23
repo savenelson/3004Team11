@@ -843,7 +843,7 @@ public class View extends Application {
 				fileMenu.show(anAlly,t.getScreenX(),t.getScreenY());
 			}
 		}
-			//boolean result= ConfirmCampaigneBox.display("Drawn new card", "Would you like to draw this card?");
+		
 		});
 	}
 	
@@ -928,6 +928,7 @@ public class View extends Application {
 				state = control.getState();
 				update(stage);
 				System.out.println("was pressed");
+
 			//	ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");'''
 				
 
@@ -956,6 +957,7 @@ public class View extends Application {
 				//return scene;
 				
 				stage.setScene(scene);
+
 
 		    }
 		});
