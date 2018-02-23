@@ -217,6 +217,7 @@ private void initUI2(Stage primaryStage) {
 		
 		this.menu = menu;
 
+		menu.setId("pane");
 		
 		Scene scene = new Scene(menu, 1280, 720);
 		scene.getStylesheets().add("style.css");	
@@ -228,33 +229,7 @@ private void initUI2(Stage primaryStage) {
 		primaryStage.setTitle("Quests of the Round Table");
 		primaryStage.show();
 	}
-	private void addButton(MainMenu menu) {
-		Button human2 = new Button("2 Humans");
-		human2.setOnAction(new EventHandler<ActionEvent>() {
-		    public void handle(ActionEvent e) {
-		        sceneChange(canvas);
-		        
-		    }
-		});
-		Button human3 = new Button("3 Humans");
-		human3.setOnAction(new EventHandler<ActionEvent>() {
-		    public void handle(ActionEvent e) {
-		        sceneChange(canvas);
-		        
-		    }
-		});
-		Button human4 = new Button("4 Humans");
-		human4.setOnAction(new EventHandler<ActionEvent>() {
-		    public void handle(ActionEvent e) {
-		        sceneChange(canvas);
-		        
-		    }
-		});
-		
-		menu.addButtons(human2);
-		menu.addButtons(human3);
-		menu.addButtons(human4);
-	}
+	
 	
 	private void addHandToCanvas(Pane canvas) {
 		CardCollection hand = state.players[state.currentPlayer].getHand();
