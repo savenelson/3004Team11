@@ -95,7 +95,6 @@ public class Model {
 		}
 	}
 	
-
 	public State getState(){
 		
 		State state = new State();
@@ -113,13 +112,14 @@ public class Model {
 		return state;
 	}
 
-	public void play(String iD) {
-		System.out.println("Model: playing to party");
+	public void party(String iD) {
+		System.out.println("Model: playing to party");		
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
 		hand.remove(c);
 		this.players[this.currentPlayer].addToParty(c);
 	}
+	
 	public void stage(String iD) {
 		System.out.println("Model: IN STAGE");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
@@ -140,6 +140,7 @@ public class Model {
 		stages[currentStage].add(c);
 		System.out.println(stages[currentStage].toString());
 	}
+	
 	public void discard(String iD) {
 		System.out.println("Model: IN DISCARD");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
@@ -147,6 +148,7 @@ public class Model {
 		hand.remove(c);
 		adventureDeckDiscard.add(c);
 	}
+	
 	public void queue(String iD) {
 		System.out.println("Model: IN QUEUE");
 		CardCollection hand = this.players[this.currentPlayer].getHand();
@@ -154,6 +156,7 @@ public class Model {
 		hand.remove(c);
 		players[currentPlayer].addToQueue(c);
 	}
+	
 	public void dequeue(String iD) {
 		System.out.println("Model: IN HAND");
 		CardCollection hand = this.players[this.currentPlayer].getQueue();
@@ -265,7 +268,7 @@ public class Model {
 		this.players[3].addToHand(this.adventureDeck.getByID("19"));
 		this.players[3].addToHand(this.adventureDeck.getByID("7"));
 		this.players[3].addToHand(this.adventureDeck.getByID("8"));
-		this.players[3].addToHand(adventureDeck.getByID("9"));
+		this.players[3].addToHand(this.adventureDeck.getByID("9"));
 		this.players[3].addToHand(this.adventureDeck.getByID("123"));
 		this.players[3].addToHand(this.adventureDeck.getByID("68"));
 		this.players[3].addToHand(this.adventureDeck.getByID("63"));
@@ -282,4 +285,19 @@ public class Model {
 		//set current StoryCard to SearchForHolyGrail
 		
 	}
+	
+	public String getSubType(String ID, int currentPlayer){
+		Card c = players[currentPlayer].getHand().getByID(ID);
+		
+		
+		// THE MOST DISGUSTING SOLUTION TO A BUG EVER
+		if(c == null){
+			return AdventureCard.FOE;
+		}
+
+		
+		return ((AdventureCard) players[currentPlayer].getHand().getByID(ID)).getSubType();
+		
+	}
+
 }

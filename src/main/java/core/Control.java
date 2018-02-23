@@ -78,16 +78,15 @@ public class Control{
 
 
 	public void handClick(String clickType, String ID) {
-		if(clickType.equals(View.PLAY)){
-			model.play(ID);
+		if(clickType.equals(View.PARTY)){
+			model.party(ID);
 		} else if (clickType.equals(View.STAGE)) {
 			model.stage(ID);
 		} else if (clickType.equals(View.QUEUE)) {
 			model.queue(ID);
 		} else if (clickType.equals(View.DEQUEUE)) {
 			model.dequeue(ID);
-		}
-		else if(clickType.equals(View.DISCARD)){
+		}else if(clickType.equals(View.DISCARD)){
 			model.discard(ID);
 		}
 	}
@@ -107,5 +106,16 @@ public class Control{
 			model.endTurn();
 		}
 	}
+	
+	public String getSubType(String ID, int currentPlayer){
+		
+		return model.getSubType(ID, currentPlayer);
+		
+		
+	}
 
+	public void alert(String message){
+		view.alert(message);
+	}
+	
 }
