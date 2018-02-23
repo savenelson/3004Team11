@@ -12,8 +12,7 @@ public class State {
 	
 	public int currentSponsor;
 	
-	private int numPlayers;
+	public int numPlayers;
 	
-	public void setNumPlayers(int i){this.numPlayers = i;}
-	public int getNumPlayers(){return this.numPlayers;}
+
 }

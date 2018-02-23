@@ -50,6 +50,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -70,7 +71,7 @@ public class View extends Application {
 	public static final String STAGE5 = "Stage 5";
 	public static final String ENDTURN = "End Turn";
 	
-	private Control control;
+	public Control control;
 	private State state;
 		
 	public static final String IMG_DIR = "src/main/resources/core/cards/";
@@ -86,6 +87,9 @@ public class View extends Application {
 	public static final int rowHandTop6 = 390;
 	public static final int colHandTop6 = 10;
 	
+	//	public static final int colAdventureDeck;
+	
+	public static final int rowStoryCard = 80;
 	public static final int rowHandBottom6 = 565;
 	public static final int colHandBottom6 = 10;
 	
@@ -97,7 +101,6 @@ public class View extends Application {
 	public static final int rowAdventureDeck = 145;
 //	public static final int colAdventureDeck;
 	
-	public static final int rowStoryCard = 80;
 	public static final int colStoryCard = 10;
 	
 	public static final int rowStage = 80;
@@ -157,6 +160,20 @@ public class View extends Application {
 	private HBox Stage; 
 	
 
+	public boolean popup(String message){
+	    ButtonType yesButton = new ButtonType("Yes");
+	    ButtonType noButton = new ButtonType("No");
+		Alert alert = new Alert(null, message, yesButton, noButton);
+		Optional<ButtonType> yesOption = alert.showAndWait();
+
+		 if (yesOption.isPresent() && yesOption.get() == yesButton) {
+			 System.out.println("YEEEEEE");
+			 return true;
+		 }		
+		 System.out.println("NOOOOOOOOOO");
+		 return false;
+	}
+	
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -183,15 +200,21 @@ public class View extends Application {
 		
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
-		primaryStage.setTitle("Quests of the Round Table");
+		primaryStage.setTitle("Quests of the Round Table - Player" + (state.currentPlayer+1));
 		primaryStage.show();
 	}
 	
 	public void update(){
+		System.out.println("update(): menu.numberSelected(): " + menu.numberSelected());
+		control.setNumPlayers(menu.numberSelected());
 		update(stage);
+		control.mainLoop();
+
 	}
 	
 	public Pane drawCards(Pane canvas){
+		this.state = control.getState();
+		
 		addControlsToCanvas(canvas);
 		addQueueToCanvas(canvas);
 		
@@ -202,15 +225,16 @@ public class View extends Application {
 		addPlayerBPartyToCanvas(canvas);
 		addShieldsBToCanvas(canvas);
 		
+		System.out.println("drawCards: state.numPlayers: " + state.numPlayers);
 		
-		if(state.getNumPlayers() == 3){
+		if(state.numPlayers == 3){
 			addPlayerCRankToCanvas(canvas);
 			addPlayerCPartyToCanvas(canvas);
 			addShieldsCToCanvas(canvas);
 		}
 
 
-		if(state.getNumPlayers() == 4){
+		if(state.numPlayers == 4){
 			addPlayerCRankToCanvas(canvas);
 			addPlayerCPartyToCanvas(canvas);
 			addShieldsCToCanvas(canvas);
@@ -219,13 +243,13 @@ public class View extends Application {
 			addShieldsDToCanvas(canvas);
 		}
 
-		
-		
 		addStoryCardToCanvas(canvas);
 		
 
 		addHandToCanvas(canvas);
 		addStageToCanvas(canvas);
+
+		addStage(canvas);
 		
 		return canvas;
 	}
@@ -233,12 +257,11 @@ public class View extends Application {
 	private void initUI(Stage primaryStage) {
 		
 		state = control.getState();
-		
+
 		canvas = new Pane();
 		canvas.setId("pane");
 		
 		canvas = drawCards(canvas);
-		
 		MainMenu menu = new MainMenu(this,canvas);
 		
 		this.menu = menu;
@@ -256,6 +279,8 @@ public class View extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.setTitle("Quests of the Round Table");
 		primaryStage.show();
+		
+
 	}
 	
 	 
@@ -577,7 +602,6 @@ public class View extends Application {
 			imgView.setFitWidth(cardXLargeWidth);
 			imgView.setFitHeight(cardXLargeHeight);
 			imgView.setPreserveRatio(true);
-			setCardClickHandler();
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
@@ -594,8 +618,6 @@ public class View extends Application {
 		Label shieldsPlayerA = new Label(playerA);
 		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
 		shieldsPlayerA.relocate(colPlayerARank+11,rowPlayerARank+72	);
-		
-		
 		
 		canvas.getChildren().addAll(shieldsPlayerA);
 	}
@@ -634,17 +656,6 @@ public class View extends Application {
 		canvas.getChildren().addAll(shieldsPlayerA);
 	}
 	
-	
-	
-	
-	private void setCardClickHandler() {
-		final Random rand = new Random();
-		imgView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-//			logger.info("Card click detected");
-			Image randomImage = ranksImg[rand.nextInt(ranksImg.length)];
-			imgView.setImage(randomImage);
-		});
-	}
 	
 	private void setStageCardControl(ImageView anAdventure) {
 		ContextMenu fileMenu = new ContextMenu();
@@ -933,7 +944,7 @@ public class View extends Application {
 	}
 	
 	public void setNumPlayers(int i){
-		state.setNumPlayers(menu.numberSelected());
+		control.setNumPlayers(menu.numberSelected());
 	}
 	
 }
