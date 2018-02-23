@@ -148,7 +148,6 @@ public class Model {
 		System.out.println("containsWeapon = " + containsWeapon(this.stages[currentStage], c.getImgName()));
 		if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
 				&& containsFoe(this.stages[currentStage])) {
-
 			control.alert("Cannot stage more than one foe per quest stage.");
 			return;
 		}
@@ -206,9 +205,25 @@ public class Model {
 		return 0;
 	}
 	
-	private int resolveStage(){
-		return 0;
-	}
+//	private int resolveStage(){
+//		/**
+//		 * To resolve a stage, we need to count the following data structures:
+//		 *    - players Queue
+//		 *    - players Party
+//		 *    - players Rank
+//		 *    vs
+//		 */
+//		int stageTotal = 0;
+//		
+//		//count BP's in the stage
+//		for (int i=0;i<this.stages[currentStage].size(); i++) {
+//			stageTotal += ((AdventureCard)this.stages[currentStage].get(i)).getBattlePoints();
+//		}
+//		
+//		for (int i=0; i<this.numPlayers; i++)
+//		
+//		return 0;
+//	}
 	
 	public boolean containsFoe(CardCollection collection) {
 		
