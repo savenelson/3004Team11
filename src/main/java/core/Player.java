@@ -3,6 +3,7 @@ package core;
 public class Player {
 
 	private int playerNumber;
+
 	
 	private RankCard rankCard;
 	public RankCard getRank(){return rankCard;}
@@ -19,6 +20,12 @@ public class Player {
 	private int battlePoints;
 	public int getBattlePoints() {return battlePoints;}
 	
+	private int shieldCount;
+	public int getShieldCount() {return shieldCount;}
+	public void addShields(int num) {
+		this.shieldCount += num;
+	}
+	
 	public Player(int playerNumber){
 		
 		hand = new CardCollection();
@@ -28,6 +35,8 @@ public class Player {
 		party = new CardCollection();
 		
 		this.playerNumber = playerNumber;
+		
+		shieldCount = 0;
 		
 		rankCard = new RankCard(RankCard.SQUIRE);
 	}

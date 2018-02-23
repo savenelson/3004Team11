@@ -54,6 +54,7 @@ public class Control{
 		model.setScenario1();	//UNCOMMENT FOR SCEN 1
 		
 //		model.setScenario2();	//UNCOMMENT FOR SCEN 2
+		
 	}
 
 	public void mainLoop(){
