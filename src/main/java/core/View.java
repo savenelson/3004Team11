@@ -871,8 +871,9 @@ public class View extends Application {
 	
 	private void addControlsToCanvas(Pane canvas) {
 		// our coordinates 
-		
+		Button[] stageButtons = new Button[5];
 		Button stage1 = new Button (STAGE1);
+		stageButtons[0] = stage1;
 		stage1.relocate(240,80);
 		stage1.setMinWidth(80);
 		stage1.setOnAction(new EventHandler<ActionEvent>() {
@@ -883,6 +884,7 @@ public class View extends Application {
 		    }
 		});
 		Button stage2 = new Button (STAGE2);
+		stageButtons[1] = stage2;
 		stage2.relocate(240,110);
 		stage2.setMinWidth(80);
 		stage2.setOnAction(new EventHandler<ActionEvent>() {
@@ -893,6 +895,7 @@ public class View extends Application {
 		    }
 		});
 		Button stage3 = new Button (STAGE3);
+		stageButtons[2] = stage3;
 		stage3.relocate(240,140);
 		stage3.setMinWidth(80);
 		stage3.setOnAction(new EventHandler<ActionEvent>() {
@@ -903,6 +906,7 @@ public class View extends Application {
 		    }
 		});
 		Button stage4 = new Button (STAGE4);
+		stageButtons[3] = stage4;
 		stage4.relocate(240,170);
 		stage4.setMinWidth(80);
 		stage4.setOnAction(new EventHandler<ActionEvent>() {
@@ -913,6 +917,7 @@ public class View extends Application {
 		    }
 		});
 		Button stage5 = new Button (STAGE5);
+		stageButtons[4] = stage5;
 		stage5.relocate(240,200);
 		stage5.setMinWidth(80);
 		stage5.setOnAction(new EventHandler<ActionEvent>() {
@@ -964,7 +969,10 @@ public class View extends Application {
 
 		    }
 		});
-
+		int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
+		for(int i = 4; i!=numStages-1; i--) {
+			stageButtons[i].setDisable(true);
+		}
 		canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
 	}
 	
