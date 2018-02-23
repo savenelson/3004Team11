@@ -374,32 +374,37 @@ public class Model {
 			System.out.println("currentSponsor: " + this.currentSponsor);
 			System.out.println("numPlayers: " + this.numPlayers);
 			
-			if(this.control.getSponsorDecision()){
-				state.players[currentPlayer].isSponsor = true;
+			while((!((QuestCard) currentStoryCard).hasSponsor) && !(state.players[currentPlayer].declinedToSponsor)) {
 				
-				numStages = ((QuestCard)state.currentStoryCard).getNumStages();
-				System.out.println("NUMSTAGES" + numStages);
-				instantiateStages(numStages);
+				if(this.control.getSponsorDecision()){
+					state.players[currentPlayer].isSponsor = true;
+					((QuestCard) currentStoryCard).hasSponsor = true;
+					
+					numStages = ((QuestCard)state.currentStoryCard).getNumStages();
+					System.out.println("NUMSTAGES" + numStages);
+					instantiateStages(numStages);
+					
+				}
 				
-				//TODO play through quest
-				/**
-				 * - sponsor populates stages
-				 * - 
-				 */ 
+				else{
+					state.players[currentPlayer].declinedToSponsor = true;
+					if(this.currentSponsor == this.numPlayers - 1){
+						this.currentSponsor = 0;
+						nextPlayer();
+						this.currentPlayerNotSponsoring = false;
+					}
+					else{
+
+						this.currentPlayerNotSponsoring = true;
+						this.currentSponsor++;
+					}
+				}	
+				
 			}
 			
-			else{
-				if(this.currentSponsor == this.numPlayers - 1){
-					this.currentSponsor = 0;
-					nextPlayer();
-					this.currentPlayerNotSponsoring = false;
-				}
-				else{
-
-					this.currentPlayerNotSponsoring = true;
-					this.currentSponsor++;
-				}
-			}	
+			
+			
+			
 		}
 	}
 	
