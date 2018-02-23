@@ -145,7 +145,11 @@ public class Model {
 		System.out.println("containsWeapon = " + containsWeapon(this.stages[currentStage], c.getImgName()));
 		if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
 				&& containsFoe(this.stages[currentStage])) {
+<<<<<<< HEAD
+			control.alert("More than one FoE");
+=======
 			control.alert("Cannot stage more than one foe per quest stage.");
+>>>>>>> cbbdfae2a7db6db1e3a184fff2887483f3eba872
 			return;
 		}
 		if(containsWeapon(this.stages[currentStage], c.getImgName())) {

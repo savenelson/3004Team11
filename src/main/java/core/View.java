@@ -243,13 +243,13 @@ public class View extends Application {
 			addShieldsDToCanvas(canvas);
 		}
 
-		
-		
 		addStoryCardToCanvas(canvas);
 		
 
 		addHandToCanvas(canvas);
 		addStageToCanvas(canvas);
+
+		addStage(canvas);
 		
 		return canvas;
 	}
@@ -262,7 +262,6 @@ public class View extends Application {
 		canvas.setId("pane");
 		
 		canvas = drawCards(canvas);
-		
 		MainMenu menu = new MainMenu(this,canvas);
 		
 		this.menu = menu;
@@ -619,8 +618,6 @@ public class View extends Application {
 		Label shieldsPlayerA = new Label(playerA);
 		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
 		shieldsPlayerA.relocate(colPlayerARank+11,rowPlayerARank+72	);
-		
-		
 		
 		canvas.getChildren().addAll(shieldsPlayerA);
 	}
