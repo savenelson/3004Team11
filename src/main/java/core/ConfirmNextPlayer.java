@@ -17,10 +17,6 @@ public class ConfirmNextPlayer {
 		
 		Label label = new Label(message);
 		
-
-		
-		Label label = new Label(message);	
-		
 		Button readyButton = new Button("Ready");
 		
 		readyButton.setOnAction(e->{
