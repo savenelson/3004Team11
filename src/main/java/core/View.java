@@ -211,6 +211,7 @@ private void initUI2(Stage primaryStage) {
 
 		addHandToCanvas(canvas);
 		addStageToCanvas(canvas);
+		addShieldsToCanvas(canvas);
 
 		addStage(canvas);
 		
@@ -563,9 +564,11 @@ private void initUI2(Stage primaryStage) {
 	
 	private void addShieldsToCanvas(Pane canvas) {
 		String playerA = Integer.toString(state.players[0].getShieldCount());
-		Label shieldsPlayerA = new Label("TEST");
+		
+		
+		Label shieldsPlayerA = new Label("3");
 		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
-		shieldsPlayerA.relocate(10, 10);
+		shieldsPlayerA.relocate(1110, 600);
 		
 		canvas.getChildren().addAll(shieldsPlayerA);
 	}
