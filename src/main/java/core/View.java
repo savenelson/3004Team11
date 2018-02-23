@@ -145,6 +145,8 @@ public class View extends Application {
 	private Stage stage;
 	private Pane canvas;
 	private TilePane tile;
+	
+	MainMenu menu = new MainMenu(this,null);
 
 	public View () {}
 
@@ -160,10 +162,43 @@ public class View extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		control = new Control(this);
 		stage = primaryStage;
-		initUI(primaryStage);
+		initUI2(primaryStage);
 	}
 
 	private void initUI(Stage primaryStage) {
+		
+		state = control.getState();
+		
+		canvas = new Pane();
+		canvas.setId("pane");
+		
+		addControlsToCanvas(canvas);
+		addQueueToCanvas(canvas);
+		addPlayerARankToCanvas(canvas);
+		addPlayerBRankToCanvas(canvas);
+		addPlayerCRankToCanvas(canvas);
+		addPlayerDRankToCanvas(canvas);
+		addPlayerAPartyToCanvas(canvas);
+		addPlayerBPartyToCanvas(canvas);
+		addPlayerCPartyToCanvas(canvas);
+		addPlayerDPartyToCanvas(canvas);
+		addShieldsToCanvas(canvas);
+		addStoryCardToCanvas(canvas);
+
+		addHandToCanvas(canvas);
+		addStageToCanvas(canvas);
+
+		addStage(canvas);
+
+		
+		Scene scene = new Scene(canvas, 1280, 720);
+		scene.getStylesheets().add("style.css");	
+		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		primaryStage.setTitle("Quests of the Round Table");
+		primaryStage.show();
+	}
+private void initUI2(Stage primaryStage) {
 		
 		state = control.getState();
 		
@@ -187,14 +222,24 @@ public class View extends Application {
 
 		addStage(canvas);
 		
-		Scene scene = new Scene(canvas, 1280, 720);
+		MainMenu menu = new MainMenu(this,canvas);
+		
+		this.menu = menu;
+
+		menu.setId("pane");
+		
+		Scene scene = new Scene(menu, 1280, 720);
 		scene.getStylesheets().add("style.css");	
+		
+		System.out.println("Should be nice back");
+		
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.setTitle("Quests of the Round Table");
 		primaryStage.show();
 	}
 	
+	 
 	private void addHandToCanvas(Pane canvas) {
 		CardCollection hand = state.players[state.currentPlayer].getHand();
 		
@@ -246,7 +291,7 @@ public class View extends Application {
 				imgView.setFitWidth(cardMediumWidth);
 				imgView.setFitHeight(cardMediumHeight);
 				imgView.setPreserveRatio(true);
-				setHandCardControl(imgView);
+				setStageCardControl(imgView);
 				tile.getChildren().add(imgView);
 
 			} catch (FileNotFoundException e) {
@@ -296,14 +341,13 @@ public class View extends Application {
 	
 	private void addPlayerARankToCanvas(Pane canvas) {
 		try {
-			Image i = new Image(new FileInputStream(IMG_DIR + state.players[state.currentPlayer].getRank().getImgName() + GIF));
+			Image i = new Image(new FileInputStream(IMG_DIR + state.players[0].getRank().getImgName() + GIF));
 			imgView = new ImageView();
 			imgView.setImage(i);
 			imgView.relocate(colPlayerARank, rowPlayerARank);
 			imgView.setFitWidth(cardSmallWidth);
 			imgView.setFitHeight(cardSmallHeight);
 			imgView.setPreserveRatio(true);
-			setCardClickHandler();
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
@@ -314,14 +358,13 @@ public class View extends Application {
 	
 	private void addPlayerBRankToCanvas(Pane canvas) {
 		try {
-			Image i = new Image(new FileInputStream(IMG_DIR + state.players[state.currentPlayer].getRank().getImgName() + GIF));
+			Image i = new Image(new FileInputStream(IMG_DIR + state.players[1].getRank().getImgName() + GIF));
 			imgView = new ImageView();
 			imgView.setImage(i);
 			imgView.relocate(colPlayerBRank, rowPlayerBRank);
 			imgView.setFitWidth(cardSmallWidth);
 			imgView.setFitHeight(cardSmallHeight);
 			imgView.setPreserveRatio(true);
-			setCardClickHandler();
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
@@ -332,14 +375,13 @@ public class View extends Application {
 	
 	private void addPlayerCRankToCanvas(Pane canvas) {
 		try {
-			Image i = new Image(new FileInputStream(IMG_DIR + state.players[state.currentPlayer].getRank().getImgName() + GIF));
+			Image i = new Image(new FileInputStream(IMG_DIR + state.players[2].getRank().getImgName() + GIF));
 			imgView = new ImageView();
 			imgView.setImage(i);
 			imgView.relocate(colPlayerCRank, rowPlayerCRank);
 			imgView.setFitWidth(cardSmallWidth);
 			imgView.setFitHeight(cardSmallHeight);
 			imgView.setPreserveRatio(true);
-			setCardClickHandler();
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
@@ -350,14 +392,13 @@ public class View extends Application {
 	
 	private void addPlayerDRankToCanvas(Pane canvas) {
 		try {
-			Image i = new Image(new FileInputStream(IMG_DIR + state.players[state.currentPlayer].getRank().getImgName() + GIF));
+			Image i = new Image(new FileInputStream(IMG_DIR + state.players[3].getRank().getImgName() + GIF));
 			imgView = new ImageView();
 			imgView.setImage(i);
 			imgView.relocate(colPlayerDRank, rowPlayerDRank);
 			imgView.setFitWidth(cardSmallWidth);
 			imgView.setFitHeight(cardSmallHeight);
 			imgView.setPreserveRatio(true);
-			setCardClickHandler();
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
@@ -506,7 +547,6 @@ public class View extends Application {
 		}
 	}
 	
-	
 	private void addStoryCardToCanvas(Pane canvas) {
 		
 		System.out.println(state.currentStoryCard.getImgName());
@@ -529,9 +569,15 @@ public class View extends Application {
 		//canvas.getChildren().addAll(imgView);
 	}
 	
+	private void addShieldsToCanvas(Pane canvas) {
+		String playerA = Integer.toString(state.players[0].getShieldCount());
+		Label shieldsPlayerA = new Label("TEST");
+		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
+		shieldsPlayerA.relocate(10, 10);
+		
+		canvas.getChildren().addAll(shieldsPlayerA);
+	}
 	
-	
-
 	private void setCardClickHandler() {
 		final Random rand = new Random();
 		imgView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -730,13 +776,11 @@ public class View extends Application {
 		});
 	}
 	
-
-
 	private void addStage(Pane canavas) {
 		
 		Stage = new HBox();
 		
-		Stage.relocate(colQueue, rowQueue-100);
+		Stage.relocate(colStage, rowStage);
 		
 		
 		canavas.getChildren().addAll(Stage);
@@ -751,7 +795,6 @@ public class View extends Application {
 		stage.getChildren().add(cardAdded);
 	}
 	
-
 	private void addControlsToCanvas(Pane canvas) {
 		// our coordinates 
 		
@@ -814,13 +857,19 @@ public class View extends Application {
 				state = control.getState();
 				initUI(stage);
 				System.out.println("was pressed");
-				
+			//	ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");
+				stage.setScene(ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?", canvas));
 
-				//ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");
-				
 		    }
 		});
 
 		canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
+	}
+	
+
+	public void sceneChange(Pane newScreen) {
+		Scene scene = new Scene(newScreen);
+		scene.getStylesheets().add("style.css");	
+		stage.setScene(scene);
 	}
 }
