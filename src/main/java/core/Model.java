@@ -249,7 +249,8 @@ public class Model {
 		 * -
 		 */
 		this.currentPlayer = 0;
-		this.currentStoryCard = this.storyDeck.getByID("126");
+		this.currentStoryCard = this.storyDeck.getByID("126"); //BOAR  hUNT
+		this.currentStoryCard = this.storyDeck.getByID("129"); //Quest of the green knight
 		this.players[0].addToHand(this.adventureDeck.getByID("42"));
 		this.players[0].addToHand(this.adventureDeck.getByID("43"));
 		this.players[0].addToHand(this.adventureDeck.getByID("1"));
@@ -387,4 +388,58 @@ public class Model {
 		return ((AdventureCard) players[currentPlayer].getHand().getByID(ID)).getSubType();
 	}
 
+	
+	public void playGame() {
+		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
+			
+			System.out.println("currentPlayer: " + this.currentPlayer);
+			System.out.println("currentSponsor: " + this.currentSponsor);
+			System.out.println("numPlayers: " + this.numPlayers);
+			
+			while((!((QuestCard) currentStoryCard).hasSponsor) && !(state.players[currentPlayer].declinedToSponsor)) {
+				
+				if(this.control.getSponsorDecision()){
+					state.players[currentPlayer].isSponsor = true;
+					((QuestCard) currentStoryCard).hasSponsor = true;
+					
+					numStages = ((QuestCard)state.currentStoryCard).getNumStages();
+					System.out.println("NUMSTAGES" + numStages);
+					instantiateStages(numStages);
+					
+				}
+				
+				else{
+					state.players[currentPlayer].declinedToSponsor = true;
+					if(this.currentSponsor == this.numPlayers - 1){
+						this.currentSponsor = 0;
+						nextPlayer();
+						this.currentPlayerNotSponsoring = false;
+					}
+					else{
+
+						this.currentPlayerNotSponsoring = true;
+						this.currentSponsor++;
+					}
+				}	
+				
+			}
+			
+			
+			
+			
+		}
+	}
+	
+	
+	private void nextPlayer(){
+		if(this.currentPlayer == numPlayers - 1){
+			this.currentPlayer = 0;
+		}
+		else{
+			this.currentPlayer++;
+			this.currentSponsor = this.currentPlayer;
+		}
+	}
+
+ 
 }

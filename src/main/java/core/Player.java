@@ -7,6 +7,7 @@ public class Player {
 	public boolean passedStage = false;
 	public boolean passedQuest = false;
 	public boolean isSponsor = false;
+	public boolean declinedToSponsor = false;
 	
 	private RankCard rankCard;
 	public RankCard getRank(){return rankCard;}

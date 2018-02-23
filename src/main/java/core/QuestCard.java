@@ -50,6 +50,7 @@ public class QuestCard extends StoryCard{
 	public static final String BOAR_HUNT_FOE  = "Boar";
 	public static final String SAXON_RAIDERS_FOE  = "All Saxons";
 	
+	public boolean hasSponsor = false;
 	
 	private int numberStages;
 	public int getNumStages(){return this.numberStages;}
