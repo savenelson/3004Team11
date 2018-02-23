@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
+import java.util.Optional;
 import java.util.Random;
 
 import org.apache.logging.log4j.LogManager;
@@ -18,8 +19,12 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -39,7 +44,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.FontWeight;
@@ -50,6 +57,7 @@ import javafx.util.Duration;
 public class View extends Application {
 	
 	public static final String PLAY = "Play";
+	public static final String PARTY = "Party";
 	public static final String DISCARD = "Discard";
 	public static final String STAGE = "Stage";
 	public static final String QUEUE = "Queue";
@@ -181,7 +189,7 @@ public class View extends Application {
 		addStageToCanvas(canvas);
 
 		addStage(canvas);
-		
+
 		
 		Scene scene = new Scene(canvas, 1280, 720);
 		scene.getStylesheets().add("style.css");	
@@ -643,6 +651,17 @@ private void initUI2(Stage primaryStage) {
 		});
 	}
 	
+	
+	public void alert(String message){
+		Alert alert = new Alert(AlertType.ERROR, message);
+		Optional<ButtonType> result = alert.showAndWait();
+		 if (result.isPresent() && result.get() == ButtonType.OK) {
+		     
+			 System.out.println("YEEEEEE");
+			 //formatSystem();
+		 }
+	}
+	
 	private void setHandCardControl(ImageView anAdventure) {
 		ContextMenu fileMenu = new ContextMenu();
 		
@@ -650,33 +669,48 @@ private void initUI2(Stage primaryStage) {
 
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println(((MenuItem) event.getSource()).getText());					
-				System.out.println(anAdventure.getId());
-				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
-				state = control.getState();
+				//System.out.println(((MenuItem) event.getSource()).getText());					
+				//System.out.println(anAdventure.getId());
 				
+				state = control.getState();				
+				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
+				state = control.getState();				
 				initUI(stage);
-
-				//addHandToCanvas(canvas);
 			}
 		};
 
-		MenuItem playItem = new MenuItem(PLAY);
-		playItem.setOnAction(eh);
-		fileMenu.getItems().add(playItem);
+		state = control.getState();
+		
+		String subType = control.getSubType(anAdventure.getId(), state.currentPlayer);
+		
+		if(subType.equals(AdventureCard.ALLY) ||
+		   subType.equals(AdventureCard.AMOUR)  ){
+			MenuItem playItem = new MenuItem(PARTY);
+			playItem.setOnAction(eh);
+			fileMenu.getItems().add(playItem);
+		}
+		
+		else if(subType.equals(AdventureCard.FOE) ||
+		        subType.equals(AdventureCard.TEST)  ){
+			MenuItem playItem = new MenuItem(STAGE);
+			playItem.setOnAction(eh);
+			fileMenu.getItems().add(playItem);
+		}
+		
+		else if(subType.equals(AdventureCard.WEAPON)){
+			MenuItem stageItem = new MenuItem(STAGE);
+			stageItem.setOnAction(eh);
+			fileMenu.getItems().add(stageItem);
+			
+			MenuItem queueItem = new MenuItem(QUEUE);
+			queueItem.setOnAction(eh);
+			fileMenu.getItems().add(queueItem);
+		}
 		
 		MenuItem discardItem = new MenuItem(DISCARD);
 		discardItem.setOnAction(eh);
 		fileMenu.getItems().add(discardItem);
 		
-		MenuItem stageItem = new MenuItem(STAGE);
-		stageItem.setOnAction(eh);
-		fileMenu.getItems().add(stageItem);
-		
-		MenuItem queueItem = new MenuItem(QUEUE);
-		queueItem.setOnAction(eh);
-		fileMenu.getItems().add(queueItem);
-
 		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
 		@Override
@@ -702,6 +736,7 @@ private void initUI2(Stage primaryStage) {
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
 				state = control.getState();
 				
+
 				initUI(stage);
 
 				//addHandToCanvas(canvas);
@@ -765,10 +800,6 @@ private void initUI2(Stage primaryStage) {
 	
 	private void addControlsToCanvas(Pane canvas) {
 		// our coordinates 
-
-//		Label labelHand = new Label("Hand");
-//		labelHand.setFont(Font.font("Serif", FontWeight.NORMAL, 20));
-//		labelHand.relocate(0, 0);
 		
 		Button stage1 = new Button (STAGE1);
 		stage1.relocate(240,80);
@@ -831,6 +862,7 @@ private void initUI2(Stage primaryStage) {
 				System.out.println("was pressed");
 			//	ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");
 				stage.setScene(ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?", canvas));
+
 		    }
 		});
 

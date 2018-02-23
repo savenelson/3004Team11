@@ -17,7 +17,9 @@ public class ConfirmNextPlayer {
 		
 		Label label = new Label(message);
 		
+
 		
+		Label label = new Label(message);	
 		
 		Button readyButton = new Button("Ready");
 		
@@ -35,7 +37,7 @@ public class ConfirmNextPlayer {
 		
 		//window.setScene(scene);
 		//window.showAndWait();
-		
+
 	}
 	
 	
