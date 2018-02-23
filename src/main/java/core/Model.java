@@ -122,6 +122,13 @@ public class Model {
 		System.out.println("Model: playing to party");		
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
+		
+		if((((AdventureCard) c).getSubType().equals(AdventureCard.AMOUR)) 
+				&& containsAmour(this.players[this.currentPlayer].getParty())) {
+			control.alert("Cannot have more than one amour in party.");
+			return;
+		}
+		
 		hand.remove(c);
 		this.players[this.currentPlayer].addToParty(c);
 	}
@@ -135,11 +142,11 @@ public class Model {
 		System.out.println("containsWeapon = " + containsWeapon(this.stages[currentStage], c.getImgName()));
 		if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
 				&& containsFoe(this.stages[currentStage])) {
-			control.alert("Cannot Stage More Than One Foe Per Quest Stage");
+			control.alert("Cannot stage more than one foe per quest stage.");
 			return;
 		}
 		if(containsWeapon(this.stages[currentStage], c.getImgName())) {
-			control.alert("Cannot Stage Duplicate Weapons");
+			control.alert("Cannot stage duplicate weapons.");
 			return;
 		}
 		hand.remove(c);
@@ -203,6 +210,19 @@ public class Model {
 			System.out.println(((AdventureCard) collection.get(i)).getSubType().toString());
 			System.out.println(((AdventureCard) collection.get(i)).getSubType().equals(AdventureCard.FOE));
 			if(((AdventureCard) collection.get(i)).getSubType().equals(AdventureCard.FOE)) {
+				//TODO need to ALERT the View
+
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean containsAmour(CardCollection collection) {
+		
+		for (int i=0; i<collection.size(); i++) {
+			if(((AdventureCard) collection.get(i)).getSubType().equals(AdventureCard.AMOUR)) {
 				//TODO need to ALERT the View
 
 				return true;
