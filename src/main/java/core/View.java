@@ -162,9 +162,74 @@ public class View extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		control = new Control(this);
 		stage = primaryStage;
-		initUI2(primaryStage);
+		initUI(primaryStage);
 	}
 
+	private void update(Stage primaryStage) {
+		state = control.getState();
+		
+		canvas = new Pane();
+		canvas.setId("pane");
+
+	
+		canvas = drawCards(canvas);
+
+
+		
+		addStage(canvas);
+		
+		Scene scene = new Scene(canvas, 1280, 720);
+		scene.getStylesheets().add("style.css");	
+		
+		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
+		primaryStage.setTitle("Quests of the Round Table");
+		primaryStage.show();
+	}
+	
+	public void update(){
+		update(stage);
+	}
+	
+	public Pane drawCards(Pane canvas){
+		addControlsToCanvas(canvas);
+		addQueueToCanvas(canvas);
+		
+		addPlayerARankToCanvas(canvas);
+		addPlayerBRankToCanvas(canvas);
+		addShieldsAToCanvas(canvas);
+		addPlayerAPartyToCanvas(canvas);
+		addPlayerBPartyToCanvas(canvas);
+		addShieldsBToCanvas(canvas);
+		
+		
+		if(state.getNumPlayers() == 3){
+			addPlayerCRankToCanvas(canvas);
+			addPlayerCPartyToCanvas(canvas);
+			addShieldsCToCanvas(canvas);
+		}
+
+
+		if(state.getNumPlayers() == 4){
+			addPlayerCRankToCanvas(canvas);
+			addPlayerCPartyToCanvas(canvas);
+			addShieldsCToCanvas(canvas);
+			addPlayerDRankToCanvas(canvas);
+			addPlayerDPartyToCanvas(canvas);
+			addShieldsDToCanvas(canvas);
+		}
+
+		addStoryCardToCanvas(canvas);
+		
+
+		addHandToCanvas(canvas);
+		addStageToCanvas(canvas);
+
+		addStage(canvas);
+		
+		return canvas;
+	}
+	
 	private void initUI(Stage primaryStage) {
 		
 		state = control.getState();
@@ -172,67 +237,19 @@ public class View extends Application {
 		canvas = new Pane();
 		canvas.setId("pane");
 		
-		addControlsToCanvas(canvas);
-		addQueueToCanvas(canvas);
-		addPlayerARankToCanvas(canvas);
-		addPlayerBRankToCanvas(canvas);
-		addPlayerCRankToCanvas(canvas);
-		addPlayerDRankToCanvas(canvas);
-		addPlayerAPartyToCanvas(canvas);
-		addPlayerBPartyToCanvas(canvas);
-		addPlayerCPartyToCanvas(canvas);
-		addPlayerDPartyToCanvas(canvas);
-		addShieldsToCanvas(canvas);
-		addStoryCardToCanvas(canvas);
-
-		addHandToCanvas(canvas);
-		addStageToCanvas(canvas);
-
-		addStage(canvas);
-
-		
-		Scene scene = new Scene(canvas, 1280, 720);
-		scene.getStylesheets().add("style.css");	
-		primaryStage.setScene(scene);
-		primaryStage.setResizable(false);
-		primaryStage.setTitle("Quests of the Round Table");
-		primaryStage.show();
-	}
-private void initUI2(Stage primaryStage) {
-		
-		state = control.getState();
-		
-		canvas = new Pane();
-		canvas.setId("pane");
-		
-		addControlsToCanvas(canvas);
-		addQueueToCanvas(canvas);
-		addPlayerARankToCanvas(canvas);
-		addPlayerBRankToCanvas(canvas);
-		addPlayerCRankToCanvas(canvas);
-		addPlayerDRankToCanvas(canvas);
-		addPlayerAPartyToCanvas(canvas);
-		addPlayerBPartyToCanvas(canvas);
-		addPlayerCPartyToCanvas(canvas);
-		addPlayerDPartyToCanvas(canvas);
-		addStoryCardToCanvas(canvas);
-
-		addHandToCanvas(canvas);
-		addStageToCanvas(canvas);
-		addShieldsToCanvas(canvas);
-
-		addStage(canvas);
-		
+		canvas = drawCards(canvas);
 		MainMenu menu = new MainMenu(this,canvas);
 		
 		this.menu = menu;
 
+		
 		menu.setId("pane");
 		
 		Scene scene = new Scene(menu, 1280, 720);
 		scene.getStylesheets().add("style.css");	
 		
-		System.out.println("Should be nice back");
+		
+		
 		
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
@@ -570,16 +587,52 @@ private void initUI2(Stage primaryStage) {
 		//canvas.getChildren().addAll(imgView);
 	}
 	
-	private void addShieldsToCanvas(Pane canvas) {
+	private void addShieldsAToCanvas(Pane canvas) {
 		String playerA = Integer.toString(state.players[0].getShieldCount());
-		
-		
-		Label shieldsPlayerA = new Label("3");
+		//System.out.println(playerA);
+		Label shieldsPlayerA = new Label(playerA);
 		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
-		shieldsPlayerA.relocate(1110, 600);
+		shieldsPlayerA.relocate(colPlayerARank+11,rowPlayerARank+72	);
 		
 		canvas.getChildren().addAll(shieldsPlayerA);
 	}
+	
+	private void addShieldsBToCanvas(Pane canvas) {
+		String playerA = Integer.toString(state.players[1].getShieldCount());
+		//System.out.println(playerA);
+		Label shieldsPlayerA = new Label(playerA);
+		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
+		shieldsPlayerA.relocate(colPlayerBRank+11,rowPlayerBRank+72	);
+		
+		
+		
+		canvas.getChildren().addAll(shieldsPlayerA);
+	}
+	private void addShieldsCToCanvas(Pane canvas) {
+		String playerA = Integer.toString(state.players[2].getShieldCount());
+		//System.out.println(playerA);
+		Label shieldsPlayerA = new Label(playerA);
+		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
+		shieldsPlayerA.relocate(colPlayerCRank+11,rowPlayerCRank+72	);
+		
+		
+		
+		canvas.getChildren().addAll(shieldsPlayerA);
+	}
+	private void addShieldsDToCanvas(Pane canvas) {
+		String playerA = Integer.toString(state.players[3].getShieldCount());
+		//System.out.println(playerA);
+		Label shieldsPlayerA = new Label(playerA);
+		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
+		shieldsPlayerA.relocate(colPlayerDRank+11,rowPlayerDRank+72	);
+		
+		
+		
+		canvas.getChildren().addAll(shieldsPlayerA);
+	}
+	
+	
+	
 	
 	private void setCardClickHandler() {
 		final Random rand = new Random();
@@ -602,7 +655,7 @@ private void initUI2(Stage primaryStage) {
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
 				state = control.getState();
 				
-				initUI(stage);
+				update(stage);
 
 
 				//addHandToCanvas(canvas);
@@ -675,7 +728,7 @@ private void initUI2(Stage primaryStage) {
 				state = control.getState();				
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
 				state = control.getState();				
-				initUI(stage);
+				update(stage);
 			}
 		};
 
@@ -737,7 +790,7 @@ private void initUI2(Stage primaryStage) {
 				state = control.getState();
 				
 
-				initUI(stage);
+				update(stage);
 
 				//addHandToCanvas(canvas);
 			}
@@ -808,7 +861,7 @@ private void initUI2(Stage primaryStage) {
 		    @Override public void handle(ActionEvent e) {
 		        control.buttonClick(STAGE1);
 				state = control.getState();
-				initUI(stage);
+				update(stage);
 		    }
 		});
 		Button stage2 = new Button (STAGE2);
@@ -818,7 +871,7 @@ private void initUI2(Stage primaryStage) {
 		    @Override public void handle(ActionEvent e) {
 		        control.buttonClick(STAGE2);
 				state = control.getState();
-				initUI(stage);
+				update(stage);
 		    }
 		});
 		Button stage3 = new Button (STAGE3);
@@ -828,7 +881,7 @@ private void initUI2(Stage primaryStage) {
 		    @Override public void handle(ActionEvent e) {
 		        control.buttonClick(STAGE3);
 				state = control.getState();
-				initUI(stage);
+				update(stage);
 		    }
 		});
 		Button stage4 = new Button (STAGE4);
@@ -838,7 +891,7 @@ private void initUI2(Stage primaryStage) {
 		    @Override public void handle(ActionEvent e) {
 		        control.buttonClick(STAGE4);
 				state = control.getState();
-				initUI(stage);
+				update(stage);
 		    }
 		});
 		Button stage5 = new Button (STAGE5);
@@ -848,7 +901,7 @@ private void initUI2(Stage primaryStage) {
 		    @Override public void handle(ActionEvent e) {
 		        control.buttonClick(STAGE5);
 				state = control.getState();
-				initUI(stage);
+				update(stage);
 		    }
 		});
 		Button endTurn = new Button (ENDTURN);
@@ -858,7 +911,7 @@ private void initUI2(Stage primaryStage) {
 		    @Override public void handle(ActionEvent e) {
 		        control.buttonClick(ENDTURN);
 				state = control.getState();
-				initUI(stage);
+				update(stage);
 				System.out.println("was pressed");
 			//	ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");
 				stage.setScene(ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?", canvas));
@@ -875,4 +928,9 @@ private void initUI2(Stage primaryStage) {
 		scene.getStylesheets().add("style.css");	
 		stage.setScene(scene);
 	}
+	
+	public void setNumPlayers(int i){
+		state.setNumPlayers(menu.numberSelected());
+	}
+	
 }
