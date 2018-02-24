@@ -12,9 +12,9 @@ public class ConfirmCampaigner {
 		window.setWidth(250);
 		
 		
-		Button yes = new Button("yes");
+		//Button yes = new Button("yes");
 		
-		Button no = new Butt
+		//Button no = new Butt
 		
 	}
 
