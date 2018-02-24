@@ -446,6 +446,20 @@ public class Model {
 		return ((AdventureCard) players[currentPlayer].getHand().getByID(ID)).getSubType();
 	}
 
+	//THIS IS A FUCKING MESS NOW SORRY -DAVENELSON
+	public void playGame() {
+		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
+			
+			//run this loop once per stage of the quest
+			for(int i = 0; i < ((QuestCard) currentStoryCard).getNumStages(); i++ ) {
+//				while(endTurnCounter < numPlayers) {
+//					
+//				}
+				endTurnCounter = 0;
+			}
+		}
+	}
+	
 	private void nextPlayer(){
 		if(this.currentPlayer == numPlayers - 1){
 			this.currentPlayer = 0;
