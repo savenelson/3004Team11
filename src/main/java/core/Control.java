@@ -66,6 +66,8 @@ public class Control{
 		view.updateState();
 		
 	}
+	
+
 
 	public boolean getSponsorDecision(){
 		return view.popup("Would you like to sponsor this quest?");
@@ -108,6 +110,14 @@ public class Control{
 		}
 	}
 	
+	public void startStageCycle(){
+		model.resetCurrentStage();
+	}
+
+	public void resolveStage(){
+		model.resolveStage();
+	}
+	
 	public void buttonClick(String clickType) {
 		if(clickType.equals(View.STAGE1)){
 			model.setCurrentStage(0);
@@ -130,6 +140,8 @@ public class Control{
 	}
 
 	public void stagesSet(){
+		startStageCycle();
+
 		model.stagesSet();
 	}
 	

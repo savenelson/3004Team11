@@ -29,6 +29,7 @@ public class Model {
 	int endTurnCounter = 0;
 	boolean currentPlayerNotSponsoring;
 	boolean gameWon = false;
+	boolean stageResolved = false;
 	
 	Card currentStoryCard;
 	
@@ -108,6 +109,12 @@ public class Model {
 		}
 	}
 	
+	public void resetCurrentStage(){
+		setCurrentStage(0);
+		
+		//this.currentStage = 0;
+	}
+	
 	public State getState(){
 		
 		state.players = this.players;
@@ -133,6 +140,8 @@ public class Model {
 		state.currentPlayerNotSponsoring = this.currentPlayerNotSponsoring; 
 		
 		state.stagesSet = this.stagesSet;
+		
+		state.stageResolved = this.stageResolved;
 		
 		return state;
 	}
@@ -217,7 +226,10 @@ public class Model {
 		// so that the previous and next players can't peek eachothers hands
 		
 		if(players[currentPlayer].isSponsor){
+			System.out.println("HOLA");
 			viewerChanged();
+			
+			System.out.println("stageResolved: " + this.stageResolved);
 		}
 		else{
 			nextPlayer();
@@ -230,11 +242,13 @@ public class Model {
 	
 	public void viewerChanged(){
 		
-		System.out.println("in viewerChanged");
+		//System.out.println("in viewerChanged");
 
 		
 		if (currentViewer == numPlayers-1){
 			currentViewer = 0;
+//			this.stageResolved = true;
+//			control.updateViewState();
 		}
 		
 		else{
@@ -243,8 +257,11 @@ public class Model {
 		
 		if(players[currentPlayer].isSponsor && currentPlayer == currentViewer){
 			currentViewer++;
+			this.stageResolved = true;
+			//control.resolveStage();
+
 		}
-		
+		System.out.println("stage resolved from viewer changed: " + this.stageResolved);
 	}
 	
 	public void stagesSet(){
@@ -252,12 +269,11 @@ public class Model {
 		control.updateViewState();
 	}
 	
-	
 	public int resolveQuest(){
 		return 0;
 	}
 	
-	private void resolveStage(){
+	public void resolveStage(){
 		/**
 		 * To resolve a stage, we need to count the following data structures:
 		 *    - players Queue
@@ -265,6 +281,27 @@ public class Model {
 		 *    - players Rank
 		 *    vs
 		 */
+		
+		CardCollection currStage = this.stages[this.currentStage];
+		
+		int stageBP = 0;
+		
+		for (int i = 0; i < currStage.size(); ++i){
+			stageBP += ((AdventureCard)currStage.get(i)).getBattlePoints();
+		}
+		
+		for(int i = 0; i < numPlayers; ++i){
+			int playerBP = 0;
+			for(int j = 0; j < players[i].getQueue().size(); ++j){
+				playerBP += ((AdventureCard) players[i].getQueue().get(j)).getBattlePoints();
+			}
+			if(playerBP >= stageBP && (! players[i].isSponsor)){
+				players[i].passedStage = true;
+			}
+		}
+		
+
+		
 //		int stageTotal = 0;
 //		
 //		//count BP's in the stage
@@ -509,8 +546,6 @@ public class Model {
 		return ret;
 	}
 
-	
-	
 	private void playQuest(){
 		if(control.getSponsorDecision()){
 			players[currentPlayer].isSponsor = true;
@@ -518,7 +553,6 @@ public class Model {
 		}
 	}
 	
-	//THIS IS A FUCKING MESS NOW SORRY -DAVENELSON
 	public void playGame() {
 		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
 			playQuest();

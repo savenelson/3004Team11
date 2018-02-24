@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.util.Optional;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -45,6 +46,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -202,7 +204,7 @@ public class View extends Application {
 			primaryStage.setTitle("Quests of the Round Table - Player" + (state.currentPlayer+1));
 		}
 		else{
-			System.out.println("HERE");
+			//System.out.println("HERE");
 			primaryStage.setTitle("Quests of the Round Table - Player" + (state.currentViewer+1));
 		}
 		primaryStage.show();
@@ -356,15 +358,27 @@ public class View extends Application {
 		}
 		
 		else if(stage.size() != 0){
-			Label stageLabel = new Label("Stage " + (state.currentStage+1) + " has " + stage.size() + " card(s)");
-			stageLabel.setFont(Font.font("Serif", FontWeight.BOLD, 40));
-			stageLabel.relocate(colStage, rowStage);
+			Label queueCardsLabel;
+			Label stageLabel;
+			if(stage.size() > 1)
+				stageLabel = new Label("Stage " + (state.currentStage+1) + " has " + stage.size() + " cards");
+			else
+				stageLabel = new Label("Stage " + (state.currentStage+1) + " has " + stage.size() + " card");
+			
+			stageLabel.setFont(Font.font("Serif", FontWeight.BOLD, 60));
+			stageLabel.relocate(colStage + 100, rowStage + 20);
+			
+			queueCardsLabel = new Label("Please queue your cards for this stage.");
+			queueCardsLabel.setFont(Font.font("Serif", FontWeight.BOLD, 32));
+			queueCardsLabel.relocate(colStage + 70, rowStage + 100);
+			
 			canvas.getChildren().add(stageLabel);
+			canvas.getChildren().add(queueCardsLabel);
 		}
 	}
 	
 	private void addQueueToCanvas(Pane canvas) {
-		System.out.println("getActivePlayer().getPlayerNumber: " + control.getActivePlayer().getPlayerNumber());
+		//System.out.println("getActivePlayer().getPlayerNumber: " + control.getActivePlayer().getPlayerNumber());
 		
 		CardCollection queue = control.getActivePlayer().getQueue();
 		
@@ -954,65 +968,134 @@ public class View extends Application {
 		endTurn.setMinWidth(80);
 		endTurn.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-	    		boolean foeInEachStage = true;
-	    		boolean [] foesPresent = null;
-	    		int numStages = 0;
-		    	if(state.players[state.currentPlayer].isSponsor){
-		    		numStages = ((QuestCard)state.currentStoryCard).getNumStages();
-			    	//System.out.println("numStages: " + numStages);
-		    		foesPresent  = new boolean [numStages];
-		    		for (int i = 0; i < numStages; ++i){
-		    			foesPresent[i] = false;
-    				}		    		
-		    		for (int i = 0; i < numStages; ++i){
-		    			for (int j = 0; j < state.stages[i].size(); ++j){
-		    				if(((AdventureCard) state.stages[i].get(j)).subType.equals(AdventureCard.FOE)){
-		    					foesPresent[i] = true;
-		    					break;
-		    				}
-		    			}
-		    		}
-		    		for (int i = 0; i < numStages; ++i){
-		    			if(foesPresent[i] == false){
-		    				foeInEachStage = false;
-		    			}
-    				}
-		    	}
-	    		if(state.players[state.currentPlayer].isSponsor && !foeInEachStage){	    			
-	    			alert("Foe not present in every stage.");
-	    			return;
-	    		}
-	    		else if(state.players[state.currentPlayer].isSponsor){	    			
-	    			control.stagesSet();
-	    		}
-
-	    		//control.viewerChanged();
-		        control.buttonClick(ENDTURN);
-				state = control.getState();
-				update(stage);
-				Label label = new Label("Click button when players switched.");
-				Button readyButton = new Button("Ready");
-				readyButton.setOnAction(new EventHandler<ActionEvent>() {
-					@Override
-					public void handle(ActionEvent event) {
-						//System.out.println("NOT BROKEN");
-						update(stage);
-					}
-				});
-				TilePane layout = new TilePane(Orientation.VERTICAL);
-				layout.getChildren().addAll(label,readyButton);
-				layout.setPrefHeight(720);
-				layout.setPrefWidth(1280);
-				Scene scene = new Scene(layout);
-				scene.getStylesheets().add("style.css");
-				stage.setScene(scene);
+		    	state = control.getState();
+		    	normalEndTurn();
 		    }
 		});
-		int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
-		for(int i = 4; i!=numStages-1; i--) {
-			stageButtons[i].setDisable(true);
+		if(state.currentPlayer == state.currentSponsor && state.currentSponsor == state.currentViewer){
+			
+			
+			int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
+			for(int i = 4; i!=numStages-1; i--) {
+				stageButtons[i].setDisable(true);
+			}
+			canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
 		}
-		canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
+		else{
+			canvas.getChildren().add(endTurn);
+		}
+	}
+	
+	private void normalEndTurn(){
+		boolean foeInEachStage = true;
+		boolean [] foesPresent = null;
+		int numStages = 0;
+    	if(state.players[state.currentPlayer].isSponsor){
+    		numStages = ((QuestCard)state.currentStoryCard).getNumStages();
+	    	//System.out.println("numStages: " + numStages);
+    		foesPresent  = new boolean [numStages];
+    		for (int i = 0; i < numStages; ++i){
+    			foesPresent[i] = false;
+			}		    		
+    		for (int i = 0; i < numStages; ++i){
+    			for (int j = 0; j < state.stages[i].size(); ++j){
+    				if(((AdventureCard) state.stages[i].get(j)).subType.equals(AdventureCard.FOE)){
+    					foesPresent[i] = true;
+    					break;
+    				}
+    			}
+    		}
+    		for (int i = 0; i < numStages; ++i){
+    			if(foesPresent[i] == false){
+    				foeInEachStage = false;
+    			}
+			}
+    	}
+		if(state.players[state.currentPlayer].isSponsor && !foeInEachStage){	    			
+			alert("Foe not present in every stage.");
+			return;
+		}
+		else if(state.players[state.currentPlayer].isSponsor){	    			
+			control.stagesSet();
+		}
+
+        control.buttonClick(ENDTURN);
+		state = control.getState();
+    	if(state.stageResolved){
+    		stageResolved();
+    	}
+    	else{
+			update(stage);
+			
+			Label playerLabel = new Label("Switch to player " + (control.getActivePlayer().getPlayerNumber()+1));
+			playerLabel.setFont(new Font("Ariel", 30));
+			
+			Label label = new Label("Click button when players switched.");
+			label.setFont(new Font("Ariel", 30));
+			
+			Button readyButton = new Button("Ready");
+			readyButton.setFont(new Font("Ariel", 30));
+			
+			readyButton.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					update(stage);
+				}
+			});
+			StackPane layout = new StackPane();
+			layout.getChildren().addAll(playerLabel, label, readyButton);
+			layout.setPrefHeight(720);
+			layout.setPrefWidth(1280);
+			
+			readyButton.setTranslateY(65);
+			playerLabel.setTranslateY(-45);			
+	
+			Scene scene = new Scene(layout);
+			scene.getStylesheets().add("style.css");
+			stage.setScene(scene);
+    	}
+    }
+	
+	public void stageResolved(){
+		control.resolveStage();
+		StackPane layout = new StackPane();
+		state = control.getState();
+		for (int i = 0; i < state.numPlayers; ++i){
+			if(!state.players[i].isSponsor){
+				Label passed = new Label("Player "+ (i+1));
+				if(state.players[i].passedStage)
+					passed.setText(passed.getText() + " passed stage " + (state.currentStage+1));
+				else
+					passed.setText(passed.getText() + " failed stage " + (state.currentStage+1));
+				passed.setFont(new Font("Ariel", 30));	
+				layout.getChildren().add(passed);
+				layout.setPrefHeight(720);
+				layout.setPrefWidth(1280);
+				passed.setTranslateY(-60*i);			
+				System.out.print("Player "+ (i+1));
+				if(state.players[i].passedStage)
+					System.out.println(" passed stage" + (state.currentStage+1));
+				else
+					System.out.println(" failed stage" + (state.currentStage+1));
+			}
+		}
+		Button readyButton = new Button("Next Stage");
+		readyButton.setFont(new Font("Ariel", 30));
+		layout.getChildren().add(readyButton);
+		readyButton.setTranslateY(65);
+		readyButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+
+				//update(stage);
+			}
+		});
+		Scene scene = new Scene(layout);
+		scene.getStylesheets().add("style.css");
+		stage.setScene(scene);
+		System.out.println("END OF RESOLVE");
+		//update(stage);
+
 	}
 	
 	public void sceneChange(Pane newScreen) {
