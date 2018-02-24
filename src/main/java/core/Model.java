@@ -481,12 +481,10 @@ public class Model {
 				
 				this.currentSponsor = currentPlayer;
 				
-//				while(endTurnCounter<this.numPlayers) {
-//					//Phase 1 - queuing and playing
-//					System.out.println("GameLoop(while count<numPlayers -  numPlayers: " + numPlayers);
-//					System.out.println("GameLoop(while count<numPlayers -  endTurnCount: " + endTurnCounter);
-//
-//				} //end while
+				while(endTurnCounter<this.numPlayers) {
+					//Phase 1 - queuing and playing
+
+				} //end while
 				endTurnCounter = 0;
 				this.currentStoryCard = this.storyDeck.pop();
 				System.out.println(this.storyDeck.size());
