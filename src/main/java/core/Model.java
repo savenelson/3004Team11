@@ -450,57 +450,17 @@ public class Model {
 	
 	//THIS IS A FUCKING MESS NOW SORRY -DAVENELSON
 	public void playGame() {
-		while(!gameWon) {
-			if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
-				
-				System.out.println("currentPlayer: " + this.currentPlayer);
-				System.out.println("currentSponsor: " + this.currentSponsor);
-				System.out.println("numPlayers: " + this.numPlayers);
-
-//				//player sponsors the
-//				while((endTurnCounter<this.numPlayers) && !(((QuestCard) currentStoryCard).hasSponsor)){
-//					boolean willCurrentPlayerSponsor = this.control.getSponsorDecision();
-//					if(willCurrentPlayerSponsor && !((QuestCard) currentStoryCard).hasSponsor){
-//						state.players[currentPlayer].isSponsor = true;
-//						((QuestCard) currentStoryCard).hasSponsor = true;
-//						
-//						numStages = ((QuestCard)state.currentStoryCard).getNumStages();
-//						System.out.println("NUMSTAGES" + numStages);
-//						System.out.println("currentSponsor: " + this.currentSponsor);
-//
-//						instantiateStages(numStages);
-//					} else {
-//						state.players[currentPlayer].declinedToSponsor = true;
-//					}
+		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
+			
+			//run this loop once per stage of the quest
+			for(int i = 0; i < ((QuestCard) currentStoryCard).getNumStages(); i++ ) {
+//				while(endTurnCounter < numPlayers) {
+//					
 //				}
-//				endTurnCounter = 0;
-//				
-//				//clears out the boolean flags from
-//				for(int i=0;i<this.numPlayers;i++) {
-//					this.state.players[i].clearBooleans();
-//				}
-//				
-				
-				this.currentSponsor = currentPlayer;
-				
-				if(this.currentPlayer == 0) {
-					
-				}
-				
-				
-//				while(endTurnCounter<this.numPlayers) {
-//					//Phase 1 - queuing and playing
-//
-//				} //end while
 				endTurnCounter = 0;
-				this.currentStoryCard = this.storyDeck.pop();
-				System.out.println(this.storyDeck.size());
-				playGame();
 			}
-		}// end storydeck.size() !=0 while
-	}//end play game
-	
-	
+		}
+	}
 	private void nextPlayer(){
 		if(this.currentPlayer == numPlayers - 1){
 			this.currentPlayer = 0;
@@ -510,5 +470,4 @@ public class Model {
 			this.currentSponsor = this.currentPlayer;
 		}
 	}
-
 }
