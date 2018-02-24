@@ -881,7 +881,7 @@ public class View extends Application {
 		        control.buttonClick(STAGE1);
 				state = control.getState();
 				
-				state.players[state.currentPlayer].addShields(5);
+				
 				update(stage);
 		    }
 		});
