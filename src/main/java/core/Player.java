@@ -23,8 +23,12 @@ public class Player {
 	
 	private int shieldCount;
 	public int getShieldCount() {return shieldCount;}
+	
 	public void addShields(int num) {
 		this.shieldCount += num;
+	}
+	public void removeShields(int num) {
+		this.shieldCount = this.shieldCount - num;
 	}
 	
 	public Player(int playerNumber){
