@@ -138,28 +138,28 @@ public class Model {
 	}
 
 	public void party(String iD) {
-		System.out.println("Model: playing to party");		
-		CardCollection hand = this.players[this.currentPlayer].getHand();
+		//System.out.println("Model: playing to party");		
+		CardCollection hand = getActivePlayer().getHand();
 		Card c = hand.getByID(iD);
 		
 		if((((AdventureCard) c).getSubType().equals(AdventureCard.AMOUR)) 
-				&& containsAmour(this.players[this.currentPlayer].getParty())) {
+				&& containsAmour(getActivePlayer().getParty())) {
 			control.alert("Cannot have more than one amour in party.");
 			return;
 		}
 		
 		hand.remove(c);
-		this.players[this.currentPlayer].addToParty(c);
+		getActivePlayer().addToParty(c);
 	}
 	
 	public void stage(String iD) {
 		//if(state.players[currentPlayer].isSponsor) {
-			System.out.println("Model: IN STAGE");
+			//System.out.println("Model: IN STAGE");
 			CardCollection hand = this.players[this.currentPlayer].getHand();
 			Card c = hand.getByID(iD);
-			System.out.println("c=" + c.getImgName());
-			System.out.println("containsFoe = " + containsFoe(this.stages[currentStage]));
-			System.out.println("containsWeapon = " + containsWeapon(this.stages[currentStage], c.getImgName()));
+			//System.out.println("c=" + c.getImgName());
+			//System.out.println("containsFoe = " + containsFoe(this.stages[currentStage]));
+			//System.out.println("containsWeapon = " + containsWeapon(this.stages[currentStage], c.getImgName()));
 			if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
 					&& containsFoe(this.stages[currentStage])) {
 				control.alert("Cannot stage more than one foe per quest stage.");
@@ -171,13 +171,19 @@ public class Model {
 			}
 			hand.remove(c);
 			stages[currentStage].add(c);
-			System.out.println(stages[currentStage].toString());
+			//System.out.println(stages[currentStage].toString());
 		//}
+	}
+	
+	public Player getActivePlayer(){
+		if(this.currentPlayer != this.currentViewer)
+			return this.players[this.currentViewer];
+		return this.players[this.currentPlayer];
 	}
 	
 	public void discard(String iD) {
 		System.out.println("Model: IN DISCARD");
-		CardCollection hand = this.players[this.currentPlayer].getHand();
+		CardCollection hand = getActivePlayer().getHand();
 		Card c = hand.getByID(iD);
 		hand.remove(c);
 		adventureDeckDiscard.add(c);
@@ -185,24 +191,24 @@ public class Model {
 	
 	public void queue(String iD) {
 		System.out.println("Model: IN QUEUE");
-		CardCollection hand = this.players[this.currentPlayer].getHand();
+		CardCollection hand = getActivePlayer().getHand();
 		Card c = hand.getByID(iD);
 		hand.remove(c);
-		players[currentPlayer].addToQueue(c);
+		getActivePlayer().addToQueue(c);
 	}
 	
 	public void dequeue(String iD) {
 		System.out.println("Model: IN HAND");
-		CardCollection hand = this.players[this.currentPlayer].getQueue();
+		CardCollection hand = getActivePlayer().getHand();
 		Card c = hand.getByID(iD);
 		hand.remove(c);
-		players[currentPlayer].addToHand(c);
+		getActivePlayer().addToHand(c);
 	}
 	
 	public void setCurrentStage(int num) {
 		this.currentStage = num;
 		control.updateViewState();
-		System.out.println("Model: Current Stage set to: "+ (currentStage+1));
+		//System.out.println("Model: Current Stage set to: "+ (currentStage+1));
 	}
 	
 	public void endTurn() {
@@ -224,6 +230,8 @@ public class Model {
 	
 	public void viewerChanged(){
 		
+		System.out.println("in viewerChanged");
+
 		
 		if (currentViewer == numPlayers-1){
 			currentViewer = 0;

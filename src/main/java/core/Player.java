@@ -3,6 +3,7 @@ package core;
 public class Player {
 
 	private int playerNumber;
+	public int getPlayerNumber(){return playerNumber;}
 
 	public boolean passedStage = false;
 	public boolean passedQuest = false;

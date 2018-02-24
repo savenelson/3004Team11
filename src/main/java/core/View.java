@@ -20,6 +20,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -161,7 +162,6 @@ public class View extends Application {
 
 	private HBox Stage; 
 	
-
 	public boolean popup(String message){
 	    ButtonType yesButton = new ButtonType("Yes");
 	    ButtonType noButton = new ButtonType("No");
@@ -169,16 +169,15 @@ public class View extends Application {
 		Optional<ButtonType> yesOption = alert.showAndWait();
 
 		 if (yesOption.isPresent() && yesOption.get() == yesButton) {
-			 System.out.println("YES");
+			 //System.out.println("YES");
 			 return true;
 		 }		
-		 System.out.println("NO");
+		 //System.out.println("NO");
 		 control.buttonClick(ENDTURN);
 		 state = control.getState();
 		 update(stage);
 		 return false;
 	}
-	
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -192,20 +191,10 @@ public class View extends Application {
 		
 		canvas = new Pane();
 		canvas.setId("pane");
-
-		for(int i = 0; i<state.players.length; ++i){
-			System.out.println("player"+i);
-			System.out.println(state.players[i].getHand().toString());
-		}
 		canvas = drawCards(canvas);
-
-
-		
 		addStage(canvas);
-		
 		Scene scene = new Scene(canvas, 1280, 720);
 		scene.getStylesheets().add("style.css");	
-		
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		
@@ -213,17 +202,17 @@ public class View extends Application {
 			primaryStage.setTitle("Quests of the Round Table - Player" + (state.currentPlayer+1));
 		}
 		else{
+			System.out.println("HERE");
 			primaryStage.setTitle("Quests of the Round Table - Player" + (state.currentViewer+1));
 		}
 		primaryStage.show();
 	}
 	
 	public void update(){
-		System.out.println("update(): menu.numberSelected(): " + menu.numberSelected());
+		//System.out.println("update(): menu.numberSelected(): " + menu.numberSelected());
 		control.setNumPlayers(menu.numberSelected());
 		update(stage);
 		control.mainLoop();
-
 	}
 	
 	public Pane drawCards(Pane canvas){
@@ -239,7 +228,7 @@ public class View extends Application {
 		addPlayerBPartyToCanvas(canvas);
 		addShieldsBToCanvas(canvas);
 		
-		System.out.println("drawCards: state.numPlayers: " + state.numPlayers);
+		//System.out.println("drawCards: state.numPlayers: " + state.numPlayers);
 		
 		if(state.numPlayers == 3){
 			addPlayerCRankToCanvas(canvas);
@@ -258,8 +247,6 @@ public class View extends Application {
 		}
 
 		addStoryCardToCanvas(canvas);
-		
-
 		addHandToCanvas(canvas);
 		addStageToCanvas(canvas);
 
@@ -286,18 +273,12 @@ public class View extends Application {
 		Scene scene = new Scene(menu, 1280, 720);
 		scene.getStylesheets().add("style.css");	
 		
-		
-		
-		
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		primaryStage.setTitle("Quests of the Round Table");
 		primaryStage.show();
-		
-
 	}
 	
-	 
 	private void addHandToCanvas(Pane canvas) {
 		
 		CardCollection hand = null;
@@ -382,9 +363,10 @@ public class View extends Application {
 		}
 	}
 	
-	
 	private void addQueueToCanvas(Pane canvas) {
-		CardCollection queue = state.players[state.currentPlayer].getQueue();
+		System.out.println("getActivePlayer().getPlayerNumber: " + control.getActivePlayer().getPlayerNumber());
+		
+		CardCollection queue = control.getActivePlayer().getQueue();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -392,7 +374,7 @@ public class View extends Application {
 		tile.setVgap(10);
 		tile.setHgap(10);
 		
-		if (state.players[state.currentPlayer].getQueue() != null) {
+		if (queue != null) {
 			for (int i = 0; i < queue.size(); ++i){
 				try {
 					Image img = new Image(new FileInputStream(IMG_DIR + queue.get(i).getImgName() + GIF));
@@ -627,7 +609,7 @@ public class View extends Application {
 	
 	private void addStoryCardToCanvas(Pane canvas) {
 		
-		System.out.println(state.currentStoryCard.getImgName());
+		//System.out.println(state.currentStoryCard.getImgName());
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.currentStoryCard.getImgName() + GIF));
 			imgView = new ImageView();
@@ -667,6 +649,7 @@ public class View extends Application {
 		
 		canvas.getChildren().addAll(shieldsPlayerA);
 	}
+	
 	private void addShieldsCToCanvas(Pane canvas) {
 		String playerA = Integer.toString(state.players[2].getShieldCount());
 		//System.out.println(playerA);
@@ -678,6 +661,7 @@ public class View extends Application {
 		
 		canvas.getChildren().addAll(shieldsPlayerA);
 	}
+	
 	private void addShieldsDToCanvas(Pane canvas) {
 		String playerA = Integer.toString(state.players[3].getShieldCount());
 		//System.out.println(playerA);
@@ -689,7 +673,6 @@ public class View extends Application {
 		
 		canvas.getChildren().addAll(shieldsPlayerA);
 	}
-	
 	
 	private void setStageCardControl(ImageView anAdventure) {
 		ContextMenu fileMenu = new ContextMenu();
@@ -752,7 +735,6 @@ public class View extends Application {
 		});
 	}
 	
-	
 	public void alert(String message){
 		Alert alert = new Alert(AlertType.ERROR, message);
 		Optional<ButtonType> result = alert.showAndWait();
@@ -790,7 +772,8 @@ public class View extends Application {
 		
 		else if((subType.equals(AdventureCard.FOE)  ||
 		        subType.equals(AdventureCard.TEST)) &&
-		        state.players[state.currentPlayer].isSponsor){
+		        state.players[state.currentPlayer].isSponsor &&
+		        state.currentPlayer == state.currentViewer){
 			MenuItem playItem = new MenuItem(STAGE);
 			playItem.setOnAction(eh);
 			fileMenu.getItems().add(playItem);
@@ -798,7 +781,8 @@ public class View extends Application {
 		
 		else if(subType.equals(AdventureCard.WEAPON)){
 			
-			if(state.players[state.currentPlayer].isSponsor){
+			if(state.players[state.currentPlayer].isSponsor&&
+			   state.currentPlayer == state.currentViewer){
 				MenuItem stageItem = new MenuItem(STAGE);
 				stageItem.setOnAction(eh);
 				fileMenu.getItems().add(stageItem);
@@ -975,7 +959,7 @@ public class View extends Application {
 	    		int numStages = 0;
 		    	if(state.players[state.currentPlayer].isSponsor){
 		    		numStages = ((QuestCard)state.currentStoryCard).getNumStages();
-			    	System.out.println("numStages: " + numStages);
+			    	//System.out.println("numStages: " + numStages);
 		    		foesPresent  = new boolean [numStages];
 		    		for (int i = 0; i < numStages; ++i){
 		    			foesPresent[i] = false;
@@ -1002,7 +986,7 @@ public class View extends Application {
 	    			control.stagesSet();
 	    		}
 
-	    		control.viewerChanged();
+	    		//control.viewerChanged();
 		        control.buttonClick(ENDTURN);
 				state = control.getState();
 				update(stage);
@@ -1011,12 +995,14 @@ public class View extends Application {
 				readyButton.setOnAction(new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						System.out.println("NOT BROKEN");
+						//System.out.println("NOT BROKEN");
 						update(stage);
 					}
 				});
-				VBox layout = new VBox(5);
+				TilePane layout = new TilePane(Orientation.VERTICAL);
 				layout.getChildren().addAll(label,readyButton);
+				layout.setPrefHeight(720);
+				layout.setPrefWidth(1280);
 				Scene scene = new Scene(layout);
 				scene.getStylesheets().add("style.css");
 				stage.setScene(scene);
@@ -1029,7 +1015,6 @@ public class View extends Application {
 		canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
 	}
 	
-
 	public void sceneChange(Pane newScreen) {
 		Scene scene = new Scene(newScreen);
 		scene.getStylesheets().add("style.css");	
