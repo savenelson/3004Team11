@@ -24,7 +24,9 @@ public class Model {
 	int currentPlayer;
 	int currentStage;
 	int currentSponsor;
+	int endTurnCounter = 0;
 	boolean currentPlayerNotSponsoring;
+	boolean gameWon = false;
 	
 	Card currentStoryCard;
 	
@@ -197,7 +199,7 @@ public class Model {
 		//also where we'll intercept the call at the Control to POPUP a blocker
 		// so that the previous and next players can't peek eachothers hands
 		nextPlayer();
-		
+		endTurnCounter++;
 		
 		
 		System.out.println("\n\n\nNum players: " + state.numPlayers);
@@ -242,6 +244,7 @@ public class Model {
 		}
 		
 		//TODO CALL THE RESOLVE SCREEN FOR VIEW
+		control.alert("Stage Finished");
 	}
 	
 	public boolean containsFoe(CardCollection collection) {
@@ -306,7 +309,7 @@ public class Model {
 		 */
 		this.currentPlayer = 0;
 		this.currentStoryCard = this.storyDeck.getByID("126"); //BOAR  hUNT
-		this.currentStoryCard = this.storyDeck.getByID("129"); //Quest of the green knight
+//		this.currentStoryCard = this.storyDeck.getByID("129"); //Quest of the green knight
 		this.players[0].addToHand(this.adventureDeck.getByID("42"));
 		this.players[0].addToHand(this.adventureDeck.getByID("43"));
 		this.players[0].addToHand(this.adventureDeck.getByID("1"));
@@ -359,7 +362,6 @@ public class Model {
 	
 	public void setScenario2() {
 		initialShuffle();
-		System.out.println("Adventure Deck: \n" + this.storyDeck.toString());
 		//set current StoryCard to SearchForHolyGrail
 		this.currentPlayer = 0;
 
@@ -445,56 +447,20 @@ public class Model {
 	}
 
 	
+	
+	//THIS IS A FUCKING MESS NOW SORRY -DAVENELSON
 	public void playGame() {
 		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
 			
-			System.out.println("currentPlayer: " + this.currentPlayer);
-			System.out.println("currentSponsor: " + this.currentSponsor);
-			System.out.println("numPlayers: " + this.numPlayers);
-			
-			int declineCount = 0;
-			
-			
-			/**
-			 * p1 sponsor?
-			 * 
-			 */
-			if(this.control.getSponsorDecision()){
-				state.players[currentPlayer].isSponsor = true;
-				((QuestCard) currentStoryCard).hasSponsor = true;
-				
-				numStages = ((QuestCard)state.currentStoryCard).getNumStages();
-				System.out.println("NUMSTAGES" + numStages);
-				instantiateStages(numStages);
-			} else {
-				state.players[currentPlayer].declinedToSponsor = true;
-			}
-			
-			
-			while((!((QuestCard) currentStoryCard).hasSponsor) 
-					&& !(state.players[currentPlayer].declinedToSponsor) 
-					&& (declineCount < this.numPlayers)) {
-			}
-			//TODO PULL NEXT STORY CARD
-
-//			else{
-//				state.players[currentPlayer].declinedToSponsor = true;
-//				declineCount++;
-//				if(this.currentSponsor == this.numPlayers - 1){
-//					this.currentSponsor = 0;
-//					nextPlayer();
-//					this.currentPlayerNotSponsoring = false;
+			//run this loop once per stage of the quest
+			for(int i = 0; i < ((QuestCard) currentStoryCard).getNumStages(); i++ ) {
+//				while(endTurnCounter < numPlayers) {
+//					
 //				}
-//				else{
-//
-//					this.currentPlayerNotSponsoring = true;
-//					this.currentSponsor++;
-//				}
-//			}
+				endTurnCounter = 0;
+			}
 		}
 	}
-	
-	
 	private void nextPlayer(){
 		if(this.currentPlayer == numPlayers - 1){
 			this.currentPlayer = 0;
@@ -504,5 +470,4 @@ public class Model {
 			this.currentSponsor = this.currentPlayer;
 		}
 	}
-
 }
