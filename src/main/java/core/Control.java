@@ -16,11 +16,12 @@ public class Control{
 
 		//TEST
   
-		//model.CardsTest();
+		model.CardsTest();
 		
 		//END TEST
 	}
 	
+
 
 	public void gameInit(String args []){
 		
@@ -69,6 +70,12 @@ public class Control{
 			
 		}
 	}
+	
+	public void updateViewState(){
+		
+		view.updateState();
+		
+	}
 
 	public boolean getSponsorDecision(){
 		return view.popup("Would you like to sponsor this quest?");
@@ -77,6 +84,10 @@ public class Control{
 	public State getState(){
 		return model.getState();
 		
+	}
+	
+	public void viewerChanged(){
+		model.viewerChanged();
 	}
 	
 	public void setNumPlayers(int i){
@@ -111,6 +122,7 @@ public class Control{
 		} else if (clickType.equals(View.STAGE5)) {
 			model.setCurrentStage(4);
 		} else if(clickType.equals(View.ENDTURN)){
+		
 			model.endTurn();
 		}
 	}
@@ -122,6 +134,10 @@ public class Control{
 		
 	}
 
+	public void stagesSet(){
+		model.stagesSet();
+	}
+	
 	public void alert(String message){
 		view.alert(message);
 	}

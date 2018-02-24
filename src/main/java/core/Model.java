@@ -20,7 +20,9 @@ public class Model {
 
 	private StoryDeck storyDeckDiscard;
 	public AdventureDeck getStoryDeckDiscard(){return this.adventureDeck;}
-	
+
+	boolean stagesSet = false;
+	int currentViewer;
 	int currentPlayer;
 	int currentStage;
 	int currentSponsor;
@@ -116,13 +118,21 @@ public class Model {
 		
 		state.currentStoryCard = this.currentStoryCard;
 		
+		state.currentViewer = this.currentViewer;
+		
 		if (stages[currentStage]!=null) {
 			state.stage = this.stages[currentStage];
 		}
 		
+		state.currentStage = this.currentStage;
+		
+		state.stages = this.stages;
+		
 		state.numPlayers = this.numPlayers;
 		
 		state.currentPlayerNotSponsoring = this.currentPlayerNotSponsoring; 
+		
+		state.stagesSet = this.stagesSet;
 		
 		return state;
 	}
@@ -143,7 +153,7 @@ public class Model {
 	}
 	
 	public void stage(String iD) {
-		if(state.players[currentPlayer].isSponsor) {
+		//if(state.players[currentPlayer].isSponsor) {
 			System.out.println("Model: IN STAGE");
 			CardCollection hand = this.players[this.currentPlayer].getHand();
 			Card c = hand.getByID(iD);
@@ -162,7 +172,7 @@ public class Model {
 			hand.remove(c);
 			stages[currentStage].add(c);
 			System.out.println(stages[currentStage].toString());
-		}
+		//}
 	}
 	
 	public void discard(String iD) {
@@ -190,7 +200,8 @@ public class Model {
 	}
 	
 	public void setCurrentStage(int num) {
-		currentStage = num;
+		this.currentStage = num;
+		control.updateViewState();
 		System.out.println("Model: Current Stage set to: "+ (currentStage+1));
 	}
 	
@@ -198,13 +209,41 @@ public class Model {
 		//this will be how a player can chose to pass his turn to the next player
 		//also where we'll intercept the call at the Control to POPUP a blocker
 		// so that the previous and next players can't peek eachothers hands
-		nextPlayer();
-		endTurnCounter++;
 		
+		if(players[currentPlayer].isSponsor){
+			viewerChanged();
+		}
+		else{
+			nextPlayer();
+			endTurnCounter++;
+		}
 		
-		System.out.println("\n\n\nNum players: " + state.numPlayers);
-		System.out.println("Current Player: " + (currentPlayer+1));
+//		System.out.println("\n\n\nNum players: " + state.numPlayers);
+//		System.out.println("Current Player: " + (currentPlayer+1));
 	}
+	
+	public void viewerChanged(){
+		
+		
+		if (currentViewer == numPlayers-1){
+			currentViewer = 0;
+		}
+		
+		else{
+			currentViewer++;
+		}
+		
+		if(players[currentPlayer].isSponsor && currentPlayer == currentViewer){
+			currentViewer++;
+		}
+		
+	}
+	
+	public void stagesSet(){
+		this.stagesSet = true;
+		control.updateViewState();
+	}
+	
 	
 	public int resolveQuest(){
 		return 0;
@@ -218,33 +257,33 @@ public class Model {
 		 *    - players Rank
 		 *    vs
 		 */
-		int stageTotal = 0;
-		
-		//count BP's in the stage
-		for (int i=0;i<this.stages[currentStage].size(); i++) {
-			stageTotal += ((AdventureCard)this.stages[currentStage].get(i)).getBattlePoints();
-		}
-		
-		int playerTotal = 0;
-		
-		for(int j=0;j<this.numPlayers;j++) {
-			for (int i=0; i<this.state.players[j].getParty().size(); i++) {
-				playerTotal += ((AdventureCard) this.state.players[j].getParty().get(i)).getBattlePoints();
-			}
-			for (int i=0; i<this.state.players[j].getQueue().size(); i++) {
-				playerTotal += ((AdventureCard) this.state.players[j].getQueue().get(i)).getBattlePoints();
-			}
-			for (int i=0; i<this.state.players[j].getQueue().size(); i++) {
-				playerTotal += (this.state.players[j].getRank()).getBattlePoints();
-			}
-			if(playerTotal>=stageTotal) {
-				this.state.players[j].passedStage = true;
-			}
-			playerTotal = 0;
-		}
-		
-		//TODO CALL THE RESOLVE SCREEN FOR VIEW
-		control.alert("Stage Finished");
+//		int stageTotal = 0;
+//		
+//		//count BP's in the stage
+//		for (int i=0;i<this.stages[currentStage].size(); i++) {
+//			stageTotal += ((AdventureCard)this.stages[currentStage].get(i)).getBattlePoints();
+//		}
+//		
+//		int playerTotal = 0;
+//		
+//		for(int j=0;j<this.numPlayers;j++) {
+//			for (int i=0; i<this.state.players[j].getParty().size(); i++) {
+//				playerTotal += ((AdventureCard) this.state.players[j].getParty().get(i)).getBattlePoints();
+//			}
+//			for (int i=0; i<this.state.players[j].getQueue().size(); i++) {
+//				playerTotal += ((AdventureCard) this.state.players[j].getQueue().get(i)).getBattlePoints();
+//			}
+//			for (int i=0; i<this.state.players[j].getQueue().size(); i++) {
+//				playerTotal += (this.state.players[j].getRank()).getBattlePoints();
+//			}
+//			if(playerTotal>=stageTotal) {
+//				this.state.players[j].passedStage = true;
+//			}
+//			playerTotal = 0;
+//		}
+//		
+//		//TODO CALL THE RESOLVE SCREEN FOR VIEW
+//		control.alert("Stage Finished");
 	}
 	
 	public boolean containsFoe(CardCollection collection) {
@@ -443,24 +482,41 @@ public class Model {
 	}
 	
 	public String getSubType(String ID, int currentPlayer){
-		return ((AdventureCard) players[currentPlayer].getHand().getByID(ID)).getSubType();
+		
+		String ret = "";
+		if (currentPlayer != currentViewer){
+			ret = ((AdventureCard) players[currentViewer].getHand().getByID(ID)).getSubType();
+		}
+		else{
+			ret = ((AdventureCard) players[currentPlayer].getHand().getByID(ID)).getSubType();
+		}
+//		
+//		if((AdventureCard) players[currentPlayer].getHand().getByID(ID) == null){
+//			
+//			System.out.println("currentPlayer: " + currentPlayer) ;
+//			System.out.println("hand: \n" + players[currentPlayer].getHand().toString());
+//			System.out.println("id: " + ID);
+//
+//		}
+		return ret;
 	}
 
 	
 	
+	private void playQuest(){
+		if(control.getSponsorDecision()){
+			players[currentPlayer].isSponsor = true;
+			control.updateViewState();
+		}
+	}
+	
 	//THIS IS A FUCKING MESS NOW SORRY -DAVENELSON
 	public void playGame() {
 		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
-			
-			//run this loop once per stage of the quest
-			for(int i = 0; i < ((QuestCard) currentStoryCard).getNumStages(); i++ ) {
-//				while(endTurnCounter < numPlayers) {
-//					
-//				}
-				endTurnCounter = 0;
-			}
+			playQuest();
 		}
 	}
+	
 	private void nextPlayer(){
 		if(this.currentPlayer == numPlayers - 1){
 			this.currentPlayer = 0;

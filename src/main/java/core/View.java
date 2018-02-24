@@ -10,6 +10,7 @@ import java.util.Random;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -173,8 +174,8 @@ public class View extends Application {
 		 }		
 		 System.out.println("NO");
 		 control.buttonClick(ENDTURN);
-		state = control.getState();
-		update(stage);
+		 state = control.getState();
+		 update(stage);
 		 return false;
 	}
 	
@@ -192,7 +193,10 @@ public class View extends Application {
 		canvas = new Pane();
 		canvas.setId("pane");
 
-	
+		for(int i = 0; i<state.players.length; ++i){
+			System.out.println("player"+i);
+			System.out.println(state.players[i].getHand().toString());
+		}
 		canvas = drawCards(canvas);
 
 
@@ -204,7 +208,13 @@ public class View extends Application {
 		
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
-		primaryStage.setTitle("Quests of the Round Table - Player" + (state.currentPlayer+1));
+		
+		if (!state.stagesSet){
+			primaryStage.setTitle("Quests of the Round Table - Player" + (state.currentPlayer+1));
+		}
+		else{
+			primaryStage.setTitle("Quests of the Round Table - Player" + (state.currentViewer+1));
+		}
 		primaryStage.show();
 	}
 	
@@ -289,7 +299,15 @@ public class View extends Application {
 	
 	 
 	private void addHandToCanvas(Pane canvas) {
-		CardCollection hand = state.players[state.currentPlayer].getHand();
+		
+		CardCollection hand = null;
+		
+		if (!state.stagesSet){
+			hand = state.players[state.currentPlayer].getHand();
+		}
+		else{
+			hand = state.players[state.currentViewer].getHand();
+		}
 		
 		tile = new TilePane();
 		tile.setPrefRows(2);
@@ -321,35 +339,47 @@ public class View extends Application {
 	}
 	
 	private void addStageToCanvas(Pane canvas) {
-		CardCollection stage = state.stage;
 		
-		tile = new TilePane();
-		tile.setPrefRows(1);
-		tile.setPrefColumns(8);
-		tile.setVgap(10);
-		tile.setHgap(10);
+		state = control.getState();
+		CardCollection stage = state.stage;
 
-		for (int i = 0; i < stage.size(); ++i){
-			try {
-				Image img = new Image(new FileInputStream(IMG_DIR + stage.get(i).getImgName() + GIF));
-				imgView = new ImageView();
-				imgView.setId(stage.get(i).getID());
-				imgView.setImage(img);
-				imgView.relocate(colStage, rowStage);
-				imgView.setFitWidth(cardMediumWidth);
-				imgView.setFitHeight(cardMediumHeight);
-				imgView.setPreserveRatio(true);
-				setStageCardControl(imgView);
-				tile.getChildren().add(imgView);
-
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+		if(state.players[state.currentViewer].isSponsor){
+			
+			tile = new TilePane();
+			tile.setPrefRows(1);
+			tile.setPrefColumns(8);
+			tile.setVgap(10);
+			tile.setHgap(10);
+	
+			for (int i = 0; i < stage.size(); ++i){
+				try {
+					Image img = new Image(new FileInputStream(IMG_DIR + stage.get(i).getImgName() + GIF));
+					imgView = new ImageView();
+					imgView.setId(stage.get(i).getID());
+					imgView.setImage(img);
+					imgView.relocate(colStage, rowStage);
+					imgView.setFitWidth(cardMediumWidth);
+					imgView.setFitHeight(cardMediumHeight);
+					imgView.setPreserveRatio(true);
+					setStageCardControl(imgView);
+					tile.getChildren().add(imgView);
+	
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
 			}
+			
+			tile.relocate(colStage, rowStage);
+			
+			canvas.getChildren().add(tile);
 		}
 		
-		tile.relocate(colStage, rowStage);
-		
-		canvas.getChildren().add(tile);
+		else if(stage.size() != 0){
+			Label stageLabel = new Label("Stage " + (state.currentStage+1) + " has " + stage.size() + " card(s)");
+			stageLabel.setFont(Font.font("Serif", FontWeight.BOLD, 40));
+			stageLabel.relocate(colStage, rowStage);
+			canvas.getChildren().add(stageLabel);
+		}
 	}
 	
 	
@@ -727,9 +757,7 @@ public class View extends Application {
 		Alert alert = new Alert(AlertType.ERROR, message);
 		Optional<ButtonType> result = alert.showAndWait();
 		 if (result.isPresent() && result.get() == ButtonType.OK) {
-		     
-			 System.out.println("YEEEEEE");
-			 //formatSystem();
+
 		 }
 	}
 	
@@ -742,7 +770,6 @@ public class View extends Application {
 			public void handle(ActionEvent event) {
 				//System.out.println(((MenuItem) event.getSource()).getText());					
 				//System.out.println(anAdventure.getId());
-				
 				state = control.getState();				
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
 				state = control.getState();				
@@ -751,7 +778,7 @@ public class View extends Application {
 		};
 
 		state = control.getState();
-		
+
 		String subType = control.getSubType(anAdventure.getId(), state.currentPlayer);
 		
 		if(subType.equals(AdventureCard.ALLY) ||
@@ -761,21 +788,26 @@ public class View extends Application {
 			fileMenu.getItems().add(playItem);
 		}
 		
-		else if(subType.equals(AdventureCard.FOE) ||
-		        subType.equals(AdventureCard.TEST)  ){
+		else if((subType.equals(AdventureCard.FOE)  ||
+		        subType.equals(AdventureCard.TEST)) &&
+		        state.players[state.currentPlayer].isSponsor){
 			MenuItem playItem = new MenuItem(STAGE);
 			playItem.setOnAction(eh);
 			fileMenu.getItems().add(playItem);
 		}
 		
 		else if(subType.equals(AdventureCard.WEAPON)){
-			MenuItem stageItem = new MenuItem(STAGE);
-			stageItem.setOnAction(eh);
-			fileMenu.getItems().add(stageItem);
 			
-			MenuItem queueItem = new MenuItem(QUEUE);
-			queueItem.setOnAction(eh);
-			fileMenu.getItems().add(queueItem);
+			if(state.players[state.currentPlayer].isSponsor){
+				MenuItem stageItem = new MenuItem(STAGE);
+				stageItem.setOnAction(eh);
+				fileMenu.getItems().add(stageItem);
+			}
+			else{
+				MenuItem queueItem = new MenuItem(QUEUE);
+				queueItem.setOnAction(eh);
+				fileMenu.getItems().add(queueItem);
+			}
 		}
 		
 		MenuItem discardItem = new MenuItem(DISCARD);
@@ -790,9 +822,15 @@ public class View extends Application {
 				//System.out.println(t.getSource());
 				//CardHandTop.getChildren().remove(t.getSource());
 				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
+				state = control.getState();
 			}
 		}
 		});
+	}
+	
+	public void updateState(){
+		state = control.getState();
+		update(stage);
 	}
 	
 	private void setQueueCardControl(ImageView anAdventure) {
@@ -932,41 +970,56 @@ public class View extends Application {
 		endTurn.setMinWidth(80);
 		endTurn.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
+	    		boolean foeInEachStage = true;
+	    		boolean [] foesPresent = null;
+	    		int numStages = 0;
+		    	if(state.players[state.currentPlayer].isSponsor){
+		    		numStages = ((QuestCard)state.currentStoryCard).getNumStages();
+			    	System.out.println("numStages: " + numStages);
+		    		foesPresent  = new boolean [numStages];
+		    		for (int i = 0; i < numStages; ++i){
+		    			foesPresent[i] = false;
+    				}		    		
+		    		for (int i = 0; i < numStages; ++i){
+		    			for (int j = 0; j < state.stages[i].size(); ++j){
+		    				if(((AdventureCard) state.stages[i].get(j)).subType.equals(AdventureCard.FOE)){
+		    					foesPresent[i] = true;
+		    					break;
+		    				}
+		    			}
+		    		}
+		    		for (int i = 0; i < numStages; ++i){
+		    			if(foesPresent[i] == false){
+		    				foeInEachStage = false;
+		    			}
+    				}
+		    	}
+	    		if(state.players[state.currentPlayer].isSponsor && !foeInEachStage){	    			
+	    			alert("Foe not present in every stage.");
+	    			return;
+	    		}
+	    		else if(state.players[state.currentPlayer].isSponsor){	    			
+	    			control.stagesSet();
+	    		}
+
+	    		control.viewerChanged();
 		        control.buttonClick(ENDTURN);
 				state = control.getState();
 				update(stage);
-				System.out.println("was pressed");
-
-			//	ConfirmNextPlayer.display("On to the next person", "Click on the ready button when ready?");'''
-				
-
-				Label label = new Label("Click on the ready button when ready?");
-				
+				Label label = new Label("Click button when players switched.");
 				Button readyButton = new Button("Ready");
-				
 				readyButton.setOnAction(new EventHandler<ActionEvent>() {
-
-
 					@Override
 					public void handle(ActionEvent event) {
 						System.out.println("NOT BROKEN");
 						update(stage);
 					}
 				});
-				
-				
 				VBox layout = new VBox(5);
-				
 				layout.getChildren().addAll(label,readyButton);
 				Scene scene = new Scene(layout);
-				
 				scene.getStylesheets().add("style.css");
-				
-				//return scene;
-				
 				stage.setScene(scene);
-
-
 		    }
 		});
 		int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
