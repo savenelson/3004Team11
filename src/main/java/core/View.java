@@ -168,10 +168,13 @@ public class View extends Application {
 		Optional<ButtonType> yesOption = alert.showAndWait();
 
 		 if (yesOption.isPresent() && yesOption.get() == yesButton) {
-			 System.out.println("YEEEEEE");
+			 System.out.println("YES");
 			 return true;
 		 }		
-		 System.out.println("NOOOOOOOOOO");
+		 System.out.println("NO");
+		 control.buttonClick(ENDTURN);
+		state = control.getState();
+		update(stage);
 		 return false;
 	}
 	

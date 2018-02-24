@@ -305,7 +305,8 @@ public class Model {
 		 * -	
 		 */
 		this.currentPlayer = 0;
-		this.currentStoryCard = this.storyDeck.getByID("126");
+		this.currentStoryCard = this.storyDeck.getByID("126"); //BOAR  hUNT
+		this.currentStoryCard = this.storyDeck.getByID("129"); //Quest of the green knight
 		this.players[0].addToHand(this.adventureDeck.getByID("42"));
 		this.players[0].addToHand(this.adventureDeck.getByID("43"));
 		this.players[0].addToHand(this.adventureDeck.getByID("1"));
@@ -360,6 +361,83 @@ public class Model {
 		initialShuffle();
 		System.out.println("Adventure Deck: \n" + this.storyDeck.toString());
 		//set current StoryCard to SearchForHolyGrail
+		this.currentPlayer = 0;
+
+		//set the quest to be of type "repel the saxon raiders"
+		this.currentStoryCard = this.storyDeck.getByID("138");
+
+//the two stages the sponsor will play
+		//foes
+		this.players[0].addToHand(this.adventureDeck.getByID("50"));  //thief
+		this.players[0].addToHand(this.adventureDeck.getByID("91"));  //green knight
+		this.players[0].addToHand(this.adventureDeck.getByID("88"));
+		//amour
+		this.players[0].addToHand(this.adventureDeck.getByID("118"));
+		this.players[0].addToHand(this.adventureDeck.getByID("119"));
+		this.players[0].addToHand(this.adventureDeck.getByID("120"));
+		//Weapon
+		this.players[0].addToHand(this.adventureDeck.getByID("42"));
+		this.players[0].addToHand(this.adventureDeck.getByID("43"));
+		this.players[0].addToHand(this.adventureDeck.getByID("1"));
+		this.players[0].addToHand(this.adventureDeck.getByID("2"));
+		this.players[0].addToHand(this.adventureDeck.getByID("23"));
+		this.players[0].addToHand(this.adventureDeck.getByID("48"));
+
+
+		//Player 2
+
+		//weapon
+		this.players[0].addToHand(this.adventureDeck.getByID("22"));
+
+		//amour
+
+		//foes
+		this.players[1].addToHand(this.adventureDeck.getByID("82")); //evil knight
+		this.players[1].addToHand(this.adventureDeck.getByID("74")); // Saxon knight
+		this.players[1].addToHand(this.adventureDeck.getByID("51")); // thief 1
+		this.players[1].addToHand(this.adventureDeck.getByID("52"));// thief 2
+		this.players[1].addToHand(this.adventureDeck.getByID("53")); // thief 3
+		this.players[1].addToHand(this.adventureDeck.getByID("67")); //robber knight
+		this.players[1].addToHand(this.adventureDeck.getByID("3"));
+		this.players[1].addToHand(this.adventureDeck.getByID("4"));
+		this.players[1].addToHand(this.adventureDeck.getByID("5"));
+		this.players[1].addToHand(this.adventureDeck.getByID("17"));
+		this.players[1].addToHand(this.adventureDeck.getByID("18"));
+		this.players[1].addToHand(this.adventureDeck.getByID("89"));
+
+
+		//player 3
+		//weapon
+		this.players[2].addToHand(this.adventureDeck.getByID("24"));
+		this.players[2].addToHand(this.adventureDeck.getByID("25"));
+		this.players[2].addToHand(this.adventureDeck.getByID("26"));
+		this.players[2].addToHand(this.adventureDeck.getByID("27"));
+		this.players[2].addToHand(this.adventureDeck.getByID("6"));
+
+		//Amour
+		this.players[2].addToHand(this.adventureDeck.getByID("121"));
+		this.players[2].addToHand(this.adventureDeck.getByID("122"));
+
+		//foe
+		this.players[2].addToHand(this.adventureDeck.getByID("54"));
+		this.players[2].addToHand(this.adventureDeck.getByID("82"));
+		this.players[2].addToHand(this.adventureDeck.getByID("90"));
+		this.players[2].addToHand(this.adventureDeck.getByID("104"));
+		this.players[2].addToHand(this.adventureDeck.getByID("125"));
+
+		//player 4
+		this.players[3].addToHand(this.adventureDeck.getByID("34"));
+		this.players[3].addToHand(this.adventureDeck.getByID("28"));
+		this.players[3].addToHand(this.adventureDeck.getByID("19"));
+		this.players[3].addToHand(this.adventureDeck.getByID("7"));
+		this.players[3].addToHand(this.adventureDeck.getByID("8"));
+		this.players[3].addToHand(this.adventureDeck.getByID("9"));
+		this.players[3].addToHand(this.adventureDeck.getByID("123"));
+		this.players[3].addToHand(this.adventureDeck.getByID("68"));
+		this.players[3].addToHand(this.adventureDeck.getByID("63"));
+		this.players[3].addToHand(this.adventureDeck.getByID("93"));
+		this.players[3].addToHand(this.adventureDeck.getByID("100"));
+		this.players[3].addToHand(this.adventureDeck.getByID("101"));
 	}
 	
 	public String getSubType(String ID, int currentPlayer){
@@ -374,32 +452,45 @@ public class Model {
 			System.out.println("currentSponsor: " + this.currentSponsor);
 			System.out.println("numPlayers: " + this.numPlayers);
 			
+			int declineCount = 0;
+			
+			
+			/**
+			 * p1 sponsor?
+			 * 
+			 */
 			if(this.control.getSponsorDecision()){
 				state.players[currentPlayer].isSponsor = true;
+				((QuestCard) currentStoryCard).hasSponsor = true;
 				
 				numStages = ((QuestCard)state.currentStoryCard).getNumStages();
 				System.out.println("NUMSTAGES" + numStages);
 				instantiateStages(numStages);
-				
-				//TODO play through quest
-				/**
-				 * - sponsor populates stages
-				 * - 
-				 */ 
+			} else {
+				state.players[currentPlayer].declinedToSponsor = true;
 			}
 			
-			else{
-				if(this.currentSponsor == this.numPlayers - 1){
-					this.currentSponsor = 0;
-					nextPlayer();
-					this.currentPlayerNotSponsoring = false;
-				}
-				else{
+			
+			while((!((QuestCard) currentStoryCard).hasSponsor) 
+					&& !(state.players[currentPlayer].declinedToSponsor) 
+					&& (declineCount < this.numPlayers)) {
+			}
+			//TODO PULL NEXT STORY CARD
 
-					this.currentPlayerNotSponsoring = true;
-					this.currentSponsor++;
-				}
-			}	
+//			else{
+//				state.players[currentPlayer].declinedToSponsor = true;
+//				declineCount++;
+//				if(this.currentSponsor == this.numPlayers - 1){
+//					this.currentSponsor = 0;
+//					nextPlayer();
+//					this.currentPlayerNotSponsoring = false;
+//				}
+//				else{
+//
+//					this.currentPlayerNotSponsoring = true;
+//					this.currentSponsor++;
+//				}
+//			}
 		}
 	}
 	

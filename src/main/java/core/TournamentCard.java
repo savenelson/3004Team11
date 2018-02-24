@@ -32,6 +32,11 @@ public class TournamentCard extends StoryCard{
 			 + ", subtype: " + this.subType 
 			 + ", name: " + this.name;
 	}
+
+
+	public String getName() {
+		return this.name;
+	}
 	
 
 
