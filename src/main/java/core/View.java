@@ -842,10 +842,6 @@ public class View extends Application {
 			}
 		};
 
-		MenuItem discardItem = new MenuItem(DISCARD);
-		discardItem.setOnAction(eh);
-		fileMenu.getItems().add(discardItem);
-		
 		MenuItem queueItem = new MenuItem(DEQUEUE);
 		queueItem.setOnAction(eh);
 		fileMenu.getItems().add(queueItem);
