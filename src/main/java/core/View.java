@@ -31,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -48,6 +49,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.FontWeight;
@@ -135,7 +137,7 @@ public class View extends Application {
 	public static final	int cardXLargeWidth = 225;
 
 	
-	//	private static final Logger logger = LogManager.getLogger(View.class);
+		private static final Logger logger = LogManager.getLogger(View.class);
 	
 	
 	private TextField shieldCount;
@@ -396,6 +398,7 @@ public class View extends Application {
 			imgView.setFitWidth(cardSmallWidth);
 			imgView.setFitHeight(cardSmallHeight);
 			imgView.setPreserveRatio(true);
+			setRankControl(imgView,state.players[0].getHand().size());
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
@@ -413,6 +416,7 @@ public class View extends Application {
 			imgView.setFitWidth(cardSmallWidth);
 			imgView.setFitHeight(cardSmallHeight);
 			imgView.setPreserveRatio(true);
+			setRankControl(imgView,state.players[1].getHand().size());
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
@@ -430,6 +434,7 @@ public class View extends Application {
 			imgView.setFitWidth(cardSmallWidth);
 			imgView.setFitHeight(cardSmallHeight);
 			imgView.setPreserveRatio(true);
+			setRankControl(imgView,state.players[2].getHand().size());
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
@@ -447,6 +452,7 @@ public class View extends Application {
 			imgView.setFitWidth(cardSmallWidth);
 			imgView.setFitHeight(cardSmallHeight);
 			imgView.setPreserveRatio(true);
+			setRankControl(imgView,state.players[3].getHand().size());
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
@@ -868,6 +874,24 @@ public class View extends Application {
 		cardAdded.setFitHeight(12);  
 		stage.getChildren().add(cardAdded);
 	}
+	private void setRankControl(ImageView aRankCard, int numberOfcards) {
+		
+		//logger.info("Showing other players hands is working ");
+		aRankCard.addEventHandler(MouseEvent.MOUSE_ENTERED,
+		        new EventHandler<MouseEvent>() {
+	          @Override
+	          public void handle(MouseEvent e) {
+	        	  System.out.println("working");
+	        	  
+	        	
+	        	  Rectangle rect = new Rectangle(0, 0, 100, 100);
+	        	  Tooltip t = new Tooltip("This player has " + numberOfcards+ " in their hands");
+	        	  Tooltip.install(rect, t);
+	        	  Tooltip.install(aRankCard, t);
+	          }
+	        });
+		 
+	}
 	
 	private void addControlsToCanvas(Pane canvas) {
 		// our coordinates 
@@ -880,6 +904,8 @@ public class View extends Application {
 		    @Override public void handle(ActionEvent e) {
 		        control.buttonClick(STAGE1);
 				state = control.getState();
+				
+				
 				update(stage);
 		    }
 		});
