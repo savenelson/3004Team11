@@ -15,7 +15,7 @@ public class ConfirmNextPlayer {
 	
 	
 	
-	public static Scene display(String display, int message, Pane canvas) {
+	public static Scene display(String display, String message, Pane canvas) {
 		
 
 
