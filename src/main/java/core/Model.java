@@ -447,8 +447,10 @@ public class Model {
 	}
 
 	
+	
+	//THIS IS A FUCKING MESS NOW SORRY -DAVENELSON
 	public void playGame() {
-		while(this.storyDeck.size()!=0 ||!gameWon) {
+		while(!gameWon) {
 			if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
 				
 				System.out.println("currentPlayer: " + this.currentPlayer);
@@ -481,10 +483,15 @@ public class Model {
 				
 				this.currentSponsor = currentPlayer;
 				
-				while(endTurnCounter<this.numPlayers) {
-					//Phase 1 - queuing and playing
-
-				} //end while
+				if(this.currentPlayer == 0) {
+					
+				}
+				
+				
+//				while(endTurnCounter<this.numPlayers) {
+//					//Phase 1 - queuing and playing
+//
+//				} //end while
 				endTurnCounter = 0;
 				this.currentStoryCard = this.storyDeck.pop();
 				System.out.println(this.storyDeck.size());
