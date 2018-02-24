@@ -12,26 +12,33 @@ public class ConfirmNextPlayer {
 	
 	static Boolean ansewer;
 	
-	public static Scene display(String display, String message, Pane canvas) {
+	
+	
+	
+	public static Scene display(String display, int message, Pane canvas) {
 		
+
+
+
 		Label label = new Label(message);
+
 		
 		Button readyButton = new Button("Ready");
 		
 		readyButton.setOnAction(e->{
 			
+			
 		});
 		VBox layout = new VBox(5);
 		
 		layout.getChildren().addAll(label,readyButton);
+		
 		Scene scene = new Scene(layout);
 		
 		layout.getChildren().add(canvas);
 		
 		return scene;
 		
-		//window.setScene(scene);
-		//window.showAndWait();
 
 	}
 	

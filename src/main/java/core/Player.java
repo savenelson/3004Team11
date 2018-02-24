@@ -4,6 +4,11 @@ public class Player {
 
 	private int playerNumber;
 
+	public boolean passedStage = false;
+	public boolean passedQuest = false;
+	public boolean isSponsor = false;
+	public boolean declinedToSponsor = false;
+	//add any new booleans to the clearBooleans function below
 	
 	private RankCard rankCard;
 	public RankCard getRank(){return rankCard;}
@@ -17,13 +22,11 @@ public class Player {
 	private CardCollection queue;
 	public CardCollection getQueue() {return queue;}
 	
-	private int battlePoints;
-	public int getBattlePoints() {return battlePoints;}
-	
 	private int shieldCount;
 	public int getShieldCount() {return shieldCount;}
 	public void addShields(int num) {
 		this.shieldCount += num;
+		promote();
 	}
 	
 	public Player(int playerNumber){
@@ -56,5 +59,28 @@ public class Player {
 	public void addToParty(Card c){
 		party.add(c);
 	}
+
+	public void clearBooleans() {
+		this.passedStage = false;
+		this.passedQuest = false;
+		this.isSponsor = false;
+		this.declinedToSponsor = false;
+	}
 	
+	public void promote() {
+		if (shieldCount >=5 && RankCard.SQUIRE.equals(rankCard.getSubType())){
+			shieldCount  = shieldCount -5;
+			rankCard = new RankCard(RankCard.KNIGHT);
+			System.out.println("Promoted to a Knight");
+		}else if ((shieldCount >=7 && RankCard.KNIGHT.equals(rankCard.getSubType()))){
+			shieldCount  = shieldCount -7;
+			rankCard = new RankCard(RankCard.CHAMPION_KNIGHT);
+			System.out.println("Promoted to a Champion Knight");
+			
+			
+		}else if((shieldCount >=10 && RankCard.CHAMPION_KNIGHT.equals(rankCard.getSubType()))) {
+			System.out.println("Winner");
+			
+		}
+	}
 }
