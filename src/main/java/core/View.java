@@ -880,6 +880,8 @@ public class View extends Application {
 		    @Override public void handle(ActionEvent e) {
 		        control.buttonClick(STAGE1);
 				state = control.getState();
+				
+				state.players[state.currentPlayer].addShields(5);
 				update(stage);
 		    }
 		});
