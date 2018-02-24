@@ -4,10 +4,12 @@ public class Player {
 
 	private int playerNumber;
 
-	public boolean passedStage = false;
-	public boolean passedQuest = false;
 	public boolean isSponsor = false;
 	public boolean declinedToSponsor = false;
+	public boolean hasQueuedAgainstStage = false;
+	public boolean isQuesting = false;
+	public boolean passedStage = false;
+	public boolean passedQuest = false;
 	//add any new booleans to the clearBooleans function below
 	
 	private RankCard rankCard;
