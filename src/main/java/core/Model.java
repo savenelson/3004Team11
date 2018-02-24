@@ -546,6 +546,7 @@ public class Model {
 		return ret;
 	}
 
+
 	private void playQuest(){
 		if(control.getSponsorDecision()){
 			players[currentPlayer].isSponsor = true;
@@ -558,7 +559,7 @@ public class Model {
 			playQuest();
 		}
 	}
-	
+
 	private void nextPlayer(){
 		if(this.currentPlayer == numPlayers - 1){
 			this.currentPlayer = 0;
@@ -569,3 +570,20 @@ public class Model {
 		}
 	}
 }
+
+/*
+Different Game states for banner:
+QUEST STAGE 1 FOE
+QUEST STAGE 2 FOE
+QUEST STAGE 3 FOE
+QUEST STAGE 4 FOE
+QUEST STAGE 5 FOE
+QUEST STAGE 1 TEST
+QUEST STAGE 2 TEST
+QUEST STAGE 3 TEST
+QUEST STAGE 4 TEST
+QUEST STAGE 5 TEST
+EVENT
+TOURNAMENT
+*/
+
