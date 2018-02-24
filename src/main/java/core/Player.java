@@ -8,6 +8,7 @@ public class Player {
 	public boolean passedQuest = false;
 	public boolean isSponsor = false;
 	public boolean declinedToSponsor = false;
+	//add any new booleans to the clearBooleans function below
 	
 	private RankCard rankCard;
 	public RankCard getRank(){return rankCard;}
@@ -56,6 +57,12 @@ public class Player {
 	
 	public void addToParty(Card c){
 		party.add(c);
+	}
+	public void clearBooleans() {
+		this.passedStage = false;
+		this.passedQuest = false;
+		this.isSponsor = false;
+		this.declinedToSponsor = false;
 	}
 	
 }
