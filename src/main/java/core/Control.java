@@ -10,17 +10,14 @@ public class Control{
 	public Control(View view) {
 		
 		this.view = view;
-		
 		gameInit(null);
-		
 
 		//TEST
-  
 		//model.CardsTest();
-		
 		//END TEST
 	}
 	
+
 
 	public void gameInit(String args []){
 		
@@ -57,17 +54,17 @@ public class Control{
 	}
 
 	public void mainLoop(){
-		
 		boolean win = false;
-		
-		
 		while(!win){
-			
 			model.playGame();
-			
 			win = !win;
-			
 		}
+	}
+	
+	public void updateViewState(){
+		
+		view.updateState();
+		
 	}
 
 	public boolean getSponsorDecision(){
@@ -79,8 +76,16 @@ public class Control{
 		
 	}
 	
+	public void viewerChanged(){
+		model.viewerChanged();
+	}
+	
 	public void setNumPlayers(int i){
 		model.numPlayers = i;
+	}
+	
+	public Player getActivePlayer(){
+		return model.getActivePlayer();
 	}
 	
 	public void printTestString(){System.out.println(testString);}
@@ -88,13 +93,17 @@ public class Control{
 	public void handClick(String clickType, String ID) {
 		if(clickType.equals(View.PARTY)){
 			model.party(ID);
-		} else if (clickType.equals(View.STAGE)) {
+		} 
+		else if (clickType.equals(View.STAGE)) {
 			model.stage(ID);
-		} else if (clickType.equals(View.QUEUE)) {
+		} 
+		else if (clickType.equals(View.QUEUE)) {
 			model.queue(ID);
-		} else if (clickType.equals(View.DEQUEUE)) {
+		} 
+		else if (clickType.equals(View.DEQUEUE)) {
 			model.dequeue(ID);
-		}else if(clickType.equals(View.DISCARD)){
+		}
+		else if(clickType.equals(View.DISCARD)){
 			model.discard(ID);
 		}
 	}
@@ -111,17 +120,19 @@ public class Control{
 		} else if (clickType.equals(View.STAGE5)) {
 			model.setCurrentStage(4);
 		} else if(clickType.equals(View.ENDTURN)){
+		
 			model.endTurn();
 		}
 	}
 	
 	public String getSubType(String ID, int currentPlayer){
-		
 		return model.getSubType(ID, currentPlayer);
-		
-		
 	}
 
+	public void stagesSet(){
+		model.stagesSet();
+	}
+	
 	public void alert(String message){
 		view.alert(message);
 	}
