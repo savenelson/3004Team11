@@ -10,6 +10,8 @@ public class CardCollection {
 
 	protected ArrayList<Card> cards;
 	
+
+	
 	public Card get(int i){return cards.get(i);}
 	
 	public Card pop(){
@@ -94,6 +96,60 @@ public class CardCollection {
 		}
 		
 		return s;
+	}
+	
+	public int getHighestFoecard() {
+		
+		int indexOfhighestFoe =-1;
+		
+		FoeCard highestFoeCard = null;
+		
+		for(int i=0; i<cards.size(); i++) {
+			boolean isFoe = ((AdventureCard) cards.get(i)).getSubType().equals("FOE");
+			if(isFoe){
+				if(highestFoeCard==null) {
+					highestFoeCard = (FoeCard) cards.get(i);
+					indexOfhighestFoe = i;
+					
+				}
+				
+				else if(highestFoeCard.getBattlePoints()<((FoeCard) cards.get(i)).getBattlePoints()){
+					highestFoeCard = (FoeCard) cards.get(i);
+					indexOfhighestFoe = i;
+					
+				}
+			
+				
+				
+			}
+		}
+		return indexOfhighestFoe;
+				
+		
+		
+	}
+	
+	public int getTestCard() {
+		
+		int indexOfTestCard = -1;
+		
+		for(int i=0; i<cards.size(); i++) {
+			boolean isTest = ((AdventureCard) cards.get(i)).getSubType().equals("TEST");
+			if(isTest) {
+				indexOfTestCard = i;
+			}
+			
+			}
+		
+		
+		
+		
+		
+		
+		
+		return indexOfTestCard;
+		
+		
 	}
 	
 }
