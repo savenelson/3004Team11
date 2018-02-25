@@ -29,6 +29,9 @@ public class Model {
 	int endTurnCounter = 0;
 	boolean currentPlayerNotSponsoring;
 	boolean gameWon = false;
+	boolean stageResolved = false;
+	boolean toggleForStages = false;
+	int stagePlaceHolder = 0;
 	
 	Card currentStoryCard;
 	
@@ -108,6 +111,12 @@ public class Model {
 		}
 	}
 	
+	public void resetCurrentStage(){
+		setCurrentStage(0);
+		
+		//this.currentStage = 0;
+	}
+	
 	public State getState(){
 		
 		state.players = this.players;
@@ -133,6 +142,12 @@ public class Model {
 		state.currentPlayerNotSponsoring = this.currentPlayerNotSponsoring; 
 		
 		state.stagesSet = this.stagesSet;
+		
+		state.stageResolved = this.stageResolved;
+		
+		state.toggleForStages = this.toggleForStages;
+		
+		state.stagePlaceHolder = this.stagePlaceHolder;
 		
 		return state;
 	}
@@ -185,6 +200,8 @@ public class Model {
 		System.out.println("Model: IN DISCARD");
 		CardCollection hand = getActivePlayer().getHand();
 		Card c = hand.getByID(iD);
+		
+		
 		hand.remove(c);
 		adventureDeckDiscard.add(c);
 	}
@@ -193,15 +210,33 @@ public class Model {
 		System.out.println("Model: IN QUEUE");
 		CardCollection hand = getActivePlayer().getHand();
 		Card c = hand.getByID(iD);
+		
+		if(containsSameWeapon(getActivePlayer().getQueue(), ((WeaponCard) c).getName())) {
+			control.alert("Cannot have duplicate weapons in queue.");
+			return;
+		}
+		
 		hand.remove(c);
 		getActivePlayer().addToQueue(c);
 	}
 	
+	public boolean containsSameWeapon(CardCollection collection, String cardName) {
+		
+		for (int i=0; i<collection.size(); i++) {
+			if(((WeaponCard) collection.get(i)).getName().equals(cardName)) {
+				//TODO need to ALERT the View
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	public void dequeue(String iD) {
 		System.out.println("Model: IN HAND");
-		CardCollection hand = getActivePlayer().getHand();
-		Card c = hand.getByID(iD);
-		hand.remove(c);
+		CardCollection queue = getActivePlayer().getQueue();
+		Card c = queue.getByID(iD);
+		queue.remove(c);
 		getActivePlayer().addToHand(c);
 	}
 	
@@ -217,7 +252,10 @@ public class Model {
 		// so that the previous and next players can't peek eachothers hands
 		
 		if(players[currentPlayer].isSponsor){
+			//System.out.println("HOLA");
 			viewerChanged();
+			
+			//System.out.println("stageResolved: " + this.stageResolved);
 		}
 		else{
 			nextPlayer();
@@ -230,11 +268,12 @@ public class Model {
 	
 	public void viewerChanged(){
 		
-		System.out.println("in viewerChanged");
+		//System.out.println("in viewerChanged");
 
-		
 		if (currentViewer == numPlayers-1){
 			currentViewer = 0;
+//			this.stageResolved = true;
+//			control.updateViewState();
 		}
 		
 		else{
@@ -243,8 +282,11 @@ public class Model {
 		
 		if(players[currentPlayer].isSponsor && currentPlayer == currentViewer){
 			currentViewer++;
+			this.stageResolved = true;
+			//control.resolveStage();
+
 		}
-		
+		System.out.println("stage resolved from viewer changed: " + this.stageResolved);
 	}
 	
 	public void stagesSet(){
@@ -252,12 +294,34 @@ public class Model {
 		control.updateViewState();
 	}
 	
-	
 	public int resolveQuest(){
 		return 0;
 	}
 	
-	private void resolveStage(){
+	static int stageOverCount = 0;
+	
+	public void stageOver(){
+		
+		for(int i = 0; i < this.numPlayers; ++i){
+			if(!this.players[i].isSponsor){
+				for(int j = 0; j < this.players[i].getQueue().size(); ++j){
+					adventureDeckDiscard.add(this.players[i].getQueue().pop());
+				}
+				players[i].passedStage = false;
+			}
+		}
+		stageOverCount++;
+		
+		this.currentViewer--;// TODO ??? MAYBE A REALLY BAD FIX MAYBE NOT, WHO KNOWS ANYMORE...
+		this.stagesSet = false;
+		this.stageResolved = false;
+		this.toggleForStages = true;
+		this.stagePlaceHolder = this.currentStage + stageOverCount;
+		state.stage = this.stages[currentStage];
+		control.updateViewState();
+	}
+	
+	public void resolveStage(){
 		/**
 		 * To resolve a stage, we need to count the following data structures:
 		 *    - players Queue
@@ -265,6 +329,40 @@ public class Model {
 		 *    - players Rank
 		 *    vs
 		 */
+		
+		CardCollection currStage = this.stages[this.currentStage];
+		
+		int stageBP = 0;
+		 
+		for (int i = 0; i < currStage.size(); ++i){
+			stageBP += ((AdventureCard)currStage.get(i)).getBattlePoints();
+		}
+		
+		for(int i = 0; i < numPlayers; ++i){
+			int playerBP = players[i].getRank().getBattlePoints();
+			if (players[i].getQueue() != null) {
+				for(int j = 0; j < players[i].getQueue().size(); ++j){
+					System.out.println("count QUEUE BPs player" + (i+1));
+					playerBP += ((AdventureCard) players[i].getQueue().get(j)).getBattlePoints();
+				}
+			}
+			if (players[i].getParty() != null) {
+				for(int j = 0; j < players[i].getParty().size(); ++j){
+					System.out.println("count PARTY BPs player" + (i+1));
+					System.out.println(((AdventureCard) players[i].getParty().get(j)).getImgName());
+					System.out.println(((AdventureCard) players[i].getParty().get(j)).getSubType());
+					playerBP += ((AdventureCard) players[i].getParty().get(j)).getBattlePoints();
+				}
+			}
+			if(playerBP >= stageBP && (! players[i].isSponsor)){
+				players[i].passedStage = true;
+			}
+			
+			//System.out.println("Player " + (i+1) + " battlePoints: " + playerBP);
+			//System.out.println("StageBP: "  + stageBP);
+			this.toggleForStages = true;
+		}
+
 //		int stageTotal = 0;
 //		
 //		//count BP's in the stage
@@ -333,6 +431,8 @@ public class Model {
 		
 		return false;
 	}
+	
+
 	
 	public void setScenario1() {
 		/**
@@ -490,7 +590,12 @@ public class Model {
 	}
 	
 	public String getSubType(String ID, int currentPlayer){
-		
+//		System.out.println("getActivePlayer().getPlayerNumber(): " + getActivePlayer().getPlayerNumber());
+//		System.out.println("CARD ID: " + ID);
+//		System.out.println();
+//		System.out.println();
+		return ((AdventureCard)getActivePlayer().getHand().getByID(ID)).getSubType();
+		/*
 		String ret = "";
 		if (currentPlayer != currentViewer){
 			ret = ((AdventureCard) players[currentViewer].getHand().getByID(ID)).getSubType();
@@ -507,22 +612,28 @@ public class Model {
 //
 //		}
 		return ret;
+		*/
 	}
 
 
-	
-	
 	private void playQuest(){
 		if(control.getSponsorDecision()){
 			players[currentPlayer].isSponsor = true;
 			control.updateViewState();
+		} else {
+			endTurn();
 		}
 	}
 	
-	//THIS IS A FUCKING MESS NOW SORRY -DAVENELSON
 	public void playGame() {
 		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
 			playQuest();
+		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.EVENT)){
+//			playEvent();
+		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)){
+//			playTournament();
+		} else {
+			//shuffle the deck - it's empty
 		}
 	}
 	
