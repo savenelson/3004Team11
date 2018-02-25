@@ -857,8 +857,6 @@ public class View extends Application {
 				System.out.println(anAdventure.getId());
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
 				state = control.getState();
-				
-
 				update(stage);
 
 				//addHandToCanvas(canvas);

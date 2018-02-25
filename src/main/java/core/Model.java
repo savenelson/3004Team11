@@ -234,9 +234,9 @@ public class Model {
 	
 	public void dequeue(String iD) {
 		System.out.println("Model: IN HAND");
-		CardCollection hand = getActivePlayer().getHand();
-		Card c = hand.getByID(iD);
-		hand.remove(c);
+		CardCollection queue = getActivePlayer().getQueue();
+		Card c = queue.getByID(iD);
+		queue.remove(c);
 		getActivePlayer().addToHand(c);
 	}
 	
@@ -270,7 +270,6 @@ public class Model {
 		
 		//System.out.println("in viewerChanged");
 
-		
 		if (currentViewer == numPlayers-1){
 			currentViewer = 0;
 //			this.stageResolved = true;
@@ -334,7 +333,7 @@ public class Model {
 		CardCollection currStage = this.stages[this.currentStage];
 		
 		int stageBP = 0;
-		
+		 
 		for (int i = 0; i < currStage.size(); ++i){
 			stageBP += ((AdventureCard)currStage.get(i)).getBattlePoints();
 		}
