@@ -330,6 +330,8 @@ public class View extends Application {
 
 		if(state.players[state.currentViewer].isSponsor){
 			
+
+			
 			tile = new TilePane();
 			tile.setPrefRows(1);
 			tile.setPrefColumns(8);
@@ -368,7 +370,8 @@ public class View extends Application {
 			{
 				control.stageIncrement();
 			}
-			
+			stage = state.stages[state.stageOverCount];
+
 			Label queueCardsLabel;
 			Label stageLabel;
 			if(stage.size() > 1)

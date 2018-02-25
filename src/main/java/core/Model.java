@@ -32,7 +32,8 @@ public class Model {
 	boolean stageResolved = false;
 	boolean toggleForStages = false;
 	int stagePlaceHolder = 0;
-	
+	static int stageOverCount = 0;
+
 	Card currentStoryCard;
 	
 	int numPlayers;
@@ -148,6 +149,8 @@ public class Model {
 		state.toggleForStages = this.toggleForStages;
 		
 		state.stagePlaceHolder = this.stagePlaceHolder;
+		
+		state.stageOverCount = this.stageOverCount;
 		
 		return state;
 	}
@@ -295,10 +298,10 @@ public class Model {
 	}
 	
 	public int resolveQuest(){
+		System.out.println("WE MADE IT BABY");
 		return 0;
 	}
 	
-	static int stageOverCount = 0;
 	
 	public void stageOver(){
 		
@@ -330,7 +333,7 @@ public class Model {
 		 *    vs
 		 */
 		
-		CardCollection currStage = this.stages[this.currentStage];
+		CardCollection currStage = this.stages[this.currentStage+stageOverCount];
 		
 		int stageBP = 0;
 		 
@@ -356,6 +359,14 @@ public class Model {
 			}
 			if(playerBP >= stageBP && (! players[i].isSponsor)){
 				players[i].passedStage = true;
+			}
+			
+			if(stageOverCount == numStages && numStages != 0){
+				System.out.println("stageOverCount: " + stageOverCount);
+				System.out.println("numStages: " + numStages);
+
+				
+				resolveQuest();
 			}
 			
 			//System.out.println("Player " + (i+1) + " battlePoints: " + playerBP);

@@ -29,5 +29,8 @@ public class State {
 	public boolean toggleForStages;
 	
 	public int stagePlaceHolder;
+	
+	public int stageOverCount;
+	
 
 }
