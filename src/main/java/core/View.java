@@ -362,7 +362,7 @@ public class View extends Application {
 		else if(state.stagesSet){
 			state = control.getState();
 			
-			System.out.println("state curr: " + state.currentStage);
+			System.out.println("current stage: " + state.currentStage);
 			
 			if (state.toggleForStages)
 			{

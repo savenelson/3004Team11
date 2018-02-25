@@ -341,13 +341,20 @@ public class Model {
 		
 		for(int i = 0; i < numPlayers; ++i){
 			int playerBP = players[i].getRank().getBattlePoints();
-			for(int j = 0; j < players[i].getQueue().size(); ++j){
-				playerBP += ((AdventureCard) players[i].getQueue().get(j)).getBattlePoints();
+			if (players[i].getQueue() != null) {
+				for(int j = 0; j < players[i].getQueue().size(); ++j){
+					System.out.println("count QUEUE BPs player" + (i+1));
+					playerBP += ((AdventureCard) players[i].getQueue().get(j)).getBattlePoints();
+				}
 			}
-			for(int j = 0; j < players[i].getParty().size(); ++j){
-				playerBP += ((AdventureCard) players[i].getQueue().get(j)).getBattlePoints();
+			if (players[i].getParty() != null) {
+				for(int j = 0; j < players[i].getParty().size(); ++j){
+					System.out.println("count PARTY BPs player" + (i+1));
+					System.out.println(((AdventureCard) players[i].getParty().get(j)).getImgName());
+					System.out.println(((AdventureCard) players[i].getParty().get(j)).getSubType());
+					playerBP += ((AdventureCard) players[i].getParty().get(j)).getBattlePoints();
+				}
 			}
-			
 			if(playerBP >= stageBP && (! players[i].isSponsor)){
 				players[i].passedStage = true;
 			}
@@ -355,11 +362,8 @@ public class Model {
 			//System.out.println("Player " + (i+1) + " battlePoints: " + playerBP);
 			//System.out.println("StageBP: "  + stageBP);
 			this.toggleForStages = true;
-
 		}
-		
 
-		
 //		int stageTotal = 0;
 //		
 //		//count BP's in the stage
@@ -617,12 +621,20 @@ public class Model {
 		if(control.getSponsorDecision()){
 			players[currentPlayer].isSponsor = true;
 			control.updateViewState();
+		} else {
+			endTurn();
 		}
 	}
 	
 	public void playGame() {
 		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
 			playQuest();
+		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.EVENT)){
+//			playEvent();
+		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)){
+//			playTournament();
+		} else {
+			//shuffle the deck - it's empty
 		}
 	}
 
