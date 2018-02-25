@@ -21,13 +21,13 @@ public class RankCard extends Card{
 		
 		this.subType = subType;
 		if(this.subType.equals(SQUIRE)){
-			
+			this.battlePoints = SQUIRE_BATTLE_POINTS;
 		}
 		else if(this.subType.equals(KNIGHT)){
-			
+			this.battlePoints = KNIGHT_BATTLE_POINTS;
 		}
 		else if(this.subType.equals(CHAMPION_KNIGHT)){
-			
+			this.battlePoints = CHAMPION_KNIGHT_BATTLE_POINTS;
 		}
 		else{
 			

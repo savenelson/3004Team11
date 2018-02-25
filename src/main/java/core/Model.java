@@ -30,6 +30,8 @@ public class Model {
 	boolean currentPlayerNotSponsoring;
 	boolean gameWon = false;
 	boolean stageResolved = false;
+	boolean toggleForStages = false;
+	int stagePlaceHolder = 0;
 	
 	Card currentStoryCard;
 	
@@ -143,6 +145,10 @@ public class Model {
 		
 		state.stageResolved = this.stageResolved;
 		
+		state.toggleForStages = this.toggleForStages;
+		
+		state.stagePlaceHolder = this.stagePlaceHolder;
+		
 		return state;
 	}
 
@@ -194,6 +200,8 @@ public class Model {
 		System.out.println("Model: IN DISCARD");
 		CardCollection hand = getActivePlayer().getHand();
 		Card c = hand.getByID(iD);
+		
+		
 		hand.remove(c);
 		adventureDeckDiscard.add(c);
 	}
@@ -202,8 +210,26 @@ public class Model {
 		System.out.println("Model: IN QUEUE");
 		CardCollection hand = getActivePlayer().getHand();
 		Card c = hand.getByID(iD);
+		
+		if(containsSameWeapon(getActivePlayer().getQueue(), ((WeaponCard) c).getName())) {
+			control.alert("Cannot have duplicate weapons in queue.");
+			return;
+		}
+		
 		hand.remove(c);
 		getActivePlayer().addToQueue(c);
+	}
+	
+	public boolean containsSameWeapon(CardCollection collection, String cardName) {
+		
+		for (int i=0; i<collection.size(); i++) {
+			if(((WeaponCard) collection.get(i)).getName().equals(cardName)) {
+				//TODO need to ALERT the View
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	public void dequeue(String iD) {
@@ -226,10 +252,10 @@ public class Model {
 		// so that the previous and next players can't peek eachothers hands
 		
 		if(players[currentPlayer].isSponsor){
-			System.out.println("HOLA");
+			//System.out.println("HOLA");
 			viewerChanged();
 			
-			System.out.println("stageResolved: " + this.stageResolved);
+			//System.out.println("stageResolved: " + this.stageResolved);
 		}
 		else{
 			nextPlayer();
@@ -273,6 +299,29 @@ public class Model {
 		return 0;
 	}
 	
+	static int stageOverCount = 0;
+	
+	public void stageOver(){
+		
+		for(int i = 0; i < this.numPlayers; ++i){
+			if(!this.players[i].isSponsor){
+				for(int j = 0; j < this.players[i].getQueue().size(); ++j){
+					adventureDeckDiscard.add(this.players[i].getQueue().pop());
+				}
+				players[i].passedStage = false;
+			}
+		}
+		stageOverCount++;
+		
+		this.currentViewer--;// TODO ??? MAYBE A REALLY BAD FIX MAYBE NOT, WHO KNOWS ANYMORE...
+		this.stagesSet = false;
+		this.stageResolved = false;
+		this.toggleForStages = true;
+		this.stagePlaceHolder = this.currentStage + stageOverCount;
+		state.stage = this.stages[currentStage];
+		control.updateViewState();
+	}
+	
 	public void resolveStage(){
 		/**
 		 * To resolve a stage, we need to count the following data structures:
@@ -291,13 +340,22 @@ public class Model {
 		}
 		
 		for(int i = 0; i < numPlayers; ++i){
-			int playerBP = 0;
+			int playerBP = players[i].getRank().getBattlePoints();
 			for(int j = 0; j < players[i].getQueue().size(); ++j){
 				playerBP += ((AdventureCard) players[i].getQueue().get(j)).getBattlePoints();
 			}
+			for(int j = 0; j < players[i].getParty().size(); ++j){
+				playerBP += ((AdventureCard) players[i].getQueue().get(j)).getBattlePoints();
+			}
+			
 			if(playerBP >= stageBP && (! players[i].isSponsor)){
 				players[i].passedStage = true;
 			}
+			
+			//System.out.println("Player " + (i+1) + " battlePoints: " + playerBP);
+			//System.out.println("StageBP: "  + stageBP);
+			this.toggleForStages = true;
+
 		}
 		
 
@@ -370,6 +428,8 @@ public class Model {
 		
 		return false;
 	}
+	
+
 	
 	public void setScenario1() {
 		/**
@@ -527,7 +587,12 @@ public class Model {
 	}
 	
 	public String getSubType(String ID, int currentPlayer){
-		
+//		System.out.println("getActivePlayer().getPlayerNumber(): " + getActivePlayer().getPlayerNumber());
+//		System.out.println("CARD ID: " + ID);
+//		System.out.println();
+//		System.out.println();
+		return ((AdventureCard)getActivePlayer().getHand().getByID(ID)).getSubType();
+		/*
 		String ret = "";
 		if (currentPlayer != currentViewer){
 			ret = ((AdventureCard) players[currentViewer].getHand().getByID(ID)).getSubType();
@@ -544,6 +609,7 @@ public class Model {
 //
 //		}
 		return ret;
+		*/
 	}
 
 

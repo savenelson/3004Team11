@@ -359,7 +359,16 @@ public class View extends Application {
 			canvas.getChildren().add(tile);
 		}
 		
-		else if(stage.size() != 0){
+		else if(state.stagesSet){
+			state = control.getState();
+			
+			System.out.println("state curr: " + state.currentStage);
+			
+			if (state.toggleForStages)
+			{
+				control.stageIncrement();
+			}
+			
 			Label queueCardsLabel;
 			Label stageLabel;
 			if(stage.size() > 1)
@@ -910,6 +919,7 @@ public class View extends Application {
 		cardAdded.setFitHeight(12);  
 		stage.getChildren().add(cardAdded);
 	}
+	
 	private void setRankControl(ImageView aRankCard, int numberOfcards) {
 		
 		//logger.info("Showing other players hands is working ");
@@ -996,6 +1006,10 @@ public class View extends Application {
 		    @Override public void handle(ActionEvent e) {
 		    	state = control.getState();
 		    	normalEndTurn();
+				if (state.toggleForStages)
+				{
+					control.stageIncrement();
+				}
 		    }
 		});
 		if(state.currentPlayer == state.currentSponsor && state.currentSponsor == state.currentViewer){
@@ -1046,6 +1060,7 @@ public class View extends Application {
 		}
 
         control.buttonClick(ENDTURN);
+
 		state = control.getState();
     	if(state.stageResolved){
     		stageResolved();
@@ -1082,11 +1097,14 @@ public class View extends Application {
     	}
     }
 	
+	
 	public void stageResolved(){
 		control.resolveStage();
 		StackPane layout = new StackPane();
 		state = control.getState();
 		for (int i = 0; i < state.numPlayers; ++i){
+			control.stageIncrement();
+			
 			if(!state.players[i].isSponsor){
 				Label passed = new Label("Player "+ (i+1));
 				if(state.players[i].passedStage)
@@ -1097,7 +1115,7 @@ public class View extends Application {
 				layout.getChildren().add(passed);
 				layout.setPrefHeight(720);
 				layout.setPrefWidth(1280);
-				passed.setTranslateY(-60*i);			
+				passed.setTranslateY(-180+(60*i));			
 				System.out.print("Player "+ (i+1));
 				if(state.players[i].passedStage)
 					System.out.println(" passed stage" + (state.currentStage+1));
@@ -1112,7 +1130,22 @@ public class View extends Application {
 		readyButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-
+				control.stageOver();
+				state = control.getState();
+				System.out.println("A");
+				System.out.println("state.currentStage: " + state.currentStage);
+				
+				normalEndTurn();
+				
+//				if (state.toggleForStages)
+//				{
+					control.stageIncrement();
+//				}
+				System.out.println("B");
+				System.out.println("state.currentStage: " + state.currentStage);
+				
+				System.out.println("C");
+				System.out.println("state.currentStage: " + state.currentStage);
 				//update(stage);
 			}
 		});

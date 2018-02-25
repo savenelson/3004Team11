@@ -67,7 +67,15 @@ public class Control{
 		
 	}
 	
-
+	public void stageIncrement(){
+		model.state.currentStage = model.state.stagePlaceHolder;
+		model.state.toggleForStages = false;
+		model.resolveStage();
+	}
+	
+	public void stageOver(){
+		model.stageOver();
+	}
 
 	public boolean getSponsorDecision(){
 		return view.popup("Would you like to sponsor this quest?");

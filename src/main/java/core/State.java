@@ -25,5 +25,9 @@ public class State {
 	public boolean stagesSet;
 	
 	public boolean stageResolved;
+	
+	public boolean toggleForStages;
+	
+	public int stagePlaceHolder;
 
 }
