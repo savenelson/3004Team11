@@ -18,6 +18,8 @@ public class State {
 	
 	public int numPlayers;
 	
+	public int numStages;
+	
 	public boolean currentPlayerNotSponsoring;
 	
 	public CardCollection [] stages;
@@ -29,5 +31,6 @@ public class State {
 	public boolean toggleForStages;
 	
 	public int stagePlaceHolder;
+
 
 }

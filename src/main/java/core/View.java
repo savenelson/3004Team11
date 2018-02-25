@@ -1021,6 +1021,7 @@ public class View extends Application {
 	}
 	
 	private void normalEndTurn(){
+		System.out.println("normalendTurn() called");
 		boolean foeInEachStage = true;
 		boolean [] foesPresent = null;
 		int numStages = 0;
@@ -1097,7 +1098,7 @@ public class View extends Application {
 		StackPane layout = new StackPane();
 		state = control.getState();
 		for (int i = 0; i < state.numPlayers; ++i){
-			control.stageIncrement();
+			control.stageIncrement();  //TODO THIS SEEMS IT MAY ADD numPlayers stages
 			
 			if(!state.players[i].isSponsor){
 				Label passed = new Label("Player "+ (i+1));
@@ -1111,10 +1112,11 @@ public class View extends Application {
 				layout.setPrefWidth(1280);
 				passed.setTranslateY(-180+(60*i));			
 				System.out.print("Player "+ (i+1));
-				if(state.players[i].passedStage)
+				if(state.players[i].passedStage) {
 					System.out.println(" passed stage" + (state.currentStage+1));
-				else
+				} else {
 					System.out.println(" failed stage" + (state.currentStage+1));
+				}
 			}
 		}
 		Button readyButton = new Button("Next Stage");

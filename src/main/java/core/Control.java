@@ -41,7 +41,7 @@ public class Control{
 		
 		model.instantiatePlayers(numPlayers);
 		
-		model.instantiateStages(5); //TODO set properly
+		model.instantiateStages(); //TODO set properly
 		
 //		model.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
 

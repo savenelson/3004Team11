@@ -67,10 +67,11 @@ public class Model {
 		currentPlayer = 0;
 	}
 	
-	public void instantiateStages(int numStages){
-		stages = new CardCollection[numStages];
+	public void instantiateStages(){
+
+		stages = new CardCollection[5];
 		
-		for(int i = 0; i < numStages; ++i){
+		for(int i = 0; i < 5; ++i){
 			stages[i] = new CardCollection();
 		}
 		
@@ -138,6 +139,8 @@ public class Model {
 		state.stages = this.stages;
 		
 		state.numPlayers = this.numPlayers;
+		
+		state.numStages = this.numStages;
 		
 		state.currentPlayerNotSponsoring = this.currentPlayerNotSponsoring; 
 		
@@ -301,6 +304,7 @@ public class Model {
 	static int stageOverCount = 0;
 	
 	public void stageOver(){
+		System.out.println("stageOver() called");
 		
 		for(int i = 0; i < this.numPlayers; ++i){
 			if(!this.players[i].isSponsor){
@@ -333,31 +337,40 @@ public class Model {
 		CardCollection currStage = this.stages[this.currentStage];
 		
 		int stageBP = 0;
-		 
+		System.out.println("!!!IF THIS PRINTS MORE THAN ONCE, WE FOUND PROBLEM");
+
 		for (int i = 0; i < currStage.size(); ++i){
 			stageBP += ((AdventureCard)currStage.get(i)).getBattlePoints();
 		}
 		
 		for(int i = 0; i < numPlayers; ++i){
-			int playerBP = players[i].getRank().getBattlePoints();
-			if (players[i].getQueue() != null) {
-				for(int j = 0; j < players[i].getQueue().size(); ++j){
-					System.out.println("count QUEUE BPs player" + (i+1));
-					playerBP += ((AdventureCard) players[i].getQueue().get(j)).getBattlePoints();
+			if(!players[i].isSponsor) {
+				int playerBP = players[i].getRank().getBattlePoints();
+				
+				if (players[i].getQueue() != null) {
+					System.out.println("count bp in queue player" + (i+1));
+					for(int j = 0; j < players[i].getQueue().size(); ++j){
+
+						System.out.println(((AdventureCard) players[i].getQueue().get(j)).getImgName());
+						System.out.println(((AdventureCard) players[i].getQueue().get(j)).getSubType());
+						playerBP += ((AdventureCard) players[i].getQueue().get(j)).getBattlePoints();
+					}
+				}
+				if (players[i].getParty() != null) {
+					System.out.println("count bp in party player" + (i+1));
+					for(int j = 0; j < players[i].getParty().size(); ++j){
+						System.out.println(((AdventureCard) players[i].getParty().get(j)).getImgName());
+						System.out.println(((AdventureCard) players[i].getParty().get(j)).getSubType());
+						playerBP += ((AdventureCard) players[i].getParty().get(j)).getBattlePoints();
+					}
+				}
+				System.out.println("playerBP" + playerBP + " vs " + "stageBP" + stageBP);
+				if(playerBP >= stageBP ){
+					players[i].passedStage = true;
+					System.out.println("Player" + (i+1) + " passed?" + players[i].passedStage);
 				}
 			}
-			if (players[i].getParty() != null) {
-				for(int j = 0; j < players[i].getParty().size(); ++j){
-					System.out.println("count PARTY BPs player" + (i+1));
-					System.out.println(((AdventureCard) players[i].getParty().get(j)).getImgName());
-					System.out.println(((AdventureCard) players[i].getParty().get(j)).getSubType());
-					playerBP += ((AdventureCard) players[i].getParty().get(j)).getBattlePoints();
-				}
-			}
-			if(playerBP >= stageBP && (! players[i].isSponsor)){
-				players[i].passedStage = true;
-			}
-			
+
 			//System.out.println("Player " + (i+1) + " battlePoints: " + playerBP);
 			//System.out.println("StageBP: "  + stageBP);
 			this.toggleForStages = true;
