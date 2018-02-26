@@ -203,11 +203,11 @@ public class View extends Application {
 		primaryStage.setResizable(false);
 		
 		if (!state.stagesSet){
-			primaryStage.setTitle("Quests of the Round Table - Player" + (state.currentPlayer+1));
+			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer+1));
 		}
 		else{
 			//System.out.println("HERE");
-			primaryStage.setTitle("Quests of the Round Table - Player" + (state.currentViewer+1));
+			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentViewer+1));
 		}
 		primaryStage.show();
 	}
@@ -375,16 +375,16 @@ public class View extends Application {
 			Label queueCardsLabel;
 			Label stageLabel;
 			if(stage.size() > 1)
-				stageLabel = new Label("Stage " + (state.currentStage+1) + " has " + stage.size() + " cards");
+				stageLabel = new Label("Stage " + (state.currentStage+1) + ": " + stage.size() + " cards");
 			else
-				stageLabel = new Label("Stage " + (state.currentStage+1) + " has " + stage.size() + " card");
+				stageLabel = new Label("Stage " + (state.currentStage+1) + ": " + stage.size() + " card");
 			
 			stageLabel.setFont(Font.font("Serif", FontWeight.BOLD, 60));
 			stageLabel.relocate(colStage + 100, rowStage + 20);
 			
-			queueCardsLabel = new Label("Please queue your cards for this stage.");
+			queueCardsLabel = new Label("Queue your cards for Stage " + (state.currentStage+1) );
 			queueCardsLabel.setFont(Font.font("Serif", FontWeight.BOLD, 32));
-			queueCardsLabel.relocate(colStage + 70, rowStage + 100);
+			queueCardsLabel.relocate(colStage + 95, rowStage + 100);
 			
 			canvas.getChildren().add(stageLabel);
 			canvas.getChildren().add(queueCardsLabel);
@@ -1108,11 +1108,11 @@ public class View extends Application {
     	else{
 			update(stage);
 			
-			Label playerLabel = new Label("Switch to player " + (control.getActivePlayer().getPlayerNumber()+1));
+			Label playerLabel = new Label("Player " + (control.getActivePlayer().getPlayerNumber()+1) + " ready?");
 			playerLabel.setFont(new Font("Ariel", 30));
 			
-			Label label = new Label("Click button when players switched.");
-			label.setFont(new Font("Ariel", 30));
+//			Label label = new Label("Click button when players switched.");
+//			label.setFont(new Font("Ariel", 30));
 			
 			Button readyButton = new Button("Ready");
 			readyButton.setFont(new Font("Ariel", 30));
@@ -1124,7 +1124,7 @@ public class View extends Application {
 				}
 			});
 			StackPane layout = new StackPane();
-			layout.getChildren().addAll(playerLabel, label, readyButton);
+			layout.getChildren().addAll(playerLabel, readyButton);
 			layout.setPrefHeight(720);
 			layout.setPrefWidth(1280);
 			
