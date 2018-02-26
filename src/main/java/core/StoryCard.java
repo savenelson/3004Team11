@@ -15,6 +15,7 @@ public abstract class StoryCard extends Card{
 		
 		this.subType = subType;
 	}
+	public String getName(){return this.name;}
 
 	
 	@Override

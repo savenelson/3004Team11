@@ -41,7 +41,7 @@ public class Control{
 		
 		model.instantiatePlayers(numPlayers);
 		
-		model.instantiateStages(5); //TODO set properly
+		model.instantiateStages(); //TODO set properly
 		
 //		model.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
 
@@ -122,6 +122,10 @@ public class Control{
 		model.resetCurrentStage();
 	}
 
+	public void nextStory(){
+		model.nextStory();
+	}
+	
 	public void resolveStage(){
 		model.resolveStage();
 	}
@@ -147,6 +151,10 @@ public class Control{
 		return model.getSubType(ID, currentPlayer);
 	}
 
+	public void resolveQuest(){
+		view.resolveQuest();
+	}
+	
 	public void stagesSet(){
 		startStageCycle();
 
@@ -155,6 +163,12 @@ public class Control{
 	
 	public void alert(String message){
 		view.alert(message);
+	}
+
+
+
+	public View getView() {
+		return view;
 	}
 	
 }

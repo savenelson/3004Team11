@@ -141,7 +141,7 @@ public class View extends Application {
 	public static final	int cardXLargeWidth = 225;
 
 	
-		private static final Logger logger = LogManager.getLogger(View.class);
+	private static final Logger logger = LogManager.getLogger(View.class);
 	
 	
 	private TextField shieldCount;
@@ -330,6 +330,8 @@ public class View extends Application {
 
 		if(state.players[state.currentViewer].isSponsor){
 			
+
+			
 			tile = new TilePane();
 			tile.setPrefRows(1);
 			tile.setPrefColumns(8);
@@ -368,7 +370,8 @@ public class View extends Application {
 			{
 				control.stageIncrement();
 			}
-			
+			stage = state.stages[state.stageOverCount];
+
 			Label queueCardsLabel;
 			Label stageLabel;
 			if(stage.size() > 1)
@@ -386,6 +389,49 @@ public class View extends Application {
 			canvas.getChildren().add(stageLabel);
 			canvas.getChildren().add(queueCardsLabel);
 		}
+	}
+	
+	public void resolveQuest(){
+
+		StackPane layout = new StackPane();
+		state = control.getState();
+		int numShields = ((QuestCard) state.currentStoryCard).getNumStages();
+		
+		for (int i = 0; i < state.numPlayers; ++i){
+			if(!state.players[i].isSponsor){
+				Label passed = new Label("Player "+ (i+1));
+				System.out.print("state.players[i].passedStage: " + state.players[i].passedStage);
+
+				if(state.players[i].passedStage)
+					passed.setText(passed.getText() + " passed Quest and receives " + numShields + " shields!");
+				else
+					passed.setText(passed.getText() + " failed Quest and receives 0 shields.");
+				
+				passed.setFont(new Font("Ariel", 30));	
+				layout.getChildren().add(passed);
+				layout.setPrefHeight(720);
+				layout.setPrefWidth(1280);
+				passed.setTranslateY(-180+(60*i));			
+				System.out.print("Player "+ (i+1));
+				
+			}
+		}
+		Button readyButton = new Button("Next Stage");
+		readyButton.setFont(new Font("Ariel", 30));
+		layout.getChildren().add(readyButton);
+		readyButton.setTranslateY(65);
+		readyButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				control.nextStory();
+				update(stage);
+			}
+		});
+		Scene scene = new Scene(layout);
+		scene.getStylesheets().add("style.css");
+		stage.setScene(scene);
+		System.out.println("END OF RESOLVE");
+		//update(stage);
 	}
 	
 	private void addQueueToCanvas(Pane canvas) {
@@ -1021,6 +1067,7 @@ public class View extends Application {
 	}
 	
 	private void normalEndTurn(){
+		System.out.println("normalendTurn() called");
 		boolean foeInEachStage = true;
 		boolean [] foesPresent = null;
 		int numStages = 0;
@@ -1091,30 +1138,31 @@ public class View extends Application {
     	}
     }
 	
-	
 	public void stageResolved(){
 		control.resolveStage();
 		StackPane layout = new StackPane();
 		state = control.getState();
 		for (int i = 0; i < state.numPlayers; ++i){
-			control.stageIncrement();
+			control.stageIncrement();  //TODO THIS SEEMS IT MAY ADD numPlayers stages
 			
 			if(!state.players[i].isSponsor){
 				Label passed = new Label("Player "+ (i+1));
-				if(state.players[i].passedStage)
+				if(state.players[i].passedStage) {
 					passed.setText(passed.getText() + " passed stage " + (state.currentStage+1));
-				else
+				} else {
 					passed.setText(passed.getText() + " failed stage " + (state.currentStage+1));
+				}
 				passed.setFont(new Font("Ariel", 30));	
 				layout.getChildren().add(passed);
 				layout.setPrefHeight(720);
 				layout.setPrefWidth(1280);
 				passed.setTranslateY(-180+(60*i));			
 				System.out.print("Player "+ (i+1));
-				if(state.players[i].passedStage)
+				if(state.players[i].passedStage) {
 					System.out.println(" passed stage" + (state.currentStage+1));
-				else
+				} else {
 					System.out.println(" failed stage" + (state.currentStage+1));
+				}
 			}
 		}
 		Button readyButton = new Button("Next Stage");
@@ -1143,19 +1191,37 @@ public class View extends Application {
 				//update(stage);
 			}
 		});
+		
+		
+		Button showCardsButton = new Button("Show Cards");
+		showCardsButton.setFont(new Font("Ariel", 30));
+		layout.getChildren().add(showCardsButton);
+		showCardsButton.setTranslateY(140);
+		showCardsButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				state = control.getState();
+				
+				ShowResoultionView resolution = new ShowResoultionView(canvas, state, control.getView());
+				sceneChange(resolution);
+			}
+		});
 		Scene scene = new Scene(layout);
 		scene.getStylesheets().add("style.css");
+		
 		stage.setScene(scene);
 		System.out.println("END OF RESOLVE");
 		//update(stage);
-
 	}
 	
 	public void sceneChange(Pane newScreen) {
+
 		newScreen.setId("pane");
 		newScreen.setId("nextPlayer");
 		Scene scene = new Scene(newScreen);
-		
+
+		Scene scene = new Scene(newScreen, 1280, 720);
+
 		scene.getStylesheets().add("style.css");	
 		stage.setScene(scene);
 	}
