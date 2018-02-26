@@ -3,11 +3,15 @@ package core;
 public class Player {
 
 	private int playerNumber;
+	public int getPlayerNumber(){return playerNumber;}
 
-	public boolean passedStage = false;
-	public boolean passedQuest = false;
 	public boolean isSponsor = false;
 	public boolean declinedToSponsor = false;
+	public boolean hasQueuedAgainstStage = false;
+	public boolean isQuesting = false;
+	public boolean passedStage = false;
+	public boolean passedQuest = false;
+	//add any new booleans to the clearBooleans function below
 	
 	private RankCard rankCard;
 	public RankCard getRank(){return rankCard;}
@@ -26,6 +30,7 @@ public class Player {
 	
 	public void addShields(int num) {
 		this.shieldCount += num;
+		promote();
 	}
 	public void removeShields(int num) {
 		this.shieldCount = this.shieldCount - num;
@@ -61,5 +66,40 @@ public class Player {
 	public void addToParty(Card c){
 		party.add(c);
 	}
+
+	public void clearBooleans() {
+		this.passedStage = false;
+		this.passedQuest = false;
+		this.isSponsor = false;
+		this.declinedToSponsor = false;
+	}
 	
+	public void promote() {
+		if (shieldCount >=5 && RankCard.SQUIRE.equals(rankCard.getSubType())){
+			shieldCount  = shieldCount -5;
+			rankCard = new RankCard(RankCard.KNIGHT);
+			System.out.println("Promoted to a Knight");
+		}else if ((shieldCount >=7 && RankCard.KNIGHT.equals(rankCard.getSubType()))){
+			shieldCount  = shieldCount -7;
+			rankCard = new RankCard(RankCard.CHAMPION_KNIGHT);
+			System.out.println("Promoted to a Champion Knight");
+			
+			
+		}else if((shieldCount >=10 && RankCard.CHAMPION_KNIGHT.equals(rankCard.getSubType()))) {
+			System.out.println("Winner");
+			
+		}
+	}
+	public  boolean canPromote(int potentialShields) {
+		if (shieldCount +potentialShields >=5 && RankCard.SQUIRE.equals(rankCard.getSubType())){
+			return true; 
+		}else if ((shieldCount+ potentialShields >=7 && RankCard.KNIGHT.equals(rankCard.getSubType()))){
+			return true;
+		}else if((shieldCount + potentialShields >=10 && RankCard.CHAMPION_KNIGHT.equals(rankCard.getSubType()))) {
+			
+			return true;
+			
+		}
+		else {return false;}
+	}
 }

@@ -23,4 +23,10 @@ public class TestCard extends AdventureCard{
 		   + ", subtype: " + this.subType 
 		   + ", name: " + this.getName();
 	}
+
+	@Override
+	public int getBattlePoints() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

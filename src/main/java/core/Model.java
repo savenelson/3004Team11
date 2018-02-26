@@ -20,12 +20,20 @@ public class Model {
 
 	private StoryDeck storyDeckDiscard;
 	public AdventureDeck getStoryDeckDiscard(){return this.adventureDeck;}
-	
+
+	boolean stagesSet = false;
+	int currentViewer;
 	int currentPlayer;
 	int currentStage;
 	int currentSponsor;
-	boolean currentPlayerNotSponsoring;
-	
+	int endTurnCounter = 0;
+//	boolean currentPlayerNotSponsoring;
+	boolean gameWon = false;
+	boolean stageResolved = false;
+	boolean toggleForStages = false;
+	int stagePlaceHolder = 0;
+	static int stageOverCount = 0;
+
 	Card currentStoryCard;
 	
 	int numPlayers;
@@ -48,7 +56,7 @@ public class Model {
 		
 		currentPlayer = 0;
 		currentSponsor = 0;
-		currentPlayerNotSponsoring = false;
+//		currentPlayerNotSponsoring = false;
 	}
 	
 	public void instantiatePlayers(int numPlayers){
@@ -60,10 +68,11 @@ public class Model {
 		currentPlayer = 0;
 	}
 	
-	public void instantiateStages(int numStages){
-		stages = new CardCollection[numStages];
+	public void instantiateStages(){
+
+		stages = new CardCollection[5];
 		
-		for(int i = 0; i < numStages; ++i){
+		for(int i = 0; i < 5; ++i){
 			stages[i] = new CardCollection();
 		}
 		
@@ -104,6 +113,12 @@ public class Model {
 		}
 	}
 	
+	public void resetCurrentStage(){
+		setCurrentStage(0);
+		
+		//this.currentStage = 0;
+	}
+	
 	public State getState(){
 		
 		state.players = this.players;
@@ -114,40 +129,58 @@ public class Model {
 		
 		state.currentStoryCard = this.currentStoryCard;
 		
+		state.currentViewer = this.currentViewer;
+		
 		if (stages[currentStage]!=null) {
 			state.stage = this.stages[currentStage];
 		}
 		
+		state.currentStage = this.currentStage;
+		
+		state.stages = this.stages;
+		
 		state.numPlayers = this.numPlayers;
 		
-		state.currentPlayerNotSponsoring = this.currentPlayerNotSponsoring; 
+		state.numStages = this.numStages;
+		
+//		state.currentPlayerNotSponsoring = this.currentPlayerNotSponsoring; 
+
+		state.stagesSet = this.stagesSet;
+		
+		state.stageResolved = this.stageResolved;
+		
+		state.toggleForStages = this.toggleForStages;
+		
+		state.stagePlaceHolder = this.stagePlaceHolder;
+		
+		state.stageOverCount = this.stageOverCount;
 		
 		return state;
 	}
 
 	public void party(String iD) {
-		System.out.println("Model: playing to party");		
-		CardCollection hand = this.players[this.currentPlayer].getHand();
+		//System.out.println("Model: playing to party");		
+		CardCollection hand = getActivePlayer().getHand();
 		Card c = hand.getByID(iD);
 		
 		if((((AdventureCard) c).getSubType().equals(AdventureCard.AMOUR)) 
-				&& containsAmour(this.players[this.currentPlayer].getParty())) {
+				&& containsAmour(getActivePlayer().getParty())) {
 			control.alert("Cannot have more than one amour in party.");
 			return;
 		}
 		
 		hand.remove(c);
-		this.players[this.currentPlayer].addToParty(c);
+		getActivePlayer().addToParty(c);
 	}
 	
 	public void stage(String iD) {
-		if(state.players[currentPlayer].isSponsor) {
-			System.out.println("Model: IN STAGE");
+		//if(state.players[currentPlayer].isSponsor) {
+			//System.out.println("Model: IN STAGE");
 			CardCollection hand = this.players[this.currentPlayer].getHand();
 			Card c = hand.getByID(iD);
-			System.out.println("c=" + c.getImgName());
-			System.out.println("containsFoe = " + containsFoe(this.stages[currentStage]));
-			System.out.println("containsWeapon = " + containsWeapon(this.stages[currentStage], c.getImgName()));
+			//System.out.println("c=" + c.getImgName());
+			//System.out.println("containsFoe = " + containsFoe(this.stages[currentStage]));
+			//System.out.println("containsWeapon = " + containsWeapon(this.stages[currentStage], c.getImgName()));
 			if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
 					&& containsFoe(this.stages[currentStage])) {
 				control.alert("Cannot stage more than one foe per quest stage.");
@@ -159,56 +192,146 @@ public class Model {
 			}
 			hand.remove(c);
 			stages[currentStage].add(c);
-			System.out.println(stages[currentStage].toString());
-		}
+			//System.out.println(stages[currentStage].toString());
+		//}
+	}
+	
+	public Player getActivePlayer(){
+		if(this.currentPlayer != this.currentViewer)
+			return this.players[this.currentViewer];
+		return this.players[this.currentPlayer];
 	}
 	
 	public void discard(String iD) {
 		System.out.println("Model: IN DISCARD");
-		CardCollection hand = this.players[this.currentPlayer].getHand();
+		CardCollection hand = getActivePlayer().getHand();
 		Card c = hand.getByID(iD);
+		
+		
 		hand.remove(c);
 		adventureDeckDiscard.add(c);
 	}
 	
 	public void queue(String iD) {
 		System.out.println("Model: IN QUEUE");
-		CardCollection hand = this.players[this.currentPlayer].getHand();
+		CardCollection hand = getActivePlayer().getHand();
 		Card c = hand.getByID(iD);
+		
+		if(containsSameWeapon(getActivePlayer().getQueue(), ((WeaponCard) c).getName())) {
+			control.alert("Cannot have duplicate weapons in queue.");
+			return;
+		}
+		
 		hand.remove(c);
-		players[currentPlayer].addToQueue(c);
+		getActivePlayer().addToQueue(c);
+	}
+	
+	public boolean containsSameWeapon(CardCollection collection, String cardName) {
+		
+		for (int i=0; i<collection.size(); i++) {
+			if(((WeaponCard) collection.get(i)).getName().equals(cardName)) {
+				//TODO need to ALERT the View
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	public void dequeue(String iD) {
 		System.out.println("Model: IN HAND");
-		CardCollection hand = this.players[this.currentPlayer].getQueue();
-		Card c = hand.getByID(iD);
-		hand.remove(c);
-		players[currentPlayer].addToHand(c);
+		CardCollection queue = getActivePlayer().getQueue();
+		Card c = queue.getByID(iD);
+		queue.remove(c);
+		getActivePlayer().addToHand(c);
 	}
 	
 	public void setCurrentStage(int num) {
-		currentStage = num;
-		System.out.println("Model: Current Stage set to: "+ (currentStage+1));
+		this.currentStage = num;
+		control.updateViewState();
+		//System.out.println("Model: Current Stage set to: "+ (currentStage+1));
 	}
 	
 	public void endTurn() {
 		//this will be how a player can chose to pass his turn to the next player
 		//also where we'll intercept the call at the Control to POPUP a blocker
 		// so that the previous and next players can't peek eachothers hands
-		nextPlayer();
 		
+		if(players[currentPlayer].isSponsor){
+			//System.out.println("HOLA");
+			viewerChanged();
+			
+			//System.out.println("stageResolved: " + this.stageResolved);
+		}
+		else{
+			nextPlayer();
+			endTurnCounter++;
+		}
 		
+//		System.out.println("\n\n\nNum players: " + state.numPlayers);
+//		System.out.println("Current Player: " + (currentPlayer+1));
+	}
+	
+	public void viewerChanged(){
 		
-		System.out.println("\n\n\nNum players: " + state.numPlayers);
-		System.out.println("Current Player: " + (currentPlayer+1));
+		//System.out.println("in viewerChanged");
+
+		if (currentViewer == numPlayers-1){
+			currentViewer = 0;
+//			this.stageResolved = true;
+//			control.updateViewState();
+		}
+		
+		else{
+			currentViewer++;
+		}
+		
+		if(players[currentPlayer].isSponsor && currentPlayer == currentViewer){
+			currentViewer++;
+			this.stageResolved = true;
+			//control.resolveStage();
+
+		}
+		System.out.println("stage resolved from viewer changed: " + this.stageResolved);
+	}
+	
+	public void stagesSet(){
+		this.stagesSet = true;
+		control.updateViewState();
 	}
 	
 	public int resolveQuest(){
+		System.out.println("WE MADE IT BABY");
+	
+		control.resolveQuest();
+		
 		return 0;
 	}
 	
-	private void resolveStage(){
+	
+	public void stageOver(){
+		System.out.println("stageOver() called");
+		
+		for(int i = 0; i < this.numPlayers; ++i){
+			if(!this.players[i].isSponsor){
+				for(int j = 0; j < this.players[i].getQueue().size(); ++j){
+					adventureDeckDiscard.add(this.players[i].getQueue().pop());
+				}
+				players[i].passedStage = false;
+			}
+		}
+		stageOverCount++;
+		
+		this.currentViewer--;// TODO ??? MAYBE A REALLY BAD FIX MAYBE NOT, WHO KNOWS ANYMORE...
+		this.stagesSet = false;
+		this.stageResolved = false;
+		this.toggleForStages = true;
+		this.stagePlaceHolder = this.currentStage + stageOverCount;
+		state.stage = this.stages[currentStage];
+		control.updateViewState();
+	}
+	
+	public void resolveStage(){
 		/**
 		 * To resolve a stage, we need to count the following data structures:
 		 *    - players Queue
@@ -216,32 +339,74 @@ public class Model {
 		 *    - players Rank
 		 *    vs
 		 */
-		int stageTotal = 0;
 		
-		//count BP's in the stage
-		for (int i=0;i<this.stages[currentStage].size(); i++) {
-			stageTotal += ((AdventureCard)this.stages[currentStage].get(i)).getBattlePoints();
+		CardCollection currStage = this.stages[this.currentStage+stageOverCount];
+		
+		int stageBP = 0;
+		System.out.println("!!!IF THIS PRINTS MORE THAN ONCE, WE FOUND PROBLEM");
+
+		for (int i = 0; i < currStage.size(); ++i){
+			stageBP += ((AdventureCard)currStage.get(i)).getBattlePoints();
 		}
 		
-		int playerTotal = 0;
-		
-		for(int j=0;j<this.numPlayers;j++) {
-			for (int i=0; i<this.state.players[j].getParty().size(); i++) {
-				playerTotal += ((AdventureCard) this.state.players[j].getParty().get(i)).getBattlePoints();
+		for(int i = 0; i < numPlayers; ++i){
+			int playerBP = players[i].getRank().getBattlePoints();
+			if (players[i].getQueue() != null) {
+				for(int j = 0; j < players[i].getQueue().size(); ++j){
+					System.out.println("count QUEUE BPs player" + (i+1));
+					playerBP += ((AdventureCard) players[i].getQueue().get(j)).getBattlePoints();
+				}
 			}
-			for (int i=0; i<this.state.players[j].getQueue().size(); i++) {
-				playerTotal += ((AdventureCard) this.state.players[j].getQueue().get(i)).getBattlePoints();
+			if (players[i].getParty() != null) {
+				for(int j = 0; j < players[i].getParty().size(); ++j){
+					System.out.println("count PARTY BPs player" + (i+1));
+					System.out.println(((AdventureCard) players[i].getParty().get(j)).getImgName());
+					System.out.println(((AdventureCard) players[i].getParty().get(j)).getSubType());
+					playerBP += ((AdventureCard) players[i].getParty().get(j)).getBattlePoints();
+				}
 			}
-			for (int i=0; i<this.state.players[j].getQueue().size(); i++) {
-				playerTotal += (this.state.players[j].getRank()).getBattlePoints();
+			if(playerBP >= stageBP && (! players[i].isSponsor) && stageBP > 0){
+				System.out.println("passed set to true");
+				players[i].passedStage = true;
 			}
-			if(playerTotal>=stageTotal) {
-				this.state.players[j].passedStage = true;
-			}
-			playerTotal = 0;
+
+			//System.out.println("Player " + (i+1) + " battlePoints: " + playerBP);
+			//System.out.println("StageBP: "  + stageBP);
+			this.toggleForStages = true;
 		}
 		
-		//TODO CALL THE RESOLVE SCREEN FOR VIEW
+		if(stageOverCount == ((QuestCard)currentStoryCard).getNumStages()&& stageOverCount != 0){
+			resolveQuest();
+		}
+		
+
+//		int stageTotal = 0;
+//		
+//		//count BP's in the stage
+//		for (int i=0;i<this.stages[currentStage].size(); i++) {
+//			stageTotal += ((AdventureCard)this.stages[currentStage].get(i)).getBattlePoints();
+//		}
+//		
+//		int playerTotal = 0;
+//		
+//		for(int j=0;j<this.numPlayers;j++) {
+//			for (int i=0; i<this.state.players[j].getParty().size(); i++) {
+//				playerTotal += ((AdventureCard) this.state.players[j].getParty().get(i)).getBattlePoints();
+//			}
+//			for (int i=0; i<this.state.players[j].getQueue().size(); i++) {
+//				playerTotal += ((AdventureCard) this.state.players[j].getQueue().get(i)).getBattlePoints();
+//			}
+//			for (int i=0; i<this.state.players[j].getQueue().size(); i++) {
+//				playerTotal += (this.state.players[j].getRank()).getBattlePoints();
+//			}
+//			if(playerTotal>=stageTotal) {
+//				this.state.players[j].passedStage = true;
+//			}
+//			playerTotal = 0;
+//		}
+//		
+//		//TODO CALL THE RESOLVE SCREEN FOR VIEW
+//		control.alert("Stage Finished");
 	}
 	
 	public boolean containsFoe(CardCollection collection) {
@@ -284,6 +449,8 @@ public class Model {
 		return false;
 	}
 	
+
+	
 	public void setScenario1() {
 		/**
 		 * Scenario 1
@@ -305,9 +472,13 @@ public class Model {
 		 * -	
 		 */
 		this.currentPlayer = 0;
-		this.currentStoryCard = this.storyDeck.getByID("126"); //BOAR  hUNT
+		this.currentStoryCard = this.storyDeck.getByID("126"); //BOAR  hUNT 
+
 		//this.currentStoryCard = this.storyDeck.getByID("129"); //Quest of the green knight
 	//	this.currentStoryCard = this.storyDeck.getByID("144");
+
+//		this.currentStoryCard = this.storyDeck.getByID("129"); //Quest of the green knight
+
 		this.players[0].addToHand(this.adventureDeck.getByID("42"));
 		this.players[0].addToHand(this.adventureDeck.getByID("43"));
 		this.players[0].addToHand(this.adventureDeck.getByID("1"));
@@ -360,7 +531,6 @@ public class Model {
 	
 	public void setScenario2() {
 		initialShuffle();
-		System.out.println("Adventure Deck: \n" + this.storyDeck.toString());
 		//set current StoryCard to SearchForHolyGrail
 		this.currentPlayer = 0;
 
@@ -442,56 +612,50 @@ public class Model {
 	}
 	
 	public String getSubType(String ID, int currentPlayer){
-		return ((AdventureCard) players[currentPlayer].getHand().getByID(ID)).getSubType();
+//		System.out.println("getActivePlayer().getPlayerNumber(): " + getActivePlayer().getPlayerNumber());
+//		System.out.println("CARD ID: " + ID);
+//		System.out.println();
+//		System.out.println();
+		return ((AdventureCard)getActivePlayer().getHand().getByID(ID)).getSubType();
+		/*
+		String ret = "";
+		if (currentPlayer != currentViewer){
+			ret = ((AdventureCard) players[currentViewer].getHand().getByID(ID)).getSubType();
+		}
+		else{
+			ret = ((AdventureCard) players[currentPlayer].getHand().getByID(ID)).getSubType();
+		}
+//		
+//		if((AdventureCard) players[currentPlayer].getHand().getByID(ID) == null){
+//			
+//			System.out.println("currentPlayer: " + currentPlayer) ;
+//			System.out.println("hand: \n" + players[currentPlayer].getHand().toString());
+//			System.out.println("id: " + ID);
+//
+//		}
+		return ret;
+		*/
 	}
 
+
+	private void playQuest(){
+		if(control.getSponsorDecision()){
+			players[currentPlayer].isSponsor = true;
+			control.updateViewState();
+		} else {
+			endTurn();
+		}
+	}
 	
 	public void playGame() {
 		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
-			
-			System.out.println("currentPlayer: " + this.currentPlayer);
-			System.out.println("currentSponsor: " + this.currentSponsor);
-			System.out.println("numPlayers: " + this.numPlayers);
-			
-			int declineCount = 0;
-			
-			
-			/**
-			 * p1 sponsor?
-			 * 
-			 */
-			if(this.control.getSponsorDecision()){
-				state.players[currentPlayer].isSponsor = true;
-				((QuestCard) currentStoryCard).hasSponsor = true;
-				
-				numStages = ((QuestCard)state.currentStoryCard).getNumStages();
-				System.out.println("NUMSTAGES" + numStages);
-				instantiateStages(numStages);
-			} else {
-				state.players[currentPlayer].declinedToSponsor = true;
-			}
-			
-			
-			while((!((QuestCard) currentStoryCard).hasSponsor) 
-					&& !(state.players[currentPlayer].declinedToSponsor) 
-					&& (declineCount < this.numPlayers)) {
-			}
-			//TODO PULL NEXT STORY CARD
-
-//			else{
-//				state.players[currentPlayer].declinedToSponsor = true;
-//				declineCount++;
-//				if(this.currentSponsor == this.numPlayers - 1){
-//					this.currentSponsor = 0;
-//					nextPlayer();
-//					this.currentPlayerNotSponsoring = false;
-//				}
-//				else{
-//
-//					this.currentPlayerNotSponsoring = true;
-//					this.currentSponsor++;
-//				}
-//			}
+			playQuest();
+		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.EVENT)){
+//			playEvent();
+		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)){
+//			playTournament();
+		} else {
+			//shuffle the deck - it's empty
 		}
 		
 		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.EVENT)){
@@ -659,7 +823,6 @@ public class Model {
 		
 	}
 	
-	
 	private void nextPlayer(){
 		if(this.currentPlayer == numPlayers - 1){
 			this.currentPlayer = 0;
@@ -670,4 +833,65 @@ public class Model {
 		}
 	}
 
+	public void nextStory() {
+		
+		for(int i = 0; i < numPlayers; ++i){
+			
+			players[i].isSponsor = false;
+			
+			CardCollection queue = players[i].getQueue();
+			for(int j = 0; j < queue.size(); ++j){
+				if(((AdventureCard) queue.get(j)).getSubType().equals(AdventureCard.AMOUR)){
+					adventureDeckDiscard.add(queue.get(j));
+					queue.remove(j);
+				}
+			}
+		}
+		
+		
+		storyDeckDiscard.add(this.currentStoryCard);
+		this.currentStoryCard = storyDeck.pop();
+
+		//public CardCollection stage;
+		
+		
+		this.currentStage = 0;
+		
+		this.currentSponsor = -1;
+		
+		
+//		public boolean currentPlayerNotSponsoring;
+		
+		//public CardCollection [] stages;
+		
+		//public boolean stagesSet;
+		
+		this.stageResolved = false;
+		
+		this.toggleForStages = false;
+		
+		this.stagePlaceHolder = 0;
+		
+		this.stageOverCount = 0;
+		
+		nextPlayer();
+		this.currentViewer = this.currentPlayer;
+	}
 }
+
+/*
+Different Game states for banner:
+QUEST STAGE 1 FOE
+QUEST STAGE 2 FOE
+QUEST STAGE 3 FOE
+QUEST STAGE 4 FOE
+QUEST STAGE 5 FOE
+QUEST STAGE 1 TEST
+QUEST STAGE 2 TEST
+QUEST STAGE 3 TEST
+QUEST STAGE 4 TEST
+QUEST STAGE 5 TEST
+EVENT
+TOURNAMENT
+*/
+
