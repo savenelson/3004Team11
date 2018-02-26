@@ -450,6 +450,236 @@ public class Model {
 	}
 	
 
+	public String getSubType(String ID, int currentPlayer){
+//		System.out.println("getActivePlayer().getPlayerNumber(): " + getActivePlayer().getPlayerNumber());
+//		System.out.println("CARD ID: " + ID);
+//		System.out.println();
+//		System.out.println();
+		return ((AdventureCard)getActivePlayer().getHand().getByID(ID)).getSubType();
+		/*
+		String ret = "";
+		if (currentPlayer != currentViewer){
+			ret = ((AdventureCard) players[currentViewer].getHand().getByID(ID)).getSubType();
+		}
+		else{
+			ret = ((AdventureCard) players[currentPlayer].getHand().getByID(ID)).getSubType();
+		}
+//		
+//		if((AdventureCard) players[currentPlayer].getHand().getByID(ID) == null){
+//			
+//			System.out.println("currentPlayer: " + currentPlayer) ;
+//			System.out.println("hand: \n" + players[currentPlayer].getHand().toString());
+//			System.out.println("id: " + ID);
+//
+//		}
+		return ret;
+		*/
+	}
+
+
+	private void playQuest(){
+		if(control.getSponsorDecision()){
+			players[currentPlayer].isSponsor = true;
+			control.updateViewState();
+		} else {
+			endTurn();
+		}
+	}
+	
+	private void playEvent() {
+
+		if (((StoryCard) currentStoryCard).getName().equals("KingsRecognition")) {
+			System.out.println("KINGS RECOGNITION DETECTED");
+			boolean inNextQ = true;
+			// using for loop through this.state.players, in a quest function, if inNextQ =
+			// true,
+			// this.players[i].addShields(2);
+
+		} else if (((StoryCard) currentStoryCard).getName().equals("QueensFavor")) {
+			System.out.println("QUEENS FAVOR DETECTED");
+			int squireCount = 0;
+			int championCount = 0;
+			int championKnightCount = 0;
+
+			for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
+
+				if ((this.state.players[i].getRank()).getSubType().equals("Squire")) {
+					squireCount++;
+				}
+				if ((this.state.players[i].getRank()).getSubType().equals("Knight")) {
+					championCount++;
+				}
+				if ((this.state.players[i].getRank()).getSubType().equals("ChampionKnight")) {
+					championKnightCount++;
+				}
+
+			}
+
+			if (squireCount < championCount) {
+				for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
+					if ((this.state.players[i].getRank()).getSubType().equals("Squire")) {
+						this.players[i].addToHand(this.adventureDeck.getByID("6"));
+						this.players[i].addToHand(this.adventureDeck.getByID("7"));
+					}
+				}
+
+			} // we then know there is one squire. give him 2 adventure cards
+
+			if (championCount < championKnightCount && (squireCount == 0)) {
+				for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
+					if ((this.state.players[i].getRank()).getSubType().equals("Champion")) {
+						this.players[i].addToHand(this.adventureDeck.getByID("6"));
+						this.players[i].addToHand(this.adventureDeck.getByID("7"));
+					}
+				}
+				// there are less champions than championKnights
+			}
+			if (championKnightCount == numPlayers || squireCount == numPlayers || championCount == numPlayers) {
+				for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
+					this.players[i].addToHand(this.adventureDeck.getByID("6"));
+					this.players[i].addToHand(this.adventureDeck.getByID("7"));
+				}
+			}
+		} else if (((StoryCard) currentStoryCard).getName().equals("CourtCalled")) {
+			System.out.println("COURT CALLED DETECTED");
+			for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
+				CardCollection hand = this.players[i].getHand();
+
+				for (int j = 0; j < hand.size(); j++) {
+
+					if (hand.getByID("100") != null) {
+						Card c = hand.getByID("100");
+						hand.remove(c);
+						adventureDeckDiscard.add(c);
+					} else if (hand.getByID("101") != null) {
+						Card c = hand.getByID("101");
+						hand.remove(c);
+						adventureDeckDiscard.add(c);
+					} else if (hand.getByID("102") != null) {
+						Card c = hand.getByID("102");
+						hand.remove(c);
+						adventureDeckDiscard.add(c);
+					} else if (hand.getByID("103") != null) {
+						Card c = hand.getByID("103");
+						hand.remove(c);
+						adventureDeckDiscard.add(c);
+					} else if (hand.getByID("104") != null) {
+						Card c = hand.getByID("104");
+						hand.remove(c);
+						adventureDeckDiscard.add(c);
+					} else if (hand.getByID("105") != null) {
+						Card c = hand.getByID("105");
+						hand.remove(c);
+						adventureDeckDiscard.add(c);
+					} else if (hand.getByID("106") != null) {
+						Card c = hand.getByID("106");
+						hand.remove(c);
+						adventureDeckDiscard.add(c);
+					} else if (hand.getByID("107") != null) {
+						Card c = hand.getByID("107");
+						hand.remove(c);
+						adventureDeckDiscard.add(c);
+					} else if (hand.getByID("108") != null) {
+						Card c = hand.getByID("108");
+						hand.remove(c);
+						adventureDeckDiscard.add(c);
+					} else if (hand.getByID("109") != null) {
+						Card c = hand.getByID("109");
+						hand.remove(c);
+						adventureDeckDiscard.add(c);
+					}
+				}
+			}
+		} else if (((StoryCard) currentStoryCard).getName().equals("Pox")) {
+			System.out.println("POX DETECTED");
+			for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
+				this.players[i].removeShields(1);
+			}
+			this.players[currentPlayer].addShields(1); // adds shield that was not supposed to be taken away
+		} else if (((StoryCard) currentStoryCard).getName().equals("Plague")) {
+			if (this.players[currentPlayer].getShieldCount() >= 2) {
+				this.players[currentPlayer].removeShields(2);
+			}
+		} else if (((StoryCard) currentStoryCard).getName().equals("ChivalrousDeed")) {
+			System.out.println("CHIVALROUS DEED DETECTED");	
+		} else if (((StoryCard) currentStoryCard).getName().equals("ProsperityThroughoutTheRealm")) {
+			System.out.println("PROSPERITY THROUGHOUT DETECTED");
+			for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
+				this.players[i].addToHand(this.adventureDeck.getByID("6"));
+				this.players[i].addToHand(this.adventureDeck.getByID("7"));
+			}
+		} else if (((StoryCard) currentStoryCard).getName().equals("KingsCallToArms")) {
+			System.out.println("KINGS CALL TO ARMS DETECTED");
+		}
+	}
+	
+	public void playGame() {
+		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
+			playQuest();
+		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.EVENT)){
+			playEvent();
+		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)){
+//			playTournament();
+		} else {
+			//shuffle the deck - it's empty
+		}
+	}
+	
+	private void nextPlayer(){
+		if(this.currentPlayer == numPlayers - 1){
+			this.currentPlayer = 0;
+		}
+		else{
+			this.currentPlayer++;
+			this.currentSponsor = this.currentPlayer;
+		}
+	}
+
+	public void nextStory() {
+		
+		for(int i = 0; i < numPlayers; ++i){
+			
+			players[i].isSponsor = false;
+			
+			CardCollection queue = players[i].getQueue();
+			for(int j = 0; j < queue.size(); ++j){
+				if(((AdventureCard) queue.get(j)).getSubType().equals(AdventureCard.AMOUR)){
+					adventureDeckDiscard.add(queue.get(j));
+					queue.remove(j);
+				}
+			}
+		}
+		
+		
+		storyDeckDiscard.add(this.currentStoryCard);
+		this.currentStoryCard = storyDeck.pop();
+
+		//public CardCollection stage;
+		
+		
+		this.currentStage = 0;
+		
+		this.currentSponsor = -1;
+		
+		
+//		public boolean currentPlayerNotSponsoring;
+		
+		//public CardCollection [] stages;
+		
+		//public boolean stagesSet;
+		
+		this.stageResolved = false;
+		
+		this.toggleForStages = false;
+		
+		this.stagePlaceHolder = 0;
+		
+		this.stageOverCount = 0;
+		
+		nextPlayer();
+		this.currentViewer = this.currentPlayer;
+	}
+	
 	
 	public void setScenario1() {
 		/**
@@ -472,8 +702,8 @@ public class Model {
 		 * -	
 		 */
 		this.currentPlayer = 0;
-		this.currentStoryCard = this.storyDeck.getByID("126"); //BOAR  hUNT 
-
+//		this.currentStoryCard = this.storyDeck.getByID("126"); //BOAR  hUNT 
+		this.currentStoryCard = this.storyDeck.getByID("143"); //Kings Recognition
 		//this.currentStoryCard = this.storyDeck.getByID("129"); //Quest of the green knight
 	//	this.currentStoryCard = this.storyDeck.getByID("144");
 
@@ -609,273 +839,6 @@ public class Model {
 		this.players[3].addToHand(this.adventureDeck.getByID("93"));
 		this.players[3].addToHand(this.adventureDeck.getByID("100"));
 		this.players[3].addToHand(this.adventureDeck.getByID("101"));
-	}
-	
-	public String getSubType(String ID, int currentPlayer){
-//		System.out.println("getActivePlayer().getPlayerNumber(): " + getActivePlayer().getPlayerNumber());
-//		System.out.println("CARD ID: " + ID);
-//		System.out.println();
-//		System.out.println();
-		return ((AdventureCard)getActivePlayer().getHand().getByID(ID)).getSubType();
-		/*
-		String ret = "";
-		if (currentPlayer != currentViewer){
-			ret = ((AdventureCard) players[currentViewer].getHand().getByID(ID)).getSubType();
-		}
-		else{
-			ret = ((AdventureCard) players[currentPlayer].getHand().getByID(ID)).getSubType();
-		}
-//		
-//		if((AdventureCard) players[currentPlayer].getHand().getByID(ID) == null){
-//			
-//			System.out.println("currentPlayer: " + currentPlayer) ;
-//			System.out.println("hand: \n" + players[currentPlayer].getHand().toString());
-//			System.out.println("id: " + ID);
-//
-//		}
-		return ret;
-		*/
-	}
-
-
-	private void playQuest(){
-		if(control.getSponsorDecision()){
-			players[currentPlayer].isSponsor = true;
-			control.updateViewState();
-		} else {
-			endTurn();
-		}
-	}
-	
-	public void playGame() {
-		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
-			playQuest();
-		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.EVENT)){
-//			playEvent();
-		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)){
-//			playTournament();
-		} else {
-			//shuffle the deck - it's empty
-		}
-		
-		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.EVENT)){
-			
-			 if(((StoryCard) currentStoryCard).getName().equals("KingsRecognition")){
-				 boolean inNextQ = true;
-				 // using for loop through this.state.players, in a quest function, if inNextQ = true, 
-				// this.players[i].addShields(2);
-
-				 
-			 } else if(((StoryCard) currentStoryCard).getName().equals("QueensFavor")){
-				 int squireCount = 0;
-				 int championCount = 0;
-				 int championKnightCount = 0;
-				 
-					for (int i=0; i<this.state.players[i].getQueue().size(); i++) {
-						
-						if((this.state.players[i].getRank()).getSubType().equals("Squire")) {squireCount++;} 
-						if((this.state.players[i].getRank()).getSubType().equals("Knight")) {championCount++;} 
-						if((this.state.players[i].getRank()).getSubType().equals("ChampionKnight")) {championKnightCount++;} 
-
-					}
-					
-					
-					if(squireCount<championCount) {
-						for (int i=0; i<this.state.players[i].getQueue().size(); i++) {
-							if((this.state.players[i].getRank()).getSubType().equals("Squire")) {
-								this.players[i].addToHand(this.adventureDeck.getByID("6")); 
-								this.players[i].addToHand(this.adventureDeck.getByID("7"));
-							} }
-						
-					}  //we then know there is one squire. give him 2 adventure cards
-					
-					if(championCount<championKnightCount && (squireCount == 0) ) {
-						for (int i=0; i<this.state.players[i].getQueue().size(); i++) {
-							if((this.state.players[i].getRank()).getSubType().equals("Champion")) {
-								this.players[i].addToHand(this.adventureDeck.getByID("6")); 
-								this.players[i].addToHand(this.adventureDeck.getByID("7"));
-							} }
-						// there are less champions than championKnights
-					} 
-					
-					if(championKnightCount == numPlayers || squireCount == numPlayers || championCount == numPlayers  ) {
-						for (int i=0; i<this.state.players[i].getQueue().size(); i++) {
-								this.players[i].addToHand(this.adventureDeck.getByID("6")); 
-								this.players[i].addToHand(this.adventureDeck.getByID("7"));
-							} 
-					}
-				}
-
-				else if(((StoryCard) currentStoryCard).getName().equals("CourtCalled")){
-					
-					
-					for (int i=0; i<this.state.players[i].getQueue().size(); i++) {
-						CardCollection hand = this.players[i].getHand();
-						
-						for (int j=0; j<hand.size();j++) {
-							
-							if(hand.getByID("100")!= null) {
-								Card c = hand.getByID("100");
-								hand.remove(c);
-								adventureDeckDiscard.add(c);
-							}
-							else if (hand.getByID("101")!= null) {
-								Card c = hand.getByID("101");
-								hand.remove(c);
-								adventureDeckDiscard.add(c);
-							}
-							else if (hand.getByID("102")!= null) {
-								Card c = hand.getByID("102");
-								hand.remove(c);
-								adventureDeckDiscard.add(c);
-							}
-							else if (hand.getByID("103")!= null) {
-								Card c = hand.getByID("103");
-								hand.remove(c);
-								adventureDeckDiscard.add(c);
-							}
-							else if (hand.getByID("104")!= null) {
-								Card c = hand.getByID("104");
-								hand.remove(c);
-								adventureDeckDiscard.add(c);
-							}
-							else if (hand.getByID("105")!= null) {
-								Card c = hand.getByID("105");
-								hand.remove(c);
-								adventureDeckDiscard.add(c);
-							}
-							else if (hand.getByID("106")!= null) {
-								Card c = hand.getByID("106");
-								hand.remove(c);
-								adventureDeckDiscard.add(c);
-							}
-							else if (hand.getByID("107")!= null) {
-								Card c = hand.getByID("107");
-								hand.remove(c);
-								adventureDeckDiscard.add(c);
-							}
-							else if (hand.getByID("108")!= null) {
-								Card c = hand.getByID("108");
-								hand.remove(c);
-								adventureDeckDiscard.add(c);
-							}
-							else if (hand.getByID("109")!= null) {
-								Card c = hand.getByID("109");
-								hand.remove(c);
-								adventureDeckDiscard.add(c);
-							}
-
-							
-						}
-
-					
-					}
-					
-					
-					
-				}
-			 
-			 
-				else if(((StoryCard) currentStoryCard).getName().equals("Pox")){
-					for (int i=0; i<this.state.players[i].getQueue().size(); i++) {
-						this.players[i].removeShields(1);
-					}
-					this.players[currentPlayer].addShields(1); // adds shield that was not supposed to be taken away
-				}
-			 
-			 
-			 
-				else if(((StoryCard) currentStoryCard).getName().equals("Plague")){
-					if(this.players[currentPlayer].getShieldCount() >=2 ) {
-						this.players[currentPlayer].removeShields(2);
-					}
-				}
-			 
-			 
-				else if(((StoryCard) currentStoryCard).getName().equals("ChivalrousDeed")){}
-				
-				else if(((StoryCard) currentStoryCard).getName().equals("ProsperityThroughoutTheRealm")){
-					for (int i=0; i<this.state.players[i].getQueue().size(); i++) {
-						this.players[i].addToHand(this.adventureDeck.getByID("6")); 
-						this.players[i].addToHand(this.adventureDeck.getByID("7"));			
-					}
-				}
-			 
-			 
-				else if(((StoryCard) currentStoryCard).getName().equals("KingsCallToArms")){
-					
-				}
-			
-			
-			
-		}
-		
-		
-		
-			
-			// 8 different event cards
-			//num players - 1 
-			
-
-		
-
-
-		
-	}
-	
-	private void nextPlayer(){
-		if(this.currentPlayer == numPlayers - 1){
-			this.currentPlayer = 0;
-		}
-		else{
-			this.currentPlayer++;
-			this.currentSponsor = this.currentPlayer;
-		}
-	}
-
-	public void nextStory() {
-		
-		for(int i = 0; i < numPlayers; ++i){
-			
-			players[i].isSponsor = false;
-			
-			CardCollection queue = players[i].getQueue();
-			for(int j = 0; j < queue.size(); ++j){
-				if(((AdventureCard) queue.get(j)).getSubType().equals(AdventureCard.AMOUR)){
-					adventureDeckDiscard.add(queue.get(j));
-					queue.remove(j);
-				}
-			}
-		}
-		
-		
-		storyDeckDiscard.add(this.currentStoryCard);
-		this.currentStoryCard = storyDeck.pop();
-
-		//public CardCollection stage;
-		
-		
-		this.currentStage = 0;
-		
-		this.currentSponsor = -1;
-		
-		
-//		public boolean currentPlayerNotSponsoring;
-		
-		//public CardCollection [] stages;
-		
-		//public boolean stagesSet;
-		
-		this.stageResolved = false;
-		
-		this.toggleForStages = false;
-		
-		this.stagePlaceHolder = 0;
-		
-		this.stageOverCount = 0;
-		
-		nextPlayer();
-		this.currentViewer = this.currentPlayer;
 	}
 }
 

@@ -1052,9 +1052,9 @@ public class View extends Application {
 				}
 		    }
 		});
-		if(state.currentPlayer == state.currentSponsor && state.currentSponsor == state.currentViewer){
-			
-			
+		if((state.currentPlayer == state.currentSponsor) && (state.currentSponsor == state.currentViewer) 
+				&& (state.currentStoryCard.equals(StoryCard.QUEST))){
+
 			int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
 			for(int i = 4; i!=numStages-1; i--) {
 				stageButtons[i].setDisable(true);
