@@ -86,4 +86,16 @@ public class Player {
 			
 		}
 	}
+	public  boolean canPromote(int potentialShields) {
+		if (shieldCount +potentialShields >=5 && RankCard.SQUIRE.equals(rankCard.getSubType())){
+			return true; 
+		}else if ((shieldCount+ potentialShields >=7 && RankCard.KNIGHT.equals(rankCard.getSubType()))){
+			return true;
+		}else if((shieldCount + potentialShields >=10 && RankCard.CHAMPION_KNIGHT.equals(rankCard.getSubType()))) {
+			
+			return true;
+			
+		}
+		else {return false;}
+	}
 }
