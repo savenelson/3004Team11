@@ -141,7 +141,7 @@ public class View extends Application {
 	public static final	int cardXLargeWidth = 225;
 
 	
-		private static final Logger logger = LogManager.getLogger(View.class);
+	private static final Logger logger = LogManager.getLogger(View.class);
 	
 	
 	private TextField shieldCount;
@@ -389,6 +389,49 @@ public class View extends Application {
 			canvas.getChildren().add(stageLabel);
 			canvas.getChildren().add(queueCardsLabel);
 		}
+	}
+	
+	public void resolveQuest(){
+
+		StackPane layout = new StackPane();
+		state = control.getState();
+		int numShields = ((QuestCard) state.currentStoryCard).getNumStages();
+		
+		for (int i = 0; i < state.numPlayers; ++i){
+			if(!state.players[i].isSponsor){
+				Label passed = new Label("Player "+ (i+1));
+				System.out.print("state.players[i].passedStage: " + state.players[i].passedStage);
+
+				if(state.players[i].passedStage)
+					passed.setText(passed.getText() + " passed Quest and receives " + numShields + " shields!");
+				else
+					passed.setText(passed.getText() + " failed Quest and receives 0 shields.");
+				
+				passed.setFont(new Font("Ariel", 30));	
+				layout.getChildren().add(passed);
+				layout.setPrefHeight(720);
+				layout.setPrefWidth(1280);
+				passed.setTranslateY(-180+(60*i));			
+				System.out.print("Player "+ (i+1));
+				
+			}
+		}
+		Button readyButton = new Button("Next Stage");
+		readyButton.setFont(new Font("Ariel", 30));
+		layout.getChildren().add(readyButton);
+		readyButton.setTranslateY(65);
+		readyButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				control.nextStory();
+				update(stage);
+			}
+		});
+		Scene scene = new Scene(layout);
+		scene.getStylesheets().add("style.css");
+		stage.setScene(scene);
+		System.out.println("END OF RESOLVE");
+		//update(stage);
 	}
 	
 	private void addQueueToCanvas(Pane canvas) {
@@ -1093,7 +1136,6 @@ public class View extends Application {
 			stage.setScene(scene);
     	}
     }
-	
 	
 	public void stageResolved(){
 		control.resolveStage();
