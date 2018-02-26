@@ -125,7 +125,10 @@ public class ShowResoultionView extends Pane{
 		goBack.setPrefSize(80, 40);
 		goBack.setOnAction(new EventHandler<ActionEvent>() {
 		    public void handle(ActionEvent e) {
-		    	view.update();	        
+		    	
+		    	Pane newChange = new Pane(toChange);
+		    	view.sceneChange(newChange);
+		  	        
 		    }
 		});
 		
