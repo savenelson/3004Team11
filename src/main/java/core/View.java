@@ -1152,7 +1152,10 @@ public class View extends Application {
 	}
 	
 	public void sceneChange(Pane newScreen) {
+		newScreen.setId("pane");
+		newScreen.setId("nextPlayer");
 		Scene scene = new Scene(newScreen);
+		
 		scene.getStylesheets().add("style.css");	
 		stage.setScene(scene);
 	}
