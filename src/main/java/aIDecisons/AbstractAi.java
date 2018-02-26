@@ -1,13 +1,14 @@
 package aIDecisons;
 
 import core.Player;
+import core.State;
 
 public abstract class AbstractAi {
 	Player player;
 	
 	State state;
 	
-	discardAfterWinningTest discardBehaviour;
+	DiscardAfterWinningTest discardBehaviour;
 	
 
 	//Sponsors behaviors
@@ -29,7 +30,7 @@ public abstract class AbstractAi {
 	
 	
 	//Bid behaviors
-	nextBid bidBehaviour;
+	NextBid bidBehaviour;
 	
 	nextBid toBidDecision;
 	
