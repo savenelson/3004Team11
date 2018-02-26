@@ -156,5 +156,11 @@ public class Control{
 	public void alert(String message){
 		view.alert(message);
 	}
+
+
+
+	public View getView() {
+		return view;
+	}
 	
 }

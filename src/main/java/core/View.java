@@ -1102,10 +1102,11 @@ public class View extends Application {
 			
 			if(!state.players[i].isSponsor){
 				Label passed = new Label("Player "+ (i+1));
-				if(state.players[i].passedStage)
+				if(state.players[i].passedStage) {
 					passed.setText(passed.getText() + " passed stage " + (state.currentStage+1));
-				else
+				} else {
 					passed.setText(passed.getText() + " failed stage " + (state.currentStage+1));
+				}
 				passed.setFont(new Font("Ariel", 30));	
 				layout.getChildren().add(passed);
 				layout.setPrefHeight(720);
@@ -1145,16 +1146,31 @@ public class View extends Application {
 				//update(stage);
 			}
 		});
+		
+		
+		Button showCardsButton = new Button("Show Cards");
+		showCardsButton.setFont(new Font("Ariel", 30));
+		layout.getChildren().add(showCardsButton);
+		showCardsButton.setTranslateY(140);
+		showCardsButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				state = control.getState();
+				
+				ShowResoultionView resolution = new ShowResoultionView(canvas, state, control.getView());
+				sceneChange(resolution);
+			}
+		});
 		Scene scene = new Scene(layout);
 		scene.getStylesheets().add("style.css");
+		
 		stage.setScene(scene);
 		System.out.println("END OF RESOLVE");
 		//update(stage);
-
 	}
 	
 	public void sceneChange(Pane newScreen) {
-		Scene scene = new Scene(newScreen);
+		Scene scene = new Scene(newScreen, 1280, 720);
 		scene.getStylesheets().add("style.css");	
 		stage.setScene(scene);
 	}
