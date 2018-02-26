@@ -1052,8 +1052,7 @@ public class View extends Application {
 				}
 		    }
 		});
-		if((state.currentPlayer == state.currentSponsor) && (state.currentSponsor == state.currentViewer) 
-				&& (state.currentStoryCard.equals(StoryCard.QUEST))){
+		if((state.currentPlayer == state.currentSponsor) && (state.currentSponsor == state.currentViewer)){
 
 			int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
 			for(int i = 4; i!=numStages-1; i--) {
