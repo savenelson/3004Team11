@@ -27,12 +27,13 @@ public class Model {
 	int currentStage;
 	int currentSponsor;
 	int endTurnCounter = 0;
-	boolean currentPlayerNotSponsoring;
+//	boolean currentPlayerNotSponsoring;
 	boolean gameWon = false;
 	boolean stageResolved = false;
 	boolean toggleForStages = false;
 	int stagePlaceHolder = 0;
-	
+	static int stageOverCount = 0;
+
 	Card currentStoryCard;
 	
 	int numPlayers;
@@ -55,7 +56,7 @@ public class Model {
 		
 		currentPlayer = 0;
 		currentSponsor = 0;
-		currentPlayerNotSponsoring = false;
+//		currentPlayerNotSponsoring = false;
 	}
 	
 	public void instantiatePlayers(int numPlayers){
@@ -139,7 +140,7 @@ public class Model {
 		
 		state.numPlayers = this.numPlayers;
 		
-		state.currentPlayerNotSponsoring = this.currentPlayerNotSponsoring; 
+//		state.currentPlayerNotSponsoring = this.currentPlayerNotSponsoring; 
 		
 		state.stagesSet = this.stagesSet;
 		
@@ -148,6 +149,8 @@ public class Model {
 		state.toggleForStages = this.toggleForStages;
 		
 		state.stagePlaceHolder = this.stagePlaceHolder;
+		
+		state.stageOverCount = this.stageOverCount;
 		
 		return state;
 	}
@@ -295,10 +298,13 @@ public class Model {
 	}
 	
 	public int resolveQuest(){
+		System.out.println("WE MADE IT BABY");
+	
+		control.resolveQuest();
+		
 		return 0;
 	}
 	
-	static int stageOverCount = 0;
 	
 	public void stageOver(){
 		
@@ -330,7 +336,7 @@ public class Model {
 		 *    vs
 		 */
 		
-		CardCollection currStage = this.stages[this.currentStage];
+		CardCollection currStage = this.stages[this.currentStage+stageOverCount];
 		
 		int stageBP = 0;
 		 
@@ -354,14 +360,21 @@ public class Model {
 					playerBP += ((AdventureCard) players[i].getParty().get(j)).getBattlePoints();
 				}
 			}
-			if(playerBP >= stageBP && (! players[i].isSponsor)){
+			if(playerBP >= stageBP && (! players[i].isSponsor) && stageBP > 0){
+				System.out.println("passed set to true");
 				players[i].passedStage = true;
 			}
+			
 			
 			//System.out.println("Player " + (i+1) + " battlePoints: " + playerBP);
 			//System.out.println("StageBP: "  + stageBP);
 			this.toggleForStages = true;
 		}
+		
+		if(stageOverCount == ((QuestCard)currentStoryCard).getNumStages()&& stageOverCount != 0){
+			resolveQuest();
+		}
+		
 
 //		int stageTotal = 0;
 //		
@@ -645,6 +658,51 @@ public class Model {
 			this.currentPlayer++;
 			this.currentSponsor = this.currentPlayer;
 		}
+	}
+
+	public void nextStory() {
+		
+		for(int i = 0; i < numPlayers; ++i){
+			
+			players[i].isSponsor = false;
+			
+			CardCollection queue = players[i].getQueue();
+			for(int j = 0; j < queue.size(); ++j){
+				if(((AdventureCard) queue.get(j)).getSubType().equals(AdventureCard.AMOUR)){
+					adventureDeckDiscard.add(queue.get(j));
+					queue.remove(j);
+				}
+			}
+		}
+		
+		
+		storyDeckDiscard.add(this.currentStoryCard);
+		this.currentStoryCard = storyDeck.pop();
+
+		//public CardCollection stage;
+		
+		
+		this.currentStage = 0;
+		
+		this.currentSponsor = -1;
+		
+		
+//		public boolean currentPlayerNotSponsoring;
+		
+		//public CardCollection [] stages;
+		
+		//public boolean stagesSet;
+		
+		this.stageResolved = false;
+		
+		this.toggleForStages = false;
+		
+		this.stagePlaceHolder = 0;
+		
+		this.stageOverCount = 0;
+		
+		nextPlayer();
+		this.currentViewer = this.currentPlayer;
 	}
 }
 

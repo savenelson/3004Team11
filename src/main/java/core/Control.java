@@ -122,6 +122,10 @@ public class Control{
 		model.resetCurrentStage();
 	}
 
+	public void nextStory(){
+		model.nextStory();
+	}
+	
 	public void resolveStage(){
 		model.resolveStage();
 	}
@@ -147,6 +151,10 @@ public class Control{
 		return model.getSubType(ID, currentPlayer);
 	}
 
+	public void resolveQuest(){
+		view.resolveQuest();
+	}
+	
 	public void stagesSet(){
 		startStageCycle();
 
