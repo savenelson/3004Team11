@@ -157,6 +157,16 @@ public class Model {
 		
 		return state;
 	}
+	
+	public boolean checkHandSize() {
+		for(int i=0;i<state.numPlayers;i++) {
+			if(players[i].getHand().size() > 12) {
+				control.alert("Hand Size is too large, please discard");
+				return false;
+			}
+		}
+		return true;
+	}
 
 	public void party(String iD) {
 		//System.out.println("Model: playing to party");		
@@ -623,6 +633,7 @@ public class Model {
 		} else {
 			//shuffle the deck - it's empty
 		}
+		checkHandSize();
 	}
 	
 	private void nextPlayer(){
@@ -721,6 +732,7 @@ public class Model {
 		this.players[0].addToHand(this.adventureDeck.getByID("91"));
 		this.players[0].addToHand(this.adventureDeck.getByID("50"));
 		this.players[0].addToHand(this.adventureDeck.getByID("88"));
+		this.players[0].addToHand(this.adventureDeck.getByID("110")); //13th card for hand!
 		this.players[1].addToHand(this.adventureDeck.getByID("44"));
 		this.players[1].addToHand(this.adventureDeck.getByID("3"));
 		this.players[1].addToHand(this.adventureDeck.getByID("4"));
