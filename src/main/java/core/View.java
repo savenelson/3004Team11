@@ -1202,7 +1202,7 @@ public class View extends Application {
 			public void handle(ActionEvent event) {
 				state = control.getState();
 				
-				ShowResoultionView resolution = new ShowResoultionView(canvas, state, control.getView());
+				ShowResoultionView resolution = new ShowResoultionView(layout, state, control.getView());
 				sceneChange(resolution);
 			}
 		});
@@ -1217,8 +1217,7 @@ public class View extends Application {
 	public void sceneChange(Pane newScreen) {
 
 		newScreen.setId("pane");
-		newScreen.setId("nextPlayer");
-		Scene scene = new Scene(newScreen);
+		
 
 		Scene scene = new Scene(newScreen, 1280, 720);
 
