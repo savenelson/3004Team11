@@ -852,6 +852,97 @@ public class Model {
 		this.players[3].addToHand(this.adventureDeck.getByID("100"));
 		this.players[3].addToHand(this.adventureDeck.getByID("101"));
 	}
+	
+	public void setScenarioTest() {
+		/**
+		 * Scenario 1
+		 * -	
+		 * -	
+		 */
+		this.currentPlayer = 0;
+		this.currentStoryCard = this.storyDeck.getByID("136"); //Slay the Dragon
+		this.players[0].addToParty(this.adventureDeck.getByID("100"));
+		this.players[0].addToParty(this.adventureDeck.getByID("101"));
+		this.players[0].addToParty(this.adventureDeck.getByID("122"));
+		this.players[1].addToParty(this.adventureDeck.getByID("103"));
+		this.players[1].addToParty(this.adventureDeck.getByID("104"));
+		this.players[1].addToParty(this.adventureDeck.getByID("123"));
+		this.players[2].addToParty(this.adventureDeck.getByID("106"));
+		this.players[2].addToParty(this.adventureDeck.getByID("107"));
+		this.players[2].addToParty(this.adventureDeck.getByID("124"));
+		this.players[3].addToParty(this.adventureDeck.getByID("109"));
+		this.players[3].addToParty(this.adventureDeck.getByID("102"));
+		this.players[3].addToParty(this.adventureDeck.getByID("125"));
+		
+		this.players[0].addToQueue(this.adventureDeck.getByID("13"));
+		this.players[0].addToQueue(this.adventureDeck.getByID("30"));
+		this.players[0].addToQueue(this.adventureDeck.getByID("37"));
+		this.players[0].addToQueue(this.adventureDeck.getByID("45"));
+		
+		this.players[1].addToQueue(this.adventureDeck.getByID("14"));
+		this.players[1].addToQueue(this.adventureDeck.getByID("31"));
+		this.players[1].addToQueue(this.adventureDeck.getByID("38"));
+		this.players[1].addToQueue(this.adventureDeck.getByID("46"));
+		
+		this.players[2].addToQueue(this.adventureDeck.getByID("15"));
+		this.players[2].addToQueue(this.adventureDeck.getByID("32"));
+		this.players[2].addToQueue(this.adventureDeck.getByID("38"));
+		this.players[2].addToQueue(this.adventureDeck.getByID("47"));
+		
+		this.players[3].addToQueue(this.adventureDeck.getByID("16"));
+		this.players[3].addToQueue(this.adventureDeck.getByID("33"));
+		this.players[3].addToQueue(this.adventureDeck.getByID("39"));
+		this.players[3].addToQueue(this.adventureDeck.getByID("48"));
+		
+		this.players[0].addToHand(this.adventureDeck.getByID("1"));
+		this.players[0].addToHand(this.adventureDeck.getByID("2"));
+		this.players[0].addToHand(this.adventureDeck.getByID("23"));
+		this.players[0].addToHand(this.adventureDeck.getByID("50"));
+		this.players[0].addToHand(this.adventureDeck.getByID("58"));
+		this.players[0].addToHand(this.adventureDeck.getByID("93"));
+		this.players[0].addToHand(this.adventureDeck.getByID("118"));
+		this.players[0].addToHand(this.adventureDeck.getByID("105"));
+		this.players[0].addToHand(this.adventureDeck.getByID("67"));
+		this.players[0].addToHand(this.adventureDeck.getByID("99"));
+		this.players[0].addToHand(this.adventureDeck.getByID("98"));
+		this.players[0].addToHand(this.adventureDeck.getByID("97"));
+		this.players[0].addToHand(this.adventureDeck.getByID("92")); //13th card for hand!
+		this.players[1].addToHand(this.adventureDeck.getByID("3"));
+		this.players[1].addToHand(this.adventureDeck.getByID("4"));
+		this.players[1].addToHand(this.adventureDeck.getByID("24"));
+		this.players[1].addToHand(this.adventureDeck.getByID("51"));
+		this.players[1].addToHand(this.adventureDeck.getByID("59"));
+		this.players[1].addToHand(this.adventureDeck.getByID("94"));
+		this.players[1].addToHand(this.adventureDeck.getByID("119"));
+		this.players[1].addToHand(this.adventureDeck.getByID("108"));
+		this.players[1].addToHand(this.adventureDeck.getByID("68"));
+		this.players[1].addToHand(this.adventureDeck.getByID("27"));
+		this.players[1].addToHand(this.adventureDeck.getByID("34"));
+		this.players[1].addToHand(this.adventureDeck.getByID("42"));
+		this.players[2].addToHand(this.adventureDeck.getByID("5"));
+		this.players[2].addToHand(this.adventureDeck.getByID("6"));
+		this.players[2].addToHand(this.adventureDeck.getByID("25"));
+		this.players[2].addToHand(this.adventureDeck.getByID("52"));
+		this.players[2].addToHand(this.adventureDeck.getByID("60"));
+		this.players[2].addToHand(this.adventureDeck.getByID("95"));
+		this.players[2].addToHand(this.adventureDeck.getByID("120"));
+		this.players[2].addToHand(this.adventureDeck.getByID("69"));
+		this.players[2].addToHand(this.adventureDeck.getByID("28"));
+		this.players[2].addToHand(this.adventureDeck.getByID("35"));
+		this.players[2].addToHand(this.adventureDeck.getByID("43"));
+		this.players[2].addToHand(this.adventureDeck.getByID("48"));
+		this.players[3].addToHand(this.adventureDeck.getByID("7"));
+		this.players[3].addToHand(this.adventureDeck.getByID("8"));
+		this.players[3].addToHand(this.adventureDeck.getByID("26"));
+		this.players[3].addToHand(this.adventureDeck.getByID("53"));
+		this.players[3].addToHand(this.adventureDeck.getByID("61"));
+		this.players[3].addToHand(this.adventureDeck.getByID("96"));
+		this.players[3].addToHand(this.adventureDeck.getByID("121"));
+		this.players[3].addToHand(this.adventureDeck.getByID("70"));
+		this.players[3].addToHand(this.adventureDeck.getByID("29"));
+		this.players[3].addToHand(this.adventureDeck.getByID("36"));
+		this.players[3].addToHand(this.adventureDeck.getByID("44"));
+	}
 }
 
 /*

@@ -926,11 +926,13 @@ public class View extends Application {
 
 	private void setMorgaineCardControl(ImageView anAlly) {
 		ContextMenu fileMenu = new ContextMenu();
-
+		
 		fileMenu.getItems().add(new MenuItem("Assassinate"));
 
 		anAlly.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
+			
+			
 		@Override
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
