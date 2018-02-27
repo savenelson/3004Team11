@@ -1,5 +1,8 @@
 package core;
 
+import javafx.scene.control.Label;
+import javafx.scene.text.Font;
+
 public class Model {
 
 	public Control control;
@@ -312,35 +315,28 @@ public class Model {
 	
 	public int resolveQuest(){
 		System.out.println("WE MADE IT BABY");
+		int numShields = ((QuestCard) state.currentStoryCard).getNumStages();
 	
+		//TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
+		for (int i = 0; i < state.numPlayers; ++i){
+			if(!players[i].isSponsor){
+				
+				if(players[i].isQuesting) {
+					players[i].addShields(numShields);
+				}
+			} else {
+				//TODO GIVE SPONSOR CARDS BACK 
+			}
+		}
+		
+		//TODO ADD SHIELDS HERE
+		
 		control.resolveQuest();
 		
 		return 0;
 	}
 	
-	
-	public void stageOver(){
-		System.out.println("stageOver() called");
-		
-		for(int i = 0; i < this.numPlayers; ++i){
-			if(!this.players[i].isSponsor){
-				for(int j = 0; j < this.players[i].getQueue().size(); ++j){
-					adventureDeckDiscard.add(this.players[i].getQueue().pop());
-				}
-				players[i].passedStage = false;
-			}
-		}
-		stageOverCount++;
-		
-		this.currentViewer--;// TODO ??? MAYBE A REALLY BAD FIX MAYBE NOT, WHO KNOWS ANYMORE...
-		this.stagesSet = false;
-		this.stageResolved = false;
-		this.toggleForStages = true;
-		this.stagePlaceHolder = this.currentStage + stageOverCount;
-		state.stage = this.stages[currentStage];
-		control.updateViewState();
-	}
-	
+
 	public void resolveStage(){
 		/**
 		 * To resolve a stage, we need to count the following data structures:
@@ -363,25 +359,22 @@ public class Model {
 			int playerBP = players[i].getRank().getBattlePoints();
 			if (players[i].getQueue() != null) {
 				for(int j = 0; j < players[i].getQueue().size(); ++j){
-					System.out.println("count QUEUE BPs player" + (i+1));
 					playerBP += ((AdventureCard) players[i].getQueue().get(j)).getBattlePoints();
 				}
 			}
 			if (players[i].getParty() != null) {
 				for(int j = 0; j < players[i].getParty().size(); ++j){
-					System.out.println("count PARTY BPs player" + (i+1));
-					System.out.println(((AdventureCard) players[i].getParty().get(j)).getImgName());
-					System.out.println(((AdventureCard) players[i].getParty().get(j)).getSubType());
 					playerBP += ((AdventureCard) players[i].getParty().get(j)).getBattlePoints();
 				}
 			}
+			
+			//Check if player passed quest
 			if(playerBP >= stageBP && (! players[i].isSponsor) && stageBP > 0){
 				System.out.println("passed set to true");
 				players[i].passedStage = true;
+			} else {
+				players[i].isQuesting = false;
 			}
-
-			//System.out.println("Player " + (i+1) + " battlePoints: " + playerBP);
-			//System.out.println("StageBP: "  + stageBP);
 			this.toggleForStages = true;
 		}
 		
@@ -417,6 +410,29 @@ public class Model {
 //		
 //		//TODO CALL THE RESOLVE SCREEN FOR VIEW
 //		control.alert("Stage Finished");
+	}
+	
+	
+	public void stageOver(){
+		System.out.println("stageOver() called");
+		
+		for(int i = 0; i < this.numPlayers; ++i){
+			if(!this.players[i].isSponsor){
+				for(int j = 0; j < this.players[i].getQueue().size(); ++j){
+					adventureDeckDiscard.add(this.players[i].getQueue().pop());
+				}
+				players[i].passedStage = false;
+			}
+		}
+		stageOverCount++;
+		
+		this.currentViewer--;// TODO ??? MAYBE A REALLY BAD FIX MAYBE NOT, WHO KNOWS ANYMORE...
+		this.stagesSet = false;
+		this.stageResolved = false;
+		this.toggleForStages = true;
+		this.stagePlaceHolder = this.currentStage + stageOverCount;
+		state.stage = this.stages[currentStage];
+		control.updateViewState();
 	}
 	
 	public boolean containsFoe(CardCollection collection) {
@@ -860,6 +876,12 @@ public class Model {
 		 * -	
 		 */
 		this.currentPlayer = 0;
+
+		this.players[0].addShields(10);
+		this.players[1].addShields(6);
+		this.players[2].addShields(14);
+		this.players[3].addShields(2);
+
 		this.currentStoryCard = this.storyDeck.getByID("136"); //Slay the Dragon
 		this.players[0].addToParty(this.adventureDeck.getByID("100"));
 		this.players[0].addToParty(this.adventureDeck.getByID("101"));
