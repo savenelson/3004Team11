@@ -31,6 +31,7 @@ public class Player {
 	public void addShields(int num) {
 		this.shieldCount += num;
 		promote();
+		promote();
 	}
 	public void removeShields(int num) {
 		this.shieldCount = this.shieldCount - num;

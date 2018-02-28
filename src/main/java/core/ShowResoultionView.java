@@ -74,34 +74,34 @@ public class ShowResoultionView extends Pane{
 	String IMG_DIR = "src/main/resources/core/cards/";
 	String GIF = ".gif";
 	
-	int rowStage = 0;
+	int rowStage = 60;
 	int colStage = 60;
 	
-	int rowPlayerARank = 160;
-	int colPlayerARank = 60;
-	int rowPlayerBRank = 320;
-	int colPlayerBRank = 60;
-	int rowPlayerCRank = 480;
-	int colPlayerCRank = 60;
-	int rowPlayerDRank = 640;
-	int colPlayerDRank = 60;
+	int rowPlayerARank = 214;
+	int colPlayerARank = 268;
+	int rowPlayerBRank = 326;
+	int colPlayerBRank = 268;
+	int rowPlayerCRank = 438;
+	int colPlayerCRank = 268;
+	int rowPlayerDRank = 550;
+	int colPlayerDRank = 268;
 	
-	int rowPlayerAParty = 160;
-	int colPlayerAParty = 180;
-	int rowPlayerBParty = 320;
-	int colPlayerBParty = 180;
-	int rowPlayerCParty = 480;
-	int colPlayerCParty = 180;
-	int rowPlayerDParty = 640;
-	int colPlayerDParty = 180;
+	int rowPlayerAParty = 214;
+	int colPlayerAParty = 450;
+	int rowPlayerBParty = 326;
+	int colPlayerBParty = 450;
+	int rowPlayerCParty = 438;
+	int colPlayerCParty = 450;
+	int rowPlayerDParty = 550;
+	int colPlayerDParty = 450;
 	
-	int rowPlayerAQueue = 160;
+	int rowPlayerAQueue = 214;
 	int colPlayerAQueue = 800;
-	int rowPlayerBQueue = 320;
+	int rowPlayerBQueue = 326;
 	int colPlayerBQueue = 800;
-	int rowPlayerCQueue = 480;
+	int rowPlayerCQueue = 438;
 	int colPlayerCQueue = 800;
-	int rowPlayerDQueue = 640;
+	int rowPlayerDQueue = 550;
 	int colPlayerDQueue = 800;
 	
 	
