@@ -1067,11 +1067,70 @@ public class View extends Application {
 		}
 	}
 	
+	private boolean stageHarder(State state) {
+		int numStages = ((QuestCard) state.currentStoryCard).getNumStages();
+		
+		
+		if (numStages == 1) return true;
+		
+		else {
+			for(int i =0; i<numStages-1; i++) {
+				
+				if(totalNumOfBP(state.stages[i])>=totalNumOfBP(state.stages[i+1])) {
+					System.out.println("");
+					return false;
+				}
+				
+				
+				
+				
+			}
+			
+			
+			
+			
+			
+			
+			
+		}
+		
+
+		
+		
+		return true;
+		
+	
+	
+		
+	}
+	private int totalNumOfBP(CardCollection stage) {
+		
+		
+		int numberOfBP =  0;
+
+		for(int i=0; i<stage.size(); i++) {
+		  if (((AdventureCard) stage.get(i)).getSubType().equals("Foe")) {
+		    numberOfBP+=((FoeCard) stage.get(i)).getBattlePoints();
+		  
+		    
+		  }else if (((AdventureCard) stage.get(i)).getSubType().equals("Weapon")) {
+		    
+		    numberOfBP+=((WeaponCard) stage.get(i)).getBattlePoints();
+		  }
+		}
+
+
+		return numberOfBP;
+		
+	}
 	private void normalEndTurn(){
 		System.out.println("normalendTurn() called");
 		boolean foeInEachStage = true;
 		boolean [] foesPresent = null;
+		
+		boolean isHarder = stageHarder(state);
 		int numStages = 0;
+
     	if(state.players[state.currentPlayer].isSponsor){
     		numStages = ((QuestCard)state.currentStoryCard).getNumStages();
 	    	//System.out.println("numStages: " + numStages);
@@ -1096,12 +1155,16 @@ public class View extends Application {
 		if(state.players[state.currentPlayer].isSponsor && !foeInEachStage){	    			
 			alert("Foe not present in every stage.");
 			return;
-		}
-		else if(state.players[state.currentPlayer].isSponsor){	    			
+		}else if(state.players[state.currentPlayer].isSponsor&& isHarder ==false) {
+			alert("The stages are not progressively harder");
+			return;
+			
+		}else if(state.players[state.currentPlayer].isSponsor){	    			
 			control.stagesSet();
 		}
 
-        control.buttonClick(ENDTURN);
+
+   control.buttonClick(ENDTURN);
 
 		state = control.getState();
     	if(state.stageResolved){
