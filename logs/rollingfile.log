@@ -1,6 +1,5 @@
-[INFO ] 2018-03-01 11:51:39.811 [main] View - main() running
-[INFO ] 2018-03-01 11:51:40.024 [JavaFX Application Thread] View - start() running
-[INFO ] 2018-03-01 11:51:40.025 [JavaFX Application Thread] Control - game initialized
-[INFO ] 2018-03-01 11:51:40.026 [JavaFX Application Thread] Model - Model created
-[INFO ] 2018-03-01 11:51:40.033 [JavaFX Application Thread] Control - passing numPlayers = 4 to model
-[INFO ] 2018-03-01 11:51:43.661 [JavaFX Application Thread] Control - mainLoop() running
+[INFO ] 2018-03-01 12:56:06.348 [main] View - main() running
+[INFO ] 2018-03-01 12:56:06.540 [JavaFX Application Thread] View - start() running
+[INFO ] 2018-03-01 12:56:06.542 [JavaFX Application Thread] Control - game initialized
+[INFO ] 2018-03-01 12:56:06.544 [JavaFX Application Thread] Model - Model created
+[INFO ] 2018-03-01 12:56:06.550 [JavaFX Application Thread] Control - passing numPlayers = 4 to model
