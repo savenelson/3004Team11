@@ -1,1 +1,0 @@
-"Hey it is sammy here adding a test file from Dave's desktop to his local copy of 3004Test. Should this "pass" code review and testing, we will upload this file to either a branch of master or master itsef".

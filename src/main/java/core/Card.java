@@ -22,5 +22,7 @@ public abstract class Card {
 		this.type = type;
 	}
 	
+	public abstract String getName();
+	
 	public abstract String toString();
 }

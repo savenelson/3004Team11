@@ -1,6 +1,14 @@
 package core;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
+
+
 public class Control{
+	
+	private static final Logger logger = LogManager.getLogger(Control.class);
 
 	Model model;
 	View view;
@@ -8,6 +16,8 @@ public class Control{
 	private static String testString;
 	
 	public Control(View view) {
+		
+		logger.info("Control created");
 		
 		this.view = view;
 		gameInit(null);
@@ -21,22 +31,25 @@ public class Control{
 
 	public void gameInit(String args []){
 		
-		int numPlayers;
+		logger.info("gameInit() running");
 		
+		int numPlayers;
+
+		//TODO this if/else can use some polish - always passes 4
 		if(args == null || args.length == 0){
 			numPlayers = 4;
-		}
-		else{
+		} else {
 			numPlayers = Integer.parseInt(args[0]);
 		}
+		
 		if(numPlayers >= 2 && numPlayers <= 4)
 		{
 
 			model = new Model(this);
-		}
-		else{// Maybe make a view constructor that displays invalid number of players type thing...??????????????
-			 // POP UP MESSAGE????? from control?
-			System.out.println("Number of players invalid ");
+			logger.info("passing numPlayers = " + numPlayers + " to model");
+			
+		} else {
+			logger.fatal("number of players ERROR");
 		}
 		
 		model.instantiatePlayers(numPlayers);
@@ -56,6 +69,8 @@ public class Control{
 	}
 
 	public void mainLoop(){
+		logger.info("mainLoop() running");
+
 		boolean win = false;
 		while(!win){
 			model.playGame();
@@ -64,45 +79,62 @@ public class Control{
 	}
 	
 	public void updateViewState(){
-		
+		logger.debug("updateViewState() called");
+
 		view.updateState();
 		
 	}
 	
 	public void stageIncrement(){
+		logger.debug("stageIncrement() called");
+
 		model.state.currentStage = model.state.stagePlaceHolder;
 		model.state.toggleForStages = false;
 		model.resolveStage();
 	}
 	
 	public void stageOver(){
+		logger.debug("stageOver() called");
+
 		model.stageOver();
 	}
 
 	public boolean getSponsorDecision(){
+		logger.info("getSponsorDecision() called");
+
 		return view.popup("Would you like to sponsor this quest?");
 	}
 	
 	public State getState(){
+		logger.debug("getState() called");
+
 		return model.getState();
 		
 	}
 	
 	public void viewerChanged(){
+		logger.debug("viewerChanged() called");
+
 		model.viewerChanged();
 	}
 	
 	public void setNumPlayers(int i){
+		logger.debug("setNumPlayers() called");
+
 		model.numPlayers = i;
 	}
 	
 	public Player getActivePlayer(){
+		logger.debug("getActivePlayer() called");
+		
 		return model.getActivePlayer();
 	}
 	
 	public void printTestString(){System.out.println(testString);}
 
 	public void handClick(String clickType, String ID) {
+		logger.debug("handClick() called");
+
 		if(clickType.equals(View.PARTY)){
 			model.party(ID);
 		} 
@@ -118,21 +150,32 @@ public class Control{
 		else if(clickType.equals(View.DISCARD)){
 			model.discard(ID);
 		}
+		else if(clickType.equals(View.ASSASSINATE)){
+			model.assassinate(ID);
+		}
 	}
 	
 	public void startStageCycle(){
+		logger.debug("startStageCycle() called");
+
 		model.resetCurrentStage();
 	}
 
 	public void nextStory(){
+		logger.debug("nextStory() called");
+
 		model.nextStory();
 	}
 	
 	public void resolveStage(){
+		logger.debug("resolveStage() called");
+
 		model.resolveStage();
 	}
 	
 	public void buttonClick(String clickType) {
+		logger.debug("buttonClick() called");
+
 		if(clickType.equals(View.STAGE1)){
 			model.setCurrentStage(0);
 		} else if (clickType.equals(View.STAGE2)) {
@@ -150,26 +193,36 @@ public class Control{
 	}
 	
 	public String getSubType(String ID, int currentPlayer){
+		logger.debug("getSubType() called");
+
 		return model.getSubType(ID, currentPlayer);
 	}
 
 	public void resolveQuest(){
+		logger.debug("resolveQuest() called");
+
 		view.resolveQuest();
 	}
 	
 	public void stagesSet(){
+		logger.debug("stagesSet() called");
+
 		startStageCycle();
 
 		model.stagesSet();
 	}
 	
 	public void alert(String message){
+		logger.info("alert() called: " + message);
+
 		view.alert(message);
 	}
 
 
 
 	public View getView() {
+		logger.debug("getView() called");
+
 		return view;
 	}
 	

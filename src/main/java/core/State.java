@@ -34,6 +34,4 @@ public class State {
 	
 	public int stageOverCount;
 	
-
-
 }

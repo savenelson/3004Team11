@@ -43,6 +43,11 @@ public class RankCard extends Card{
 			  + ", type: " + this.type 
 			  + ", subtype: " + this.subType;
 	}
+	
+	public String getName() {
+		return this.subType;
+	}
+	
 	@Override
 	public String getImgName() {
 		return this.type + this.subType;

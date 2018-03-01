@@ -1,65 +1,39 @@
 package core;
 
-import java.awt.Insets;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
 import java.util.Optional;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
+
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Orientation;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 
 public class View extends Application {
@@ -70,6 +44,7 @@ public class View extends Application {
 	public static final String STAGE = "Stage";
 	public static final String QUEUE = "Queue";
 	public static final String DEQUEUE = "Dequeue";
+	public static final String ASSASSINATE = "Assassinate";
 	
 	public static final String STAGE1 = "Stage 1";
 	public static final String STAGE2 = "Stage 2";
@@ -139,18 +114,10 @@ public class View extends Application {
 	public static final	int cardLargeWidth = 150;
 	public static final	int cardXLargeHeight = 300;
 	public static final	int cardXLargeWidth = 225;
-
 	
 	private static final Logger logger = LogManager.getLogger(View.class);
-	
-	
-	private TextField shieldCount;
-	
-	private Image[] ranksImg, handImg, partyImg;
+
 	private ImageView imgView;
-	
-	//Hands
-	private HBox CardHandTop, CardHandBottom, CardHandOverflow;
 	
 	private Stage stage;
 	private Pane canvas;
@@ -158,39 +125,50 @@ public class View extends Application {
 	
 	MainMenu menu = new MainMenu(this,null);
 
-	public View () {}
+	public View () {
+		logger.info("View created");
+
+	}
 
 	public static void main(String [] args){
+		logger.info("main() running");
+
 		launch(args);
 	}
 
 	private HBox Stage; 
 	
 	public boolean popup(String message){
+		logger.debug("popup() called");
+
 	    ButtonType yesButton = new ButtonType("Yes");
 	    ButtonType noButton = new ButtonType("No");
 		Alert alert = new Alert(null, message, yesButton, noButton);
 		Optional<ButtonType> yesOption = alert.showAndWait();
 
 		 if (yesOption.isPresent() && yesOption.get() == yesButton) {
-			 //System.out.println("YES");
+			logger.info("Yes clicked");
 			 return true;
 		 }		
-		 //System.out.println("NO");
 		 control.buttonClick(ENDTURN);
 		 state = control.getState();
 		 update(stage);
+		 logger.info("No clicked");
 		 return false;
 	}
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		logger.info("start() running");
+
 		control = new Control(this);
 		stage = primaryStage;
 		initUI(primaryStage);
 	}
 
 	private void update(Stage primaryStage) {
+		logger.debug("update(Stage) called");
+
 		state = control.getState();
 		
 		canvas = new Pane();
@@ -204,22 +182,26 @@ public class View extends Application {
 		
 		if (!state.stagesSet){
 			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer+1));
+			logger.info("Current View: Player " + state.currentPlayer);
 		}
 		else{
-			//System.out.println("HERE");
 			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentViewer+1));
+			logger.info("Current View: Player " + state.currentViewer);
 		}
 		primaryStage.show();
 	}
 	
 	public void update(){
-		//System.out.println("update(): menu.numberSelected(): " + menu.numberSelected());
+		logger.debug("update() called");
+
 		control.setNumPlayers(menu.numberSelected());
 		update(stage);
 		control.mainLoop();
 	}
 	
 	public Pane drawCards(Pane canvas){
+		logger.debug("drawCards() called");
+
 		this.state = control.getState();
 		
 		addControlsToCanvas(canvas);
@@ -231,9 +213,7 @@ public class View extends Application {
 		addPlayerAPartyToCanvas(canvas);
 		addPlayerBPartyToCanvas(canvas);
 		addShieldsBToCanvas(canvas);
-		
-		//System.out.println("drawCards: state.numPlayers: " + state.numPlayers);
-		
+				
 		if(state.numPlayers == 3){
 			addPlayerCRankToCanvas(canvas);
 			addPlayerCPartyToCanvas(canvas);
@@ -260,7 +240,8 @@ public class View extends Application {
 	}
 	
 	private void initUI(Stage primaryStage) {
-		
+		logger.debug("initUI() called");
+
 		state = control.getState();
 
 		canvas = new Pane();
@@ -284,7 +265,8 @@ public class View extends Application {
 	}
 	
 	private void addHandToCanvas(Pane canvas) {
-		
+		logger.debug("addHandToCanvas() called");
+
 		CardCollection hand = null;
 		
 		if (!state.stagesSet){
@@ -324,7 +306,8 @@ public class View extends Application {
 	}
 	
 	private void addStageToCanvas(Pane canvas) {
-		
+		logger.debug("addStageToCanvas() called");
+
 		state = control.getState();
 		CardCollection stage = state.stage;
 
@@ -363,9 +346,7 @@ public class View extends Application {
 		
 		else if(state.stagesSet){
 			state = control.getState();
-			
-			System.out.println("current stage: " + state.currentStage);
-			
+						
 			if (state.toggleForStages)
 			{
 				control.stageIncrement();
@@ -392,6 +373,8 @@ public class View extends Application {
 	}
 	
 	public void resolveQuest(){
+		logger.debug("resolveQuest() called");
+
 
 		StackPane layout = new StackPane();
 		state = control.getState();
@@ -400,7 +383,6 @@ public class View extends Application {
 		for (int i = 0; i < state.numPlayers; ++i){
 			if(!state.players[i].isSponsor){
 				Label passed = new Label("Player "+ (i+1));
-				System.out.print("state.players[i].passedStage: " + state.players[i].passedStage);
 
 				if(state.players[i].passedStage)
 					passed.setText(passed.getText() + " passed Quest and receives " + numShields + " shields!");
@@ -411,18 +393,18 @@ public class View extends Application {
 				layout.getChildren().add(passed);
 				layout.setPrefHeight(720);
 				layout.setPrefWidth(1280);
-				passed.setTranslateY(-180+(60*i));			
-				System.out.print("Player "+ (i+1));
-				
+				passed.setTranslateY(-180+(60*i));							
 			}
 		}
-		Button readyButton = new Button("Next Stage");
-		readyButton.setFont(new Font("Ariel", 30));
-		layout.getChildren().add(readyButton);
-		readyButton.setTranslateY(65);
-		readyButton.setOnAction(new EventHandler<ActionEvent>() {
+		Button nextStageButton = new Button("Next Stage");
+		nextStageButton.setFont(new Font("Ariel", 30));
+		layout.getChildren().add(nextStageButton);
+		nextStageButton.setTranslateY(65);
+		nextStageButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				logger.info("nextStageButton clicked");
+
 				control.nextStory();
 				update(stage);
 			}
@@ -430,13 +412,12 @@ public class View extends Application {
 		Scene scene = new Scene(layout);
 		scene.getStylesheets().add("style.css");
 		stage.setScene(scene);
-		System.out.println("END OF RESOLVE");
 		//update(stage);
 	}
 	
 	private void addQueueToCanvas(Pane canvas) {
-		//System.out.println("getActivePlayer().getPlayerNumber: " + control.getActivePlayer().getPlayerNumber());
-		
+		logger.debug("addQueueToCanvas() called");
+
 		CardCollection queue = control.getActivePlayer().getQueue();
 		
 		tile = new TilePane();
@@ -471,6 +452,8 @@ public class View extends Application {
 	}
 	
 	private void addPlayerARankToCanvas(Pane canvas) {
+		logger.debug("addPlayerARankToCanvas() called");
+
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.players[0].getRank().getImgName() + GIF));
 			imgView = new ImageView();
@@ -489,6 +472,8 @@ public class View extends Application {
 	}
 	
 	private void addPlayerBRankToCanvas(Pane canvas) {
+		logger.debug("addPlayerBRankToCanvas() called");
+
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.players[1].getRank().getImgName() + GIF));
 			imgView = new ImageView();
@@ -507,6 +492,8 @@ public class View extends Application {
 	}
 	
 	private void addPlayerCRankToCanvas(Pane canvas) {
+		logger.debug("addPlayerCRankToCanvas() called");
+
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.players[2].getRank().getImgName() + GIF));
 			imgView = new ImageView();
@@ -525,6 +512,8 @@ public class View extends Application {
 	} 	
 	
 	private void addPlayerDRankToCanvas(Pane canvas) {
+		logger.debug("addPlayerDRankToCanvas() called");
+
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.players[3].getRank().getImgName() + GIF));
 			imgView = new ImageView();
@@ -543,7 +532,8 @@ public class View extends Application {
 	}
 	
 	private void addPlayerAPartyToCanvas(Pane canvas) {
-		
+		logger.debug("addPlayerAPartyToCanvas() called");
+
 		CardCollection party = state.players[0].getParty();
 		
 		tile = new TilePane();
@@ -563,7 +553,7 @@ public class View extends Application {
 					imgView.setFitWidth(cardSmallWidth);
 					imgView.setFitHeight(cardSmallHeight);
 					imgView.setPreserveRatio(true);
-					setMorgaineCardControl(imgView);
+					setPartyCardControl(imgView);
 					tile.getChildren().add(imgView);
 
 				} catch (FileNotFoundException e) {
@@ -578,7 +568,8 @@ public class View extends Application {
 	}
 
 	private void addPlayerBPartyToCanvas(Pane canvas) {
-		
+		logger.debug("addPlayerBPartyToCanvas() called");
+
 		CardCollection party = state.players[1].getParty();
 		
 		tile = new TilePane();
@@ -598,7 +589,7 @@ public class View extends Application {
 					imgView.setFitWidth(cardSmallWidth);
 					imgView.setFitHeight(cardSmallHeight);
 					imgView.setPreserveRatio(true);
-					setMorgaineCardControl(imgView);
+					setPartyCardControl(imgView);
 					tile.getChildren().add(imgView);
 
 				} catch (FileNotFoundException e) {
@@ -613,7 +604,8 @@ public class View extends Application {
 	}
 
 	private void addPlayerCPartyToCanvas(Pane canvas) {
-		
+		logger.debug("addPlayerCPartyToCanvas() called");
+
 		CardCollection party = state.players[2].getParty();
 		
 		tile = new TilePane();
@@ -633,7 +625,7 @@ public class View extends Application {
 					imgView.setFitWidth(cardSmallWidth);
 					imgView.setFitHeight(cardSmallHeight);
 					imgView.setPreserveRatio(true);
-					setMorgaineCardControl(imgView);
+					setPartyCardControl(imgView);
 					tile.getChildren().add(imgView);
 
 				} catch (FileNotFoundException e) {
@@ -648,7 +640,8 @@ public class View extends Application {
 	}
 	
 	private void addPlayerDPartyToCanvas(Pane canvas) {
-		
+		logger.debug("addPlayerDPartyToCanvas() called");
+
 		CardCollection party = state.players[3].getParty();
 		
 		tile = new TilePane();
@@ -668,7 +661,7 @@ public class View extends Application {
 					imgView.setFitWidth(cardSmallWidth);
 					imgView.setFitHeight(cardSmallHeight);
 					imgView.setPreserveRatio(true);
-					setMorgaineCardControl(imgView);
+					setPartyCardControl(imgView);
 					tile.getChildren().add(imgView);
 
 				} catch (FileNotFoundException e) {
@@ -683,8 +676,8 @@ public class View extends Application {
 	}
 	
 	private void addStoryCardToCanvas(Pane canvas) {
-		
-		//System.out.println(state.currentStoryCard.getImgName());
+		logger.debug("addStoryCardToCanvas() called");
+
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.currentStoryCard.getImgName() + GIF));
 			imgView = new ImageView();
@@ -704,8 +697,10 @@ public class View extends Application {
 	}
 	
 	private void addShieldsAToCanvas(Pane canvas) {
+		logger.debug("addShieldsAToCanvas() called");
+
+		
 		String playerA = Integer.toString(state.players[0].getShieldCount());
-		//System.out.println(playerA);
 		Label shieldsPlayerA = new Label(playerA);
 		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
 		shieldsPlayerA.relocate(colPlayerARank+11,rowPlayerARank+72	);
@@ -714,8 +709,9 @@ public class View extends Application {
 	}
 	
 	private void addShieldsBToCanvas(Pane canvas) {
+		logger.debug("addShieldsBToCanvas() called");
+
 		String playerA = Integer.toString(state.players[1].getShieldCount());
-		//System.out.println(playerA);
 		Label shieldsPlayerA = new Label(playerA);
 		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
 		shieldsPlayerA.relocate(colPlayerBRank+11,rowPlayerBRank+72	);
@@ -726,8 +722,9 @@ public class View extends Application {
 	}
 	
 	private void addShieldsCToCanvas(Pane canvas) {
+		logger.debug("addShieldsCToCanvas() called");
+
 		String playerA = Integer.toString(state.players[2].getShieldCount());
-		//System.out.println(playerA);
 		Label shieldsPlayerA = new Label(playerA);
 		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
 		shieldsPlayerA.relocate(colPlayerCRank+11,rowPlayerCRank+72	);
@@ -738,8 +735,9 @@ public class View extends Application {
 	}
 	
 	private void addShieldsDToCanvas(Pane canvas) {
+		logger.debug("addShieldsDToCanvas() called");
+
 		String playerA = Integer.toString(state.players[3].getShieldCount());
-		//System.out.println(playerA);
 		Label shieldsPlayerA = new Label(playerA);
 		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
 		shieldsPlayerA.relocate(colPlayerDRank+11,rowPlayerDRank+72	);
@@ -750,14 +748,14 @@ public class View extends Application {
 	}
 	
 	private void setStageCardControl(ImageView anAdventure) {
+		logger.debug("setStageCardControl() called");
+
 		ContextMenu fileMenu = new ContextMenu();
 		
 		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
 
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println(((MenuItem) event.getSource()).getText());					
-				System.out.println(anAdventure.getId());
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
 				state = control.getState();
 				
@@ -792,7 +790,6 @@ public class View extends Application {
 		campaigne.setOnAction(new EventHandler<ActionEvent>() {
 		    public void handle(ActionEvent e) {
 		        addCardToStage(Stage, imgView);
-		        System.out.println(e.getSource());
 		    }
 		});
 		
@@ -811,6 +808,8 @@ public class View extends Application {
 	}
 	
 	public void alert(String message){
+		logger.debug("alert() called ");
+
 		Alert alert = new Alert(AlertType.ERROR, message);
 		Optional<ButtonType> result = alert.showAndWait();
 		 if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -819,14 +818,14 @@ public class View extends Application {
 	}
 	
 	private void setHandCardControl(ImageView anAdventure) {
+		logger.debug("setHandCardControl() called");
+
 		ContextMenu fileMenu = new ContextMenu();
 		
 		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
 
 			@Override
 			public void handle(ActionEvent event) {
-				//System.out.println(((MenuItem) event.getSource()).getText());					
-				//System.out.println(anAdventure.getId());
 				state = control.getState();				
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
 				state = control.getState();				
@@ -878,8 +877,6 @@ public class View extends Application {
 		@Override
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
-				//System.out.println(t.getSource());
-				//CardHandTop.getChildren().remove(t.getSource());
 				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
 				state = control.getState();
 			}
@@ -888,19 +885,21 @@ public class View extends Application {
 	}
 	
 	public void updateState(){
+		logger.debug("updateState() called");
+
 		state = control.getState();
 		update(stage);
 	}
 	
 	private void setQueueCardControl(ImageView anAdventure) {
+		logger.debug("setQueueCardControl() called");
+
 		ContextMenu fileMenu = new ContextMenu();
 		
 		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
 
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println(((MenuItem) event.getSource()).getText());					
-				System.out.println(anAdventure.getId());
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
 				state = control.getState();
 				update(stage);
@@ -924,26 +923,39 @@ public class View extends Application {
 		});
 	}
 
-	private void setMorgaineCardControl(ImageView anAlly) {
+	private void setPartyCardControl(ImageView anAlly) {
+		logger.debug("setPartyCardControl() called");
+
 		ContextMenu fileMenu = new ContextMenu();
+
+		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent event) {
+				control.handClick(((MenuItem) event.getSource()).getText(), anAlly.getId());
+				state = control.getState();
+				update(stage);
+			}
+		};
 		
-		fileMenu.getItems().add(new MenuItem("Assassinate"));
+		MenuItem assassinateAlly = new MenuItem(ASSASSINATE);
+		assassinateAlly.setOnAction(eh);
+		fileMenu.getItems().add(assassinateAlly);
 
 		anAlly.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
-			
-			
 		@Override
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
 				fileMenu.show(anAlly,t.getScreenX(),t.getScreenY());
 			}
 		}
-		
 		});
 	}
 	
 	private void addStage(Pane canavas) {
+		logger.debug("addStage() called");
+
 		
 		Stage = new HBox();
 		
@@ -955,7 +967,8 @@ public class View extends Application {
 	}
 	
 	private void addCardToStage(HBox stage, ImageView newCard) {
-		
+		logger.debug("addCardToStage() called");
+
 		ImageView cardAdded = new ImageView();
 		cardAdded.setImage(newCard.getImage());
 		cardAdded.setFitHeight(12);  
@@ -963,15 +976,12 @@ public class View extends Application {
 	}
 	
 	private void setRankControl(ImageView aRankCard, int numberOfcards) {
-		
-		//logger.info("Showing other players hands is working ");
+		logger.debug("setRankControl() called");
+
 		aRankCard.addEventHandler(MouseEvent.MOUSE_ENTERED,
 		        new EventHandler<MouseEvent>() {
 	          @Override
-	          public void handle(MouseEvent e) {
-	        	  System.out.println("working");
-	        	  
-	        	
+	          public void handle(MouseEvent e) {    	
 	        	  Rectangle rect = new Rectangle(0, 0, 100, 100);
 	        	  Tooltip t = new Tooltip("This player has " + numberOfcards+ " in their hands");
 	        	  Tooltip.install(rect, t);
@@ -982,6 +992,8 @@ public class View extends Application {
 	}
 	
 	private void addControlsToCanvas(Pane canvas) {
+		logger.debug("addControlsToCanvas() called");
+
 		// our coordinates 
 		Button[] stageButtons = new Button[5];
 		Button stage1 = new Button (STAGE1);
@@ -990,6 +1002,7 @@ public class View extends Application {
 		stage1.setMinWidth(80);
 		stage1.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
+		    	logger.info("Stage 1 clicked");
 		        control.buttonClick(STAGE1);
 				state = control.getState();
 				
@@ -1003,6 +1016,7 @@ public class View extends Application {
 		stage2.setMinWidth(80);
 		stage2.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
+		    	logger.info("Stage 2 clicked");
 		        control.buttonClick(STAGE2);
 				state = control.getState();
 				update(stage);
@@ -1014,6 +1028,7 @@ public class View extends Application {
 		stage3.setMinWidth(80);
 		stage3.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
+		    	logger.info("Stage 3 clicked");
 		        control.buttonClick(STAGE3);
 				state = control.getState();
 				update(stage);
@@ -1025,6 +1040,7 @@ public class View extends Application {
 		stage4.setMinWidth(80);
 		stage4.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
+		    	logger.info("Stage 4 clicked");
 		        control.buttonClick(STAGE4);
 				state = control.getState();
 				update(stage);
@@ -1036,6 +1052,7 @@ public class View extends Application {
 		stage5.setMinWidth(80);
 		stage5.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
+		    	logger.info("Stage 5 clicked");
 		        control.buttonClick(STAGE5);
 				state = control.getState();
 				update(stage);
@@ -1046,6 +1063,7 @@ public class View extends Application {
 		endTurn.setMinWidth(80);
 		endTurn.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
+		    	logger.info("End Turn clicked");
 		    	state = control.getState();
 		    	normalEndTurn();
 				if (state.toggleForStages)
@@ -1068,6 +1086,8 @@ public class View extends Application {
 	}
 	
 	private boolean stageHarder(State state) {
+		logger.debug("stageHarder() called");
+
 		int numStages = ((QuestCard) state.currentStoryCard).getNumStages();
 		
 		
@@ -1080,31 +1100,13 @@ public class View extends Application {
 					System.out.println("");
 					return false;
 				}
-				
-				
-				
-				
-			}
-			
-			
-			
-			
-			
-			
-			
+			}	
 		}
-		
-
-		
-		
 		return true;
-		
-	
-	
-		
 	}
+	
 	private int totalNumOfBP(CardCollection stage) {
-		
+		logger.debug("totalNumOfBP() called");
 		
 		int numberOfBP =  0;
 
@@ -1124,7 +1126,8 @@ public class View extends Application {
 		
 	}
 	private void normalEndTurn(){
-		System.out.println("normalendTurn() called");
+		logger.debug("normalEndTurn() called");
+
 		boolean foeInEachStage = true;
 		boolean [] foesPresent = null;
 		
@@ -1133,7 +1136,6 @@ public class View extends Application {
 
     	if(state.players[state.currentPlayer].isSponsor){
     		numStages = ((QuestCard)state.currentStoryCard).getNumStages();
-	    	//System.out.println("numStages: " + numStages);
     		foesPresent  = new boolean [numStages];
     		for (int i = 0; i < numStages; ++i){
     			foesPresent[i] = false;
@@ -1155,22 +1157,20 @@ public class View extends Application {
 		if(state.players[state.currentPlayer].isSponsor && !foeInEachStage){	    			
 			alert("Foe not present in every stage.");
 			return;
-		}else if(state.players[state.currentPlayer].isSponsor&& isHarder ==false) {
+		} else if(state.players[state.currentPlayer].isSponsor&& isHarder ==false) {
 			alert("The stages are not progressively harder");
 			return;
 			
-		}else if(state.players[state.currentPlayer].isSponsor){	    			
+		} else if(state.players[state.currentPlayer].isSponsor){	    			
 			control.stagesSet();
 		}
 
-
-   control.buttonClick(ENDTURN);
+		control.buttonClick(ENDTURN);
 
 		state = control.getState();
     	if(state.stageResolved){
     		stageResolved();
-    	}
-    	else{
+    	} else {
 			update(stage);
 			
 			Label playerLabel = new Label("Player " + (control.getActivePlayer().getPlayerNumber()+1) + " ready?");
@@ -1185,6 +1185,8 @@ public class View extends Application {
 			readyButton.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
+					logger.info("Ready clicked");
+
 					update(stage);
 				}
 			});
@@ -1203,6 +1205,9 @@ public class View extends Application {
     }
 	
 	public void stageResolved(){
+		logger.debug("stageResolved() called");
+		logger.info("Stage Over");
+
 		control.resolveStage();
 		StackPane layout = new StackPane();
 		state = control.getState();
@@ -1213,8 +1218,10 @@ public class View extends Application {
 				Label passed = new Label("Player "+ (i+1));
 				if(state.players[i].passedStage) {
 					passed.setText(passed.getText() + " passed stage " + (state.currentStage+1));
+
 				} else {
 					passed.setText(passed.getText() + " failed stage " + (state.currentStage+1));
+
 				}
 				passed.setFont(new Font("Ariel", 30));	
 				layout.getChildren().add(passed);
@@ -1223,36 +1230,25 @@ public class View extends Application {
 				passed.setTranslateY(-180+(60*i));			
 				System.out.print("Player "+ (i+1));
 				if(state.players[i].passedStage) {
-					System.out.println(" passed stage" + (state.currentStage+1));
+					logger.info("Player " + i + " passed stage " + (state.currentStage+1));
 				} else {
-					System.out.println(" failed stage" + (state.currentStage+1));
+					logger.info("Player " + i + " failed stage " + (state.currentStage+1));
 				}
 			}
 		}
-		Button readyButton = new Button("Next Stage");
-		readyButton.setFont(new Font("Ariel", 30));
-		layout.getChildren().add(readyButton);
-		readyButton.setTranslateY(65);
-		readyButton.setOnAction(new EventHandler<ActionEvent>() {
+		Button nextStageButton = new Button("Next Stage");
+		nextStageButton.setFont(new Font("Ariel", 30));
+		layout.getChildren().add(nextStageButton);
+		nextStageButton.setTranslateY(65);
+		nextStageButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				logger.info("nextStageButton clicked");
+
 				control.stageOver();
 				state = control.getState();
-				System.out.println("A");
-				System.out.println("state.currentStage: " + state.currentStage);
-				
 				normalEndTurn();
-				
-//				if (state.toggleForStages)
-//				{
-					control.stageIncrement();
-//				}
-				System.out.println("B");
-				System.out.println("state.currentStage: " + state.currentStage);
-				
-				System.out.println("C");
-				System.out.println("state.currentStage: " + state.currentStage);
-				//update(stage);
+				control.stageIncrement();
 			}
 		});
 		
@@ -1264,6 +1260,8 @@ public class View extends Application {
 		showCardsButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				logger.info("showCardsButton clicked");
+
 				state = control.getState();
 				
 				ShowResoultionView resolution = new ShowResoultionView(layout, state, control.getView());
@@ -1274,11 +1272,12 @@ public class View extends Application {
 		scene.getStylesheets().add("style.css");
 		
 		stage.setScene(scene);
-		System.out.println("END OF RESOLVE");
 		//update(stage);
 	}
 	
 	public void sceneChange(Pane newScreen) {
+		logger.debug("sceneChange() called");
+
 
 		newScreen.setId("pane");
 		
@@ -1290,6 +1289,8 @@ public class View extends Application {
 	}
 	
 	public void setNumPlayers(int i){
+		logger.debug("setNumPlayers() called");
+
 		control.setNumPlayers(menu.numberSelected());
 	}
 	

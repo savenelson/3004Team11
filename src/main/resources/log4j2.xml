@@ -8,7 +8,7 @@
         <Console name="Console-Appender" target="SYSTEM_OUT">
             <PatternLayout>
                 <pattern>
-                    [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+                    [%-5level] %d{HH:mm:ss.SSS} %c{1} - %msg%n
                 </pattern>>
             </PatternLayout>
         </Console>
@@ -31,12 +31,12 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-           <Logger name="com.comp3004" level="debug" additivity="true">
-               <AppenderRef ref="File-Appender" level="error"/>
-               <AppenderRef ref="RollingFile-Appender" level="debug"/>
-               <AppenderRef ref="Console-Appender" level="info"/>
+           <Logger name="com.comp3004" level="DEBUG" additivity="true">
+               <AppenderRef ref="File-Appender" level="ERROR"/>
+               <AppenderRef ref="RollingFile-Appender" level="DEBUG"/>
+               <AppenderRef ref="Console-Appender" level="INFO"/>
            </Logger>
-        <Root level="debug">
+        <Root level="INFO">
             <AppenderRef ref="Console-Appender"/>
             <AppenderRef ref="RollingFile-Appender"/>
         </Root>

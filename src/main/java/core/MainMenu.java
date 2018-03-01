@@ -13,8 +13,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class MainMenu extends Pane{
+	private static final Logger logger = LogManager.getLogger(Player.class);
+
 	public static final String IMG_DIR = "src/main/resources/core/cards/";
 	public static final String GIF = ".gif";
 	public static final String SQUIRE = "Squire";
@@ -54,6 +59,7 @@ public class MainMenu extends Pane{
 		human2.setOnAction(new EventHandler<ActionEvent>() {
 			
 		    public void handle(ActionEvent e) {
+		    	logger.info("Game for 2 players begining");
 		        numberPlayers = 2;
 		    	aView.update();
 		    }
@@ -76,6 +82,8 @@ public class MainMenu extends Pane{
 		human3.setStyle("-fx-font: 22 arial; -fx-base: rgb(0,0,255); -fx-text-fill:rgb(255,255,255);");
 		human3.setOnAction(new EventHandler<ActionEvent>() {
 		    public void handle(ActionEvent e) {
+		    	logger.info("Game for 3 players begining");
+
 		    	numberPlayers = 3;
 		    	aView.update();
 		    }
@@ -100,6 +108,7 @@ public class MainMenu extends Pane{
 		human4.setGraphic(b);
 		human4.setOnAction(new EventHandler<ActionEvent>() {
 		    public void handle(ActionEvent e) {
+		    	logger.info("Game for 4 players begining");
 		    	numberPlayers = 4;
 		    	aView.update();	        
 		    }

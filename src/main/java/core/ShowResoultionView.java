@@ -1,73 +1,24 @@
 package core;
 
 
-import java.awt.Insets;
-import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
-import java.util.Optional;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
-
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Orientation;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 
 
 public class ShowResoultionView extends Pane{
 	public int numberPlayers;
 	private State state;
-	private View view;
 	private TilePane tile;
 	private ImageView imgView;
 	
@@ -75,7 +26,7 @@ public class ShowResoultionView extends Pane{
 	String GIF = ".gif";
 	
 	int rowStage = 60;
-	int colStage = 60;
+	int colStage = 360;
 	
 	int rowPlayerARank = 214;
 	int colPlayerARank = 268;
@@ -119,7 +70,56 @@ public class ShowResoultionView extends Pane{
 		Label  label = new Label("Resolution");
 		label.setPrefHeight(10);
 		label.setTextAlignment(TextAlignment.CENTER);
-		label.setFont(new Font("Ariel", 30));
+		label.setFont(new Font("Ariel", 40));
+		label.relocate(550, 10);
+		
+		Label  rank = new Label("Rank");
+		rank.setPrefHeight(10);
+		rank.setTextAlignment(TextAlignment.CENTER);
+		rank.setFont(new Font("Ariel", 30));
+		rank.relocate(270, 170);
+		
+		Label  party = new Label("Party");
+		party.setPrefHeight(10);
+		party.setTextAlignment(TextAlignment.CENTER);
+		party.setFont(new Font("Ariel", 30));
+		party.relocate(455, 170);
+		
+		Label  queue = new Label("Queue");
+		queue.setPrefHeight(10);
+		queue.setTextAlignment(TextAlignment.CENTER);
+		queue.setFont(new Font("Ariel", 30));
+		queue.relocate(805, 170);
+		
+		Label  p1 = new Label("Player 1");
+		p1.setPrefHeight(10);
+		p1.setTextAlignment(TextAlignment.CENTER);
+		p1.setFont(new Font("Ariel", 30));
+		p1.relocate(90, 250);
+		
+		Label  p2 = new Label("Player 2");
+		p2.setPrefHeight(10);
+		p2.setTextAlignment(TextAlignment.CENTER);
+		p2.setFont(new Font("Ariel", 30));
+		p2.relocate(90, 360);
+		
+		Label  p3 = new Label("Player 3");
+		p3.setPrefHeight(10);
+		p3.setTextAlignment(TextAlignment.CENTER);
+		p3.setFont(new Font("Ariel", 30));
+		p3.relocate(90, 470);
+		
+		Label  p4 = new Label("Player 4");
+		p4.setPrefHeight(10);
+		p4.setTextAlignment(TextAlignment.CENTER);
+		p4.setFont(new Font("Ariel", 30));
+		p4.relocate(90, 580);
+		
+		Label  stage = new Label("Stage");
+		stage.setPrefHeight(10);
+		stage.setTextAlignment(TextAlignment.CENTER);
+		stage.setFont(new Font("Ariel", 30));
+		stage.relocate(240, 100);
 		
 		Button goBack = new Button("Back");
 		goBack.setPrefSize(80, 40);
@@ -131,11 +131,12 @@ public class ShowResoultionView extends Pane{
 		  	        
 		    }
 		});
+		goBack.relocate(580, 670);
 		
 
 		drawCards(this, state);
 		
-		this.getChildren().addAll(label, goBack);
+		this.getChildren().addAll(label, goBack, p1, p2, p3, p4, rank, party, queue, stage);
 
 //		view.update();
 	}
