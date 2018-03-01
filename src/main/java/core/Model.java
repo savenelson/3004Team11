@@ -880,10 +880,12 @@ public class Model {
 		this.players[0].addShields(10);
 		this.players[1].addShields(6);
 		this.players[2].addShields(14);
-		this.players[3].addShields(2);
+		
+		stages[0].add(this.adventureDeck.getByID("57"));
+		stages[1].add(this.adventureDeck.getByID("86"));
 
-		this.currentStoryCard = this.storyDeck.getByID("136"); //Slay the Dragon
-		this.players[0].addToParty(this.adventureDeck.getByID("100"));
+
+		this.currentStoryCard = this.storyDeck.getByID("126"); //BOAR  hUNT 		this.players[0].addToParty(this.adventureDeck.getByID("100"));
 		this.players[0].addToParty(this.adventureDeck.getByID("101"));
 		this.players[0].addToParty(this.adventureDeck.getByID("122"));
 		this.players[1].addToParty(this.adventureDeck.getByID("103"));
@@ -958,7 +960,7 @@ public class Model {
 		this.players[3].addToHand(this.adventureDeck.getByID("26"));
 		this.players[3].addToHand(this.adventureDeck.getByID("53"));
 		this.players[3].addToHand(this.adventureDeck.getByID("61"));
-		this.players[3].addToHand(this.adventureDeck.getByID("96"));
+		this.players[3].addToHand(this.adventureDeck.getByID("87"));
 		this.players[3].addToHand(this.adventureDeck.getByID("121"));
 		this.players[3].addToHand(this.adventureDeck.getByID("70"));
 		this.players[3].addToHand(this.adventureDeck.getByID("29"));
