@@ -1,14 +1,16 @@
 package core;
 
-import java.util.Collections;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class AdventureDeck extends CardCollection{
+	private static final Logger logger = LogManager.getLogger(AdventureDeck.class);
 
-	
 	
 	public AdventureDeck() {
 		super();
 		
+		logger.info("Adventure Deck Created");
 		// WEAPONS
 		for(int i = 0; i < WeaponCard.NUMBER_SWORDS; ++i){
 			cards.add(new WeaponCard(WeaponCard.SWORD_NAME, WeaponCard.SWORD_BATTLE_POINTS));

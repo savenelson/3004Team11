@@ -1,6 +1,10 @@
 package core;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Player {
+	private static final Logger logger = LogManager.getLogger(Player.class);
 
 	private int playerNumber;
 	public int getPlayerNumber(){return playerNumber;}
@@ -29,11 +33,15 @@ public class Player {
 	public int getShieldCount() {return shieldCount;}
 	
 	public void addShields(int num) {
+		logger.info(this.playerNumber + " gains " + num + " shields");
 		this.shieldCount += num;
 		promote();
-		promote();
+		promote(); //added to catch rigging scenarios
+		promote(); //added to catch rigging scenarios
 	}
 	public void removeShields(int num) {
+		logger.info(this.playerNumber + " loses " + num + " shields");
+
 		this.shieldCount = this.shieldCount - num;
 	}
 	
@@ -57,14 +65,18 @@ public class Player {
 	}
 	
 	public void addToHand(Card c){
+		logger.info(this.playerNumber + " adds card " + c.getName() + " to hand");
 		hand.add(c);
 	}
 	
 	public void addToQueue(Card c){
+		logger.info(this.playerNumber + " adds card " + c.getName() + " to queue");
 		queue.add(c);
 	}
 	
 	public void addToParty(Card c){
+		logger.info(this.playerNumber + " adds card " + c.getName() + " to party");
+
 		party.add(c);
 	}
 
@@ -79,16 +91,17 @@ public class Player {
 		if (shieldCount >=5 && RankCard.SQUIRE.equals(rankCard.getSubType())){
 			shieldCount  = shieldCount -5;
 			rankCard = new RankCard(RankCard.KNIGHT);
-			System.out.println("Promoted to a Knight");
+			logger.info(this.playerNumber + " promoted to Knight");
+
 		}else if ((shieldCount >=7 && RankCard.KNIGHT.equals(rankCard.getSubType()))){
 			shieldCount  = shieldCount -7;
 			rankCard = new RankCard(RankCard.CHAMPION_KNIGHT);
-			System.out.println("Promoted to a Champion Knight");
+			logger.info(this.playerNumber + " promoted to Champion Knight");
 			
 			
 		}else if((shieldCount >=10 && RankCard.CHAMPION_KNIGHT.equals(rankCard.getSubType()))) {
-			System.out.println("Winner");
-			
+			logger.info(this.playerNumber + " promoted to Knight of The Round Table - WINNER!");
+			logger.info("Game Won by " + this.playerNumber);
 		}
 	}
 	public  boolean canPromote(int potentialShields) {

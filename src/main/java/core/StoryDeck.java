@@ -1,10 +1,17 @@
 package core;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class StoryDeck extends CardCollection{
 
-	
+	private static final Logger logger = LogManager.getLogger(StoryDeck.class);
+
 	
 	public StoryDeck() {
 		super();
+		
+		logger.info("New Story Deck Created");
 		// Quest
 		cards.add(new QuestCard(QuestCard.BOAR_HUNT,QuestCard.BOAR_HUNT_STAGES,QuestCard.BOAR_HUNT_FOE));
 		cards.add(new QuestCard(QuestCard.BOAR_HUNT,QuestCard.BOAR_HUNT_STAGES,QuestCard.BOAR_HUNT_FOE));

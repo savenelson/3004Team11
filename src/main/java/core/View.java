@@ -1,65 +1,39 @@
 package core;
 
-import java.awt.Insets;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
 import java.util.Optional;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
+
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.geometry.Orientation;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.FontWeight;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 
 public class View extends Application {
@@ -141,14 +115,8 @@ public class View extends Application {
 	public static final	int cardXLargeWidth = 225;
 	
 	private static final Logger logger = LogManager.getLogger(View.class);
-	
-	private TextField shieldCount;
-	
-	private Image[] ranksImg, handImg, partyImg;
+
 	private ImageView imgView;
-	
-	//Hands
-	private HBox CardHandTop, CardHandBottom, CardHandOverflow;
 	
 	private Stage stage;
 	private Pane canvas;
@@ -156,7 +124,10 @@ public class View extends Application {
 	
 	MainMenu menu = new MainMenu(this,null);
 
-	public View () {}
+	public View () {
+		logger.info("View created");
+
+	}
 
 	public static void main(String [] args){
 		logger.info("main() running");
