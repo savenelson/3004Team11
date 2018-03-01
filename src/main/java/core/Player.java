@@ -65,18 +65,17 @@ public class Player {
 	}
 	
 	public void addToHand(Card c){
-		logger.info(this.playerNumber + " adds card " + c.getName() + " to hand");
+		logger.info(this.playerNumber + "s hand changed - added " + c.getName());
 		hand.add(c);
 	}
 	
 	public void addToQueue(Card c){
-		logger.info(this.playerNumber + " adds card " + c.getName() + " to queue");
+		logger.info(this.playerNumber + "s queue changed - added " + c.getName());
 		queue.add(c);
 	}
 	
 	public void addToParty(Card c){
-		logger.info(this.playerNumber + " adds card " + c.getName() + " to party");
-
+		logger.info(this.playerNumber + "s party changed - added " + c.getName());
 		party.add(c);
 	}
 

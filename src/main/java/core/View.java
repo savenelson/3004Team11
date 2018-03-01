@@ -146,11 +146,13 @@ public class View extends Application {
 		Optional<ButtonType> yesOption = alert.showAndWait();
 
 		 if (yesOption.isPresent() && yesOption.get() == yesButton) {
+			logger.info("Yes clicked");
 			 return true;
 		 }		
 		 control.buttonClick(ENDTURN);
 		 state = control.getState();
 		 update(stage);
+		 logger.info("No clicked");
 		 return false;
 	}
 	
@@ -179,9 +181,11 @@ public class View extends Application {
 		
 		if (!state.stagesSet){
 			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer+1));
+			logger.info("Current View: Player " + state.currentPlayer);
 		}
 		else{
 			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentViewer+1));
+			logger.info("Current View: Player " + state.currentViewer);
 		}
 		primaryStage.show();
 	}
@@ -391,13 +395,15 @@ public class View extends Application {
 				passed.setTranslateY(-180+(60*i));							
 			}
 		}
-		Button readyButton = new Button("Next Stage");
-		readyButton.setFont(new Font("Ariel", 30));
-		layout.getChildren().add(readyButton);
-		readyButton.setTranslateY(65);
-		readyButton.setOnAction(new EventHandler<ActionEvent>() {
+		Button nextStageButton = new Button("Next Stage");
+		nextStageButton.setFont(new Font("Ariel", 30));
+		layout.getChildren().add(nextStageButton);
+		nextStageButton.setTranslateY(65);
+		nextStageButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				logger.info("nextStageButton clicked");
+
 				control.nextStory();
 				update(stage);
 			}
@@ -801,7 +807,7 @@ public class View extends Application {
 	}
 	
 	public void alert(String message){
-		logger.debug("alert() called");
+		logger.debug("alert() called ");
 
 		Alert alert = new Alert(AlertType.ERROR, message);
 		Optional<ButtonType> result = alert.showAndWait();
@@ -986,6 +992,7 @@ public class View extends Application {
 		stage1.setMinWidth(80);
 		stage1.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
+		    	logger.info("Stage 1 clicked");
 		        control.buttonClick(STAGE1);
 				state = control.getState();
 				
@@ -999,6 +1006,7 @@ public class View extends Application {
 		stage2.setMinWidth(80);
 		stage2.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
+		    	logger.info("Stage 2 clicked");
 		        control.buttonClick(STAGE2);
 				state = control.getState();
 				update(stage);
@@ -1010,6 +1018,7 @@ public class View extends Application {
 		stage3.setMinWidth(80);
 		stage3.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
+		    	logger.info("Stage 3 clicked");
 		        control.buttonClick(STAGE3);
 				state = control.getState();
 				update(stage);
@@ -1021,6 +1030,7 @@ public class View extends Application {
 		stage4.setMinWidth(80);
 		stage4.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
+		    	logger.info("Stage 4 clicked");
 		        control.buttonClick(STAGE4);
 				state = control.getState();
 				update(stage);
@@ -1032,6 +1042,7 @@ public class View extends Application {
 		stage5.setMinWidth(80);
 		stage5.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
+		    	logger.info("Stage 5 clicked");
 		        control.buttonClick(STAGE5);
 				state = control.getState();
 				update(stage);
@@ -1042,6 +1053,7 @@ public class View extends Application {
 		endTurn.setMinWidth(80);
 		endTurn.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
+		    	logger.info("End Turn clicked");
 		    	state = control.getState();
 		    	normalEndTurn();
 				if (state.toggleForStages)
@@ -1163,6 +1175,8 @@ public class View extends Application {
 			readyButton.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
+					logger.info("Ready clicked");
+
 					update(stage);
 				}
 			});
@@ -1182,6 +1196,7 @@ public class View extends Application {
 	
 	public void stageResolved(){
 		logger.debug("stageResolved() called");
+		logger.info("Stage Over");
 
 		control.resolveStage();
 		StackPane layout = new StackPane();
@@ -1193,8 +1208,10 @@ public class View extends Application {
 				Label passed = new Label("Player "+ (i+1));
 				if(state.players[i].passedStage) {
 					passed.setText(passed.getText() + " passed stage " + (state.currentStage+1));
+
 				} else {
 					passed.setText(passed.getText() + " failed stage " + (state.currentStage+1));
+
 				}
 				passed.setFont(new Font("Ariel", 30));	
 				layout.getChildren().add(passed);
@@ -1203,19 +1220,21 @@ public class View extends Application {
 				passed.setTranslateY(-180+(60*i));			
 				System.out.print("Player "+ (i+1));
 				if(state.players[i].passedStage) {
-					System.out.println(" passed stage" + (state.currentStage+1));
+					logger.info("Player " + i + " passed stage " + (state.currentStage+1));
 				} else {
-					System.out.println(" failed stage" + (state.currentStage+1));
+					logger.info("Player " + i + " failed stage " + (state.currentStage+1));
 				}
 			}
 		}
-		Button readyButton = new Button("Next Stage");
-		readyButton.setFont(new Font("Ariel", 30));
-		layout.getChildren().add(readyButton);
-		readyButton.setTranslateY(65);
-		readyButton.setOnAction(new EventHandler<ActionEvent>() {
+		Button nextStageButton = new Button("Next Stage");
+		nextStageButton.setFont(new Font("Ariel", 30));
+		layout.getChildren().add(nextStageButton);
+		nextStageButton.setTranslateY(65);
+		nextStageButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				logger.info("nextStageButton clicked");
+
 				control.stageOver();
 				state = control.getState();
 				normalEndTurn();
@@ -1231,6 +1250,8 @@ public class View extends Application {
 		showCardsButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+				logger.info("showCardsButton clicked");
+
 				state = control.getState();
 				
 				ShowResoultionView resolution = new ShowResoultionView(layout, state, control.getView());

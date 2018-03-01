@@ -3,7 +3,6 @@ package core;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 public class Model {
 
 	private static final Logger logger = LogManager.getLogger(Model.class);
@@ -176,6 +175,8 @@ public class Model {
 		for(int i=0;i<state.numPlayers;i++) {
 			if(players[i].getHand().size() > 12) {
 				control.alert("Hand Size is too large, please discard");
+				logger.info("Player " + i + " hand too large");
+
 				return false;
 			}
 		}
@@ -196,6 +197,8 @@ public class Model {
 		
 		hand.remove(c);
 		getActivePlayer().addToParty(c);
+		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from hand to party");
+
 	}
 	
 	public void stage(String iD) {
@@ -214,13 +217,16 @@ public class Model {
 		}
 		hand.remove(c);
 		stages[currentStage].add(c);
+		logger.info("Player " + this.currentPlayer + " moves " + c.getName() + " from hand to Stage " + currentStage);
+
 	}
 	
 	public Player getActivePlayer(){
 		logger.debug("getActivePlayer() called");
 
-		if(this.currentPlayer != this.currentViewer)
+		if(this.currentPlayer != this.currentViewer) {
 			return this.players[this.currentViewer];
+		}
 		return this.players[this.currentPlayer];
 	}
 	
@@ -233,6 +239,8 @@ public class Model {
 		
 		hand.remove(c);
 		adventureDeckDiscard.add(c);
+		logger.info("Player " + this.currentPlayer + " discarded " + c.getName());
+
 	}
 	
 	public void queue(String iD) {
@@ -248,6 +256,8 @@ public class Model {
 		
 		hand.remove(c);
 		getActivePlayer().addToQueue(c);
+		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from hand to queue");
+
 	}
 	
 	public boolean containsSameWeapon(CardCollection collection, String cardName) {
@@ -265,11 +275,11 @@ public class Model {
 	
 	public void dequeue(String iD) {
 		logger.debug("dequeue(" + iD + ") called");
-
 		CardCollection queue = getActivePlayer().getQueue();
 		Card c = queue.getByID(iD);
 		queue.remove(c);
 		getActivePlayer().addToHand(c);
+		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from queue to hand");
 	}
 	
 	public void setCurrentStage(int num) {
@@ -463,8 +473,10 @@ public class Model {
 
 		if(control.getSponsorDecision()){
 			players[currentPlayer].isSponsor = true;
+			logger.info("Player " + currentPlayer + " will sponsor");
 			control.updateViewState();
 		} else {
+			logger.info("Player " + currentPlayer + " will not sponsor");
 			endTurn();
 		}
 	}
@@ -610,11 +622,13 @@ public class Model {
 
 		if(this.currentPlayer == numPlayers - 1){
 			this.currentPlayer = 0;
+
 		}
 		else{
 			this.currentPlayer++;
 			this.currentSponsor = this.currentPlayer;
 		}
+		logger.info("Player changed to " + this.currentPlayer);
 	}
 
 	public void nextStory() {

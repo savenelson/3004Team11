@@ -100,7 +100,7 @@ public class Control{
 	}
 
 	public boolean getSponsorDecision(){
-		logger.debug("getSponsorDecision() called");
+		logger.info("getSponsorDecision() called");
 
 		return view.popup("Would you like to sponsor this quest?");
 	}
@@ -126,7 +126,7 @@ public class Control{
 	
 	public Player getActivePlayer(){
 		logger.debug("getActivePlayer() called");
-
+		
 		return model.getActivePlayer();
 	}
 	
@@ -210,7 +210,7 @@ public class Control{
 	}
 	
 	public void alert(String message){
-		logger.info("alert() called" + message);
+		logger.info("alert() called: " + message);
 
 		view.alert(message);
 	}
