@@ -243,6 +243,49 @@ public class Model {
 
 	}
 	
+	public void assassinate(String iD) {
+		logger.debug("assassinate() called");
+		
+		boolean hasMordred = false;
+		int indexMordred = 0;
+		CardCollection hand = getActivePlayer().getHand();
+		
+		for(int i=0;i< hand.size();i++) {
+			if(hand.get(i).getName().equals("Mordred")){
+				hasMordred = true;
+				indexMordred = i;
+			}
+		}
+		
+		if(hasMordred) {
+			int playerHoldingAlly = 0;
+			//find who is holding the Ally
+			for(int i = 0; i < this.numPlayers; ++i){
+				CardCollection party = state.players[i].getParty();
+				for(int j=0;j< party.size();j++) {
+					if(party.get(j).getID().equals(iD)){
+						playerHoldingAlly = i;
+					}
+				}
+			}
+			//remove the ally 
+			CardCollection party = state.players[playerHoldingAlly].getParty();
+			Card c = party.getByID(iD);
+			party.remove(c);
+			adventureDeckDiscard.add(c);
+			
+			//remove mordred
+			Card mordred = hand.get(indexMordred);
+			hand.remove(mordred);
+			adventureDeckDiscard.add(mordred);
+
+			logger.info("Player " + this.currentPlayer + " assaniated Player " + playerHoldingAlly + "s ally " + c.getName());
+		} else {
+			control.alert("You do not have Mordred in your hand!");
+		}
+		
+	}
+	
 	public void queue(String iD) {
 		logger.debug("queue() called");
 

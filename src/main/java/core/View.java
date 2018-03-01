@@ -44,6 +44,7 @@ public class View extends Application {
 	public static final String STAGE = "Stage";
 	public static final String QUEUE = "Queue";
 	public static final String DEQUEUE = "Dequeue";
+	public static final String ASSASSINATE = "Assassinate";
 	
 	public static final String STAGE1 = "Stage 1";
 	public static final String STAGE2 = "Stage 2";
@@ -552,7 +553,7 @@ public class View extends Application {
 					imgView.setFitWidth(cardSmallWidth);
 					imgView.setFitHeight(cardSmallHeight);
 					imgView.setPreserveRatio(true);
-					setMorgaineCardControl(imgView);
+					setPartyCardControl(imgView);
 					tile.getChildren().add(imgView);
 
 				} catch (FileNotFoundException e) {
@@ -588,7 +589,7 @@ public class View extends Application {
 					imgView.setFitWidth(cardSmallWidth);
 					imgView.setFitHeight(cardSmallHeight);
 					imgView.setPreserveRatio(true);
-					setMorgaineCardControl(imgView);
+					setPartyCardControl(imgView);
 					tile.getChildren().add(imgView);
 
 				} catch (FileNotFoundException e) {
@@ -624,7 +625,7 @@ public class View extends Application {
 					imgView.setFitWidth(cardSmallWidth);
 					imgView.setFitHeight(cardSmallHeight);
 					imgView.setPreserveRatio(true);
-					setMorgaineCardControl(imgView);
+					setPartyCardControl(imgView);
 					tile.getChildren().add(imgView);
 
 				} catch (FileNotFoundException e) {
@@ -660,7 +661,7 @@ public class View extends Application {
 					imgView.setFitWidth(cardSmallWidth);
 					imgView.setFitHeight(cardSmallHeight);
 					imgView.setPreserveRatio(true);
-					setMorgaineCardControl(imgView);
+					setPartyCardControl(imgView);
 					tile.getChildren().add(imgView);
 
 				} catch (FileNotFoundException e) {
@@ -922,24 +923,33 @@ public class View extends Application {
 		});
 	}
 
-	private void setMorgaineCardControl(ImageView anAlly) {
-		logger.debug("setMorgaineCardControl() called");
+	private void setPartyCardControl(ImageView anAlly) {
+		logger.debug("setPartyCardControl() called");
 
 		ContextMenu fileMenu = new ContextMenu();
+
+		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent event) {
+				control.handClick(((MenuItem) event.getSource()).getText(), anAlly.getId());
+				state = control.getState();
+				update(stage);
+			}
+		};
 		
-		fileMenu.getItems().add(new MenuItem("Assassinate"));
+		MenuItem assassinateAlly = new MenuItem(ASSASSINATE);
+		assassinateAlly.setOnAction(eh);
+		fileMenu.getItems().add(assassinateAlly);
 
 		anAlly.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
-			
-			
 		@Override
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
 				fileMenu.show(anAlly,t.getScreenX(),t.getScreenY());
 			}
 		}
-		
 		});
 	}
 	

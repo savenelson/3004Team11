@@ -150,6 +150,9 @@ public class Control{
 		else if(clickType.equals(View.DISCARD)){
 			model.discard(ID);
 		}
+		else if(clickType.equals(View.ASSASSINATE)){
+			model.assassinate(ID);
+		}
 	}
 	
 	public void startStageCycle(){
