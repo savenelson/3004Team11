@@ -69,7 +69,7 @@ public class Model {
 	}
 	
 	public void instantiatePlayers(int numPlayers){
-		logger.info("instantiatePlayers() called");
+		logger.debug("instantiatePlayers() called");
 		players = new Player[numPlayers];
 
 		for(int i = 0; i < numPlayers; ++i){
@@ -79,7 +79,7 @@ public class Model {
 	}
 	
 	public void instantiateStages(){
-		logger.info("instantiateStages() called");
+		logger.debug("instantiateStages() called");
 
 		stages = new CardCollection[5];
 		
@@ -91,7 +91,7 @@ public class Model {
 	}
 	
 	public void initialShuffle(){
-		logger.info("initialShuffle() called");
+		logger.debug("initialShuffle() called");
 
 		this.adventureDeck.shuffle();
 		
@@ -100,7 +100,7 @@ public class Model {
 	}
 	
 	public void deal(){
-		logger.info("deal() called");
+		logger.debug("deal() called");
 
 			            // 12 cards in hand
 		for(int i = 0; i < 12; ++i){
@@ -114,7 +114,7 @@ public class Model {
 	}
 	
 	public void CardsTest(){
-		logger.info("CardsTest() called");
+		logger.debug("CardsTest() called");
 
 		System.out.println("Adventure Deck: \n" + this.adventureDeck.toString());
 
@@ -128,7 +128,7 @@ public class Model {
 	}
 	
 	public void resetCurrentStage(){
-		logger.info("resetCurrentStage() called");
+		logger.debug("resetCurrentStage() called");
 
 		setCurrentStage(0);
 		
@@ -136,7 +136,7 @@ public class Model {
 	}
 	
 	public State getState(){
-		logger.info("getState() called");
+		logger.debug("getState() called");
 
 		state.players = this.players;
 		
@@ -176,7 +176,7 @@ public class Model {
 	}
 	
 	public boolean checkHandSize() {
-		logger.info("checkHandSize() called");
+		logger.debug("checkHandSize() called");
 
 		for(int i=0;i<state.numPlayers;i++) {
 			if(players[i].getHand().size() > 12) {
@@ -188,7 +188,7 @@ public class Model {
 	}
 
 	public void party(String iD) {
-		logger.info("party() called");
+		logger.debug("party() called");
 
 		CardCollection hand = getActivePlayer().getHand();
 		Card c = hand.getByID(iD);
@@ -204,7 +204,7 @@ public class Model {
 	}
 	
 	public void stage(String iD) {
-		logger.info("stage() called");
+		logger.debug("stage() called");
 
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
@@ -222,7 +222,7 @@ public class Model {
 	}
 	
 	public Player getActivePlayer(){
-		logger.info("getActivePlayer() called");
+		logger.debug("getActivePlayer() called");
 
 		if(this.currentPlayer != this.currentViewer)
 			return this.players[this.currentViewer];
@@ -230,7 +230,7 @@ public class Model {
 	}
 	
 	public void discard(String iD) {
-		logger.info("discard() called");
+		logger.debug("discard() called");
 
 		CardCollection hand = getActivePlayer().getHand();
 		Card c = hand.getByID(iD);
@@ -241,7 +241,7 @@ public class Model {
 	}
 	
 	public void queue(String iD) {
-		logger.info("queue() called");
+		logger.debug("queue() called");
 
 		CardCollection hand = getActivePlayer().getHand();
 		Card c = hand.getByID(iD);
@@ -256,7 +256,7 @@ public class Model {
 	}
 	
 	public boolean containsSameWeapon(CardCollection collection, String cardName) {
-		logger.info("containsSameWeapon() called");
+		logger.debug("containsSameWeapon() called");
 
 		for (int i=0; i<collection.size(); i++) {
 			if(((WeaponCard) collection.get(i)).getName().equals(cardName)) {
@@ -269,7 +269,7 @@ public class Model {
 	}
 	
 	public void dequeue(String iD) {
-		logger.info("dequeue() called");
+		logger.debug("dequeue() called");
 
 		CardCollection queue = getActivePlayer().getQueue();
 		Card c = queue.getByID(iD);
@@ -278,14 +278,14 @@ public class Model {
 	}
 	
 	public void setCurrentStage(int num) {
-		logger.info("setCurrentStage() called");
+		logger.debug("setCurrentStage() called");
 
 		this.currentStage = num;
 		control.updateViewState();
 	}
 	
 	public void endTurn() {
-		logger.info("endTurn() called");
+		logger.debug("endTurn() called");
 
 
 		if(players[currentPlayer].isSponsor){
@@ -298,7 +298,7 @@ public class Model {
 	}
 	
 	public void viewerChanged(){
-		logger.info("viewerChanged() called");
+		logger.debug("viewerChanged() called");
 
 		if (currentViewer == numPlayers-1){
 			currentViewer = 0;
@@ -316,14 +316,14 @@ public class Model {
 	}
 	
 	public void stagesSet(){
-		logger.info("stagesSet() called");
+		logger.debug("stagesSet() called");
 
 		this.stagesSet = true;
 		control.updateViewState();
 	}
 	
 	public int resolveQuest(){
-		logger.info("resolveQuest() called");
+		logger.debug("resolveQuest() called");
 
 		int numShields = ((QuestCard) state.currentStoryCard).getNumStages();
 	
@@ -354,7 +354,7 @@ public class Model {
 		 *    - players Party
 		 *    - players Rank
 		 */
-		logger.info("resolveStage() called");
+		logger.debug("resolveStage() called");
 
 		
 		CardCollection currStage = this.stages[this.currentStage+stageOverCount];
@@ -423,7 +423,7 @@ public class Model {
 	
 	
 	public void stageOver(){
-		logger.info("stageOver() called");
+		logger.debug("stageOver() called");
 
 		for(int i = 0; i < this.numPlayers; ++i){
 			if(!this.players[i].isSponsor){
@@ -445,7 +445,7 @@ public class Model {
 	}
 	
 	public boolean containsFoe(CardCollection collection) {
-		logger.info("containsFoe() called");
+		logger.debug("containsFoe() called");
 
 		for (int i=0; i<collection.size(); i++) {
 			if(((AdventureCard) collection.get(i)).getSubType().equals(AdventureCard.FOE)) {
@@ -459,7 +459,7 @@ public class Model {
 	}
 	
 	public boolean containsAmour(CardCollection collection) {
-		logger.info("containsAmour() called");
+		logger.debug("containsAmour() called");
 
 		for (int i=0; i<collection.size(); i++) {
 			if(((AdventureCard) collection.get(i)).getSubType().equals(AdventureCard.AMOUR)) {
@@ -473,7 +473,7 @@ public class Model {
 	}
 	
 	public boolean containsWeapon(CardCollection collection, String cardName) {
-		logger.info("containsWeapon() called");
+		logger.debug("containsWeapon() called");
 
 		for (int i=0; i<collection.size(); i++) {
 			if(collection.get(i).getImgName().equals(cardName)) {
@@ -487,14 +487,14 @@ public class Model {
 	
 
 	public String getSubType(String ID, int currentPlayer){
-		logger.info("getSubType() called");
+		logger.debug("getSubType() called");
 
 		return ((AdventureCard)getActivePlayer().getHand().getByID(ID)).getSubType();
 	}
 
 
 	private void playQuest(){
-		logger.info("playQuest() called");
+		logger.debug("playQuest() called");
 
 		if(control.getSponsorDecision()){
 			players[currentPlayer].isSponsor = true;
@@ -505,7 +505,7 @@ public class Model {
 	}
 	
 	private void playEvent() {
-		logger.info("playEvent() called");
+		logger.debug("playEvent() called");
 
 		if (((StoryCard) currentStoryCard).getName().equals("KingsRecognition")) {
 			boolean inNextQ = true;
@@ -626,7 +626,7 @@ public class Model {
 	}
 	
 	public void playGame() {
-		logger.info("playGame() called");
+		logger.debug("playGame() called");
 
 		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
 			playQuest();
@@ -641,7 +641,7 @@ public class Model {
 	}
 	
 	private void nextPlayer(){
-		logger.info("nextPlayer() called");
+		logger.debug("nextPlayer() called");
 
 		if(this.currentPlayer == numPlayers - 1){
 			this.currentPlayer = 0;
@@ -653,7 +653,7 @@ public class Model {
 	}
 
 	public void nextStory() {
-		logger.info("nextStory() called");
+		logger.debug("nextStory() called");
 
 		for(int i = 0; i < numPlayers; ++i){
 			
@@ -690,7 +690,7 @@ public class Model {
 	
 	
 	public void setScenario1() {
-		logger.info("setScenario1() called");
+		logger.debug("setScenario1() called");
 
 		/**
 		 * Scenario 1
@@ -769,7 +769,7 @@ public class Model {
 	}
 	
 	public void setScenario2() {
-		logger.info("setScenario2() called");
+		logger.debug("setScenario2() called");
 
 		this.currentPlayer = 0;
 		this.currentStoryCard = this.storyDeck.getByID("138");
@@ -825,7 +825,7 @@ public class Model {
 	}
 	
 	public void setScenarioTest() {
-		logger.info("setScenarioTest() called");
+		logger.debug("setScenarioTest() called");
 
 
 		this.currentPlayer = 0;
