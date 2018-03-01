@@ -167,7 +167,7 @@ public class View extends Application {
 	private HBox Stage; 
 	
 	public boolean popup(String message){
-		logger.info("popup() called");
+		logger.debug("popup() called");
 
 	    ButtonType yesButton = new ButtonType("Yes");
 	    ButtonType noButton = new ButtonType("No");
@@ -193,7 +193,7 @@ public class View extends Application {
 	}
 
 	private void update(Stage primaryStage) {
-		logger.info("update(Stage) called");
+		logger.debug("update(Stage) called");
 
 		state = control.getState();
 		
@@ -216,7 +216,7 @@ public class View extends Application {
 	}
 	
 	public void update(){
-		logger.info("update() called");
+		logger.debug("update() called");
 
 		control.setNumPlayers(menu.numberSelected());
 		update(stage);
@@ -224,7 +224,7 @@ public class View extends Application {
 	}
 	
 	public Pane drawCards(Pane canvas){
-		logger.info("drawCards() called");
+		logger.debug("drawCards() called");
 
 		this.state = control.getState();
 		
@@ -264,7 +264,7 @@ public class View extends Application {
 	}
 	
 	private void initUI(Stage primaryStage) {
-		logger.info("initUI() called");
+		logger.debug("initUI() called");
 
 		state = control.getState();
 
@@ -289,7 +289,7 @@ public class View extends Application {
 	}
 	
 	private void addHandToCanvas(Pane canvas) {
-		logger.info("addHandToCanvas() called");
+		logger.debug("addHandToCanvas() called");
 
 		CardCollection hand = null;
 		
@@ -330,7 +330,7 @@ public class View extends Application {
 	}
 	
 	private void addStageToCanvas(Pane canvas) {
-		logger.info("addStageToCanvas() called");
+		logger.debug("addStageToCanvas() called");
 
 		state = control.getState();
 		CardCollection stage = state.stage;
@@ -397,7 +397,7 @@ public class View extends Application {
 	}
 	
 	public void resolveQuest(){
-		logger.info("resolveQuest() called");
+		logger.debug("resolveQuest() called");
 
 
 		StackPane layout = new StackPane();
@@ -438,7 +438,7 @@ public class View extends Application {
 	}
 	
 	private void addQueueToCanvas(Pane canvas) {
-		logger.info("addQueueToCanvas() called");
+		logger.debug("addQueueToCanvas() called");
 
 		CardCollection queue = control.getActivePlayer().getQueue();
 		
@@ -474,7 +474,7 @@ public class View extends Application {
 	}
 	
 	private void addPlayerARankToCanvas(Pane canvas) {
-		logger.info("addPlayerARankToCanvas() called");
+		logger.debug("addPlayerARankToCanvas() called");
 
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.players[0].getRank().getImgName() + GIF));
@@ -494,7 +494,7 @@ public class View extends Application {
 	}
 	
 	private void addPlayerBRankToCanvas(Pane canvas) {
-		logger.info("addPlayerBRankToCanvas() called");
+		logger.debug("addPlayerBRankToCanvas() called");
 
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.players[1].getRank().getImgName() + GIF));
@@ -514,7 +514,7 @@ public class View extends Application {
 	}
 	
 	private void addPlayerCRankToCanvas(Pane canvas) {
-		logger.info("addPlayerCRankToCanvas() called");
+		logger.debug("addPlayerCRankToCanvas() called");
 
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.players[2].getRank().getImgName() + GIF));
@@ -534,7 +534,7 @@ public class View extends Application {
 	} 	
 	
 	private void addPlayerDRankToCanvas(Pane canvas) {
-		logger.info("addPlayerDRankToCanvas() called");
+		logger.debug("addPlayerDRankToCanvas() called");
 
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.players[3].getRank().getImgName() + GIF));
@@ -554,7 +554,7 @@ public class View extends Application {
 	}
 	
 	private void addPlayerAPartyToCanvas(Pane canvas) {
-		logger.info("addPlayerAPartyToCanvas() called");
+		logger.debug("addPlayerAPartyToCanvas() called");
 
 		CardCollection party = state.players[0].getParty();
 		
@@ -590,7 +590,7 @@ public class View extends Application {
 	}
 
 	private void addPlayerBPartyToCanvas(Pane canvas) {
-		logger.info("addPlayerBPartyToCanvas() called");
+		logger.debug("addPlayerBPartyToCanvas() called");
 
 		CardCollection party = state.players[1].getParty();
 		
@@ -626,7 +626,7 @@ public class View extends Application {
 	}
 
 	private void addPlayerCPartyToCanvas(Pane canvas) {
-		logger.info("addPlayerCPartyToCanvas() called");
+		logger.debug("addPlayerCPartyToCanvas() called");
 
 		CardCollection party = state.players[2].getParty();
 		
@@ -662,7 +662,7 @@ public class View extends Application {
 	}
 	
 	private void addPlayerDPartyToCanvas(Pane canvas) {
-		logger.info("addPlayerDPartyToCanvas() called");
+		logger.debug("addPlayerDPartyToCanvas() called");
 
 		CardCollection party = state.players[3].getParty();
 		
@@ -698,7 +698,7 @@ public class View extends Application {
 	}
 	
 	private void addStoryCardToCanvas(Pane canvas) {
-		logger.info("addStoryCardToCanvas() called");
+		logger.debug("addStoryCardToCanvas() called");
 
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.currentStoryCard.getImgName() + GIF));
@@ -719,7 +719,7 @@ public class View extends Application {
 	}
 	
 	private void addShieldsAToCanvas(Pane canvas) {
-		logger.info("addShieldsAToCanvas() called");
+		logger.debug("addShieldsAToCanvas() called");
 
 		
 		String playerA = Integer.toString(state.players[0].getShieldCount());
@@ -731,7 +731,7 @@ public class View extends Application {
 	}
 	
 	private void addShieldsBToCanvas(Pane canvas) {
-		logger.info("addShieldsBToCanvas() called");
+		logger.debug("addShieldsBToCanvas() called");
 
 		String playerA = Integer.toString(state.players[1].getShieldCount());
 		Label shieldsPlayerA = new Label(playerA);
@@ -744,7 +744,7 @@ public class View extends Application {
 	}
 	
 	private void addShieldsCToCanvas(Pane canvas) {
-		logger.info("addShieldsCToCanvas() called");
+		logger.debug("addShieldsCToCanvas() called");
 
 		String playerA = Integer.toString(state.players[2].getShieldCount());
 		Label shieldsPlayerA = new Label(playerA);
@@ -757,7 +757,7 @@ public class View extends Application {
 	}
 	
 	private void addShieldsDToCanvas(Pane canvas) {
-		logger.info("addShieldsDToCanvas() called");
+		logger.debug("addShieldsDToCanvas() called");
 
 		String playerA = Integer.toString(state.players[3].getShieldCount());
 		Label shieldsPlayerA = new Label(playerA);
@@ -770,7 +770,7 @@ public class View extends Application {
 	}
 	
 	private void setStageCardControl(ImageView anAdventure) {
-		logger.info("setStageCardControl() called");
+		logger.debug("setStageCardControl() called");
 
 		ContextMenu fileMenu = new ContextMenu();
 		
@@ -830,7 +830,7 @@ public class View extends Application {
 	}
 	
 	public void alert(String message){
-		logger.info("alert() called");
+		logger.debug("alert() called");
 
 		Alert alert = new Alert(AlertType.ERROR, message);
 		Optional<ButtonType> result = alert.showAndWait();
@@ -840,7 +840,7 @@ public class View extends Application {
 	}
 	
 	private void setHandCardControl(ImageView anAdventure) {
-		logger.info("setHandCardControl() called");
+		logger.debug("setHandCardControl() called");
 
 		ContextMenu fileMenu = new ContextMenu();
 		
@@ -907,14 +907,14 @@ public class View extends Application {
 	}
 	
 	public void updateState(){
-		logger.info("updateState() called");
+		logger.debug("updateState() called");
 
 		state = control.getState();
 		update(stage);
 	}
 	
 	private void setQueueCardControl(ImageView anAdventure) {
-		logger.info("setQueueCardControl() called");
+		logger.debug("setQueueCardControl() called");
 
 		ContextMenu fileMenu = new ContextMenu();
 		
@@ -946,7 +946,7 @@ public class View extends Application {
 	}
 
 	private void setMorgaineCardControl(ImageView anAlly) {
-		logger.info("setMorgaineCardControl() called");
+		logger.debug("setMorgaineCardControl() called");
 
 		ContextMenu fileMenu = new ContextMenu();
 		
@@ -967,7 +967,7 @@ public class View extends Application {
 	}
 	
 	private void addStage(Pane canavas) {
-		logger.info("addStage() called");
+		logger.debug("addStage() called");
 
 		
 		Stage = new HBox();
@@ -980,7 +980,7 @@ public class View extends Application {
 	}
 	
 	private void addCardToStage(HBox stage, ImageView newCard) {
-		logger.info("addCardToStage() called");
+		logger.debug("addCardToStage() called");
 
 		ImageView cardAdded = new ImageView();
 		cardAdded.setImage(newCard.getImage());
@@ -989,7 +989,7 @@ public class View extends Application {
 	}
 	
 	private void setRankControl(ImageView aRankCard, int numberOfcards) {
-		logger.info("setRankControl() called");
+		logger.debug("setRankControl() called");
 
 		aRankCard.addEventHandler(MouseEvent.MOUSE_ENTERED,
 		        new EventHandler<MouseEvent>() {
@@ -1005,7 +1005,7 @@ public class View extends Application {
 	}
 	
 	private void addControlsToCanvas(Pane canvas) {
-		logger.info("addControlsToCanvas() called");
+		logger.debug("addControlsToCanvas() called");
 
 		// our coordinates 
 		Button[] stageButtons = new Button[5];
@@ -1093,7 +1093,7 @@ public class View extends Application {
 	}
 	
 	private boolean stageHarder(State state) {
-		logger.info("stageHarder() called");
+		logger.debug("stageHarder() called");
 
 		int numStages = ((QuestCard) state.currentStoryCard).getNumStages();
 		
@@ -1113,7 +1113,7 @@ public class View extends Application {
 	}
 	
 	private int totalNumOfBP(CardCollection stage) {
-		logger.info("totalNumOfBP() called");
+		logger.debug("totalNumOfBP() called");
 		
 		int numberOfBP =  0;
 
@@ -1133,7 +1133,7 @@ public class View extends Application {
 		
 	}
 	private void normalEndTurn(){
-		logger.info("normalEndTurn() called");
+		logger.debug("normalEndTurn() called");
 
 		boolean foeInEachStage = true;
 		boolean [] foesPresent = null;
@@ -1210,7 +1210,7 @@ public class View extends Application {
     }
 	
 	public void stageResolved(){
-		logger.info("stageResolved() called");
+		logger.debug("stageResolved() called");
 
 		control.resolveStage();
 		StackPane layout = new StackPane();
@@ -1274,7 +1274,7 @@ public class View extends Application {
 	}
 	
 	public void sceneChange(Pane newScreen) {
-		logger.info("sceneChange() called");
+		logger.debug("sceneChange() called");
 
 
 		newScreen.setId("pane");
@@ -1287,7 +1287,7 @@ public class View extends Application {
 	}
 	
 	public void setNumPlayers(int i){
-		logger.info("setNumPlayers() called");
+		logger.debug("setNumPlayers() called");
 
 		control.setNumPlayers(menu.numberSelected());
 	}

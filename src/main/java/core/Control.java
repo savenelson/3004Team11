@@ -76,14 +76,14 @@ public class Control{
 	}
 	
 	public void updateViewState(){
-		logger.info("updateViewState() called");
+		logger.debug("updateViewState() called");
 
 		view.updateState();
 		
 	}
 	
 	public void stageIncrement(){
-		logger.info("stageIncrement() called");
+		logger.debug("stageIncrement() called");
 
 		model.state.currentStage = model.state.stagePlaceHolder;
 		model.state.toggleForStages = false;
@@ -91,38 +91,38 @@ public class Control{
 	}
 	
 	public void stageOver(){
-		logger.info("stageOver() called");
+		logger.debug("stageOver() called");
 
 		model.stageOver();
 	}
 
 	public boolean getSponsorDecision(){
-		logger.info("getSponsorDecision() called");
+		logger.debug("getSponsorDecision() called");
 
 		return view.popup("Would you like to sponsor this quest?");
 	}
 	
 	public State getState(){
-		logger.info("getState() called");
+		logger.debug("getState() called");
 
 		return model.getState();
 		
 	}
 	
 	public void viewerChanged(){
-		logger.info("viewerChanged() called");
+		logger.debug("viewerChanged() called");
 
 		model.viewerChanged();
 	}
 	
 	public void setNumPlayers(int i){
-		logger.info("setNumPlayers() called");
+		logger.debug("setNumPlayers() called");
 
 		model.numPlayers = i;
 	}
 	
 	public Player getActivePlayer(){
-		logger.info("getActivePlayer() called");
+		logger.debug("getActivePlayer() called");
 
 		return model.getActivePlayer();
 	}
@@ -130,7 +130,7 @@ public class Control{
 	public void printTestString(){System.out.println(testString);}
 
 	public void handClick(String clickType, String ID) {
-		logger.info("handClick() called");
+		logger.debug("handClick() called");
 
 		if(clickType.equals(View.PARTY)){
 			model.party(ID);
@@ -150,25 +150,25 @@ public class Control{
 	}
 	
 	public void startStageCycle(){
-		logger.info("startStageCycle() called");
+		logger.debug("startStageCycle() called");
 
 		model.resetCurrentStage();
 	}
 
 	public void nextStory(){
-		logger.info("nextStory() called");
+		logger.debug("nextStory() called");
 
 		model.nextStory();
 	}
 	
 	public void resolveStage(){
-		logger.info("resolveStage() called");
+		logger.debug("resolveStage() called");
 
 		model.resolveStage();
 	}
 	
 	public void buttonClick(String clickType) {
-		logger.info("buttonClick() called");
+		logger.debug("buttonClick() called");
 
 		if(clickType.equals(View.STAGE1)){
 			model.setCurrentStage(0);
@@ -187,19 +187,19 @@ public class Control{
 	}
 	
 	public String getSubType(String ID, int currentPlayer){
-		logger.info("getSubType() called");
+		logger.debug("getSubType() called");
 
 		return model.getSubType(ID, currentPlayer);
 	}
 
 	public void resolveQuest(){
-		logger.info("resolveQuest() called");
+		logger.debug("resolveQuest() called");
 
 		view.resolveQuest();
 	}
 	
 	public void stagesSet(){
-		logger.info("stagesSet() called");
+		logger.debug("stagesSet() called");
 
 		startStageCycle();
 
@@ -207,7 +207,7 @@ public class Control{
 	}
 	
 	public void alert(String message){
-		logger.info("alert() called");
+		logger.debug("alert() called");
 
 		view.alert(message);
 	}
@@ -215,7 +215,7 @@ public class Control{
 
 
 	public View getView() {
-		logger.info("getView() called");
+		logger.debug("getView() called");
 
 		return view;
 	}
