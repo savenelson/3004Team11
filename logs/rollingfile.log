@@ -1,5 +1,93 @@
-[INFO ] 2018-03-01 12:56:06.348 [main] View - main() running
-[INFO ] 2018-03-01 12:56:06.540 [JavaFX Application Thread] View - start() running
-[INFO ] 2018-03-01 12:56:06.542 [JavaFX Application Thread] Control - game initialized
-[INFO ] 2018-03-01 12:56:06.544 [JavaFX Application Thread] Model - Model created
-[INFO ] 2018-03-01 12:56:06.550 [JavaFX Application Thread] Control - passing numPlayers = 4 to model
+[INFO ] 2018-03-01 12:59:05.891 [main] View - main() running
+[INFO ] 2018-03-01 12:59:06.087 [JavaFX Application Thread] View - View created
+[INFO ] 2018-03-01 12:59:06.096 [JavaFX Application Thread] View - start() running
+[INFO ] 2018-03-01 12:59:06.098 [JavaFX Application Thread] Control - Control created
+[INFO ] 2018-03-01 12:59:06.098 [JavaFX Application Thread] Control - gameInit() running
+[INFO ] 2018-03-01 12:59:06.100 [JavaFX Application Thread] Model - Model created
+[INFO ] 2018-03-01 12:59:06.102 [JavaFX Application Thread] AdventureDeck - Adventure Deck Created
+[INFO ] 2018-03-01 12:59:06.106 [JavaFX Application Thread] StoryDeck - New Story Deck Created
+[INFO ] 2018-03-01 12:59:06.107 [JavaFX Application Thread] AdventureDeck - Adventure Deck Created
+[INFO ] 2018-03-01 12:59:06.108 [JavaFX Application Thread] StoryDeck - New Story Deck Created
+[INFO ] 2018-03-01 12:59:06.108 [JavaFX Application Thread] Control - passing numPlayers = 4 to model
+[INFO ] 2018-03-01 12:59:06.109 [JavaFX Application Thread] Model - setScenarioTest() called - Setting up TEST SCENARIO
+[INFO ] 2018-03-01 12:59:06.109 [JavaFX Application Thread] Player - 0 gains 10 shields
+[INFO ] 2018-03-01 12:59:06.109 [JavaFX Application Thread] Player - 0 promoted to Knight
+[INFO ] 2018-03-01 12:59:06.110 [JavaFX Application Thread] Player - 1 gains 6 shields
+[INFO ] 2018-03-01 12:59:06.110 [JavaFX Application Thread] Player - 1 promoted to Knight
+[INFO ] 2018-03-01 12:59:06.110 [JavaFX Application Thread] Player - 2 gains 14 shields
+[INFO ] 2018-03-01 12:59:06.110 [JavaFX Application Thread] Player - 2 promoted to Knight
+[INFO ] 2018-03-01 12:59:06.110 [JavaFX Application Thread] Player - 2 promoted to Champion Knight
+[INFO ] 2018-03-01 12:59:06.110 [JavaFX Application Thread] Player - 0 adds card SirLancelot to party
+[INFO ] 2018-03-01 12:59:06.110 [JavaFX Application Thread] Player - 0 adds card Amour to party
+[INFO ] 2018-03-01 12:59:06.111 [JavaFX Application Thread] Player - 1 adds card SirTristan to party
+[INFO ] 2018-03-01 12:59:06.111 [JavaFX Application Thread] Player - 1 adds card KingPellinore to party
+[INFO ] 2018-03-01 12:59:06.111 [JavaFX Application Thread] Player - 1 adds card Amour to party
+[INFO ] 2018-03-01 12:59:06.111 [JavaFX Application Thread] Player - 2 adds card SirPercival to party
+[INFO ] 2018-03-01 12:59:06.111 [JavaFX Application Thread] Player - 2 adds card QueenGuinevere to party
+[INFO ] 2018-03-01 12:59:06.111 [JavaFX Application Thread] Player - 2 adds card Amour to party
+[INFO ] 2018-03-01 12:59:06.111 [JavaFX Application Thread] Player - 3 adds card Merlin to party
+[INFO ] 2018-03-01 12:59:06.111 [JavaFX Application Thread] Player - 3 adds card KingArthur to party
+[INFO ] 2018-03-01 12:59:06.111 [JavaFX Application Thread] Player - 3 adds card Amour to party
+[INFO ] 2018-03-01 12:59:06.112 [JavaFX Application Thread] Player - 0 adds card Sword to queue
+[INFO ] 2018-03-01 12:59:06.112 [JavaFX Application Thread] Player - 0 adds card Horse to queue
+[INFO ] 2018-03-01 12:59:06.112 [JavaFX Application Thread] Player - 0 adds card BattleAx to queue
+[INFO ] 2018-03-01 12:59:06.112 [JavaFX Application Thread] Player - 0 adds card Lance to queue
+[INFO ] 2018-03-01 12:59:06.112 [JavaFX Application Thread] Player - 1 adds card Sword to queue
+[INFO ] 2018-03-01 12:59:06.112 [JavaFX Application Thread] Player - 1 adds card Horse to queue
+[INFO ] 2018-03-01 12:59:06.112 [JavaFX Application Thread] Player - 1 adds card BattleAx to queue
+[INFO ] 2018-03-01 12:59:06.112 [JavaFX Application Thread] Player - 1 adds card Lance to queue
+[INFO ] 2018-03-01 12:59:06.113 [JavaFX Application Thread] Player - 2 adds card Sword to queue
+[INFO ] 2018-03-01 12:59:06.113 [JavaFX Application Thread] Player - 2 adds card Horse to queue
+[INFO ] 2018-03-01 12:59:06.113 [JavaFX Application Thread] Player - 2 adds card BattleAx to queue
+[INFO ] 2018-03-01 12:59:06.113 [JavaFX Application Thread] Player - 2 adds card Lance to queue
+[INFO ] 2018-03-01 12:59:06.113 [JavaFX Application Thread] Player - 3 adds card Sword to queue
+[INFO ] 2018-03-01 12:59:06.113 [JavaFX Application Thread] Player - 3 adds card Horse to queue
+[INFO ] 2018-03-01 12:59:06.113 [JavaFX Application Thread] Player - 3 adds card BattleAx to queue
+[INFO ] 2018-03-01 12:59:06.113 [JavaFX Application Thread] Player - 3 adds card Excalibur to queue
+[INFO ] 2018-03-01 12:59:06.113 [JavaFX Application Thread] Player - 0 adds card Sword to hand
+[INFO ] 2018-03-01 12:59:06.113 [JavaFX Application Thread] Player - 0 adds card Sword to hand
+[INFO ] 2018-03-01 12:59:06.114 [JavaFX Application Thread] Player - 0 adds card Horse to hand
+[INFO ] 2018-03-01 12:59:06.114 [JavaFX Application Thread] Player - 0 adds card Thieves to hand
+[INFO ] 2018-03-01 12:59:06.114 [JavaFX Application Thread] Player - 0 adds card Boar to hand
+[INFO ] 2018-03-01 12:59:06.114 [JavaFX Application Thread] Player - 0 adds card Mordred to hand
+[INFO ] 2018-03-01 12:59:06.114 [JavaFX Application Thread] Player - 0 adds card Amour to hand
+[INFO ] 2018-03-01 12:59:06.114 [JavaFX Application Thread] Player - 0 adds card SirGawain to hand
+[INFO ] 2018-03-01 12:59:06.114 [JavaFX Application Thread] Player - 0 adds card RobberKnight to hand
+[INFO ] 2018-03-01 12:59:06.114 [JavaFX Application Thread] Player - 0 adds card Dragon to hand
+[INFO ] 2018-03-01 12:59:06.115 [JavaFX Application Thread] Player - 0 adds card Giant to hand
+[INFO ] 2018-03-01 12:59:06.115 [JavaFX Application Thread] Player - 0 adds card Giant to hand
+[INFO ] 2018-03-01 12:59:06.116 [JavaFX Application Thread] Player - 1 adds card Sword to hand
+[INFO ] 2018-03-01 12:59:06.116 [JavaFX Application Thread] Player - 1 adds card Sword to hand
+[INFO ] 2018-03-01 12:59:06.116 [JavaFX Application Thread] Player - 1 adds card Horse to hand
+[INFO ] 2018-03-01 12:59:06.117 [JavaFX Application Thread] Player - 1 adds card Thieves to hand
+[INFO ] 2018-03-01 12:59:06.117 [JavaFX Application Thread] Player - 1 adds card Boar to hand
+[INFO ] 2018-03-01 12:59:06.117 [JavaFX Application Thread] Player - 1 adds card Mordred to hand
+[INFO ] 2018-03-01 12:59:06.117 [JavaFX Application Thread] Player - 1 adds card Amour to hand
+[INFO ] 2018-03-01 12:59:06.117 [JavaFX Application Thread] Player - 1 adds card QueenIseult to hand
+[INFO ] 2018-03-01 12:59:06.117 [JavaFX Application Thread] Player - 1 adds card RobberKnight to hand
+[INFO ] 2018-03-01 12:59:06.117 [JavaFX Application Thread] Player - 1 adds card Horse to hand
+[INFO ] 2018-03-01 12:59:06.117 [JavaFX Application Thread] Player - 1 adds card BattleAx to hand
+[INFO ] 2018-03-01 12:59:06.118 [JavaFX Application Thread] Player - 1 adds card Lance to hand
+[INFO ] 2018-03-01 12:59:06.118 [JavaFX Application Thread] Player - 2 adds card Sword to hand
+[INFO ] 2018-03-01 12:59:06.118 [JavaFX Application Thread] Player - 2 adds card Sword to hand
+[INFO ] 2018-03-01 12:59:06.118 [JavaFX Application Thread] Player - 2 adds card Horse to hand
+[INFO ] 2018-03-01 12:59:06.118 [JavaFX Application Thread] Player - 2 adds card Thieves to hand
+[INFO ] 2018-03-01 12:59:06.118 [JavaFX Application Thread] Player - 2 adds card Boar to hand
+[INFO ] 2018-03-01 12:59:06.118 [JavaFX Application Thread] Player - 2 adds card Mordred to hand
+[INFO ] 2018-03-01 12:59:06.118 [JavaFX Application Thread] Player - 2 adds card Amour to hand
+[INFO ] 2018-03-01 12:59:06.118 [JavaFX Application Thread] Player - 2 adds card RobberKnight to hand
+[INFO ] 2018-03-01 12:59:06.119 [JavaFX Application Thread] Player - 2 adds card Horse to hand
+[INFO ] 2018-03-01 12:59:06.119 [JavaFX Application Thread] Player - 2 adds card BattleAx to hand
+[INFO ] 2018-03-01 12:59:06.119 [JavaFX Application Thread] Player - 2 adds card Lance to hand
+[INFO ] 2018-03-01 12:59:06.119 [JavaFX Application Thread] Player - 2 adds card Excalibur to hand
+[INFO ] 2018-03-01 12:59:06.119 [JavaFX Application Thread] Player - 3 adds card Sword to hand
+[INFO ] 2018-03-01 12:59:06.119 [JavaFX Application Thread] Player - 3 adds card Sword to hand
+[INFO ] 2018-03-01 12:59:06.119 [JavaFX Application Thread] Player - 3 adds card Horse to hand
+[INFO ] 2018-03-01 12:59:06.119 [JavaFX Application Thread] Player - 3 adds card Thieves to hand
+[INFO ] 2018-03-01 12:59:06.119 [JavaFX Application Thread] Player - 3 adds card Boar to hand
+[INFO ] 2018-03-01 12:59:06.120 [JavaFX Application Thread] Player - 3 adds card EvilKnight to hand
+[INFO ] 2018-03-01 12:59:06.120 [JavaFX Application Thread] Player - 3 adds card Amour to hand
+[INFO ] 2018-03-01 12:59:06.120 [JavaFX Application Thread] Player - 3 adds card RobberKnight to hand
+[INFO ] 2018-03-01 12:59:06.120 [JavaFX Application Thread] Player - 3 adds card Horse to hand
+[INFO ] 2018-03-01 12:59:06.120 [JavaFX Application Thread] Player - 3 adds card BattleAx to hand
+[INFO ] 2018-03-01 12:59:06.120 [JavaFX Application Thread] Player - 3 adds card Lance to hand
