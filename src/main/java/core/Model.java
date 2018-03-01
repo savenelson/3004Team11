@@ -172,7 +172,6 @@ public class Model {
 	}
 
 	public void party(String iD) {
-		//System.out.println("Model: playing to party");		
 		CardCollection hand = getActivePlayer().getHand();
 		Card c = hand.getByID(iD);
 		
@@ -187,26 +186,20 @@ public class Model {
 	}
 	
 	public void stage(String iD) {
-		//if(state.players[currentPlayer].isSponsor) {
-			//System.out.println("Model: IN STAGE");
-			CardCollection hand = this.players[this.currentPlayer].getHand();
-			Card c = hand.getByID(iD);
-			//System.out.println("c=" + c.getImgName());
-			//System.out.println("containsFoe = " + containsFoe(this.stages[currentStage]));
-			//System.out.println("containsWeapon = " + containsWeapon(this.stages[currentStage], c.getImgName()));
-			if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
-					&& containsFoe(this.stages[currentStage])) {
-				control.alert("Cannot stage more than one foe per quest stage.");
-				return;
-			}
-			if(containsWeapon(this.stages[currentStage], c.getImgName())) {
-				control.alert("Cannot stage duplicate weapons.");
-				return;
-			}
-			hand.remove(c);
-			stages[currentStage].add(c);
-			//System.out.println(stages[currentStage].toString());
-		//}
+
+		CardCollection hand = this.players[this.currentPlayer].getHand();
+		Card c = hand.getByID(iD);
+		if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
+				&& containsFoe(this.stages[currentStage])) {
+			control.alert("Cannot stage more than one foe per quest stage.");
+			return;
+		}
+		if(containsWeapon(this.stages[currentStage], c.getImgName())) {
+			control.alert("Cannot stage duplicate weapons.");
+			return;
+		}
+		hand.remove(c);
+		stages[currentStage].add(c);
 	}
 	
 	public Player getActivePlayer(){
@@ -216,7 +209,6 @@ public class Model {
 	}
 	
 	public void discard(String iD) {
-		System.out.println("Model: IN DISCARD");
 		CardCollection hand = getActivePlayer().getHand();
 		Card c = hand.getByID(iD);
 		
@@ -226,7 +218,6 @@ public class Model {
 	}
 	
 	public void queue(String iD) {
-		System.out.println("Model: IN QUEUE");
 		CardCollection hand = getActivePlayer().getHand();
 		Card c = hand.getByID(iD);
 		
@@ -252,7 +243,6 @@ public class Model {
 	}
 	
 	public void dequeue(String iD) {
-		System.out.println("Model: IN HAND");
 		CardCollection queue = getActivePlayer().getQueue();
 		Card c = queue.getByID(iD);
 		queue.remove(c);
@@ -262,37 +252,23 @@ public class Model {
 	public void setCurrentStage(int num) {
 		this.currentStage = num;
 		control.updateViewState();
-		//System.out.println("Model: Current Stage set to: "+ (currentStage+1));
 	}
 	
 	public void endTurn() {
-		//this will be how a player can chose to pass his turn to the next player
-		//also where we'll intercept the call at the Control to POPUP a blocker
-		// so that the previous and next players can't peek eachothers hands
-		
+
 		if(players[currentPlayer].isSponsor){
-			//System.out.println("HOLA");
-			viewerChanged();
-			
-			//System.out.println("stageResolved: " + this.stageResolved);
+			viewerChanged();		
 		}
 		else{
 			nextPlayer();
 			endTurnCounter++;
 		}
-		
-//		System.out.println("\n\n\nNum players: " + state.numPlayers);
-//		System.out.println("Current Player: " + (currentPlayer+1));
 	}
 	
 	public void viewerChanged(){
 		
-		//System.out.println("in viewerChanged");
-
 		if (currentViewer == numPlayers-1){
 			currentViewer = 0;
-//			this.stageResolved = true;
-//			control.updateViewState();
 		}
 		
 		else{
@@ -302,10 +278,8 @@ public class Model {
 		if(players[currentPlayer].isSponsor && currentPlayer == currentViewer){
 			currentViewer++;
 			this.stageResolved = true;
-			//control.resolveStage();
 
 		}
-		System.out.println("stage resolved from viewer changed: " + this.stageResolved);
 	}
 	
 	public void stagesSet(){
@@ -314,7 +288,6 @@ public class Model {
 	}
 	
 	public int resolveQuest(){
-		System.out.println("WE MADE IT BABY");
 		int numShields = ((QuestCard) state.currentStoryCard).getNumStages();
 	
 		//TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
@@ -349,7 +322,6 @@ public class Model {
 		CardCollection currStage = this.stages[this.currentStage+stageOverCount];
 		
 		int stageBP = 0;
-		System.out.println("!!!IF THIS PRINTS MORE THAN ONCE, WE FOUND PROBLEM");
 
 		for (int i = 0; i < currStage.size(); ++i){
 			stageBP += ((AdventureCard)currStage.get(i)).getBattlePoints();
@@ -370,7 +342,6 @@ public class Model {
 			
 			//Check if player passed quest
 			if(playerBP >= stageBP && (! players[i].isSponsor) && stageBP > 0){
-				System.out.println("passed set to true");
 				players[i].passedStage = true;
 			} else {
 				players[i].isQuesting = false;
@@ -413,9 +384,7 @@ public class Model {
 	}
 	
 	
-	public void stageOver(){
-		System.out.println("stageOver() called");
-		
+	public void stageOver(){		
 		for(int i = 0; i < this.numPlayers; ++i){
 			if(!this.players[i].isSponsor){
 				for(int j = 0; j < this.players[i].getQueue().size(); ++j){
@@ -438,8 +407,6 @@ public class Model {
 	public boolean containsFoe(CardCollection collection) {
 		
 		for (int i=0; i<collection.size(); i++) {
-			System.out.println(((AdventureCard) collection.get(i)).getSubType().toString());
-			System.out.println(((AdventureCard) collection.get(i)).getSubType().equals(AdventureCard.FOE));
 			if(((AdventureCard) collection.get(i)).getSubType().equals(AdventureCard.FOE)) {
 				//TODO need to ALERT the View
 
@@ -477,29 +444,7 @@ public class Model {
 	
 
 	public String getSubType(String ID, int currentPlayer){
-//		System.out.println("getActivePlayer().getPlayerNumber(): " + getActivePlayer().getPlayerNumber());
-//		System.out.println("CARD ID: " + ID);
-//		System.out.println();
-//		System.out.println();
 		return ((AdventureCard)getActivePlayer().getHand().getByID(ID)).getSubType();
-		/*
-		String ret = "";
-		if (currentPlayer != currentViewer){
-			ret = ((AdventureCard) players[currentViewer].getHand().getByID(ID)).getSubType();
-		}
-		else{
-			ret = ((AdventureCard) players[currentPlayer].getHand().getByID(ID)).getSubType();
-		}
-//		
-//		if((AdventureCard) players[currentPlayer].getHand().getByID(ID) == null){
-//			
-//			System.out.println("currentPlayer: " + currentPlayer) ;
-//			System.out.println("hand: \n" + players[currentPlayer].getHand().toString());
-//			System.out.println("id: " + ID);
-//
-//		}
-		return ret;
-		*/
 	}
 
 
@@ -515,14 +460,12 @@ public class Model {
 	private void playEvent() {
 
 		if (((StoryCard) currentStoryCard).getName().equals("KingsRecognition")) {
-			System.out.println("KINGS RECOGNITION DETECTED");
 			boolean inNextQ = true;
 			// using for loop through this.state.players, in a quest function, if inNextQ =
 			// true,
 			// this.players[i].addShields(2);
 
 		} else if (((StoryCard) currentStoryCard).getName().equals("QueensFavor")) {
-			System.out.println("QUEENS FAVOR DETECTED");
 			int squireCount = 0;
 			int championCount = 0;
 			int championKnightCount = 0;
@@ -567,7 +510,6 @@ public class Model {
 				}
 			}
 		} else if (((StoryCard) currentStoryCard).getName().equals("CourtCalled")) {
-			System.out.println("COURT CALLED DETECTED");
 			for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
 				CardCollection hand = this.players[i].getHand();
 
@@ -617,7 +559,6 @@ public class Model {
 				}
 			}
 		} else if (((StoryCard) currentStoryCard).getName().equals("Pox")) {
-			System.out.println("POX DETECTED");
 			for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
 				this.players[i].removeShields(1);
 			}
@@ -627,15 +568,12 @@ public class Model {
 				this.players[currentPlayer].removeShields(2);
 			}
 		} else if (((StoryCard) currentStoryCard).getName().equals("ChivalrousDeed")) {
-			System.out.println("CHIVALROUS DEED DETECTED");	
 		} else if (((StoryCard) currentStoryCard).getName().equals("ProsperityThroughoutTheRealm")) {
-			System.out.println("PROSPERITY THROUGHOUT DETECTED");
 			for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
 				this.players[i].addToHand(this.adventureDeck.getByID("6"));
 				this.players[i].addToHand(this.adventureDeck.getByID("7"));
 			}
 		} else if (((StoryCard) currentStoryCard).getName().equals("KingsCallToArms")) {
-			System.out.println("KINGS CALL TO ARMS DETECTED");
 		}
 	}
 	
@@ -681,19 +619,9 @@ public class Model {
 		storyDeckDiscard.add(this.currentStoryCard);
 		this.currentStoryCard = storyDeck.pop();
 
-		//public CardCollection stage;
-		
-		
 		this.currentStage = 0;
 		
 		this.currentSponsor = -1;
-		
-		
-//		public boolean currentPlayerNotSponsoring;
-		
-		//public CardCollection [] stages;
-		
-		//public boolean stagesSet;
 		
 		this.stageResolved = false;
 		
@@ -731,11 +659,9 @@ public class Model {
 		this.currentPlayer = 0;
 		this.currentStoryCard = this.storyDeck.getByID("126"); //BOAR  hUNT 
 //		this.currentStoryCard = this.storyDeck.getByID("143"); //Kings Recognition
-		//this.currentStoryCard = this.storyDeck.getByID("129"); //Quest of the green knight
-	//	this.currentStoryCard = this.storyDeck.getByID("144");
-
 //		this.currentStoryCard = this.storyDeck.getByID("129"); //Quest of the green knight
-
+//		this.currentStoryCard = this.storyDeck.getByID("144");
+//		this.currentStoryCard = this.storyDeck.getByID("129"); //Quest of the green knight
 		this.players[0].addToHand(this.adventureDeck.getByID("42"));
 		this.players[0].addToHand(this.adventureDeck.getByID("43"));
 		this.players[0].addToHand(this.adventureDeck.getByID("1"));
@@ -748,7 +674,7 @@ public class Model {
 		this.players[0].addToHand(this.adventureDeck.getByID("91"));
 		this.players[0].addToHand(this.adventureDeck.getByID("50"));
 		this.players[0].addToHand(this.adventureDeck.getByID("88"));
-		this.players[0].addToHand(this.adventureDeck.getByID("110")); //13th card for hand!
+//		this.players[0].addToHand(this.adventureDeck.getByID("110")); //13th card for hand!
 		this.players[1].addToHand(this.adventureDeck.getByID("44"));
 		this.players[1].addToHand(this.adventureDeck.getByID("3"));
 		this.players[1].addToHand(this.adventureDeck.getByID("4"));
@@ -789,38 +715,22 @@ public class Model {
 	
 	public void setScenario2() {
 		initialShuffle();
-		//set current StoryCard to SearchForHolyGrail
+
 		this.currentPlayer = 0;
-
-		//set the quest to be of type "repel the saxon raiders"
 		this.currentStoryCard = this.storyDeck.getByID("138");
-
-//the two stages the sponsor will play
-		//foes
 		this.players[0].addToHand(this.adventureDeck.getByID("50"));  //thief
 		this.players[0].addToHand(this.adventureDeck.getByID("91"));  //green knight
 		this.players[0].addToHand(this.adventureDeck.getByID("88"));
-		//amour
 		this.players[0].addToHand(this.adventureDeck.getByID("118"));
 		this.players[0].addToHand(this.adventureDeck.getByID("119"));
 		this.players[0].addToHand(this.adventureDeck.getByID("120"));
-		//Weapon
 		this.players[0].addToHand(this.adventureDeck.getByID("42"));
 		this.players[0].addToHand(this.adventureDeck.getByID("43"));
 		this.players[0].addToHand(this.adventureDeck.getByID("1"));
 		this.players[0].addToHand(this.adventureDeck.getByID("2"));
 		this.players[0].addToHand(this.adventureDeck.getByID("23"));
 		this.players[0].addToHand(this.adventureDeck.getByID("48"));
-
-
-		//Player 2
-
-		//weapon
 		this.players[0].addToHand(this.adventureDeck.getByID("22"));
-
-		//amour
-
-		//foes
 		this.players[1].addToHand(this.adventureDeck.getByID("82")); //evil knight
 		this.players[1].addToHand(this.adventureDeck.getByID("74")); // Saxon knight
 		this.players[1].addToHand(this.adventureDeck.getByID("51")); // thief 1
@@ -833,28 +743,18 @@ public class Model {
 		this.players[1].addToHand(this.adventureDeck.getByID("17"));
 		this.players[1].addToHand(this.adventureDeck.getByID("18"));
 		this.players[1].addToHand(this.adventureDeck.getByID("89"));
-
-
-		//player 3
-		//weapon
 		this.players[2].addToHand(this.adventureDeck.getByID("24"));
 		this.players[2].addToHand(this.adventureDeck.getByID("25"));
 		this.players[2].addToHand(this.adventureDeck.getByID("26"));
 		this.players[2].addToHand(this.adventureDeck.getByID("27"));
 		this.players[2].addToHand(this.adventureDeck.getByID("6"));
-
-		//Amour
 		this.players[2].addToHand(this.adventureDeck.getByID("121"));
 		this.players[2].addToHand(this.adventureDeck.getByID("122"));
-
-		//foe
 		this.players[2].addToHand(this.adventureDeck.getByID("54"));
 		this.players[2].addToHand(this.adventureDeck.getByID("82"));
 		this.players[2].addToHand(this.adventureDeck.getByID("90"));
 		this.players[2].addToHand(this.adventureDeck.getByID("104"));
 		this.players[2].addToHand(this.adventureDeck.getByID("125"));
-
-		//player 4
 		this.players[3].addToHand(this.adventureDeck.getByID("34"));
 		this.players[3].addToHand(this.adventureDeck.getByID("28"));
 		this.players[3].addToHand(this.adventureDeck.getByID("19"));
@@ -870,11 +770,7 @@ public class Model {
 	}
 	
 	public void setScenarioTest() {
-		/**
-		 * Scenario 1
-		 * -	
-		 * -	
-		 */
+
 		this.currentPlayer = 0;
 
 		this.players[0].addShields(10);
@@ -883,7 +779,6 @@ public class Model {
 		
 		stages[0].add(this.adventureDeck.getByID("57"));
 		stages[1].add(this.adventureDeck.getByID("86"));
-
 
 		this.currentStoryCard = this.storyDeck.getByID("126"); //BOAR  hUNT 		this.players[0].addToParty(this.adventureDeck.getByID("100"));
 		this.players[0].addToParty(this.adventureDeck.getByID("101"));
@@ -897,27 +792,22 @@ public class Model {
 		this.players[3].addToParty(this.adventureDeck.getByID("109"));
 		this.players[3].addToParty(this.adventureDeck.getByID("102"));
 		this.players[3].addToParty(this.adventureDeck.getByID("125"));
-		
 		this.players[0].addToQueue(this.adventureDeck.getByID("13"));
 		this.players[0].addToQueue(this.adventureDeck.getByID("30"));
 		this.players[0].addToQueue(this.adventureDeck.getByID("37"));
 		this.players[0].addToQueue(this.adventureDeck.getByID("45"));
-		
 		this.players[1].addToQueue(this.adventureDeck.getByID("14"));
 		this.players[1].addToQueue(this.adventureDeck.getByID("31"));
 		this.players[1].addToQueue(this.adventureDeck.getByID("38"));
 		this.players[1].addToQueue(this.adventureDeck.getByID("46"));
-		
 		this.players[2].addToQueue(this.adventureDeck.getByID("15"));
 		this.players[2].addToQueue(this.adventureDeck.getByID("32"));
 		this.players[2].addToQueue(this.adventureDeck.getByID("38"));
 		this.players[2].addToQueue(this.adventureDeck.getByID("47"));
-		
 		this.players[3].addToQueue(this.adventureDeck.getByID("16"));
 		this.players[3].addToQueue(this.adventureDeck.getByID("33"));
 		this.players[3].addToQueue(this.adventureDeck.getByID("39"));
 		this.players[3].addToQueue(this.adventureDeck.getByID("48"));
-		
 		this.players[0].addToHand(this.adventureDeck.getByID("1"));
 		this.players[0].addToHand(this.adventureDeck.getByID("2"));
 		this.players[0].addToHand(this.adventureDeck.getByID("23"));
@@ -930,7 +820,7 @@ public class Model {
 		this.players[0].addToHand(this.adventureDeck.getByID("99"));
 		this.players[0].addToHand(this.adventureDeck.getByID("98"));
 		this.players[0].addToHand(this.adventureDeck.getByID("97"));
-		this.players[0].addToHand(this.adventureDeck.getByID("92")); //13th card for hand!
+//		this.players[0].addToHand(this.adventureDeck.getByID("92")); //13th card for hand!
 		this.players[1].addToHand(this.adventureDeck.getByID("3"));
 		this.players[1].addToHand(this.adventureDeck.getByID("4"));
 		this.players[1].addToHand(this.adventureDeck.getByID("24"));
@@ -969,19 +859,4 @@ public class Model {
 	}
 }
 
-/*
-Different Game states for banner:
-QUEST STAGE 1 FOE
-QUEST STAGE 2 FOE
-QUEST STAGE 3 FOE
-QUEST STAGE 4 FOE
-QUEST STAGE 5 FOE
-QUEST STAGE 1 TEST
-QUEST STAGE 2 TEST
-QUEST STAGE 3 TEST
-QUEST STAGE 4 TEST
-QUEST STAGE 5 TEST
-EVENT
-TOURNAMENT
-*/
 

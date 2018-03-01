@@ -34,9 +34,7 @@ public class Control{
 
 			model = new Model(this);
 		}
-		else{// Maybe make a view constructor that displays invalid number of players type thing...??????????????
-			 // POP UP MESSAGE????? from control?
-			System.out.println("Number of players invalid ");
+		else{
 		}
 		
 		model.instantiatePlayers(numPlayers);
