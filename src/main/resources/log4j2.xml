@@ -31,7 +31,7 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-           <Logger name="com.comp3004" level="debug" additivity="true">
+           <Logger name="com.comp3004" level="trace" additivity="true">
                <AppenderRef ref="File-Appender" level="error"/>
                <AppenderRef ref="RollingFile-Appender" level="debug"/>
                <AppenderRef ref="Console-Appender" level="info"/>

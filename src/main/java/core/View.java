@@ -139,10 +139,8 @@ public class View extends Application {
 	public static final	int cardLargeWidth = 150;
 	public static final	int cardXLargeHeight = 300;
 	public static final	int cardXLargeWidth = 225;
-
 	
 	private static final Logger logger = LogManager.getLogger(View.class);
-	
 	
 	private TextField shieldCount;
 	
@@ -161,12 +159,16 @@ public class View extends Application {
 	public View () {}
 
 	public static void main(String [] args){
+		logger.info("main() running");
+
 		launch(args);
 	}
 
 	private HBox Stage; 
 	
 	public boolean popup(String message){
+		logger.info("popup() called");
+
 	    ButtonType yesButton = new ButtonType("Yes");
 	    ButtonType noButton = new ButtonType("No");
 		Alert alert = new Alert(null, message, yesButton, noButton);
@@ -183,12 +185,16 @@ public class View extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		logger.info("start() running");
+
 		control = new Control(this);
 		stage = primaryStage;
 		initUI(primaryStage);
 	}
 
 	private void update(Stage primaryStage) {
+		logger.info("update(Stage) called");
+
 		state = control.getState();
 		
 		canvas = new Pane();
@@ -210,12 +216,16 @@ public class View extends Application {
 	}
 	
 	public void update(){
+		logger.info("update() called");
+
 		control.setNumPlayers(menu.numberSelected());
 		update(stage);
 		control.mainLoop();
 	}
 	
 	public Pane drawCards(Pane canvas){
+		logger.info("drawCards() called");
+
 		this.state = control.getState();
 		
 		addControlsToCanvas(canvas);
@@ -254,7 +264,8 @@ public class View extends Application {
 	}
 	
 	private void initUI(Stage primaryStage) {
-		
+		logger.info("initUI() called");
+
 		state = control.getState();
 
 		canvas = new Pane();
@@ -278,7 +289,8 @@ public class View extends Application {
 	}
 	
 	private void addHandToCanvas(Pane canvas) {
-		
+		logger.info("addHandToCanvas() called");
+
 		CardCollection hand = null;
 		
 		if (!state.stagesSet){
@@ -318,7 +330,8 @@ public class View extends Application {
 	}
 	
 	private void addStageToCanvas(Pane canvas) {
-		
+		logger.info("addStageToCanvas() called");
+
 		state = control.getState();
 		CardCollection stage = state.stage;
 
@@ -384,6 +397,8 @@ public class View extends Application {
 	}
 	
 	public void resolveQuest(){
+		logger.info("resolveQuest() called");
+
 
 		StackPane layout = new StackPane();
 		state = control.getState();
@@ -423,7 +438,8 @@ public class View extends Application {
 	}
 	
 	private void addQueueToCanvas(Pane canvas) {
-		
+		logger.info("addQueueToCanvas() called");
+
 		CardCollection queue = control.getActivePlayer().getQueue();
 		
 		tile = new TilePane();
@@ -458,6 +474,8 @@ public class View extends Application {
 	}
 	
 	private void addPlayerARankToCanvas(Pane canvas) {
+		logger.info("addPlayerARankToCanvas() called");
+
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.players[0].getRank().getImgName() + GIF));
 			imgView = new ImageView();
@@ -476,6 +494,8 @@ public class View extends Application {
 	}
 	
 	private void addPlayerBRankToCanvas(Pane canvas) {
+		logger.info("addPlayerBRankToCanvas() called");
+
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.players[1].getRank().getImgName() + GIF));
 			imgView = new ImageView();
@@ -494,6 +514,8 @@ public class View extends Application {
 	}
 	
 	private void addPlayerCRankToCanvas(Pane canvas) {
+		logger.info("addPlayerCRankToCanvas() called");
+
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.players[2].getRank().getImgName() + GIF));
 			imgView = new ImageView();
@@ -512,6 +534,8 @@ public class View extends Application {
 	} 	
 	
 	private void addPlayerDRankToCanvas(Pane canvas) {
+		logger.info("addPlayerDRankToCanvas() called");
+
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.players[3].getRank().getImgName() + GIF));
 			imgView = new ImageView();
@@ -530,7 +554,8 @@ public class View extends Application {
 	}
 	
 	private void addPlayerAPartyToCanvas(Pane canvas) {
-		
+		logger.info("addPlayerAPartyToCanvas() called");
+
 		CardCollection party = state.players[0].getParty();
 		
 		tile = new TilePane();
@@ -565,7 +590,8 @@ public class View extends Application {
 	}
 
 	private void addPlayerBPartyToCanvas(Pane canvas) {
-		
+		logger.info("addPlayerBPartyToCanvas() called");
+
 		CardCollection party = state.players[1].getParty();
 		
 		tile = new TilePane();
@@ -600,7 +626,8 @@ public class View extends Application {
 	}
 
 	private void addPlayerCPartyToCanvas(Pane canvas) {
-		
+		logger.info("addPlayerCPartyToCanvas() called");
+
 		CardCollection party = state.players[2].getParty();
 		
 		tile = new TilePane();
@@ -635,7 +662,8 @@ public class View extends Application {
 	}
 	
 	private void addPlayerDPartyToCanvas(Pane canvas) {
-		
+		logger.info("addPlayerDPartyToCanvas() called");
+
 		CardCollection party = state.players[3].getParty();
 		
 		tile = new TilePane();
@@ -670,7 +698,8 @@ public class View extends Application {
 	}
 	
 	private void addStoryCardToCanvas(Pane canvas) {
-		
+		logger.info("addStoryCardToCanvas() called");
+
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.currentStoryCard.getImgName() + GIF));
 			imgView = new ImageView();
@@ -690,6 +719,9 @@ public class View extends Application {
 	}
 	
 	private void addShieldsAToCanvas(Pane canvas) {
+		logger.info("addShieldsAToCanvas() called");
+
+		
 		String playerA = Integer.toString(state.players[0].getShieldCount());
 		Label shieldsPlayerA = new Label(playerA);
 		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
@@ -699,6 +731,8 @@ public class View extends Application {
 	}
 	
 	private void addShieldsBToCanvas(Pane canvas) {
+		logger.info("addShieldsBToCanvas() called");
+
 		String playerA = Integer.toString(state.players[1].getShieldCount());
 		Label shieldsPlayerA = new Label(playerA);
 		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
@@ -710,6 +744,8 @@ public class View extends Application {
 	}
 	
 	private void addShieldsCToCanvas(Pane canvas) {
+		logger.info("addShieldsCToCanvas() called");
+
 		String playerA = Integer.toString(state.players[2].getShieldCount());
 		Label shieldsPlayerA = new Label(playerA);
 		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
@@ -721,6 +757,8 @@ public class View extends Application {
 	}
 	
 	private void addShieldsDToCanvas(Pane canvas) {
+		logger.info("addShieldsDToCanvas() called");
+
 		String playerA = Integer.toString(state.players[3].getShieldCount());
 		Label shieldsPlayerA = new Label(playerA);
 		shieldsPlayerA.setFont(Font.font("Serif", FontWeight.BOLD, 30));
@@ -732,6 +770,8 @@ public class View extends Application {
 	}
 	
 	private void setStageCardControl(ImageView anAdventure) {
+		logger.info("setStageCardControl() called");
+
 		ContextMenu fileMenu = new ContextMenu();
 		
 		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
@@ -790,6 +830,8 @@ public class View extends Application {
 	}
 	
 	public void alert(String message){
+		logger.info("alert() called");
+
 		Alert alert = new Alert(AlertType.ERROR, message);
 		Optional<ButtonType> result = alert.showAndWait();
 		 if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -798,6 +840,8 @@ public class View extends Application {
 	}
 	
 	private void setHandCardControl(ImageView anAdventure) {
+		logger.info("setHandCardControl() called");
+
 		ContextMenu fileMenu = new ContextMenu();
 		
 		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
@@ -863,11 +907,15 @@ public class View extends Application {
 	}
 	
 	public void updateState(){
+		logger.info("updateState() called");
+
 		state = control.getState();
 		update(stage);
 	}
 	
 	private void setQueueCardControl(ImageView anAdventure) {
+		logger.info("setQueueCardControl() called");
+
 		ContextMenu fileMenu = new ContextMenu();
 		
 		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
@@ -898,6 +946,8 @@ public class View extends Application {
 	}
 
 	private void setMorgaineCardControl(ImageView anAlly) {
+		logger.info("setMorgaineCardControl() called");
+
 		ContextMenu fileMenu = new ContextMenu();
 		
 		fileMenu.getItems().add(new MenuItem("Assassinate"));
@@ -917,6 +967,8 @@ public class View extends Application {
 	}
 	
 	private void addStage(Pane canavas) {
+		logger.info("addStage() called");
+
 		
 		Stage = new HBox();
 		
@@ -928,7 +980,8 @@ public class View extends Application {
 	}
 	
 	private void addCardToStage(HBox stage, ImageView newCard) {
-		
+		logger.info("addCardToStage() called");
+
 		ImageView cardAdded = new ImageView();
 		cardAdded.setImage(newCard.getImage());
 		cardAdded.setFitHeight(12);  
@@ -936,8 +989,8 @@ public class View extends Application {
 	}
 	
 	private void setRankControl(ImageView aRankCard, int numberOfcards) {
-		
-		//logger.info("Showing other players hands is working ");
+		logger.info("setRankControl() called");
+
 		aRankCard.addEventHandler(MouseEvent.MOUSE_ENTERED,
 		        new EventHandler<MouseEvent>() {
 	          @Override
@@ -952,6 +1005,8 @@ public class View extends Application {
 	}
 	
 	private void addControlsToCanvas(Pane canvas) {
+		logger.info("addControlsToCanvas() called");
+
 		// our coordinates 
 		Button[] stageButtons = new Button[5];
 		Button stage1 = new Button (STAGE1);
@@ -1038,6 +1093,8 @@ public class View extends Application {
 	}
 	
 	private boolean stageHarder(State state) {
+		logger.info("stageHarder() called");
+
 		int numStages = ((QuestCard) state.currentStoryCard).getNumStages();
 		
 		
@@ -1056,7 +1113,7 @@ public class View extends Application {
 	}
 	
 	private int totalNumOfBP(CardCollection stage) {
-		
+		logger.info("totalNumOfBP() called");
 		
 		int numberOfBP =  0;
 
@@ -1076,6 +1133,8 @@ public class View extends Application {
 		
 	}
 	private void normalEndTurn(){
+		logger.info("normalEndTurn() called");
+
 		boolean foeInEachStage = true;
 		boolean [] foesPresent = null;
 		
@@ -1105,22 +1164,20 @@ public class View extends Application {
 		if(state.players[state.currentPlayer].isSponsor && !foeInEachStage){	    			
 			alert("Foe not present in every stage.");
 			return;
-		}else if(state.players[state.currentPlayer].isSponsor&& isHarder ==false) {
+		} else if(state.players[state.currentPlayer].isSponsor&& isHarder ==false) {
 			alert("The stages are not progressively harder");
 			return;
 			
-		}else if(state.players[state.currentPlayer].isSponsor){	    			
+		} else if(state.players[state.currentPlayer].isSponsor){	    			
 			control.stagesSet();
 		}
 
-
-   control.buttonClick(ENDTURN);
+		control.buttonClick(ENDTURN);
 
 		state = control.getState();
     	if(state.stageResolved){
     		stageResolved();
-    	}
-    	else{
+    	} else {
 			update(stage);
 			
 			Label playerLabel = new Label("Player " + (control.getActivePlayer().getPlayerNumber()+1) + " ready?");
@@ -1153,6 +1210,8 @@ public class View extends Application {
     }
 	
 	public void stageResolved(){
+		logger.info("stageResolved() called");
+
 		control.resolveStage();
 		StackPane layout = new StackPane();
 		state = control.getState();
@@ -1215,6 +1274,8 @@ public class View extends Application {
 	}
 	
 	public void sceneChange(Pane newScreen) {
+		logger.info("sceneChange() called");
+
 
 		newScreen.setId("pane");
 		
@@ -1226,6 +1287,8 @@ public class View extends Application {
 	}
 	
 	public void setNumPlayers(int i){
+		logger.info("setNumPlayers() called");
+
 		control.setNumPlayers(menu.numberSelected());
 	}
 	
