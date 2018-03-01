@@ -3,8 +3,6 @@ package core;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javafx.scene.control.Label;
-import javafx.scene.text.Font;
 
 public class Model {
 
@@ -69,7 +67,7 @@ public class Model {
 	}
 	
 	public void instantiatePlayers(int numPlayers){
-		logger.debug("instantiatePlayers() called");
+		logger.debug("instantiatePlayers(" + numPlayers + ") called");
 		players = new Player[numPlayers];
 
 		for(int i = 0; i < numPlayers; ++i){
@@ -79,7 +77,7 @@ public class Model {
 	}
 	
 	public void instantiateStages(){
-		logger.debug("instantiateStages() called");
+		logger.debug("instantiateStages() called - hard coded to 5");
 
 		stages = new CardCollection[5];
 		
@@ -100,7 +98,7 @@ public class Model {
 	}
 	
 	public void deal(){
-		logger.debug("deal() called");
+		logger.info("deal() called");
 
 			            // 12 cards in hand
 		for(int i = 0; i < 12; ++i){
@@ -110,6 +108,7 @@ public class Model {
 			}
 			
 			this.currentStoryCard = storyDeck.pop();
+			logger.info("setting current story card to" + this.currentStoryCard);
 		}
 	}
 	
@@ -160,8 +159,6 @@ public class Model {
 		
 		state.numStages = this.numStages;
 		
-//		state.currentPlayerNotSponsoring = this.currentPlayerNotSponsoring; 
-
 		state.stagesSet = this.stagesSet;
 		
 		state.stageResolved = this.stageResolved;
@@ -169,9 +166,7 @@ public class Model {
 		state.toggleForStages = this.toggleForStages;
 		
 		state.stagePlaceHolder = this.stagePlaceHolder;
-		
-		state.stageOverCount = this.stageOverCount;
-		
+
 		return state;
 	}
 	
@@ -256,7 +251,7 @@ public class Model {
 	}
 	
 	public boolean containsSameWeapon(CardCollection collection, String cardName) {
-		logger.debug("containsSameWeapon() called");
+		logger.debug("containsSameWeapon(" + cardName + ") called");
 
 		for (int i=0; i<collection.size(); i++) {
 			if(((WeaponCard) collection.get(i)).getName().equals(cardName)) {
@@ -269,7 +264,7 @@ public class Model {
 	}
 	
 	public void dequeue(String iD) {
-		logger.debug("dequeue() called");
+		logger.debug("dequeue(" + iD + ") called");
 
 		CardCollection queue = getActivePlayer().getQueue();
 		Card c = queue.getByID(iD);
@@ -278,7 +273,7 @@ public class Model {
 	}
 	
 	public void setCurrentStage(int num) {
-		logger.debug("setCurrentStage() called");
+		logger.debug("setCurrentStage(" + num + ") called");
 
 		this.currentStage = num;
 		control.updateViewState();
@@ -390,35 +385,6 @@ public class Model {
 		if(stageOverCount == ((QuestCard)currentStoryCard).getNumStages()&& stageOverCount != 0){
 			resolveQuest();
 		}
-		
-
-//		int stageTotal = 0;
-//		
-//		//count BP's in the stage
-//		for (int i=0;i<this.stages[currentStage].size(); i++) {
-//			stageTotal += ((AdventureCard)this.stages[currentStage].get(i)).getBattlePoints();
-//		}
-//		
-//		int playerTotal = 0;
-//		
-//		for(int j=0;j<this.numPlayers;j++) {
-//			for (int i=0; i<this.state.players[j].getParty().size(); i++) {
-//				playerTotal += ((AdventureCard) this.state.players[j].getParty().get(i)).getBattlePoints();
-//			}
-//			for (int i=0; i<this.state.players[j].getQueue().size(); i++) {
-//				playerTotal += ((AdventureCard) this.state.players[j].getQueue().get(i)).getBattlePoints();
-//			}
-//			for (int i=0; i<this.state.players[j].getQueue().size(); i++) {
-//				playerTotal += (this.state.players[j].getRank()).getBattlePoints();
-//			}
-//			if(playerTotal>=stageTotal) {
-//				this.state.players[j].passedStage = true;
-//			}
-//			playerTotal = 0;
-//		}
-//		
-//		//TODO CALL THE RESOLVE SCREEN FOR VIEW
-//		control.alert("Stage Finished");
 	}
 	
 	
@@ -477,7 +443,6 @@ public class Model {
 
 		for (int i=0; i<collection.size(); i++) {
 			if(collection.get(i).getImgName().equals(cardName)) {
-				//TODO need to ALERT the View
 				return true;
 			}
 		}
@@ -508,7 +473,7 @@ public class Model {
 		logger.debug("playEvent() called");
 
 		if (((StoryCard) currentStoryCard).getName().equals("KingsRecognition")) {
-			boolean inNextQ = true;
+//			boolean inNextQ = true;
 			// using for loop through this.state.players, in a quest function, if inNextQ =
 			// true,
 			// this.players[i].addShields(2);
@@ -682,15 +647,13 @@ public class Model {
 		
 		this.stagePlaceHolder = 0;
 		
-		this.stageOverCount = 0;
-		
 		nextPlayer();
 		this.currentViewer = this.currentPlayer;
 	}
 	
 	
 	public void setScenario1() {
-		logger.debug("setScenario1() called");
+		logger.debug("setScenario1() called - Setting up SCENARIO ONE");
 
 		/**
 		 * Scenario 1
@@ -769,7 +732,7 @@ public class Model {
 	}
 	
 	public void setScenario2() {
-		logger.debug("setScenario2() called");
+		logger.debug("setScenario2() called - Setting up SCENARIO TWO");
 
 		this.currentPlayer = 0;
 		this.currentStoryCard = this.storyDeck.getByID("138");
@@ -825,7 +788,7 @@ public class Model {
 	}
 	
 	public void setScenarioTest() {
-		logger.debug("setScenarioTest() called");
+		logger.info("setScenarioTest() called - Setting up TEST SCENARIO");
 
 
 		this.currentPlayer = 0;

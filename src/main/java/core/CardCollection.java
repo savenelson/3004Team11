@@ -37,7 +37,7 @@ public class CardCollection {
 	// returns cards array size after adding 
 	public int add(Card c){cards.add(c); return cards.size();}
 	
-	// returns cards array size after adding 
+	// returns cards array size after adding
 	public void addAll(Collection<? extends Card> c){cards.addAll(c);}
 	
 	public int size(){return cards.size();}
@@ -51,12 +51,6 @@ public class CardCollection {
 	}
 	
 	public Card getByID(String ID){
-		
-		
-//		for(Card c : cards){
-//			if(c.getID().equals(ID))
-//				return c;
-//		}
 		
 		for (int i = 0; i < cards.size(); ++i){
 			if(ID.equals(cards.get(i).getID())){
@@ -177,10 +171,10 @@ public int getFoecardsLessthan(int bp) {
 }
 
 public int getNumberOfFoecardsLessthan(int bp) {
-	int numberOfFoes = 0;
+//	int numberOfFoes = 0;
 	
 	int counter =0;
-	int indexOfFoe =-1;
+//	int indexOfFoe =-1;
 	
 	FoeCard Foe = null;
 	
@@ -189,16 +183,11 @@ public int getNumberOfFoecardsLessthan(int bp) {
 			 Foe = ((FoeCard) cards.get(i));
 			if(Foe.getBattlePoints() < bp){
 				counter++;
-				
-			
+
 			}
 		}
 	}
-		
-		
 
-	
-	
 	return counter;
 	
 }

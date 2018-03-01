@@ -5,28 +5,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 public class ConfirmNextPlayer {
 	
 	static Boolean ansewer;
 	
-	
-	
-	
 	public static Scene display(String display, String message, Pane canvas) {
 		
-
-
-
 		Label label = new Label(message);
 
 		
 		Button readyButton = new Button("Ready");
 		
 		readyButton.setOnAction(e->{
-			
 			
 		});
 		VBox layout = new VBox(5);
@@ -39,9 +30,6 @@ public class ConfirmNextPlayer {
 		
 		return scene;
 		
-
 	}
 	
-	
-
 }

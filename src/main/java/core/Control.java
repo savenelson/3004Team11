@@ -17,6 +17,8 @@ public class Control{
 	
 	public Control(View view) {
 		
+		logger.info("Control created");
+		
 		this.view = view;
 		gameInit(null);
 
@@ -29,10 +31,11 @@ public class Control{
 
 	public void gameInit(String args []){
 		
-		logger.info("game initialized");
+		logger.info("gameInit() running");
 		
 		int numPlayers;
 
+		//TODO this if/else can use some polish - always passes 4
 		if(args == null || args.length == 0){
 			numPlayers = 4;
 		} else {
@@ -46,7 +49,7 @@ public class Control{
 			logger.info("passing numPlayers = " + numPlayers + " to model");
 			
 		} else {
-			logger.fatal("number of players");
+			logger.fatal("number of players ERROR");
 		}
 		
 		model.instantiatePlayers(numPlayers);
@@ -207,7 +210,7 @@ public class Control{
 	}
 	
 	public void alert(String message){
-		logger.debug("alert() called");
+		logger.info("alert() called" + message);
 
 		view.alert(message);
 	}
