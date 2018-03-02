@@ -403,7 +403,7 @@ public class View extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				logger.info("nextStageButton clicked");
-
+				System.out.println("\n\n nextStroty called!!");
 				control.nextStory();
 				update(stage);
 			}
