@@ -432,7 +432,6 @@ public class Model {
 		 *    - get a card if they pass
 		 */
 		logger.debug("resolveStage() called");
-		System.out.println("GG");
 
 		
 		CardCollection currStage = this.stages[this.currentStage+stageOverCount];
@@ -489,9 +488,12 @@ public class Model {
 
 		for(int i = 0; i < this.numPlayers; ++i){
 			if(!this.players[i].isSponsor){
-				for(int j = 0; j < this.players[i].getQueue().size(); ++j){
-					
-					System.out.println("\n\n\n"+  this.players[i].getQueue().toString());
+				
+				int size = this.players[i].getQueue().size();
+				
+				for(int j = 0; j < size; ++j){
+					System.out.println("\n\nthis.players[i].getQueue().size(): " + this.players[i].getQueue().size()); 
+					System.out.println("queue popping: "+  this.players[i].getQueue().toString());
 					adventureDeckDiscard.add(this.players[i].getQueue().pop());
 				}
 				players[i].passedStage = false;

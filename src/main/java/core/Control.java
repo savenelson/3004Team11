@@ -23,7 +23,7 @@ public class Control{
 		gameInit(null);
 
 		//TEST
-		//model.CardsTest();
+		model.CardsTest();
 		//END TEST
 	}
 	
@@ -56,11 +56,11 @@ public class Control{
 		
 		model.instantiateStages(); //TODO set properly
 		
-//		model.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
+		model.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
 
-//		model.deal(); 			//COMMENT OUT FOR SET SCENEARIOS
+		model.deal(); 			//COMMENT OUT FOR SET SCENEARIOS
 		
-		model.setScenario1();	//UNCOMMENT FOR SCEN 1
+//		model.setScenario1();	//UNCOMMENT FOR SCEN 1
 		
 //		model.setScenario2();	//UNCOMMENT FOR SCEN 2
 		
