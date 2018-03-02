@@ -749,7 +749,7 @@ public class Model {
 					if ((this.state.players[i].getRank()).getSubType().equals("Squire")) {
 						
 						if (this.state.players[i].getShieldCount() == lowestShieldSquire ) {
-							this.players[i].addShields(3);
+							this.players[i].addShields(6);
 							
 						}
 
