@@ -25,7 +25,8 @@ public class Model {
 
 	private StoryDeck storyDeckDiscard;
 	public AdventureDeck getStoryDeckDiscard(){return this.adventureDeck;}
-
+	
+	boolean inNextQ = false;
 	boolean stagesSet = false;
 	int currentViewer;
 	int currentPlayer;
@@ -139,6 +140,8 @@ public class Model {
 		state.currentPlayer = this.currentPlayer;
 		
 		state.currentSponsor = this.currentSponsor;
+		
+		state.inNextQ = this.inNextQ;
 		
 		state.currentStoryCard = this.currentStoryCard;
 		
@@ -397,13 +400,30 @@ public class Model {
 	
 	public int resolveQuest(){
 		logger.debug("resolveQuest() called");
+<<<<<<< HEAD
 		int numStages = this.state.numStages;
+=======
+		
+		if(inNextQ) {
+			
+			for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
+				this.players[i].addShields(2);
+			}
+			inNextQ = false;
+			}
+
+>>>>>>> a103905eb43fe98fc5e03ad79b5544c47a6e8cea
 		int numShields = ((QuestCard) state.currentStoryCard).getNumStages();
 		logger.info("Number of Stages: " + numShields);
 
 		//TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
 		for (int i = 0; i < state.numPlayers; ++i){
 			if(!players[i].isSponsor){
+<<<<<<< HEAD
+=======
+
+				System.out.println("Players "+ i+1+ players[i].isQuesting + players[i].passedQuest);
+>>>>>>> a103905eb43fe98fc5e03ad79b5544c47a6e8cea
 
 				if(players[i].passedQuest) {
 					players[i].addShields(numShields);
@@ -413,6 +433,7 @@ public class Model {
 						adventureDeckDiscard.add(c);
 					}
 				}
+
 			} else {
 				//TODO GIVE SPONSOR CARDS BACK 
 			}
@@ -464,6 +485,11 @@ public class Model {
 				players[i].passedStage = true;
 				if(state.currentStage +1==((QuestCard)state.currentStoryCard).getNumStages() ) {
 					players[i].passedQuest =true;
+<<<<<<< HEAD
+=======
+
+					System.out.println("true turned ");
+>>>>>>> a103905eb43fe98fc5e03ad79b5544c47a6e8cea
 
 					Card c = this.adventureDeck.pop();
 					this.players[i].addToHand(c);
@@ -476,6 +502,7 @@ public class Model {
 		}
 		if(stageOverCount == ((QuestCard)currentStoryCard).getNumStages()&& stageOverCount != 0){
 			resolveQuest();
+
 		}
 		
 		
@@ -563,6 +590,8 @@ public class Model {
 
 
 	private void playQuest(){
+		
+
 		logger.debug("playQuest() called");
 		boolean decision = control.getSponsorDecision();
 		if(decision){
@@ -586,11 +615,8 @@ public class Model {
 		logger.debug("playEvent() called");
 
 		if (((StoryCard) currentStoryCard).getName().equals("KingsRecognition")) {
-//			boolean inNextQ = true;
-			// using for loop through this.state.players, in a quest function, if inNextQ =
-			// true,
-			// this.players[i].addShields(2);
-
+			 this.inNextQ = true;
+			 
 		} else if (((StoryCard) currentStoryCard).getName().equals("QueensFavor")) {
 			int squireCount = 0;
 			int championCount = 0;
@@ -610,7 +636,7 @@ public class Model {
 
 			}
 
-			if (squireCount < championCount) {
+			if (squireCount != 0) {
 				for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
 					if ((this.state.players[i].getRank()).getSubType().equals("Squire")) {
 						this.players[i].addToHand(this.adventureDeck.getByID("6"));
@@ -693,8 +719,81 @@ public class Model {
 			if (this.players[currentPlayer].getShieldCount() >= 2) {
 				this.players[currentPlayer].removeShields(2);
 			}
+			
+			
+			
 		} else if (((StoryCard) currentStoryCard).getName().equals("ChivalrousDeed")) {
-		} else if (((StoryCard) currentStoryCard).getName().equals("ProsperityThroughoutTheRealm")) {
+			int squireCount = 0;
+			int championCount = 0;
+			int championKnightCount = 0;
+			
+			int lowestShieldSquire = 0;
+			int lowestShieldKnight = 0;
+			int lowestShieldChamp = 0;
+			
+
+			for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
+
+				if ((this.state.players[i].getRank()).getSubType().equals("Squire")) {
+					squireCount++;
+					 lowestShieldSquire = this.state.players[i].getShieldCount();
+					 if (lowestShieldSquire > this.state.players[i].getShieldCount()){lowestShieldSquire = this.state.players[i].getShieldCount();}
+				}
+				if ((this.state.players[i].getRank()).getSubType().equals("Knight")) {
+					championCount++;
+					lowestShieldKnight = this.state.players[i].getShieldCount();
+					 if (lowestShieldKnight > this.state.players[i].getShieldCount()){lowestShieldKnight = this.state.players[i].getShieldCount();}
+				}
+				if ((this.state.players[i].getRank()).getSubType().equals("ChampionKnight")) {
+					championKnightCount++;
+					lowestShieldChamp = this.state.players[i].getShieldCount();
+					 if (lowestShieldChamp > this.state.players[i].getShieldCount()){lowestShieldChamp = this.state.players[i].getShieldCount();}
+				}
+
+			}
+
+			if (squireCount != 0) {  // squire is the lowest, so as long as it there are more than 0 squires, we know the lowest rank is that of the squire
+				for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
+					if ((this.state.players[i].getRank()).getSubType().equals("Squire")) {
+						
+						if (this.state.players[i].getShieldCount() == lowestShieldSquire ) {
+							this.players[i].addShields(3);
+							
+						}
+
+					}
+				}
+
+			} 
+
+			if (championCount <= championKnightCount && (squireCount == 0) && (championCount != 0)) {
+				for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
+					if ((this.state.players[i].getRank()).getSubType().equals("Champion")) {
+						if (this.state.players[i].getShieldCount() == lowestShieldKnight ) {
+							this.players[i].addShields(3);
+							
+						}
+						
+					}
+				}
+			}
+			if (championKnightCount == numPlayers) {
+				for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
+					if ((this.state.players[i].getRank()).getSubType().equals("ChampionKnight")) {
+						if (this.state.players[i].getShieldCount() == lowestShieldChamp ) {
+							this.players[i].addShields(3);
+							
+						}
+						
+					}
+
+				}
+			}
+		} 
+		
+		
+		
+		else if (((StoryCard) currentStoryCard).getName().equals("ProsperityThroughoutTheRealm")) {
 			for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
 				this.players[i].addToHand(this.adventureDeck.getByID("6"));
 				this.players[i].addToHand(this.adventureDeck.getByID("7"));

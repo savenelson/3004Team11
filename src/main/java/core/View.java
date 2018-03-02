@@ -376,6 +376,7 @@ public class View extends Application {
 			if(!state.players[i].isSponsor){
 				Label passed = new Label("Player "+ (i+1));
 
+
 				
 				
 				
