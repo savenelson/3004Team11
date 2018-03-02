@@ -40,6 +40,7 @@ public class View extends Application {
 	public static final String QUEUE = "Queue";
 	public static final String DEQUEUE = "Dequeue";
 	public static final String ASSASSINATE = "Assassinate";
+	public static final String UNSTAGE = "Unstage";
 	
 	public static final String STAGE1 = "Stage 1";
 	public static final String STAGE2 = "Stage 2";
@@ -64,7 +65,7 @@ public class View extends Application {
 	public static final int rowHandTop6 = 390;
 	public static final int colHandTop6 = 10;
 	
-	//	public static final int colAdventureDeck;
+	//	public static final int colAdventureDeck;que
 	
 	public static final int rowStoryCard = 80;
 	public static final int rowHandBottom6 = 565;
@@ -752,35 +753,40 @@ public class View extends Application {
 			}
 		};
 
-		MenuItem playItem = new MenuItem(PLAY);
-		playItem.setOnAction(eh);
-		fileMenu.getItems().add(playItem);
-		
-		MenuItem discardItem = new MenuItem(DISCARD);
-		discardItem.setOnAction(eh);
-		fileMenu.getItems().add(discardItem);
-		
-		MenuItem stageItem = new MenuItem(STAGE);
+		MenuItem stageItem = new MenuItem(UNSTAGE);
 		stageItem.setOnAction(eh);
 		fileMenu.getItems().add(stageItem);
 		
-		MenuItem queueItem = new MenuItem(QUEUE);
-		queueItem.setOnAction(eh);
-		fileMenu.getItems().add(queueItem);
-
-		fileMenu.getItems().add(new MenuItem("Discard"));
-		fileMenu.getItems().add(new MenuItem("Play"));
+//		MenuItem playItem = new MenuItem(PLAY);
+//		playItem.setOnAction(eh);
+//		fileMenu.getItems().add(playItem);
+//		
+//		MenuItem discardItem = new MenuItem(DISCARD);
+//		discardItem.setOnAction(eh);
+//		fileMenu.getItems().add(discardItem);
+//		
+//		MenuItem stageItem = new MenuItem(STAGE);
+//		stageItem.setOnAction(eh);
+//		fileMenu.getItems().add(stageItem);
+//		
+//		MenuItem queueItem = new MenuItem(QUEUE);
+//		queueItem.setOnAction(eh);
+//		fileMenu.getItems().add(queueItem);
+//
+//		fileMenu.getItems().add(new MenuItem("Discard"));
+//		
+//		fileMenu.getItems().add(new MenuItem("Play"));
+//		
+//		MenuItem campaigne =  new MenuItem("Campaigne");
 		
-		MenuItem campaigne =  new MenuItem("Campaigne");
-		
-		campaigne.setOnAction(new EventHandler<ActionEvent>() {
-		    public void handle(ActionEvent e) {
-		        addCardToStage(Stage, imgView);
-		    }
-		});
-		
-		fileMenu.getItems().add(campaigne);
-
+//		campaigne.setOnAction(new EventHandler<ActionEvent>() {
+//		    public void handle(ActionEvent e) {
+//		        addCardToStage(Stage, imgView);
+//		    }
+//		});
+//		
+//		fileMenu.getItems().add(campaigne);
+//
 
 		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 

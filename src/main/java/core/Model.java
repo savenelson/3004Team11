@@ -217,6 +217,37 @@ public class Model {
 		stages[currentStage].add(c);
 		logger.info("Player " + this.currentPlayer + " moves " + c.getName() + " from hand to Stage " + currentStage);
 
+	}	
+	
+	public void unstage(String iD) {
+		logger.debug("unstage() called");
+
+		
+		Card c = this.stages[currentStage].getByID(iD);
+		
+		this.stages[currentStage].remove(c);
+		
+		this.players[this.currentPlayer].getHand().add(c);
+		
+//		for (int i = 0; i < this.stages[currentStage].size(); ++i){
+//			
+//		}
+//		
+//		CardCollection hand = this.players[this.currentPlayer].getHand();
+//		Card c = hand.getByID(iD);
+//		if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
+//				&& containsFoe(this.stages[currentStage])) {
+//			control.alert("Cannot stage more than one foe per quest stage.");
+//			return;
+//		}
+//		if(containsWeapon(this.stages[currentStage], c.getImgName())) {
+//			control.alert("Cannot stage duplicate weapons.");
+//			return;
+//		}
+//		hand.remove(c);
+//		stages[currentStage].add(c);
+		logger.info("Player " + this.currentPlayer + " moves " + c.getName() + " from Stage back to Hand");
+
 	}
 	
 	public Player getActivePlayer(){

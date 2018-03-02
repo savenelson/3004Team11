@@ -60,11 +60,11 @@ public class Control{
 
 //		model.deal(); 			//COMMENT OUT FOR SET SCENEARIOS
 		
-//		model.setScenario1();	//UNCOMMENT FOR SCEN 1
+		model.setScenario1();	//UNCOMMENT FOR SCEN 1
 		
 //		model.setScenario2();	//UNCOMMENT FOR SCEN 2
 		
-		model.setScenarioTest();
+//		model.setScenarioTest();
 		
 	}
 
@@ -102,7 +102,7 @@ public class Control{
 	public boolean getSponsorDecision(){
 		logger.info("getSponsorDecision() called");
 
-		return view.popup("Would you like to sponsor this quest?");
+		return view.popup("Player " + (getActivePlayer().getPlayerNumber()+1) + " - Would you like to sponsor this quest?");
 	}
 	
 	public State getState(){
@@ -140,6 +140,9 @@ public class Control{
 		} 
 		else if (clickType.equals(View.STAGE)) {
 			model.stage(ID);
+		} 		
+		else if (clickType.equals(View.UNSTAGE)) {
+			model.unstage(ID);
 		} 
 		else if (clickType.equals(View.QUEUE)) {
 			model.queue(ID);
