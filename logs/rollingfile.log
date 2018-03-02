@@ -1,18 +1,6 @@
-[INFO ] 2018-03-01 20:13:00.333 [JavaFX Application Thread] View - Current View: Player 1
-[INFO ] 2018-03-01 20:13:00.857 [JavaFX Application Thread] View - Current View: Player 1
-[INFO ] 2018-03-01 20:13:01.402 [JavaFX Application Thread] View - Current View: Player 0
-[INFO ] 2018-03-01 20:13:02.604 [JavaFX Application Thread] View - Ready clicked
-[INFO ] 2018-03-01 20:13:03.229 [JavaFX Application Thread] View - Current View: Player 0
-[INFO ] 2018-03-01 20:13:06.286 [JavaFX Application Thread] View - End Turn clicked
-[INFO ] 2018-03-01 20:13:06.842 [JavaFX Application Thread] View - Current View: Player 0
-[INFO ] 2018-03-01 20:13:07.403 [JavaFX Application Thread] View - Current View: Player 0
-[INFO ] 2018-03-01 20:13:07.404 [JavaFX Application Thread] View - Stage Over
-[INFO ] 2018-03-01 20:13:07.414 [JavaFX Application Thread] View - Player 0 failed stage 1
-[INFO ] 2018-03-01 20:13:10.021 [JavaFX Application Thread] View - nextStageButton clicked
-[INFO ] 2018-03-01 20:13:10.021 [JavaFX Application Thread] Model - Player changed to 0
-[INFO ] 2018-03-01 20:13:10.567 [JavaFX Application Thread] View - Current View: Player 0
-[INFO ] 2018-03-01 20:13:10.567 [JavaFX Application Thread] Control - getSponsorDecision() called
-[INFO ] 2018-03-01 20:13:12.901 [JavaFX Application Thread] View - Yes clicked
-[INFO ] 2018-03-01 20:13:12.901 [JavaFX Application Thread] Model - Player 0 will sponsor
-[INFO ] 2018-03-01 20:13:13.559 [JavaFX Application Thread] View - Current View: Player 0
-[INFO ] 2018-03-01 20:13:14.130 [JavaFX Application Thread] View - Current View: Player 0
+[INFO ] 2018-03-02 09:43:03.808 [JavaFX Application Thread] View - End Turn clicked
+[INFO ] 2018-03-02 09:43:04.126 [JavaFX Application Thread] View - Current View: Player 0
+[INFO ] 2018-03-02 09:43:04.430 [JavaFX Application Thread] View - Current View: Player 0
+[INFO ] 2018-03-02 09:43:04.776 [JavaFX Application Thread] View - Current View: Player 1
+[INFO ] 2018-03-02 09:43:06.316 [JavaFX Application Thread] View - Ready clicked
+[INFO ] 2018-03-02 09:43:06.644 [JavaFX Application Thread] View - Current View: Player 1

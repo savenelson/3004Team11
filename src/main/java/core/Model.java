@@ -408,6 +408,7 @@ public class Model {
 		 *    - players Rank
 		 */
 		logger.debug("resolveStage() called");
+		System.out.println("GG");
 
 		
 		CardCollection currStage = this.stages[this.currentStage+stageOverCount];

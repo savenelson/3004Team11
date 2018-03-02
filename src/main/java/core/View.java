@@ -1210,7 +1210,7 @@ public class View extends Application {
 		logger.debug("stageResolved() called");
 		logger.info("Stage Over");
 
-		control.resolveStage();
+		
 		StackPane layout = new StackPane();
 		state = control.getState();
 		for (int i = 0; i < state.numPlayers; ++i){
