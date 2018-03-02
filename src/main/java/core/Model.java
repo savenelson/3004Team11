@@ -404,9 +404,21 @@ public class Model {
 		//TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
 		for (int i = 0; i < state.numPlayers; ++i){
 			if(!players[i].isSponsor){
+<<<<<<< HEAD
+				System.out.println("Players "+ i+1+ players[i].isQuesting + players[i].passedQuest);
+				
+			
+					if(players[i].passedQuest) {
+						players[i].addShields(numShields);
+						
+					}
+					
+				
+=======
 				if(players[i].passedQuest) {
 					players[i].addShields(numShields);
 				}
+>>>>>>> master
 			} else {
 				//TODO GIVE SPONSOR CARDS BACK 
 			}
@@ -428,6 +440,7 @@ public class Model {
 		 *    - players Rank
 		 */
 		logger.debug("resolveStage() called");
+		System.out.println("GG");
 
 		
 		CardCollection currStage = this.stages[this.currentStage+stageOverCount];
@@ -452,9 +465,16 @@ public class Model {
 			}
 			
 			//Check if player passed quest
+<<<<<<< HEAD
+			if(playerBP >= stageBP && (! players[i].isSponsor) && stageBP > 0){
+				players[i].passedStage = true;
+				if(state.currentStage +1==((QuestCard)state.currentStoryCard).getNumStages() )
+					players[i].passedQuest =true;
+=======
 			if((playerBP >= stageBP) && (! players[i].isSponsor) && (stageBP > 0)){
 				this.players[i].passedStage = true;
 				this.players[i].passedQuest = true;
+>>>>>>> master
 			} else {
 				this.players[i].passedQuest = false;
 			}
@@ -709,10 +729,16 @@ public class Model {
 
 	public void nextStory() {
 		logger.debug("nextStory() called");
-
+		//get ready for the next person
 		for(int i = 0; i < numPlayers; ++i){
 			
 			players[i].isSponsor = false;
+			players[i].isQuesting = false;
+			players[i].passedQuest = false;
+			players[i].passedStage = false;
+			stagesSet = false;
+			
+			
 			
 			CardCollection queue = players[i].getQueue();
 			for(int j = 0; j < queue.size(); ++j){
@@ -740,6 +766,9 @@ public class Model {
 		
 		nextPlayer();
 		this.currentViewer = this.currentPlayer;
+		System.out.println(currentStoryCard.getName());
+		control.updateViewState();
+		playGame();
 	}
 	
 	

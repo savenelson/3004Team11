@@ -375,8 +375,15 @@ public class View extends Application {
 		for (int i = 0; i < state.numPlayers; ++i){
 			if(!state.players[i].isSponsor){
 				Label passed = new Label("Player "+ (i+1));
+<<<<<<< HEAD
+				
+				
+				
+				if(state.players[i].passedQuest)
+=======
 
 				if(state.players[i].passedStage) {
+>>>>>>> master
 					passed.setText(passed.getText() + " passed Quest and receives " + numShields + " shields!");
 				} else {
 					passed.setText(passed.getText() + " failed Quest and receives 0 shields.");
@@ -1196,7 +1203,7 @@ public class View extends Application {
 		logger.debug("stageResolved() called");
 		logger.info("Stage Over");
 
-		control.resolveStage();
+		
 		StackPane layout = new StackPane();
 		state = control.getState();
 		for (int i = 0; i < state.numPlayers; ++i){
