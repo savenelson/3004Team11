@@ -487,7 +487,12 @@ public class Model {
 
 		for(int i = 0; i < this.numPlayers; ++i){
 			if(!this.players[i].isSponsor){
-				for(int j = 0; j < this.players[i].getQueue().size(); ++j){
+				
+				int size = this.players[i].getQueue().size();
+				
+				for(int j = 0; j < size; ++j){
+					System.out.println("\n\nthis.players[i].getQueue().size(): " + this.players[i].getQueue().size()); 
+					System.out.println("queue popping: "+  this.players[i].getQueue().toString());
 					adventureDeckDiscard.add(this.players[i].getQueue().pop());
 				}
 				players[i].passedStage = false;
