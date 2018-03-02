@@ -135,7 +135,7 @@ public class CardInstantiationTest {
 QuestCard holygrail = new QuestCard(QuestCard.HOLY_GRAIL,	QuestCard.HOLY_GRAIL_STAGES,	QuestCard.HOLY_GRAIL_FOE);
 assertEquals("SearchForTheHolyGrail", holygrail.getName());
 assertEquals(5, holygrail.getNumStages());
-assertEquals("All", holygrail.getFoe());
+
 
 
 QuestCard greenknight = new QuestCard(QuestCard.GREEN_KNIGHT,	QuestCard.GREEN_KNIGHT_STAGES,	QuestCard.GREEN_KNIGHT_FOE);
