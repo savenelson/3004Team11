@@ -23,7 +23,7 @@ public class Control{
 		gameInit(null);
 
 		//TEST
-		//model.CardsTest();
+		model.CardsTest();
 		//END TEST
 	}
 	
@@ -102,7 +102,7 @@ public class Control{
 	public boolean getSponsorDecision(){
 		logger.info("getSponsorDecision() called");
 
-		return view.popup("Would you like to sponsor this quest?");
+		return view.popup("Player " + (getActivePlayer().getPlayerNumber()+1) + " - Would you like to sponsor this quest?");
 	}
 	
 	public State getState(){
@@ -140,6 +140,9 @@ public class Control{
 		} 
 		else if (clickType.equals(View.STAGE)) {
 			model.stage(ID);
+		} 		
+		else if (clickType.equals(View.UNSTAGE)) {
+			model.unstage(ID);
 		} 
 		else if (clickType.equals(View.QUEUE)) {
 			model.queue(ID);

@@ -40,6 +40,7 @@ public class View extends Application {
 	public static final String QUEUE = "Queue";
 	public static final String DEQUEUE = "Dequeue";
 	public static final String ASSASSINATE = "Assassinate";
+	public static final String UNSTAGE = "Unstage";
 	
 	public static final String STAGE1 = "Stage 1";
 	public static final String STAGE2 = "Stage 2";
@@ -64,7 +65,7 @@ public class View extends Application {
 	public static final int rowHandTop6 = 390;
 	public static final int colHandTop6 = 10;
 	
-	//	public static final int colAdventureDeck;
+	//	public static final int colAdventureDeck;que
 	
 	public static final int rowStoryCard = 80;
 	public static final int rowHandBottom6 = 565;
@@ -374,15 +375,16 @@ public class View extends Application {
 		for (int i = 0; i < state.numPlayers; ++i){
 			if(!state.players[i].isSponsor){
 				Label passed = new Label("Player "+ (i+1));
-<<<<<<< HEAD
-				
-				
-				
-				if(state.players[i].passedQuest)
-=======
 
-				if(state.players[i].passedStage) {
->>>>>>> master
+
+				
+				
+				
+			
+
+
+				if(state.players[i].passedQuest){
+
 					passed.setText(passed.getText() + " passed Quest and receives " + numShields + " shields!");
 				} else {
 					passed.setText(passed.getText() + " failed Quest and receives 0 shields.");
@@ -402,7 +404,6 @@ public class View extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				logger.info("nextStageButton clicked");
-
 				control.nextStory();
 				update(stage);
 			}
@@ -759,35 +760,40 @@ public class View extends Application {
 			}
 		};
 
-		MenuItem playItem = new MenuItem(PLAY);
-		playItem.setOnAction(eh);
-		fileMenu.getItems().add(playItem);
-		
-		MenuItem discardItem = new MenuItem(DISCARD);
-		discardItem.setOnAction(eh);
-		fileMenu.getItems().add(discardItem);
-		
-		MenuItem stageItem = new MenuItem(STAGE);
+		MenuItem stageItem = new MenuItem(UNSTAGE);
 		stageItem.setOnAction(eh);
 		fileMenu.getItems().add(stageItem);
 		
-		MenuItem queueItem = new MenuItem(QUEUE);
-		queueItem.setOnAction(eh);
-		fileMenu.getItems().add(queueItem);
-
-		fileMenu.getItems().add(new MenuItem("Discard"));
-		fileMenu.getItems().add(new MenuItem("Play"));
+//		MenuItem playItem = new MenuItem(PLAY);
+//		playItem.setOnAction(eh);
+//		fileMenu.getItems().add(playItem);
+//		
+//		MenuItem discardItem = new MenuItem(DISCARD);
+//		discardItem.setOnAction(eh);
+//		fileMenu.getItems().add(discardItem);
+//		
+//		MenuItem stageItem = new MenuItem(STAGE);
+//		stageItem.setOnAction(eh);
+//		fileMenu.getItems().add(stageItem);
+//		
+//		MenuItem queueItem = new MenuItem(QUEUE);
+//		queueItem.setOnAction(eh);
+//		fileMenu.getItems().add(queueItem);
+//
+//		fileMenu.getItems().add(new MenuItem("Discard"));
+//		
+//		fileMenu.getItems().add(new MenuItem("Play"));
+//		
+//		MenuItem campaigne =  new MenuItem("Campaigne");
 		
-		MenuItem campaigne =  new MenuItem("Campaigne");
-		
-		campaigne.setOnAction(new EventHandler<ActionEvent>() {
-		    public void handle(ActionEvent e) {
-		        addCardToStage(Stage, imgView);
-		    }
-		});
-		
-		fileMenu.getItems().add(campaigne);
-
+//		campaigne.setOnAction(new EventHandler<ActionEvent>() {
+//		    public void handle(ActionEvent e) {
+//		        addCardToStage(Stage, imgView);
+//		    }
+//		});
+//		
+//		fileMenu.getItems().add(campaigne);
+//
 
 		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
@@ -1065,12 +1071,17 @@ public class View extends Application {
 		    }
 		});
 		if((state.currentPlayer == state.currentSponsor) && (state.currentSponsor == state.currentViewer)){
-
-			int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
-			for(int i = 4; i!=numStages-1; i--) {
-				stageButtons[i].setDisable(true);
+			
+			if(((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST)){
+				
+				int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
+				for(int i = 4; i!=numStages-1; i--) {
+					stageButtons[i].setDisable(true);
+				}
+				canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
+			} else {
+				canvas.getChildren().add(endTurn);
 			}
-			canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
 		}
 		else{
 			canvas.getChildren().add(endTurn);
@@ -1119,11 +1130,13 @@ public class View extends Application {
 	}
 	private void normalEndTurn(){
 		logger.info("normalEndTurn() called");
-
+		boolean isHarder = false;
 		boolean foeInEachStage = true;
 		boolean [] foesPresent = null;
-		
-		boolean isHarder = stageHarder(state);
+		if(((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST)) {
+			isHarder = stageHarder(state);
+		}
+
 		int numStages = 0;
 
     	if(state.players[state.currentPlayer].isSponsor){
@@ -1149,7 +1162,7 @@ public class View extends Application {
 		if(state.players[state.currentPlayer].isSponsor && !foeInEachStage){	    			
 			alert("Foe not present in every stage.");
 			return;
-		} else if(state.players[state.currentPlayer].isSponsor&& isHarder ==false) {
+		} else if(state.players[state.currentPlayer].isSponsor && isHarder==false) {
 			alert("The stages are not progressively harder");
 			return;
 			
@@ -1217,7 +1230,6 @@ public class View extends Application {
 				layout.setPrefHeight(720);
 				layout.setPrefWidth(1280);
 				passed.setTranslateY(-180+(60*i));			
-				System.out.print("Player "+ (i+1));
 				if(state.players[i].passedStage) {
 					logger.info("Player " + i + " passed stage " + (state.currentStage+1));
 				} else {

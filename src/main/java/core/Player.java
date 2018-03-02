@@ -33,6 +33,7 @@ public class Player {
 	public int getShieldCount() {return shieldCount;}
 	
 	public void addShields(int num) {
+		num= num/2; //TODO this is so wrong
 		logger.info(this.playerNumber + " gains " + num + " shields");
 		this.shieldCount += num;
 		promote();
@@ -46,6 +47,7 @@ public class Player {
 	}
 	
 	public Player(int playerNumber){
+		
 		
 		hand = new CardCollection();
 		
