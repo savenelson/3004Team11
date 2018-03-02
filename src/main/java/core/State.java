@@ -14,6 +14,8 @@ public class State {
 	
 	public int currentStage;
 	
+	public boolean inNextQ;
+	
 	public int currentSponsor;
 	
 	public int numPlayers;

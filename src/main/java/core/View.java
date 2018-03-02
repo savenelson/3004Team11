@@ -375,15 +375,9 @@ public class View extends Application {
 		for (int i = 0; i < state.numPlayers; ++i){
 			if(!state.players[i].isSponsor){
 				Label passed = new Label("Player "+ (i+1));
-<<<<<<< HEAD
-				
-				
-				
-				if(state.players[i].passedQuest)
-=======
 
-				if(state.players[i].passedStage) {
->>>>>>> master
+
+				if(state.players[i].passedQuest) {
 					passed.setText(passed.getText() + " passed Quest and receives " + numShields + " shields!");
 				} else {
 					passed.setText(passed.getText() + " failed Quest and receives 0 shields.");
