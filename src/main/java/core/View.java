@@ -341,7 +341,7 @@ public class View extends Application {
 						
 			if (state.toggleForStages)
 			{
-				control.stageIncrement();
+				//control.stageIncrement();
 			}
 			stage = state.stages[state.stageOverCount];
 
