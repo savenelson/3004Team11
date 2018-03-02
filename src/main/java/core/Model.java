@@ -404,7 +404,6 @@ public class Model {
 		//TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
 		for (int i = 0; i < state.numPlayers; ++i){
 			if(!players[i].isSponsor){
-<<<<<<< HEAD
 				System.out.println("Players "+ i+1+ players[i].isQuesting + players[i].passedQuest);
 				
 			
@@ -414,11 +413,7 @@ public class Model {
 					}
 					
 				
-=======
-				if(players[i].passedQuest) {
-					players[i].addShields(numShields);
-				}
->>>>>>> master
+
 			} else {
 				//TODO GIVE SPONSOR CARDS BACK 
 			}
@@ -465,25 +460,26 @@ public class Model {
 			}
 			
 			//Check if player passed quest
-<<<<<<< HEAD
+
 			if(playerBP >= stageBP && (! players[i].isSponsor) && stageBP > 0){
 				players[i].passedStage = true;
-				if(state.currentStage +1==((QuestCard)state.currentStoryCard).getNumStages() )
+				if(state.currentStage +1==((QuestCard)state.currentStoryCard).getNumStages() ) {
 					players[i].passedQuest =true;
-=======
-			if((playerBP >= stageBP) && (! players[i].isSponsor) && (stageBP > 0)){
-				this.players[i].passedStage = true;
-				this.players[i].passedQuest = true;
->>>>>>> master
-			} else {
-				this.players[i].passedQuest = false;
-			}
+					System.out.println("true turned ");
+				}
+			
 			this.toggleForStages = true;
 		}
-		
+			
+		}
 		if(stageOverCount == ((QuestCard)currentStoryCard).getNumStages()&& stageOverCount != 0){
 			resolveQuest();
 		}
+		
+		
+	
+
+
 	}
 	
 	
