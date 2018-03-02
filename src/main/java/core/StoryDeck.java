@@ -14,8 +14,9 @@ public class StoryDeck extends CardCollection{
 		logger.info("New Story Deck Created");
 		// Quest
 		cards.add(new QuestCard(QuestCard.BOAR_HUNT,QuestCard.BOAR_HUNT_STAGES,QuestCard.BOAR_HUNT_FOE));
-		cards.add(new QuestCard(QuestCard.BOAR_HUNT,QuestCard.BOAR_HUNT_STAGES,QuestCard.BOAR_HUNT_FOE));
+		cards.add(new EventCard(EventCard.CHIVALROUS_DEED_NAME));
 		cards.add(new QuestCard(QuestCard.HOLY_GRAIL,QuestCard.HOLY_GRAIL_STAGES,QuestCard.HOLY_GRAIL_FOE));
+		cards.add(new QuestCard(QuestCard.BOAR_HUNT,QuestCard.BOAR_HUNT_STAGES,QuestCard.BOAR_HUNT_FOE));
 		cards.add(new QuestCard(QuestCard.GREEN_KNIGHT,QuestCard.GREEN_KNIGHT_STAGES,QuestCard.GREEN_KNIGHT_FOE));
 		cards.add(new QuestCard(QuestCard.QUESTING_BEAST,QuestCard.QUESTING_BEAST_STAGES,QuestCard.QUESTING_BEAST_FOE));
 		cards.add(new QuestCard(QuestCard.QUEENS_HONOR,QuestCard.QUEENS_HONOR_STAGES,QuestCard.QUEENS_HONOR_FOE));
@@ -42,7 +43,7 @@ public class StoryDeck extends CardCollection{
 		cards.add(new EventCard(EventCard.COURT_CAMELOT_NAME));
 		cards.add(new EventCard(EventCard.POX_NAME));
 		cards.add(new EventCard(EventCard.PLAGUE_NAME));
-		cards.add(new EventCard(EventCard.CHIVALROUS_DEED_NAME));
+//		cards.add(new EventCard(EventCard.CHIVALROUS_DEED_NAME));
 		cards.add(new EventCard(EventCard.PROSPERITY_NAME));
 		cards.add(new EventCard(EventCard.CALL_ARMS_NAME));
 
@@ -50,9 +51,7 @@ public class StoryDeck extends CardCollection{
 
 	public static void main(String args[]){
 		StoryDeck aD = new StoryDeck();
-		
-		System.out.println("Story deck size (no Test Cards): " + aD.size());
-	}
+			}
 	
 }
 

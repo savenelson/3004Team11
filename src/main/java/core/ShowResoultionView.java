@@ -22,6 +22,7 @@ public class ShowResoultionView extends Pane{
 	private TilePane tile;
 	private ImageView imgView;
 	
+	
 	String IMG_DIR = "src/main/resources/core/cards/";
 	String GIF = ".gif";
 	

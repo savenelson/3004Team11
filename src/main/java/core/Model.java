@@ -397,18 +397,21 @@ public class Model {
 	
 	public int resolveQuest(){
 		logger.debug("resolveQuest() called");
-
+		int numStages = this.state.numStages;
 		int numShields = ((QuestCard) state.currentStoryCard).getNumStages();
 		logger.info("Number of Stages: " + numShields);
 
 		//TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
 		for (int i = 0; i < state.numPlayers; ++i){
 			if(!players[i].isSponsor){
-				System.out.println("Players "+ i+1+ players[i].isQuesting + players[i].passedQuest);
 
 				if(players[i].passedQuest) {
 					players[i].addShields(numShields);
-					
+					for(int j=0;j<numStages;j++) {
+						Card c = this.adventureDeck.pop();
+						this.players[i].addToHand(c);
+						adventureDeckDiscard.add(c);
+					}
 				}
 			} else {
 				//TODO GIVE SPONSOR CARDS BACK 
@@ -461,7 +464,6 @@ public class Model {
 				players[i].passedStage = true;
 				if(state.currentStage +1==((QuestCard)state.currentStoryCard).getNumStages() ) {
 					players[i].passedQuest =true;
-					System.out.println("true turned ");
 
 					Card c = this.adventureDeck.pop();
 					this.players[i].addToHand(c);
@@ -492,8 +494,6 @@ public class Model {
 				int size = this.players[i].getQueue().size();
 				
 				for(int j = 0; j < size; ++j){
-					System.out.println("\n\nthis.players[i].getQueue().size(): " + this.players[i].getQueue().size()); 
-					System.out.println("queue popping: "+  this.players[i].getQueue().toString());
 					adventureDeckDiscard.add(this.players[i].getQueue().pop());
 				}
 				players[i].passedStage = false;
@@ -745,7 +745,10 @@ public class Model {
 			stagesSet = false;
 			
 			
+			//remove stage cards
+			instantiateStages(); //TODO - DO PROPERLY
 			
+			//remove amours
 			CardCollection queue = players[i].getQueue();
 			for(int j = 0; j < queue.size(); ++j){
 				if(((AdventureCard) queue.get(j)).getSubType().equals(AdventureCard.AMOUR)){
@@ -772,7 +775,6 @@ public class Model {
 		
 		nextPlayer();
 		this.currentViewer = this.currentPlayer;
-		System.out.println(currentStoryCard.getName());
 		control.updateViewState();
 		playGame();
 	}
@@ -1021,7 +1023,9 @@ public class Model {
 		this.players[3].addToHand(c);
 		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
-	}
+		
+		this.adventureDeck.shuffle();
+	} //end set scenario 1
 	
 	
 	public void setScenario2() {

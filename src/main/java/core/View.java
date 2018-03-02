@@ -341,7 +341,7 @@ public class View extends Application {
 						
 			if (state.toggleForStages)
 			{
-				//control.stageIncrement();
+				control.stageIncrement();
 			}
 			stage = state.stages[state.stageOverCount];
 
@@ -403,7 +403,6 @@ public class View extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				logger.info("nextStageButton clicked");
-				System.out.println("\n\n nextStroty called!!");
 				control.nextStory();
 				update(stage);
 			}
@@ -1227,7 +1226,6 @@ public class View extends Application {
 				layout.setPrefHeight(720);
 				layout.setPrefWidth(1280);
 				passed.setTranslateY(-180+(60*i));			
-				System.out.print("Player "+ (i+1));
 				if(state.players[i].passedStage) {
 					logger.info("Player " + i + " passed stage " + (state.currentStage+1));
 				} else {
