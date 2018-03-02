@@ -1,7 +1,7 @@
 /target/
 
 /logs/archive/*
-/logs/rolling*
+/logs/rolling*.log
 **/*.log
 
 .metadata
