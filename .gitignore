@@ -1,6 +1,7 @@
 /target/
 
 /logs/archive/*
+/logs/rolling*
 
 .metadata
 bin/
