@@ -129,8 +129,6 @@ public class Model {
 		logger.debug("resetCurrentStage() called");
 
 		setCurrentStage(0);
-		
-		//this.currentStage = 0;
 	}
 	
 	public State getState(){
@@ -315,7 +313,7 @@ public class Model {
 		
 		return false;
 	}
-	
+
 	public void dequeue(String iD) {
 		logger.debug("dequeue(" + iD + ") called");
 		CardCollection queue = getActivePlayer().getQueue();
@@ -335,9 +333,8 @@ public class Model {
 	public void endTurn() {
 		logger.debug("endTurn() called");
 
-
 		if(players[currentPlayer].isSponsor){
-			viewerChanged();		
+			viewerChanged();	
 		}
 		else{
 			nextPlayer();
@@ -348,18 +345,15 @@ public class Model {
 	public void viewerChanged(){
 		logger.debug("viewerChanged() called");
 
-		if (currentViewer == numPlayers-1){
+		if (currentViewer == ((numPlayers-1)%numPlayers)){
 			currentViewer = 0;
-		}
-		
-		else{
+		} else {
 			currentViewer++;
 		}
 		
 		if(players[currentPlayer].isSponsor && currentPlayer == currentViewer){
 			currentViewer++;
 			this.stageResolved = true;
-
 		}
 	}
 	
@@ -374,12 +368,12 @@ public class Model {
 		logger.debug("resolveQuest() called");
 
 		int numShields = ((QuestCard) state.currentStoryCard).getNumStages();
-	
+		logger.info("Number of Stages: " + numShields);
+
 		//TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
 		for (int i = 0; i < state.numPlayers; ++i){
 			if(!players[i].isSponsor){
-				
-				if(players[i].isQuesting) {
+				if(players[i].passedQuest) {
 					players[i].addShields(numShields);
 				}
 			} else {
@@ -427,10 +421,11 @@ public class Model {
 			}
 			
 			//Check if player passed quest
-			if(playerBP >= stageBP && (! players[i].isSponsor) && stageBP > 0){
-				players[i].passedStage = true;
+			if((playerBP >= stageBP) && (! players[i].isSponsor) && (stageBP > 0)){
+				this.players[i].passedStage = true;
+				this.players[i].passedQuest = true;
 			} else {
-				players[i].isQuesting = false;
+				this.players[i].passedQuest = false;
 			}
 			this.toggleForStages = true;
 		}
@@ -506,20 +501,26 @@ public class Model {
 
 	public String getSubType(String ID, int currentPlayer){
 		logger.debug("getSubType() called");
-
-		return ((AdventureCard)getActivePlayer().getHand().getByID(ID)).getSubType();
+		String result = "";
+		
+		if (((AdventureCard)getActivePlayer().getHand().getByID(ID)) != null) {
+			result = ((AdventureCard)getActivePlayer().getHand().getByID(ID)).getSubType();
+		}
+		return result;
 	}
 
 
 	private void playQuest(){
 		logger.debug("playQuest() called");
-
-		if(control.getSponsorDecision()){
+		boolean decision = control.getSponsorDecision();
+		if(decision){
 			players[currentPlayer].isSponsor = true;
 			logger.info("Player " + currentPlayer + " will sponsor");
 			control.updateViewState();
 		} else {
+			players[currentPlayer].isSponsor = false;
 			logger.info("Player " + currentPlayer + " will not sponsor");
+			control.updateViewState();
 			endTurn();
 		}
 	}
@@ -655,7 +656,8 @@ public class Model {
 		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)){
 //			playTournament();
 		} else {
-			//shuffle the deck - it's empty
+			adventureDeck = adventureDeckDiscard;
+			adventureDeck.shuffle();
 		}
 		checkHandSize();
 	}
@@ -684,8 +686,9 @@ public class Model {
 			CardCollection queue = players[i].getQueue();
 			for(int j = 0; j < queue.size(); ++j){
 				if(((AdventureCard) queue.get(j)).getSubType().equals(AdventureCard.AMOUR)){
-					adventureDeckDiscard.add(queue.get(j));
+					Card c = queue.get(j);
 					queue.remove(j);
+					adventureDeckDiscard.add(c);
 				}
 			}
 		}

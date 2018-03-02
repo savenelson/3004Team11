@@ -3,13 +3,8 @@ package core;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Optional;
-
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -140,21 +135,20 @@ public class View extends Application {
 	
 	public boolean popup(String message){
 		logger.debug("popup() called");
-
+		boolean response;
 	    ButtonType yesButton = new ButtonType("Yes");
 	    ButtonType noButton = new ButtonType("No");
-		Alert alert = new Alert(null, message, yesButton, noButton);
+		Alert alert = new Alert(AlertType.CONFIRMATION, message, yesButton, noButton);
 		Optional<ButtonType> yesOption = alert.showAndWait();
-
 		 if (yesOption.isPresent() && yesOption.get() == yesButton) {
 			logger.info("Yes clicked");
-			 return true;
-		 }		
-		 control.buttonClick(ENDTURN);
-		 state = control.getState();
-		 update(stage);
-		 logger.info("No clicked");
-		 return false;
+			response = true;
+		 } else {
+			 control.buttonClick(ENDTURN);
+			 logger.info("No clicked");
+			 response = false;
+		 }
+		 return response;
 	}
 	
 	@Override
@@ -183,8 +177,7 @@ public class View extends Application {
 		if (!state.stagesSet){
 			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer+1));
 			logger.info("Current View: Player " + state.currentPlayer);
-		}
-		else{
+		} else {
 			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentViewer+1));
 			logger.info("Current View: Player " + state.currentViewer);
 		}
@@ -342,9 +335,7 @@ public class View extends Application {
 			tile.relocate(colStage, rowStage);
 			
 			canvas.getChildren().add(tile);
-		}
-		
-		else if(state.stagesSet){
+		} else if(state.stagesSet){
 			state = control.getState();
 						
 			if (state.toggleForStages)
@@ -384,11 +375,11 @@ public class View extends Application {
 			if(!state.players[i].isSponsor){
 				Label passed = new Label("Player "+ (i+1));
 
-				if(state.players[i].passedStage)
+				if(state.players[i].passedStage) {
 					passed.setText(passed.getText() + " passed Quest and receives " + numShields + " shields!");
-				else
+				} else {
 					passed.setText(passed.getText() + " failed Quest and receives 0 shields.");
-				
+				}
 				passed.setFont(new Font("Ariel", 30));	
 				layout.getChildren().add(passed);
 				layout.setPrefHeight(720);
@@ -466,7 +457,6 @@ public class View extends Application {
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -486,7 +476,6 @@ public class View extends Application {
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -506,7 +495,6 @@ public class View extends Application {
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	} 	
@@ -526,7 +514,6 @@ public class View extends Application {
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -689,7 +676,6 @@ public class View extends Application {
 			canvas.getChildren().addAll(imgView);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 				
@@ -827,8 +813,7 @@ public class View extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				state = control.getState();				
-				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
-				state = control.getState();				
+				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());			
 				update(stage);
 			}
 		};
@@ -1126,7 +1111,7 @@ public class View extends Application {
 		
 	}
 	private void normalEndTurn(){
-		logger.debug("normalEndTurn() called");
+		logger.info("normalEndTurn() called");
 
 		boolean foeInEachStage = true;
 		boolean [] foesPresent = null;
@@ -1175,9 +1160,6 @@ public class View extends Application {
 			
 			Label playerLabel = new Label("Player " + (control.getActivePlayer().getPlayerNumber()+1) + " ready?");
 			playerLabel.setFont(new Font("Ariel", 30));
-			
-//			Label label = new Label("Click button when players switched.");
-//			label.setFont(new Font("Ariel", 30));
 			
 			Button readyButton = new Button("Ready");
 			readyButton.setFont(new Font("Ariel", 30));
@@ -1252,7 +1234,6 @@ public class View extends Application {
 			}
 		});
 		
-		
 		Button showCardsButton = new Button("Show Cards");
 		showCardsButton.setFont(new Font("Ariel", 30));
 		layout.getChildren().add(showCardsButton);
@@ -1278,10 +1259,8 @@ public class View extends Application {
 	public void sceneChange(Pane newScreen) {
 		logger.debug("sceneChange() called");
 
-
 		newScreen.setId("pane");
 		
-
 		Scene scene = new Scene(newScreen, 1280, 720);
 
 		scene.getStylesheets().add("style.css");	
