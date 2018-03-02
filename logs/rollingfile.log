@@ -1,104 +1,18 @@
-[INFO ] 2018-03-01 14:26:35.012 [main] View - main() running
-[INFO ] 2018-03-01 14:26:35.216 [JavaFX Application Thread] View - View created
-[INFO ] 2018-03-01 14:26:35.226 [JavaFX Application Thread] View - start() running
-[INFO ] 2018-03-01 14:26:35.227 [JavaFX Application Thread] Control - Control created
-[INFO ] 2018-03-01 14:26:35.227 [JavaFX Application Thread] Control - gameInit() running
-[INFO ] 2018-03-01 14:26:35.229 [JavaFX Application Thread] Model - Model created
-[INFO ] 2018-03-01 14:26:35.230 [JavaFX Application Thread] AdventureDeck - Adventure Deck Created
-[INFO ] 2018-03-01 14:26:35.234 [JavaFX Application Thread] StoryDeck - New Story Deck Created
-[INFO ] 2018-03-01 14:26:35.236 [JavaFX Application Thread] AdventureDeck - Adventure Deck Created
-[INFO ] 2018-03-01 14:26:35.236 [JavaFX Application Thread] StoryDeck - New Story Deck Created
-[INFO ] 2018-03-01 14:26:35.236 [JavaFX Application Thread] Control - passing numPlayers = 4 to model
-[INFO ] 2018-03-01 14:26:35.237 [JavaFX Application Thread] Model - setScenarioTest() called - Setting up TEST SCENARIO
-[INFO ] 2018-03-01 14:26:35.237 [JavaFX Application Thread] Player - 0 gains 10 shields
-[INFO ] 2018-03-01 14:26:35.237 [JavaFX Application Thread] Player - 0 promoted to Knight
-[INFO ] 2018-03-01 14:26:35.238 [JavaFX Application Thread] Player - 1 gains 6 shields
-[INFO ] 2018-03-01 14:26:35.238 [JavaFX Application Thread] Player - 1 promoted to Knight
-[INFO ] 2018-03-01 14:26:35.238 [JavaFX Application Thread] Player - 2 gains 14 shields
-[INFO ] 2018-03-01 14:26:35.238 [JavaFX Application Thread] Player - 2 promoted to Knight
-[INFO ] 2018-03-01 14:26:35.238 [JavaFX Application Thread] Player - 2 promoted to Champion Knight
-[INFO ] 2018-03-01 14:26:35.238 [JavaFX Application Thread] Player - 0s party changed - added SirLancelot
-[INFO ] 2018-03-01 14:26:35.238 [JavaFX Application Thread] Player - 0s party changed - added Amour
-[INFO ] 2018-03-01 14:26:35.238 [JavaFX Application Thread] Player - 1s party changed - added SirTristan
-[INFO ] 2018-03-01 14:26:35.239 [JavaFX Application Thread] Player - 1s party changed - added KingPellinore
-[INFO ] 2018-03-01 14:26:35.239 [JavaFX Application Thread] Player - 1s party changed - added Amour
-[INFO ] 2018-03-01 14:26:35.239 [JavaFX Application Thread] Player - 2s party changed - added SirPercival
-[INFO ] 2018-03-01 14:26:35.239 [JavaFX Application Thread] Player - 2s party changed - added QueenGuinevere
-[INFO ] 2018-03-01 14:26:35.239 [JavaFX Application Thread] Player - 2s party changed - added Amour
-[INFO ] 2018-03-01 14:26:35.239 [JavaFX Application Thread] Player - 3s party changed - added Merlin
-[INFO ] 2018-03-01 14:26:35.239 [JavaFX Application Thread] Player - 3s party changed - added KingArthur
-[INFO ] 2018-03-01 14:26:35.239 [JavaFX Application Thread] Player - 3s party changed - added Amour
-[INFO ] 2018-03-01 14:26:35.239 [JavaFX Application Thread] Player - 0s queue changed - added Sword
-[INFO ] 2018-03-01 14:26:35.239 [JavaFX Application Thread] Player - 0s queue changed - added Horse
-[INFO ] 2018-03-01 14:26:35.240 [JavaFX Application Thread] Player - 0s queue changed - added BattleAx
-[INFO ] 2018-03-01 14:26:35.240 [JavaFX Application Thread] Player - 0s queue changed - added Lance
-[INFO ] 2018-03-01 14:26:35.240 [JavaFX Application Thread] Player - 1s queue changed - added Sword
-[INFO ] 2018-03-01 14:26:35.240 [JavaFX Application Thread] Player - 1s queue changed - added Horse
-[INFO ] 2018-03-01 14:26:35.240 [JavaFX Application Thread] Player - 1s queue changed - added BattleAx
-[INFO ] 2018-03-01 14:26:35.240 [JavaFX Application Thread] Player - 1s queue changed - added Lance
-[INFO ] 2018-03-01 14:26:35.240 [JavaFX Application Thread] Player - 2s queue changed - added Sword
-[INFO ] 2018-03-01 14:26:35.240 [JavaFX Application Thread] Player - 2s queue changed - added Horse
-[INFO ] 2018-03-01 14:26:35.240 [JavaFX Application Thread] Player - 2s queue changed - added BattleAx
-[INFO ] 2018-03-01 14:26:35.241 [JavaFX Application Thread] Player - 2s queue changed - added Lance
-[INFO ] 2018-03-01 14:26:35.241 [JavaFX Application Thread] Player - 3s queue changed - added Sword
-[INFO ] 2018-03-01 14:26:35.241 [JavaFX Application Thread] Player - 3s queue changed - added Horse
-[INFO ] 2018-03-01 14:26:35.243 [JavaFX Application Thread] Player - 3s queue changed - added BattleAx
-[INFO ] 2018-03-01 14:26:35.243 [JavaFX Application Thread] Player - 3s queue changed - added Excalibur
-[INFO ] 2018-03-01 14:26:35.243 [JavaFX Application Thread] Player - 0s hand changed - added Sword
-[INFO ] 2018-03-01 14:26:35.243 [JavaFX Application Thread] Player - 0s hand changed - added Sword
-[INFO ] 2018-03-01 14:26:35.243 [JavaFX Application Thread] Player - 0s hand changed - added Horse
-[INFO ] 2018-03-01 14:26:35.243 [JavaFX Application Thread] Player - 0s hand changed - added Thieves
-[INFO ] 2018-03-01 14:26:35.243 [JavaFX Application Thread] Player - 0s hand changed - added Boar
-[INFO ] 2018-03-01 14:26:35.243 [JavaFX Application Thread] Player - 0s hand changed - added Mordred
-[INFO ] 2018-03-01 14:26:35.243 [JavaFX Application Thread] Player - 0s hand changed - added Amour
-[INFO ] 2018-03-01 14:26:35.243 [JavaFX Application Thread] Player - 0s hand changed - added SirGawain
-[INFO ] 2018-03-01 14:26:35.244 [JavaFX Application Thread] Player - 0s hand changed - added RobberKnight
-[INFO ] 2018-03-01 14:26:35.244 [JavaFX Application Thread] Player - 0s hand changed - added Dragon
-[INFO ] 2018-03-01 14:26:35.244 [JavaFX Application Thread] Player - 0s hand changed - added Giant
-[INFO ] 2018-03-01 14:26:35.244 [JavaFX Application Thread] Player - 0s hand changed - added Giant
-[INFO ] 2018-03-01 14:26:35.244 [JavaFX Application Thread] Player - 1s hand changed - added Sword
-[INFO ] 2018-03-01 14:26:35.244 [JavaFX Application Thread] Player - 1s hand changed - added Sword
-[INFO ] 2018-03-01 14:26:35.244 [JavaFX Application Thread] Player - 1s hand changed - added Horse
-[INFO ] 2018-03-01 14:26:35.244 [JavaFX Application Thread] Player - 1s hand changed - added Thieves
-[INFO ] 2018-03-01 14:26:35.244 [JavaFX Application Thread] Player - 1s hand changed - added Boar
-[INFO ] 2018-03-01 14:26:35.244 [JavaFX Application Thread] Player - 1s hand changed - added Mordred
-[INFO ] 2018-03-01 14:26:35.244 [JavaFX Application Thread] Player - 1s hand changed - added Amour
-[INFO ] 2018-03-01 14:26:35.245 [JavaFX Application Thread] Player - 1s hand changed - added QueenIseult
-[INFO ] 2018-03-01 14:26:35.245 [JavaFX Application Thread] Player - 1s hand changed - added RobberKnight
-[INFO ] 2018-03-01 14:26:35.245 [JavaFX Application Thread] Player - 1s hand changed - added Horse
-[INFO ] 2018-03-01 14:26:35.245 [JavaFX Application Thread] Player - 1s hand changed - added BattleAx
-[INFO ] 2018-03-01 14:26:35.245 [JavaFX Application Thread] Player - 1s hand changed - added Lance
-[INFO ] 2018-03-01 14:26:35.245 [JavaFX Application Thread] Player - 2s hand changed - added Sword
-[INFO ] 2018-03-01 14:26:35.245 [JavaFX Application Thread] Player - 2s hand changed - added Sword
-[INFO ] 2018-03-01 14:26:35.245 [JavaFX Application Thread] Player - 2s hand changed - added Horse
-[INFO ] 2018-03-01 14:26:35.245 [JavaFX Application Thread] Player - 2s hand changed - added Thieves
-[INFO ] 2018-03-01 14:26:35.245 [JavaFX Application Thread] Player - 2s hand changed - added Boar
-[INFO ] 2018-03-01 14:26:35.245 [JavaFX Application Thread] Player - 2s hand changed - added Mordred
-[INFO ] 2018-03-01 14:26:35.246 [JavaFX Application Thread] Player - 2s hand changed - added Amour
-[INFO ] 2018-03-01 14:26:35.246 [JavaFX Application Thread] Player - 2s hand changed - added RobberKnight
-[INFO ] 2018-03-01 14:26:35.246 [JavaFX Application Thread] Player - 2s hand changed - added Horse
-[INFO ] 2018-03-01 14:26:35.246 [JavaFX Application Thread] Player - 2s hand changed - added BattleAx
-[INFO ] 2018-03-01 14:26:35.246 [JavaFX Application Thread] Player - 2s hand changed - added Lance
-[INFO ] 2018-03-01 14:26:35.246 [JavaFX Application Thread] Player - 2s hand changed - added Excalibur
-[INFO ] 2018-03-01 14:26:35.246 [JavaFX Application Thread] Player - 3s hand changed - added Sword
-[INFO ] 2018-03-01 14:26:35.246 [JavaFX Application Thread] Player - 3s hand changed - added Sword
-[INFO ] 2018-03-01 14:26:35.246 [JavaFX Application Thread] Player - 3s hand changed - added Horse
-[INFO ] 2018-03-01 14:26:35.246 [JavaFX Application Thread] Player - 3s hand changed - added Thieves
-[INFO ] 2018-03-01 14:26:35.246 [JavaFX Application Thread] Player - 3s hand changed - added Boar
-[INFO ] 2018-03-01 14:26:35.246 [JavaFX Application Thread] Player - 3s hand changed - added EvilKnight
-[INFO ] 2018-03-01 14:26:35.246 [JavaFX Application Thread] Player - 3s hand changed - added Amour
-[INFO ] 2018-03-01 14:26:35.247 [JavaFX Application Thread] Player - 3s hand changed - added RobberKnight
-[INFO ] 2018-03-01 14:26:35.247 [JavaFX Application Thread] Player - 3s hand changed - added Horse
-[INFO ] 2018-03-01 14:26:35.247 [JavaFX Application Thread] Player - 3s hand changed - added BattleAx
-[INFO ] 2018-03-01 14:26:35.247 [JavaFX Application Thread] Player - 3s hand changed - added Lance
-[INFO ] 2018-03-01 14:26:37.291 [JavaFX Application Thread] Player - Game for 2 players begining
-[INFO ] 2018-03-01 14:26:38.035 [JavaFX Application Thread] View - Current View: Player 0
-[INFO ] 2018-03-01 14:26:38.036 [JavaFX Application Thread] Control - mainLoop() running
-[INFO ] 2018-03-01 14:26:38.036 [JavaFX Application Thread] Control - getSponsorDecision() called
-[INFO ] 2018-03-01 14:26:39.114 [JavaFX Application Thread] View - Yes clicked
-[INFO ] 2018-03-01 14:26:39.114 [JavaFX Application Thread] Model - Player 0 will sponsor
-[INFO ] 2018-03-01 14:26:39.793 [JavaFX Application Thread] View - Current View: Player 0
-[INFO ] 2018-03-01 14:26:40.392 [JavaFX Application Thread] Model - Player 0 assaniated Player 0s ally SirLancelot
-[INFO ] 2018-03-01 14:26:40.966 [JavaFX Application Thread] View - Current View: Player 0
-[INFO ] 2018-03-01 14:26:42.347 [JavaFX Application Thread] Control - alert() called: You do not have Mordred in your hand!
-[INFO ] 2018-03-01 14:26:44.418 [JavaFX Application Thread] View - Current View: Player 0
+[INFO ] 2018-03-01 20:13:00.333 [JavaFX Application Thread] View - Current View: Player 1
+[INFO ] 2018-03-01 20:13:00.857 [JavaFX Application Thread] View - Current View: Player 1
+[INFO ] 2018-03-01 20:13:01.402 [JavaFX Application Thread] View - Current View: Player 0
+[INFO ] 2018-03-01 20:13:02.604 [JavaFX Application Thread] View - Ready clicked
+[INFO ] 2018-03-01 20:13:03.229 [JavaFX Application Thread] View - Current View: Player 0
+[INFO ] 2018-03-01 20:13:06.286 [JavaFX Application Thread] View - End Turn clicked
+[INFO ] 2018-03-01 20:13:06.842 [JavaFX Application Thread] View - Current View: Player 0
+[INFO ] 2018-03-01 20:13:07.403 [JavaFX Application Thread] View - Current View: Player 0
+[INFO ] 2018-03-01 20:13:07.404 [JavaFX Application Thread] View - Stage Over
+[INFO ] 2018-03-01 20:13:07.414 [JavaFX Application Thread] View - Player 0 failed stage 1
+[INFO ] 2018-03-01 20:13:10.021 [JavaFX Application Thread] View - nextStageButton clicked
+[INFO ] 2018-03-01 20:13:10.021 [JavaFX Application Thread] Model - Player changed to 0
+[INFO ] 2018-03-01 20:13:10.567 [JavaFX Application Thread] View - Current View: Player 0
+[INFO ] 2018-03-01 20:13:10.567 [JavaFX Application Thread] Control - getSponsorDecision() called
+[INFO ] 2018-03-01 20:13:12.901 [JavaFX Application Thread] View - Yes clicked
+[INFO ] 2018-03-01 20:13:12.901 [JavaFX Application Thread] Model - Player 0 will sponsor
+[INFO ] 2018-03-01 20:13:13.559 [JavaFX Application Thread] View - Current View: Player 0
+[INFO ] 2018-03-01 20:13:14.130 [JavaFX Application Thread] View - Current View: Player 0
