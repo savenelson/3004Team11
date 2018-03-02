@@ -341,7 +341,7 @@ public class View extends Application {
 						
 			if (state.toggleForStages)
 			{
-				control.stageIncrement();
+				//control.stageIncrement();
 			}
 			stage = state.stages[state.stageOverCount];
 
@@ -375,9 +375,21 @@ public class View extends Application {
 		for (int i = 0; i < state.numPlayers; ++i){
 			if(!state.players[i].isSponsor){
 				Label passed = new Label("Player "+ (i+1));
+<<<<<<< HEAD
 
 
 				if(state.players[i].passedQuest) {
+=======
+
+				
+				
+				
+			
+
+
+				if(state.players[i].passedQuest){
+
+>>>>>>> 0cd41d77dc01dfd5b5d5079347b4896914283708
 					passed.setText(passed.getText() + " passed Quest and receives " + numShields + " shields!");
 				} else {
 					passed.setText(passed.getText() + " failed Quest and receives 0 shields.");
@@ -397,7 +409,7 @@ public class View extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				logger.info("nextStageButton clicked");
-
+				System.out.println("\n\n nextStroty called!!");
 				control.nextStory();
 				update(stage);
 			}
@@ -1065,12 +1077,16 @@ public class View extends Application {
 		    }
 		});
 		if((state.currentPlayer == state.currentSponsor) && (state.currentSponsor == state.currentViewer)){
-
-			int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
-			for(int i = 4; i!=numStages-1; i--) {
-				stageButtons[i].setDisable(true);
+			
+			if(((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST)){
+				
+				int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
+				for(int i = 4; i!=numStages-1; i--) {
+					stageButtons[i].setDisable(true);
+				}
+				canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
 			}
-			canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
+
 		}
 		else{
 			canvas.getChildren().add(endTurn);

@@ -415,7 +415,10 @@ public class Model {
 		//TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
 		for (int i = 0; i < state.numPlayers; ++i){
 			if(!players[i].isSponsor){
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0cd41d77dc01dfd5b5d5079347b4896914283708
 				System.out.println("Players "+ i+1+ players[i].isQuesting + players[i].passedQuest);
 				
 			
@@ -425,9 +428,12 @@ public class Model {
 					}
 					
 				
+<<<<<<< HEAD
 				if(players[i].passedQuest) {
 					players[i].addShields(numShields);
 				}
+=======
+>>>>>>> 0cd41d77dc01dfd5b5d5079347b4896914283708
 
 			} else {
 				//TODO GIVE SPONSOR CARDS BACK 
@@ -450,7 +456,6 @@ public class Model {
 		 *    - players Rank
 		 */
 		logger.debug("resolveStage() called");
-		System.out.println("GG");
 
 		
 		CardCollection currStage = this.stages[this.currentStage+stageOverCount];
@@ -475,22 +480,42 @@ public class Model {
 			}
 			
 			//Check if player passed quest
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0cd41d77dc01dfd5b5d5079347b4896914283708
 			if(playerBP >= stageBP && (! players[i].isSponsor) && stageBP > 0){
 				players[i].passedStage = true;
-				if(state.currentStage +1==((QuestCard)state.currentStoryCard).getNumStages() )
+				if(state.currentStage +1==((QuestCard)state.currentStoryCard).getNumStages() ) {
 					players[i].passedQuest =true;
+<<<<<<< HEAD
 			if((playerBP >= stageBP) && (! players[i].isSponsor) && (stageBP > 0)){
 				this.players[i].passedStage = true;
 				this.players[i].passedQuest = true;
 			} else {
 				this.players[i].passedQuest = false;
 			}
+=======
+					System.out.println("true turned ");
+				}
+			
+>>>>>>> 0cd41d77dc01dfd5b5d5079347b4896914283708
 			this.toggleForStages = true;
 		}
-		
+			
+		}
 		if(stageOverCount == ((QuestCard)currentStoryCard).getNumStages()&& stageOverCount != 0){
 			resolveQuest();
+<<<<<<< HEAD
 		}}
+=======
+		}
+		
+		
+	
+
+
+>>>>>>> 0cd41d77dc01dfd5b5d5079347b4896914283708
 	}
 	
 	
@@ -499,7 +524,12 @@ public class Model {
 
 		for(int i = 0; i < this.numPlayers; ++i){
 			if(!this.players[i].isSponsor){
-				for(int j = 0; j < this.players[i].getQueue().size(); ++j){
+				
+				int size = this.players[i].getQueue().size();
+				
+				for(int j = 0; j < size; ++j){
+					System.out.println("\n\nthis.players[i].getQueue().size(): " + this.players[i].getQueue().size()); 
+					System.out.println("queue popping: "+  this.players[i].getQueue().toString());
 					adventureDeckDiscard.add(this.players[i].getQueue().pop());
 				}
 				players[i].passedStage = false;

@@ -47,6 +47,7 @@ public class Player {
 	
 	public Player(int playerNumber){
 		
+		
 		hand = new CardCollection();
 		
 		queue = new CardCollection();
