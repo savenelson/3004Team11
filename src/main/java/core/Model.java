@@ -400,9 +400,9 @@ public class Model {
 	
 	public int resolveQuest(){
 		logger.debug("resolveQuest() called");
-<<<<<<< HEAD
+
 		int numStages = this.state.numStages;
-=======
+
 		
 		if(inNextQ) {
 			
@@ -412,18 +412,14 @@ public class Model {
 			inNextQ = false;
 			}
 
->>>>>>> a103905eb43fe98fc5e03ad79b5544c47a6e8cea
 		int numShields = ((QuestCard) state.currentStoryCard).getNumStages();
 		logger.info("Number of Stages: " + numShields);
 
 		//TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
 		for (int i = 0; i < state.numPlayers; ++i){
 			if(!players[i].isSponsor){
-<<<<<<< HEAD
-=======
 
 				System.out.println("Players "+ i+1+ players[i].isQuesting + players[i].passedQuest);
->>>>>>> a103905eb43fe98fc5e03ad79b5544c47a6e8cea
 
 				if(players[i].passedQuest) {
 					players[i].addShields(numShields);
@@ -485,12 +481,8 @@ public class Model {
 				players[i].passedStage = true;
 				if(state.currentStage +1==((QuestCard)state.currentStoryCard).getNumStages() ) {
 					players[i].passedQuest =true;
-<<<<<<< HEAD
-=======
 
 					System.out.println("true turned ");
->>>>>>> a103905eb43fe98fc5e03ad79b5544c47a6e8cea
-
 					Card c = this.adventureDeck.pop();
 					this.players[i].addToHand(c);
 					adventureDeckDiscard.add(c);

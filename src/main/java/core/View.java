@@ -1079,8 +1079,9 @@ public class View extends Application {
 					stageButtons[i].setDisable(true);
 				}
 				canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
+			} else {
+				canvas.getChildren().add(endTurn);
 			}
-
 		}
 		else{
 			canvas.getChildren().add(endTurn);
@@ -1129,11 +1130,13 @@ public class View extends Application {
 	}
 	private void normalEndTurn(){
 		logger.info("normalEndTurn() called");
-
+		boolean isHarder = false;
 		boolean foeInEachStage = true;
 		boolean [] foesPresent = null;
-		
-		boolean isHarder = stageHarder(state);
+		if(((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST)) {
+			isHarder = stageHarder(state);
+		}
+
 		int numStages = 0;
 
     	if(state.players[state.currentPlayer].isSponsor){
@@ -1159,7 +1162,7 @@ public class View extends Application {
 		if(state.players[state.currentPlayer].isSponsor && !foeInEachStage){	    			
 			alert("Foe not present in every stage.");
 			return;
-		} else if(state.players[state.currentPlayer].isSponsor&& isHarder ==false) {
+		} else if(state.players[state.currentPlayer].isSponsor && isHarder==false) {
 			alert("The stages are not progressively harder");
 			return;
 			
