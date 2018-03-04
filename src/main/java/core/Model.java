@@ -1104,10 +1104,7 @@ public class Model {
 		this.players[3].addToHand(c);
 		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
-
 //		ID: 61, type: Adventure, subtype: Foe, name: Boar, battle points: 5, alternative battle points: 15, special: <NO SPECIAL>
-
-		
 		c = this.adventureDeck.getByID("61");
 		this.players[3].addToHand(c);
 		adventureDeckDiscard.add(c);
