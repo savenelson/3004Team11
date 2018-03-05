@@ -401,7 +401,7 @@ public class View extends Application {
 		layout.getChildren().add(nextStageButton);
 		nextStageButton.setTranslateY(65);
 		nextStageButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
+
 			public void handle(ActionEvent event) {
 				logger.info("nextStageButton clicked");
 				control.nextStory();
@@ -741,14 +741,13 @@ public class View extends Application {
 		canvas.getChildren().addAll(shieldsPlayerA);
 	}
 	
-	private void setStageCardControl(ImageView anAdventure) {
+	private void setStageCardControl(final ImageView anAdventure) {
 		logger.debug("setStageCardControl() called");
 
-		ContextMenu fileMenu = new ContextMenu();
+		final ContextMenu fileMenu = new ContextMenu();
 		
 		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
 
-			@Override
 			public void handle(ActionEvent event) {
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
 				state = control.getState();
@@ -797,7 +796,7 @@ public class View extends Application {
 
 		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
-		@Override
+
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
 				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
@@ -816,14 +815,14 @@ public class View extends Application {
 		 }
 	}
 	
-	private void setHandCardControl(ImageView anAdventure) {
+	private void setHandCardControl(final ImageView anAdventure) {
 		logger.debug("setHandCardControl() called");
 
-		ContextMenu fileMenu = new ContextMenu();
+		final ContextMenu fileMenu = new ContextMenu();
 		
 		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
 
-			@Override
+
 			public void handle(ActionEvent event) {
 				state = control.getState();				
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());			
@@ -872,7 +871,6 @@ public class View extends Application {
 		
 		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
-		@Override
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
 				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
@@ -889,14 +887,14 @@ public class View extends Application {
 		update(stage);
 	}
 	
-	private void setQueueCardControl(ImageView anAdventure) {
+	private void setQueueCardControl(final ImageView anAdventure) {
 		logger.debug("setQueueCardControl() called");
 
-		ContextMenu fileMenu = new ContextMenu();
+		final ContextMenu fileMenu = new ContextMenu();
 		
 		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
 
-			@Override
+			
 			public void handle(ActionEvent event) {
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
 				state = control.getState();
@@ -912,7 +910,6 @@ public class View extends Application {
 
 		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
-		@Override
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
 				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
@@ -921,14 +918,13 @@ public class View extends Application {
 		});
 	}
 
-	private void setPartyCardControl(ImageView anAlly) {
+	private void setPartyCardControl(final ImageView anAlly) {
 		logger.debug("setPartyCardControl() called");
 
-		ContextMenu fileMenu = new ContextMenu();
+		final ContextMenu fileMenu = new ContextMenu();
 
 		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
 
-			@Override
 			public void handle(ActionEvent event) {
 				control.handClick(((MenuItem) event.getSource()).getText(), anAlly.getId());
 				state = control.getState();
@@ -942,7 +938,7 @@ public class View extends Application {
 
 		anAlly.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
-		@Override
+
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
 				fileMenu.show(anAlly,t.getScreenX(),t.getScreenY());
@@ -973,12 +969,11 @@ public class View extends Application {
 		stage.getChildren().add(cardAdded);
 	}
 	
-	private void setRankControl(ImageView aRankCard, int numberOfcards) {
+	private void setRankControl(final ImageView aRankCard, final int numberOfcards) {
 		logger.debug("setRankControl() called");
 
 		aRankCard.addEventHandler(MouseEvent.MOUSE_ENTERED,
 		        new EventHandler<MouseEvent>() {
-	          @Override
 	          public void handle(MouseEvent e) {    	
 	        	  Rectangle rect = new Rectangle(0, 0, 100, 100);
 	        	  Tooltip t = new Tooltip("This player has " + numberOfcards+ " in their hands");
@@ -999,7 +994,7 @@ public class View extends Application {
 		stage1.relocate(240,80);
 		stage1.setMinWidth(80);
 		stage1.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
+		    public void handle(ActionEvent e) {
 		    	logger.info("Stage 1 clicked");
 		        control.buttonClick(STAGE1);
 				state = control.getState();
@@ -1013,7 +1008,7 @@ public class View extends Application {
 		stage2.relocate(240,110);
 		stage2.setMinWidth(80);
 		stage2.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
+		    public void handle(ActionEvent e) {
 		    	logger.info("Stage 2 clicked");
 		        control.buttonClick(STAGE2);
 				state = control.getState();
@@ -1025,7 +1020,7 @@ public class View extends Application {
 		stage3.relocate(240,140);
 		stage3.setMinWidth(80);
 		stage3.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
+		    public void handle(ActionEvent e) {
 		    	logger.info("Stage 3 clicked");
 		        control.buttonClick(STAGE3);
 				state = control.getState();
@@ -1037,7 +1032,7 @@ public class View extends Application {
 		stage4.relocate(240,170);
 		stage4.setMinWidth(80);
 		stage4.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
+		    public void handle(ActionEvent e) {
 		    	logger.info("Stage 4 clicked");
 		        control.buttonClick(STAGE4);
 				state = control.getState();
@@ -1049,7 +1044,7 @@ public class View extends Application {
 		stage5.relocate(240,200);
 		stage5.setMinWidth(80);
 		stage5.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
+		    public void handle(ActionEvent e) {
 		    	logger.info("Stage 5 clicked");
 		        control.buttonClick(STAGE5);
 				state = control.getState();
@@ -1060,7 +1055,7 @@ public class View extends Application {
 		endTurn.relocate(240,230);
 		endTurn.setMinWidth(80);
 		endTurn.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
+		    public void handle(ActionEvent e) {
 		    	logger.info("End Turn clicked");
 		    	state = control.getState();
 		    	normalEndTurn();
@@ -1185,7 +1180,6 @@ public class View extends Application {
 			readyButton.setFont(new Font("Ariel", 30));
 			
 			readyButton.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
 				public void handle(ActionEvent event) {
 					logger.info("Ready clicked");
 
@@ -1211,7 +1205,7 @@ public class View extends Application {
 		logger.info("Stage Over");
 
 		
-		StackPane layout = new StackPane();
+		final StackPane layout = new StackPane();
 		state = control.getState();
 		for (int i = 0; i < state.numPlayers; ++i){
 			control.stageIncrement();  //TODO THIS SEEMS IT MAY ADD numPlayers stages
@@ -1242,7 +1236,6 @@ public class View extends Application {
 		layout.getChildren().add(nextStageButton);
 		nextStageButton.setTranslateY(65);
 		nextStageButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent event) {
 				logger.info("nextStageButton clicked");
 
@@ -1258,7 +1251,6 @@ public class View extends Application {
 		layout.getChildren().add(showCardsButton);
 		showCardsButton.setTranslateY(140);
 		showCardsButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent event) {
 				logger.info("showCardsButton clicked");
 

@@ -605,193 +605,11 @@ public class Model {
 	
 	private void playEvent() {
 		logger.debug("playEvent() called");
-
-		if (((StoryCard) currentStoryCard).getName().equals("KingsRecognition")) {
-			 this.inNextQ = true;
-			 
-		} else if (((StoryCard) currentStoryCard).getName().equals("QueensFavor")) {
-			int squireCount = 0;
-			int championCount = 0;
-			int championKnightCount = 0;
-
-			for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
-
-				if ((this.state.players[i].getRank()).getSubType().equals("Squire")) {
-					squireCount++;
-				}
-				if ((this.state.players[i].getRank()).getSubType().equals("Knight")) {
-					championCount++;
-				}
-				if ((this.state.players[i].getRank()).getSubType().equals("ChampionKnight")) {
-					championKnightCount++;
-				}
-
-			}
-
-			if (squireCount != 0) {
-				for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
-					if ((this.state.players[i].getRank()).getSubType().equals("Squire")) {
-						this.players[i].addToHand(this.adventureDeck.pop());
-						this.players[i].addToHand(this.adventureDeck.pop());
-					}
-				}
-
-			} // we then know there is one squire. give him 2 adventure cards
-
-			if (championCount < championKnightCount && (squireCount == 0)) {
-				for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
-					if ((this.state.players[i].getRank()).getSubType().equals("Champion")) {
-						this.players[i].addToHand(this.adventureDeck.getByID("6"));
-						this.players[i].addToHand(this.adventureDeck.getByID("7"));
-					}
-				}
-				// there are less champions than championKnights
-			}
-			if (championKnightCount == numPlayers || squireCount == numPlayers || championCount == numPlayers) {
-				for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
-					this.players[i].addToHand(this.adventureDeck.pop());
-					this.players[i].addToHand(this.adventureDeck.pop());
-				}
-			}
-		} else if (((StoryCard) currentStoryCard).getName().equals("CourtCalled")) {
-			for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
-				CardCollection hand = this.players[i].getHand();
-
-				for (int j = 0; j < hand.size(); j++) {
-
-					if (hand.getByID("100") != null) {
-						Card c = hand.getByID("100");
-						hand.remove(c);
-						adventureDeckDiscard.add(c);
-					} else if (hand.getByID("101") != null) {
-						Card c = hand.getByID("101");
-						hand.remove(c);
-						adventureDeckDiscard.add(c);
-					} else if (hand.getByID("102") != null) {
-						Card c = hand.getByID("102");
-						hand.remove(c);
-						adventureDeckDiscard.add(c);
-					} else if (hand.getByID("103") != null) {
-						Card c = hand.getByID("103");
-						hand.remove(c);
-						adventureDeckDiscard.add(c);
-					} else if (hand.getByID("104") != null) {
-						Card c = hand.getByID("104");
-						hand.remove(c);
-						adventureDeckDiscard.add(c);
-					} else if (hand.getByID("105") != null) {
-						Card c = hand.getByID("105");
-						hand.remove(c);
-						adventureDeckDiscard.add(c);
-					} else if (hand.getByID("106") != null) {
-						Card c = hand.getByID("106");
-						hand.remove(c);
-						adventureDeckDiscard.add(c);
-					} else if (hand.getByID("107") != null) {
-						Card c = hand.getByID("107");
-						hand.remove(c);
-						adventureDeckDiscard.add(c);
-					} else if (hand.getByID("108") != null) {
-						Card c = hand.getByID("108");
-						hand.remove(c);
-						adventureDeckDiscard.add(c);
-					} else if (hand.getByID("109") != null) {
-						Card c = hand.getByID("109");
-						hand.remove(c);
-						adventureDeckDiscard.add(c);
-					}
-				}
-			}
-		} else if (((StoryCard) currentStoryCard).getName().equals("Pox")) {
-			for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
-				this.players[i].removeShields(1);
-			}
-			this.players[currentPlayer].addShields(1); // adds shield that was not supposed to be taken away
-		} else if (((StoryCard) currentStoryCard).getName().equals("Plague")) {
-			if (this.players[currentPlayer].getShieldCount() >= 2) {
-				this.players[currentPlayer].removeShields(2);
-			}
-			
-			
-			
-		} else if (((StoryCard) currentStoryCard).getName().equals("ChivalrousDeed")) {
-			int squireCount = 0;
-			int championCount = 0;
-			int championKnightCount = 0;
-			
-			int lowestShieldSquire = 0;
-			int lowestShieldKnight = 0;
-			int lowestShieldChamp = 0;
-			
-
-			for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
-
-				if ((this.state.players[i].getRank()).getSubType().equals("Squire")) {
-					squireCount++;
-					 lowestShieldSquire = this.state.players[i].getShieldCount();
-					 if (lowestShieldSquire > this.state.players[i].getShieldCount()){lowestShieldSquire = this.state.players[i].getShieldCount();}
-				}
-				if ((this.state.players[i].getRank()).getSubType().equals("Knight")) {
-					championCount++;
-					lowestShieldKnight = this.state.players[i].getShieldCount();
-					 if (lowestShieldKnight > this.state.players[i].getShieldCount()){lowestShieldKnight = this.state.players[i].getShieldCount();}
-				}
-				if ((this.state.players[i].getRank()).getSubType().equals("ChampionKnight")) {
-					championKnightCount++;
-					lowestShieldChamp = this.state.players[i].getShieldCount();
-					 if (lowestShieldChamp > this.state.players[i].getShieldCount()){lowestShieldChamp = this.state.players[i].getShieldCount();}
-				}
-
-			}
-
-			if (squireCount != 0) {  // squire is the lowest, so as long as it there are more than 0 squires, we know the lowest rank is that of the squire
-				for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
-					if ((this.state.players[i].getRank()).getSubType().equals("Squire")) {
-						
-						if (this.state.players[i].getShieldCount() == lowestShieldSquire ) {
-							this.players[i].addShields(6);
-							
-						}
-
-					}
-				}
-
-			} 
-
-			if (championCount <= championKnightCount && (squireCount == 0) && (championCount != 0)) {
-				for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
-					if ((this.state.players[i].getRank()).getSubType().equals("Champion")) {
-						if (this.state.players[i].getShieldCount() == lowestShieldKnight ) {
-							this.players[i].addShields(3);
-							
-						}
-						
-					}
-				}
-			}
-			if (championKnightCount == numPlayers) {
-				for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
-					if ((this.state.players[i].getRank()).getSubType().equals("ChampionKnight")) {
-						if (this.state.players[i].getShieldCount() == lowestShieldChamp ) {
-							this.players[i].addShields(3);
-							
-						}
-						
-					}
-
-				}
-			}
-		} 
 		
-		
-		
-		else if (((StoryCard) currentStoryCard).getName().equals("ProsperityThroughoutTheRealm")) {
-			for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
-				this.players[i].addToHand(this.adventureDeck.getByID("6"));
-				this.players[i].addToHand(this.adventureDeck.getByID("7"));
-			}
-		} else if (((StoryCard) currentStoryCard).getName().equals("KingsCallToArms")) {
-		}
+		EventManger eventHandler = new EventManger(this);
+		eventHandler.handleEvent(((StoryCard) currentStoryCard).getName());
+
+	
 	}
 	
 	public void playGame() {
@@ -1295,6 +1113,100 @@ public class Model {
 		this.players[3].addToHand(this.adventureDeck.getByID("29"));
 		this.players[3].addToHand(this.adventureDeck.getByID("36"));
 		this.players[3].addToHand(this.adventureDeck.getByID("44"));
+	}
+	
+	public void eventTesting() {
+		logger.info("seve");
+
+
+		this.currentPlayer = 0;
+
+		this.players[0].addShields(10);
+		this.players[1].addShields(6);
+		this.players[2].addShields(14);
+		this.players[3].addShields(10);
+		
+		stages[0].add(this.adventureDeck.getByID("57"));
+		stages[1].add(this.adventureDeck.getByID("86"));
+
+		this.currentStoryCard = this.storyDeck.getByID("151");
+		this.players[0].addToParty(this.adventureDeck.getByID("100"));
+		this.players[0].addToParty(this.adventureDeck.getByID("101"));
+		this.players[0].addToParty(this.adventureDeck.getByID("122"));
+		this.players[1].addToParty(this.adventureDeck.getByID("103"));
+		this.players[1].addToParty(this.adventureDeck.getByID("104"));
+		this.players[1].addToParty(this.adventureDeck.getByID("123"));
+		this.players[2].addToParty(this.adventureDeck.getByID("106"));
+		this.players[2].addToParty(this.adventureDeck.getByID("107"));
+		this.players[2].addToParty(this.adventureDeck.getByID("124"));
+		this.players[3].addToParty(this.adventureDeck.getByID("109"));
+		this.players[3].addToParty(this.adventureDeck.getByID("102"));
+		this.players[3].addToParty(this.adventureDeck.getByID("125"));
+		this.players[0].addToQueue(this.adventureDeck.getByID("13"));
+		this.players[0].addToQueue(this.adventureDeck.getByID("30"));
+		this.players[0].addToQueue(this.adventureDeck.getByID("37"));
+		this.players[0].addToQueue(this.adventureDeck.getByID("45"));
+		this.players[1].addToQueue(this.adventureDeck.getByID("14"));
+		this.players[1].addToQueue(this.adventureDeck.getByID("31"));
+		this.players[1].addToQueue(this.adventureDeck.getByID("38"));
+		this.players[1].addToQueue(this.adventureDeck.getByID("46"));
+		this.players[2].addToQueue(this.adventureDeck.getByID("15"));
+		this.players[2].addToQueue(this.adventureDeck.getByID("32"));
+		this.players[2].addToQueue(this.adventureDeck.getByID("38"));
+		this.players[2].addToQueue(this.adventureDeck.getByID("47"));
+		this.players[3].addToQueue(this.adventureDeck.getByID("16"));
+		this.players[3].addToQueue(this.adventureDeck.getByID("33"));
+		this.players[3].addToQueue(this.adventureDeck.getByID("39"));
+		this.players[3].addToQueue(this.adventureDeck.getByID("48"));
+		this.players[0].addToHand(this.adventureDeck.getByID("1"));
+		this.players[0].addToHand(this.adventureDeck.getByID("2"));
+		this.players[0].addToHand(this.adventureDeck.getByID("23"));
+		this.players[0].addToHand(this.adventureDeck.getByID("50"));
+		this.players[0].addToHand(this.adventureDeck.getByID("58"));
+		this.players[0].addToHand(this.adventureDeck.getByID("93"));
+		this.players[0].addToHand(this.adventureDeck.getByID("118"));
+		this.players[0].addToHand(this.adventureDeck.getByID("105"));
+		this.players[0].addToHand(this.adventureDeck.getByID("67"));
+		this.players[0].addToHand(this.adventureDeck.getByID("99"));
+		this.players[0].addToHand(this.adventureDeck.getByID("98"));
+		this.players[0].addToHand(this.adventureDeck.getByID("97"));
+//		this.players[0].addToHand(this.adventureDeck.getByID("92")); //13th card for hand!
+		this.players[1].addToHand(this.adventureDeck.getByID("3"));
+		this.players[1].addToHand(this.adventureDeck.getByID("4"));
+		this.players[1].addToHand(this.adventureDeck.getByID("24"));
+		this.players[1].addToHand(this.adventureDeck.getByID("51"));
+		this.players[1].addToHand(this.adventureDeck.getByID("59"));
+		this.players[1].addToHand(this.adventureDeck.getByID("94"));
+		this.players[1].addToHand(this.adventureDeck.getByID("119"));
+		this.players[1].addToHand(this.adventureDeck.getByID("108"));
+		this.players[1].addToHand(this.adventureDeck.getByID("68"));
+		this.players[1].addToHand(this.adventureDeck.getByID("27"));
+		this.players[1].addToHand(this.adventureDeck.getByID("34"));
+		this.players[1].addToHand(this.adventureDeck.getByID("42"));
+		this.players[2].addToHand(this.adventureDeck.getByID("5"));
+		this.players[2].addToHand(this.adventureDeck.getByID("6"));
+		this.players[2].addToHand(this.adventureDeck.getByID("25"));
+		this.players[2].addToHand(this.adventureDeck.getByID("52"));
+		this.players[2].addToHand(this.adventureDeck.getByID("60"));
+		this.players[2].addToHand(this.adventureDeck.getByID("95"));
+		this.players[2].addToHand(this.adventureDeck.getByID("120"));
+		this.players[2].addToHand(this.adventureDeck.getByID("69"));
+		this.players[2].addToHand(this.adventureDeck.getByID("28"));
+		this.players[2].addToHand(this.adventureDeck.getByID("35"));
+		this.players[2].addToHand(this.adventureDeck.getByID("43"));
+		this.players[2].addToHand(this.adventureDeck.getByID("48"));
+		this.players[3].addToHand(this.adventureDeck.getByID("7"));
+		this.players[3].addToHand(this.adventureDeck.getByID("8"));
+		this.players[3].addToHand(this.adventureDeck.getByID("26"));
+		this.players[3].addToHand(this.adventureDeck.getByID("53"));
+		this.players[3].addToHand(this.adventureDeck.getByID("61"));
+		this.players[3].addToHand(this.adventureDeck.getByID("87"));
+		this.players[3].addToHand(this.adventureDeck.getByID("121"));
+		this.players[3].addToHand(this.adventureDeck.getByID("70"));
+		this.players[3].addToHand(this.adventureDeck.getByID("29"));
+		this.players[3].addToHand(this.adventureDeck.getByID("36"));
+		this.players[3].addToHand(this.adventureDeck.getByID("44"));
+		
 	}
 }
 
