@@ -60,13 +60,13 @@ public class Control{
 
 //		model.deal(); 			//COMMENT OUT FOR SET SCENEARIOS
 		
-		//model.setScenario1();	//UNCOMMENT FOR SCEN 1
+		model.setScenario1();	//UNCOMMENT FOR SCEN 1
 		
 //		model.setScenario2();	//UNCOMMENT FOR SCEN 2
 		
 //		model.setScenarioTest();
 		
-		model.eventTesting();
+		//model.eventTesting();
 	}
 
 	public void mainLoop(){
@@ -105,7 +105,11 @@ public class Control{
 
 		return view.popup("Player " + (getActivePlayer().getPlayerNumber()+1) + " - Would you like to sponsor this quest?");
 	}
-	
+	public boolean getQuestingDecision(){
+		logger.info("getQuesting() called");
+
+		return view.popup("Player " + (getActivePlayer().getPlayerNumber()+1) + " - Would you like to quest quest?");
+	}
 	public State getState(){
 		logger.debug("getState() called");
 

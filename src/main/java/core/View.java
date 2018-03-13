@@ -145,7 +145,7 @@ public class View extends Application {
 			logger.info("Yes clicked");
 			response = true;
 		 } else {
-			 control.buttonClick(ENDTURN);
+			// control.buttonClick(ENDTURN);
 			 logger.info("No clicked");
 			 response = false;
 		 }
@@ -195,6 +195,7 @@ public class View extends Application {
 	
 	public Pane drawCards(Pane canvas){
 		logger.debug("drawCards() called");
+		
 
 		this.state = control.getState();
 		
@@ -843,8 +844,7 @@ public class View extends Application {
 		
 		else if((subType.equals(AdventureCard.FOE)  ||
 		        subType.equals(AdventureCard.TEST)) &&
-		        state.players[state.currentPlayer].isSponsor &&
-		        state.currentPlayer == state.currentViewer){
+		        state.players[state.currentPlayer].isSponsor ){
 			MenuItem playItem = new MenuItem(STAGE);
 			playItem.setOnAction(eh);
 			fileMenu.getItems().add(playItem);
@@ -852,8 +852,7 @@ public class View extends Application {
 		
 		else if(subType.equals(AdventureCard.WEAPON)){
 			
-			if(state.players[state.currentPlayer].isSponsor&&
-			   state.currentPlayer == state.currentViewer){
+			if(state.players[state.currentPlayer].isSponsor){
 				MenuItem stageItem = new MenuItem(STAGE);
 				stageItem.setOnAction(eh);
 				fileMenu.getItems().add(stageItem);
@@ -1065,6 +1064,7 @@ public class View extends Application {
 				}
 		    }
 		});
+		/*
 		if((state.currentPlayer == state.currentSponsor) && (state.currentSponsor == state.currentViewer)){
 			
 			if(((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST)){
@@ -1080,7 +1080,18 @@ public class View extends Application {
 		}
 		else{
 			canvas.getChildren().add(endTurn);
+		}*/
+	if((state.players[state.currentPlayer].isSponsor&& ((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST))){
+			
+				int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
+				for(int i = 4; i!=numStages-1; i--) {stageButtons[i].setDisable(true);} 
+				canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
+			
 		}
+		else{
+			canvas.getChildren().add(endTurn);
+		}
+		
 	}
 	
 	private boolean stageHarder(State state) {
@@ -1163,15 +1174,17 @@ public class View extends Application {
 			
 		} else if(state.players[state.currentPlayer].isSponsor){	    			
 			control.stagesSet();
+			control.buttonClick(ENDTURN);
 		}
 
-		control.buttonClick(ENDTURN);
+		
 
 		state = control.getState();
     	if(state.stageResolved){
     		stageResolved();
     	} else {
 			update(stage);
+			control.buttonClick(ENDTURN);
 			
 			Label playerLabel = new Label("Player " + (control.getActivePlayer().getPlayerNumber()+1) + " ready?");
 			playerLabel.setFont(new Font("Ariel", 30));

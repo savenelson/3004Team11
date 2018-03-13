@@ -1,70 +1,72 @@
 package core;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.Optional;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
+import core.*;
 
-public class QuestManager extends Pane{
-	public static final String ENDTURN = "End Turn";
-	private Control control;
-	public State state;
-	private TilePane tile;
-	private ImageView imgView;
-	String IMG_DIR = "src/main/resources/core/cards/";
-	String GIF = ".gif";
-	public boolean hasAnswer = false;
+public class QuestManager implements StoryCardState{
+	private static final Logger logger = LogManager.getLogger(QuestManager.class);
+	Model  model;
+	Player[] players ; 
+	
+	boolean hasSponsor = false;
+	
+	boolean questersReady = false;
+	
+	int numberOfquesters = 0;
 	
 	
-	
-	public QuestManager(State state, Control control) {
-		this.state = state;
-		this.control = control;
-		Label  label = new Label("Sponsor Quest");
-		Label label2 = new Label(state.players[state.currentPlayer].toString());
-		label2.relocate(550, 10);
+	int numberOfrequests = 0;
+	public QuestManager(Model model) {
+		this.model = model;
+		players = model.getPlayers();
 		
-		label.setPrefHeight(10);
-		label.setTextAlignment(TextAlignment.CENTER);
-		label.setFont(new Font("Ariel", 40));
-		label.relocate(550, 10);
-		try {
-			Image i = new Image(new FileInputStream(IMG_DIR + state.currentStoryCard.getImgName() + GIF));
-			imgView = new ImageView();
-			imgView.setImage(i);
-			imgView.relocate(100, 100);
-			imgView.setFitWidth(100);
-			imgView.setFitHeight(100);
-			imgView.setPreserveRatio(true);
-			this.getChildren().addAll(imgView);
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-		this.getChildren().addAll(label, label2);
 		
 		
 	}
 	
 	
 	
-	public void setState() {
-		state = control.getState();
+	public void handle() {
+		logger.info("Handling questing info");
+		// if I do not have a sponsor askk the person if they want to sponsor 
+		if(!hasSponsor) {
+		if(!this.model.getActivePlayer().declinedToSponsor) {
+		boolean wantToSponsor= model.control.getSponsorDecision();
+		if(wantToSponsor) {
+			logger.info("Found a sponsor ");
+			hasSponsor = true;
+			
+			model.getActivePlayer().isSponsor = true;
+			model.control.updateViewState();
+		}
+		
+		model.getActivePlayer().declinedToSponsor = true;
+		}
+		}
+		/*
+		if(hasSponsor && !questersReady &&!this.model.getActivePlayer().isSponsor ) {
+			if(!this.model.getActivePlayer().declinedQuesting) {
+				boolean isQuesting = model.control.getQuestingDecision();
+				if(isQuesting) {
+					logger.info("THe Player has decidied to quest ");
+					model.getActivePlayer().isQuesting = true;
+					
+					numberOfrequests++;
+					
+				}
+				this.model.getActivePlayer().declinedQuesting = true;
+			}
+		}*/
+	}
+
+
+
+	public Player nextPlayer() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

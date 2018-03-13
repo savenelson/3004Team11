@@ -2,14 +2,16 @@ package core;
 
 
 // class to handle event cards
-public class EventManger{
+public class EventManger implements StoryCardState{
 Player [] players;
 int numPlayers;
 AdventureDeck adventureDeck;
 AdventureDeck adventureDeckDiscard;
 boolean nextQ;
 int currentPlayer;
+Model model; 
 public EventManger(Model model) {
+	this.model = model;
 	this.players= model.getPlayers();
 	this.numPlayers = model.numPlayers;
 	this.adventureDeck = model.getAdventureDeck();
@@ -253,6 +255,19 @@ public void Plague() {
 		this.players[currentPlayer].removeShields(2);
 	}
 	
+}
+
+
+public void handle() {
+	// TODO Auto-generated method stub
+	model.ge
+	
+}
+
+
+public Player nextPlayer() {
+	// TODO Auto-generated method stub
+	return null;
 }
 
 
