@@ -151,6 +151,7 @@ public class View extends Application {
 		 }
 		 return response;
 	}
+
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -179,8 +180,8 @@ public class View extends Application {
 			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer+1));
 			logger.info("Current View: Player " + state.currentPlayer);
 		} else {
-			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentViewer+1));
-			logger.info("Current View: Player " + state.currentViewer);
+			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer+1));
+			logger.info("Current View: Player " + state.currentPlayer);
 		}
 		primaryStage.show();
 	}
@@ -268,7 +269,7 @@ public class View extends Application {
 			hand = state.players[state.currentPlayer].getHand();
 		}
 		else{
-			hand = state.players[state.currentViewer].getHand();
+			hand = state.players[state.currentPlayer].getHand();
 		}
 		
 		tile = new TilePane();
@@ -306,7 +307,7 @@ public class View extends Application {
 		state = control.getState();
 		CardCollection stage = state.stage;
 
-		if(state.players[state.currentViewer].isSponsor){
+		if(state.players[state.currentPlayer].isSponsor){
 			
 
 			
@@ -376,10 +377,6 @@ public class View extends Application {
 		for (int i = 0; i < state.numPlayers; ++i){
 			if(!state.players[i].isSponsor){
 				Label passed = new Label("Player "+ (i+1));
-
-
-				
-				
 				
 			
 
@@ -1057,7 +1054,7 @@ public class View extends Application {
 		    public void handle(ActionEvent e) {
 		    	logger.info("End Turn clicked");
 		    	state = control.getState();
-		    	normalEndTurn();
+		    control.model.endTurn();
 				if (state.toggleForStages)
 				{
 					control.stageIncrement();
@@ -1065,7 +1062,7 @@ public class View extends Application {
 		    }
 		});
 		/*
-		if((state.currentPlayer == state.currentSponsor) && (state.currentSponsor == state.currentViewer)){
+		if((state.currentPlayer == state.currentSponsor) && (state.currentSponsor == state.currentPlayer)){
 			
 			if(((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST)){
 				
@@ -1136,7 +1133,8 @@ public class View extends Application {
 	}
 	private void normalEndTurn(){
 		logger.info("normalEndTurn() called");
-		boolean isHarder = false;
+		
+		/*boolean isHarder = false;
 		boolean foeInEachStage = true;
 		boolean [] foesPresent = null;
 		if(((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST)) {
@@ -1175,6 +1173,8 @@ public class View extends Application {
 		} else if(state.players[state.currentPlayer].isSponsor){	    			
 			control.stagesSet();
 			control.buttonClick(ENDTURN);
+		}else if (state.players[state.currentPlayer].declinedQuesting) {
+			control.buttonClick(ENDTURN);
 		}
 
 		
@@ -1183,8 +1183,9 @@ public class View extends Application {
     	if(state.stageResolved){
     		stageResolved();
     	} else {
+    			//control.buttonClick(ENDTURN);
 			update(stage);
-			control.buttonClick(ENDTURN);
+			
 			
 			Label playerLabel = new Label("Player " + (control.getActivePlayer().getPlayerNumber()+1) + " ready?");
 			playerLabel.setFont(new Font("Ariel", 30));
@@ -1210,7 +1211,7 @@ public class View extends Application {
 			Scene scene = new Scene(layout);
 			scene.getStylesheets().add("style.css");
 			stage.setScene(scene);
-    	}
+    	} */
     }
 	
 	public void stageResolved(){
@@ -1254,7 +1255,7 @@ public class View extends Application {
 
 				control.stageOver();
 				state = control.getState();
-				normalEndTurn();
+				control.model.endTurn();
 				control.stageIncrement();
 			}
 		});

@@ -2,7 +2,8 @@ package core;
 
 public interface StoryCardState {
 	void handle();
-	Player nextPlayer();
+	void nextPlayer();
+	void setPlayer();
 	
 	
 

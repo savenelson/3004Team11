@@ -374,7 +374,9 @@ public class Model {
 		logger.debug("endTurn() called");
 		logger.info("I end turn called changing s ");
 		
-		nextPlayer();
+		
+		
+		questManger.nextPlayer();
 		questManger.handle();
 		
 		
@@ -504,7 +506,8 @@ public class Model {
 					adventureDeckDiscard.add(c);
 				}
 			
-			this.toggleForStages = true;
+		//
+				this.toggleForStages = true;
 		}
 			
 		}
@@ -521,7 +524,7 @@ public class Model {
 	
 	
 	public void stageOver(){
-		logger.debug("stageOver() called");
+		logger.info("stageOver() called");
 
 		for(int i = 0; i < this.numPlayers; ++i){
 			if(!this.players[i].isSponsor){
@@ -536,7 +539,7 @@ public class Model {
 		}
 		stageOverCount++;
 		
-		this.currentViewer--;// TODO ??? MAYBE A REALLY BAD FIX MAYBE NOT, WHO KNOWS ANYMORE...
+		//this.currentViewer--;// TODO ??? MAYBE A REALLY BAD FIX MAYBE NOT, WHO KNOWS ANYMORE...
 		this.stagesSet = false;
 		this.stageResolved = false;
 		this.toggleForStages = true;
@@ -647,9 +650,9 @@ public class Model {
 		checkHandSize();
 	}
 	
-	private void nextPlayer(){
-		logger.debug("nextPlayer() called");
-
+	public void nextPlayer(){
+		logger.info("nextPlayer() called");
+		
 		if(this.currentPlayer == numPlayers - 1){
 			this.currentPlayer = 0;
 
@@ -660,7 +663,7 @@ public class Model {
 		}
 		logger.info("Player changed to " + this.currentPlayer);
 		control.view.update();
-		questManger.handle();
+		
 	}
 
 	public void nextStory() {
