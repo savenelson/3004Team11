@@ -145,12 +145,13 @@ public class View extends Application {
 			logger.info("Yes clicked");
 			response = true;
 		 } else {
-			 control.buttonClick(ENDTURN);
+			// control.buttonClick(ENDTURN);
 			 logger.info("No clicked");
 			 response = false;
 		 }
 		 return response;
 	}
+
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -179,8 +180,8 @@ public class View extends Application {
 			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer+1));
 			logger.info("Current View: Player " + state.currentPlayer);
 		} else {
-			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentViewer+1));
-			logger.info("Current View: Player " + state.currentViewer);
+			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer+1));
+			logger.info("Current View: Player " + state.currentPlayer);
 		}
 		primaryStage.show();
 	}
@@ -195,6 +196,7 @@ public class View extends Application {
 	
 	public Pane drawCards(Pane canvas){
 		logger.debug("drawCards() called");
+		
 
 		this.state = control.getState();
 		
@@ -267,7 +269,7 @@ public class View extends Application {
 			hand = state.players[state.currentPlayer].getHand();
 		}
 		else{
-			hand = state.players[state.currentViewer].getHand();
+			hand = state.players[state.currentPlayer].getHand();
 		}
 		
 		tile = new TilePane();
@@ -305,7 +307,7 @@ public class View extends Application {
 		state = control.getState();
 		CardCollection stage = state.stage;
 
-		if(state.players[state.currentViewer].isSponsor){
+		if(state.players[state.currentPlayer].isSponsor){
 			
 
 			
@@ -341,7 +343,7 @@ public class View extends Application {
 						
 			if (state.toggleForStages)
 			{
-				//control.stageIncrement();
+				control.stageIncrement();
 			}
 			stage = state.stages[state.stageOverCount];
 
@@ -375,9 +377,6 @@ public class View extends Application {
 		for (int i = 0; i < state.numPlayers; ++i){
 			if(!state.players[i].isSponsor){
 				Label passed = new Label("Player "+ (i+1));
-
-				
-				
 				
 			
 
@@ -400,10 +399,9 @@ public class View extends Application {
 		layout.getChildren().add(nextStageButton);
 		nextStageButton.setTranslateY(65);
 		nextStageButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
+
 			public void handle(ActionEvent event) {
 				logger.info("nextStageButton clicked");
-				System.out.println("\n\n nextStroty called!!");
 				control.nextStory();
 				update(stage);
 			}
@@ -741,14 +739,13 @@ public class View extends Application {
 		canvas.getChildren().addAll(shieldsPlayerA);
 	}
 	
-	private void setStageCardControl(ImageView anAdventure) {
+	private void setStageCardControl(final ImageView anAdventure) {
 		logger.debug("setStageCardControl() called");
 
-		ContextMenu fileMenu = new ContextMenu();
+		final ContextMenu fileMenu = new ContextMenu();
 		
 		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
 
-			@Override
 			public void handle(ActionEvent event) {
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
 				state = control.getState();
@@ -797,7 +794,7 @@ public class View extends Application {
 
 		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
-		@Override
+
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
 				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
@@ -816,14 +813,14 @@ public class View extends Application {
 		 }
 	}
 	
-	private void setHandCardControl(ImageView anAdventure) {
+	private void setHandCardControl(final ImageView anAdventure) {
 		logger.debug("setHandCardControl() called");
 
-		ContextMenu fileMenu = new ContextMenu();
+		final ContextMenu fileMenu = new ContextMenu();
 		
 		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
 
-			@Override
+
 			public void handle(ActionEvent event) {
 				state = control.getState();				
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());			
@@ -844,8 +841,7 @@ public class View extends Application {
 		
 		else if((subType.equals(AdventureCard.FOE)  ||
 		        subType.equals(AdventureCard.TEST)) &&
-		        state.players[state.currentPlayer].isSponsor &&
-		        state.currentPlayer == state.currentViewer){
+		        state.players[state.currentPlayer].isSponsor ){
 			MenuItem playItem = new MenuItem(STAGE);
 			playItem.setOnAction(eh);
 			fileMenu.getItems().add(playItem);
@@ -853,8 +849,7 @@ public class View extends Application {
 		
 		else if(subType.equals(AdventureCard.WEAPON)){
 			
-			if(state.players[state.currentPlayer].isSponsor&&
-			   state.currentPlayer == state.currentViewer){
+			if(state.players[state.currentPlayer].isSponsor){
 				MenuItem stageItem = new MenuItem(STAGE);
 				stageItem.setOnAction(eh);
 				fileMenu.getItems().add(stageItem);
@@ -872,7 +867,6 @@ public class View extends Application {
 		
 		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
-		@Override
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
 				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
@@ -889,14 +883,14 @@ public class View extends Application {
 		update(stage);
 	}
 	
-	private void setQueueCardControl(ImageView anAdventure) {
+	private void setQueueCardControl(final ImageView anAdventure) {
 		logger.debug("setQueueCardControl() called");
 
-		ContextMenu fileMenu = new ContextMenu();
+		final ContextMenu fileMenu = new ContextMenu();
 		
 		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
 
-			@Override
+			
 			public void handle(ActionEvent event) {
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());
 				state = control.getState();
@@ -912,7 +906,6 @@ public class View extends Application {
 
 		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
-		@Override
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
 				fileMenu.show(anAdventure,t.getScreenX(),t.getScreenY());
@@ -921,14 +914,13 @@ public class View extends Application {
 		});
 	}
 
-	private void setPartyCardControl(ImageView anAlly) {
+	private void setPartyCardControl(final ImageView anAlly) {
 		logger.debug("setPartyCardControl() called");
 
-		ContextMenu fileMenu = new ContextMenu();
+		final ContextMenu fileMenu = new ContextMenu();
 
 		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
 
-			@Override
 			public void handle(ActionEvent event) {
 				control.handClick(((MenuItem) event.getSource()).getText(), anAlly.getId());
 				state = control.getState();
@@ -942,7 +934,7 @@ public class View extends Application {
 
 		anAlly.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
-		@Override
+
 		public void handle(MouseEvent t) {
 			if (t.getButton() == MouseButton.SECONDARY) {
 				fileMenu.show(anAlly,t.getScreenX(),t.getScreenY());
@@ -973,12 +965,11 @@ public class View extends Application {
 		stage.getChildren().add(cardAdded);
 	}
 	
-	private void setRankControl(ImageView aRankCard, int numberOfcards) {
+	private void setRankControl(final ImageView aRankCard, final int numberOfcards) {
 		logger.debug("setRankControl() called");
 
 		aRankCard.addEventHandler(MouseEvent.MOUSE_ENTERED,
 		        new EventHandler<MouseEvent>() {
-	          @Override
 	          public void handle(MouseEvent e) {    	
 	        	  Rectangle rect = new Rectangle(0, 0, 100, 100);
 	        	  Tooltip t = new Tooltip("This player has " + numberOfcards+ " in their hands");
@@ -999,7 +990,7 @@ public class View extends Application {
 		stage1.relocate(240,80);
 		stage1.setMinWidth(80);
 		stage1.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
+		    public void handle(ActionEvent e) {
 		    	logger.info("Stage 1 clicked");
 		        control.buttonClick(STAGE1);
 				state = control.getState();
@@ -1013,7 +1004,7 @@ public class View extends Application {
 		stage2.relocate(240,110);
 		stage2.setMinWidth(80);
 		stage2.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
+		    public void handle(ActionEvent e) {
 		    	logger.info("Stage 2 clicked");
 		        control.buttonClick(STAGE2);
 				state = control.getState();
@@ -1025,7 +1016,7 @@ public class View extends Application {
 		stage3.relocate(240,140);
 		stage3.setMinWidth(80);
 		stage3.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
+		    public void handle(ActionEvent e) {
 		    	logger.info("Stage 3 clicked");
 		        control.buttonClick(STAGE3);
 				state = control.getState();
@@ -1037,7 +1028,7 @@ public class View extends Application {
 		stage4.relocate(240,170);
 		stage4.setMinWidth(80);
 		stage4.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
+		    public void handle(ActionEvent e) {
 		    	logger.info("Stage 4 clicked");
 		        control.buttonClick(STAGE4);
 				state = control.getState();
@@ -1049,7 +1040,7 @@ public class View extends Application {
 		stage5.relocate(240,200);
 		stage5.setMinWidth(80);
 		stage5.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
+		    public void handle(ActionEvent e) {
 		    	logger.info("Stage 5 clicked");
 		        control.buttonClick(STAGE5);
 				state = control.getState();
@@ -1060,17 +1051,18 @@ public class View extends Application {
 		endTurn.relocate(240,230);
 		endTurn.setMinWidth(80);
 		endTurn.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
+		    public void handle(ActionEvent e) {
 		    	logger.info("End Turn clicked");
 		    	state = control.getState();
-		    	normalEndTurn();
+		    control.model.endTurn();
 				if (state.toggleForStages)
 				{
 					control.stageIncrement();
 				}
 		    }
 		});
-		if((state.currentPlayer == state.currentSponsor) && (state.currentSponsor == state.currentViewer)){
+		/*
+		if((state.currentPlayer == state.currentSponsor) && (state.currentSponsor == state.currentPlayer)){
 			
 			if(((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST)){
 				
@@ -1079,12 +1071,24 @@ public class View extends Application {
 					stageButtons[i].setDisable(true);
 				}
 				canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
+			} else {
+				canvas.getChildren().add(endTurn);
 			}
-
+		}
+		else{
+			canvas.getChildren().add(endTurn);
+		}*/
+	if((state.players[state.currentPlayer].isSponsor&& ((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST))){
+			
+				int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
+				for(int i = 4; i!=numStages-1; i--) {stageButtons[i].setDisable(true);} 
+				canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
+			
 		}
 		else{
 			canvas.getChildren().add(endTurn);
 		}
+		
 	}
 	
 	private boolean stageHarder(State state) {
@@ -1129,11 +1133,14 @@ public class View extends Application {
 	}
 	private void normalEndTurn(){
 		logger.info("normalEndTurn() called");
-
+		
+		/*boolean isHarder = false;
 		boolean foeInEachStage = true;
 		boolean [] foesPresent = null;
-		
-		boolean isHarder = stageHarder(state);
+		if(((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST)) {
+			isHarder = stageHarder(state);
+		}
+
 		int numStages = 0;
 
     	if(state.players[state.currentPlayer].isSponsor){
@@ -1159,21 +1166,26 @@ public class View extends Application {
 		if(state.players[state.currentPlayer].isSponsor && !foeInEachStage){	    			
 			alert("Foe not present in every stage.");
 			return;
-		} else if(state.players[state.currentPlayer].isSponsor&& isHarder ==false) {
+		} else if(state.players[state.currentPlayer].isSponsor && isHarder==false) {
 			alert("The stages are not progressively harder");
 			return;
 			
 		} else if(state.players[state.currentPlayer].isSponsor){	    			
 			control.stagesSet();
+			control.buttonClick(ENDTURN);
+		}else if (state.players[state.currentPlayer].declinedQuesting) {
+			control.buttonClick(ENDTURN);
 		}
 
-		control.buttonClick(ENDTURN);
+		
 
 		state = control.getState();
     	if(state.stageResolved){
     		stageResolved();
     	} else {
+    			//control.buttonClick(ENDTURN);
 			update(stage);
+			
 			
 			Label playerLabel = new Label("Player " + (control.getActivePlayer().getPlayerNumber()+1) + " ready?");
 			playerLabel.setFont(new Font("Ariel", 30));
@@ -1182,7 +1194,6 @@ public class View extends Application {
 			readyButton.setFont(new Font("Ariel", 30));
 			
 			readyButton.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
 				public void handle(ActionEvent event) {
 					logger.info("Ready clicked");
 
@@ -1200,7 +1211,7 @@ public class View extends Application {
 			Scene scene = new Scene(layout);
 			scene.getStylesheets().add("style.css");
 			stage.setScene(scene);
-    	}
+    	} */
     }
 	
 	public void stageResolved(){
@@ -1208,7 +1219,7 @@ public class View extends Application {
 		logger.info("Stage Over");
 
 		
-		StackPane layout = new StackPane();
+		final StackPane layout = new StackPane();
 		state = control.getState();
 		for (int i = 0; i < state.numPlayers; ++i){
 			control.stageIncrement();  //TODO THIS SEEMS IT MAY ADD numPlayers stages
@@ -1227,7 +1238,6 @@ public class View extends Application {
 				layout.setPrefHeight(720);
 				layout.setPrefWidth(1280);
 				passed.setTranslateY(-180+(60*i));			
-				System.out.print("Player "+ (i+1));
 				if(state.players[i].passedStage) {
 					logger.info("Player " + i + " passed stage " + (state.currentStage+1));
 				} else {
@@ -1240,13 +1250,12 @@ public class View extends Application {
 		layout.getChildren().add(nextStageButton);
 		nextStageButton.setTranslateY(65);
 		nextStageButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent event) {
 				logger.info("nextStageButton clicked");
 
 				control.stageOver();
 				state = control.getState();
-				normalEndTurn();
+				control.model.endTurn();
 				control.stageIncrement();
 			}
 		});
@@ -1256,7 +1265,6 @@ public class View extends Application {
 		layout.getChildren().add(showCardsButton);
 		showCardsButton.setTranslateY(140);
 		showCardsButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
 			public void handle(ActionEvent event) {
 				logger.info("showCardsButton clicked");
 

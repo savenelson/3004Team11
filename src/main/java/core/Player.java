@@ -11,6 +11,7 @@ public class Player {
 
 	public boolean isSponsor = false;
 	public boolean declinedToSponsor = false;
+	public boolean declinedQuesting =false;
 	public boolean hasQueuedAgainstStage = false;
 	public boolean isQuesting = false;
 	public boolean passedStage = false;
@@ -33,6 +34,7 @@ public class Player {
 	public int getShieldCount() {return shieldCount;}
 	
 	public void addShields(int num) {
+		num= num/2; //TODO this is so wrong
 		logger.info(this.playerNumber + " gains " + num + " shields");
 		this.shieldCount += num;
 		promote();
