@@ -145,12 +145,13 @@ public class View extends Application {
 			logger.info("Yes clicked");
 			response = true;
 		 } else {
-			 control.buttonClick(ENDTURN);
+			// control.buttonClick(ENDTURN);
 			 logger.info("No clicked");
 			 response = false;
 		 }
 		 return response;
 	}
+
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -179,8 +180,8 @@ public class View extends Application {
 			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer+1));
 			logger.info("Current View: Player " + state.currentPlayer);
 		} else {
-			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentViewer+1));
-			logger.info("Current View: Player " + state.currentViewer);
+			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer+1));
+			logger.info("Current View: Player " + state.currentPlayer);
 		}
 		primaryStage.show();
 	}
@@ -195,6 +196,7 @@ public class View extends Application {
 	
 	public Pane drawCards(Pane canvas){
 		logger.debug("drawCards() called");
+		
 
 		this.state = control.getState();
 		
@@ -267,7 +269,7 @@ public class View extends Application {
 			hand = state.players[state.currentPlayer].getHand();
 		}
 		else{
-			hand = state.players[state.currentViewer].getHand();
+			hand = state.players[state.currentPlayer].getHand();
 		}
 		
 		tile = new TilePane();
@@ -305,7 +307,7 @@ public class View extends Application {
 		state = control.getState();
 		CardCollection stage = state.stage;
 
-		if(state.players[state.currentViewer].isSponsor){
+		if(state.players[state.currentPlayer].isSponsor){
 			
 
 			
@@ -375,10 +377,6 @@ public class View extends Application {
 		for (int i = 0; i < state.numPlayers; ++i){
 			if(!state.players[i].isSponsor){
 				Label passed = new Label("Player "+ (i+1));
-
-
-				
-				
 				
 			
 
@@ -843,8 +841,7 @@ public class View extends Application {
 		
 		else if((subType.equals(AdventureCard.FOE)  ||
 		        subType.equals(AdventureCard.TEST)) &&
-		        state.players[state.currentPlayer].isSponsor &&
-		        state.currentPlayer == state.currentViewer){
+		        state.players[state.currentPlayer].isSponsor ){
 			MenuItem playItem = new MenuItem(STAGE);
 			playItem.setOnAction(eh);
 			fileMenu.getItems().add(playItem);
@@ -852,8 +849,7 @@ public class View extends Application {
 		
 		else if(subType.equals(AdventureCard.WEAPON)){
 			
-			if(state.players[state.currentPlayer].isSponsor&&
-			   state.currentPlayer == state.currentViewer){
+			if(state.players[state.currentPlayer].isSponsor){
 				MenuItem stageItem = new MenuItem(STAGE);
 				stageItem.setOnAction(eh);
 				fileMenu.getItems().add(stageItem);
@@ -1058,14 +1054,15 @@ public class View extends Application {
 		    public void handle(ActionEvent e) {
 		    	logger.info("End Turn clicked");
 		    	state = control.getState();
-		    	normalEndTurn();
+		    control.model.endTurn();
 				if (state.toggleForStages)
 				{
 					control.stageIncrement();
 				}
 		    }
 		});
-		if((state.currentPlayer == state.currentSponsor) && (state.currentSponsor == state.currentViewer)){
+		/*
+		if((state.currentPlayer == state.currentSponsor) && (state.currentSponsor == state.currentPlayer)){
 			
 			if(((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST)){
 				
@@ -1080,7 +1077,18 @@ public class View extends Application {
 		}
 		else{
 			canvas.getChildren().add(endTurn);
+		}*/
+	if((state.players[state.currentPlayer].isSponsor&& ((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST))){
+			
+				int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
+				for(int i = 4; i!=numStages-1; i--) {stageButtons[i].setDisable(true);} 
+				canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
+			
 		}
+		else{
+			canvas.getChildren().add(endTurn);
+		}
+		
 	}
 	
 	private boolean stageHarder(State state) {
@@ -1125,7 +1133,8 @@ public class View extends Application {
 	}
 	private void normalEndTurn(){
 		logger.info("normalEndTurn() called");
-		boolean isHarder = false;
+		
+		/*boolean isHarder = false;
 		boolean foeInEachStage = true;
 		boolean [] foesPresent = null;
 		if(((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST)) {
@@ -1163,15 +1172,20 @@ public class View extends Application {
 			
 		} else if(state.players[state.currentPlayer].isSponsor){	    			
 			control.stagesSet();
+			control.buttonClick(ENDTURN);
+		}else if (state.players[state.currentPlayer].declinedQuesting) {
+			control.buttonClick(ENDTURN);
 		}
 
-		control.buttonClick(ENDTURN);
+		
 
 		state = control.getState();
     	if(state.stageResolved){
     		stageResolved();
     	} else {
+    			//control.buttonClick(ENDTURN);
 			update(stage);
+			
 			
 			Label playerLabel = new Label("Player " + (control.getActivePlayer().getPlayerNumber()+1) + " ready?");
 			playerLabel.setFont(new Font("Ariel", 30));
@@ -1197,7 +1211,7 @@ public class View extends Application {
 			Scene scene = new Scene(layout);
 			scene.getStylesheets().add("style.css");
 			stage.setScene(scene);
-    	}
+    	} */
     }
 	
 	public void stageResolved(){
@@ -1241,7 +1255,7 @@ public class View extends Application {
 
 				control.stageOver();
 				state = control.getState();
-				normalEndTurn();
+				control.model.endTurn();
 				control.stageIncrement();
 			}
 		});

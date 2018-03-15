@@ -48,10 +48,17 @@ public class Model {
 	CardCollection [] stages;
 	CardCollection [] getStages() {return stages;}
 	
+	StoryCardState questManger;
+	StoryCardState eventManger;
 	Model(Control control){
+		
 		logger.info("Model created");
 
 		this.control = control;
+		
+		questManger= new QuestManager(this);
+		eventManger = new EventManger(this);
+		
 		
 		this.adventureDeck = new AdventureDeck();
 		this.storyDeck = new StoryDeck();
@@ -219,7 +226,8 @@ public class Model {
 		hand.remove(c);
 		stages[currentStage].add(c);
 		logger.info("Player " + this.currentPlayer + " moves " + c.getName() + " from hand to Stage " + currentStage);
-
+		
+		
 	}	
 	
 	public void unstage(String iD) {
@@ -256,9 +264,7 @@ public class Model {
 	public Player getActivePlayer(){
 		logger.debug("getActivePlayer() called");
 
-		if(this.currentPlayer != this.currentViewer) {
-			return this.players[this.currentViewer];
-		}
+		
 		return this.players[this.currentPlayer];
 	}
 	
@@ -366,14 +372,26 @@ public class Model {
 	
 	public void endTurn() {
 		logger.debug("endTurn() called");
+		logger.info("I end turn called changing s ");
+		
+		
+		
+		questManger.nextPlayer();
+		questManger.handle();
+		
+		
+		//nextPlayer();
+		
 
-		if(players[currentPlayer].isSponsor){
+		/*if(players[currentPlayer].isSponsor){
 			viewerChanged();	
 		}
 		else{
 			nextPlayer();
 			endTurnCounter++;
-		}
+		}*/
+		
+		
 	}
 	
 	public void viewerChanged(){
@@ -488,7 +506,8 @@ public class Model {
 					adventureDeckDiscard.add(c);
 				}
 			
-			this.toggleForStages = true;
+		//
+				this.toggleForStages = true;
 		}
 			
 		}
@@ -505,7 +524,7 @@ public class Model {
 	
 	
 	public void stageOver(){
-		logger.debug("stageOver() called");
+		logger.info("stageOver() called");
 
 		for(int i = 0; i < this.numPlayers; ++i){
 			if(!this.players[i].isSponsor){
@@ -520,7 +539,7 @@ public class Model {
 		}
 		stageOverCount++;
 		
-		this.currentViewer--;// TODO ??? MAYBE A REALLY BAD FIX MAYBE NOT, WHO KNOWS ANYMORE...
+		//this.currentViewer--;// TODO ??? MAYBE A REALLY BAD FIX MAYBE NOT, WHO KNOWS ANYMORE...
 		this.stagesSet = false;
 		this.stageResolved = false;
 		this.toggleForStages = true;
@@ -585,7 +604,10 @@ public class Model {
 		
 
 		logger.debug("playQuest() called");
-		boolean decision = control.getSponsorDecision();
+		
+		
+		questManger.handle();
+		/*boolean decision = control.getSponsorDecision();
 		if(decision){
 			players[currentPlayer].isSponsor = true;
 			logger.info("Player " + currentPlayer + " will sponsor");
@@ -600,14 +622,14 @@ public class Model {
 			logger.info("Player " + currentPlayer + " will not sponsor");
 			control.updateViewState();
 			endTurn();
-		}
+		} */
 	}
 	
 	private void playEvent() {
 		logger.debug("playEvent() called");
 		
-		EventManger eventHandler = new EventManger(this);
-		eventHandler.handleEvent(((StoryCard) currentStoryCard).getName());
+		eventManger.handle();
+		((EventManger) eventManger).handleEvent(((StoryCard) currentStoryCard).getName());
 
 	
 	}
@@ -628,9 +650,9 @@ public class Model {
 		checkHandSize();
 	}
 	
-	private void nextPlayer(){
-		logger.debug("nextPlayer() called");
-
+	public void nextPlayer(){
+		logger.info("nextPlayer() called");
+		
 		if(this.currentPlayer == numPlayers - 1){
 			this.currentPlayer = 0;
 
@@ -640,6 +662,8 @@ public class Model {
 			this.currentSponsor = this.currentPlayer;
 		}
 		logger.info("Player changed to " + this.currentPlayer);
+		control.view.update();
+		
 	}
 
 	public void nextStory() {
@@ -682,7 +706,7 @@ public class Model {
 		
 		this.stagePlaceHolder = 0;
 		
-		nextPlayer();
+		
 		this.currentViewer = this.currentPlayer;
 		control.updateViewState();
 		playGame();
