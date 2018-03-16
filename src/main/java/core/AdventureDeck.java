@@ -3,14 +3,16 @@ package core;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class AdventureDeck extends CardCollection{
+public class AdventureDeck extends CardCollection<AdventureCard>{
 	private static final Logger logger = LogManager.getLogger(AdventureDeck.class);
 
 	
 	public AdventureDeck() {
-		super();
 		
+		super();
+
 		logger.info("Adventure Deck Created");
+		
 		// WEAPONS
 		for(int i = 0; i < WeaponCard.NUMBER_SWORDS; ++i){
 			cards.add(new WeaponCard(WeaponCard.SWORD_NAME, WeaponCard.SWORD_BATTLE_POINTS));
@@ -102,6 +104,16 @@ public class AdventureDeck extends CardCollection{
 //		AdventureDeck aD = new AdventureDeck();
 //		
 //		System.out.println("Adventure deck size (no Test Cards): " + aD.size());
+//	}
+	
+//	public AdventureCard getByID(String ID){
+//		
+//		for (int i = 0; i < cards.size(); ++i){
+//			if(ID.equals(cards.get(i).getID())){
+//				return cards.get(i);
+//			}
+//		}
+//		return null;
 //	}
 	
 }

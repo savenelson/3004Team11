@@ -12,7 +12,7 @@ public class Model {
 	State state;
 	
 	private Player [] players;
-	public Player [] getPlayers(){return players;}
+	public Player  [] getPlayers(){return players;}
 	
 	private AdventureDeck adventureDeck;
 	public AdventureDeck getAdventureDeck(){return this.adventureDeck;}
@@ -24,7 +24,7 @@ public class Model {
 	public StoryDeck getStoryDeck(){return storyDeck;}
 
 	private StoryDeck storyDeckDiscard;
-	public AdventureDeck getStoryDeckDiscard(){return this.adventureDeck;}
+	public StoryDeck getStoryDeckDiscard(){return storyDeckDiscard;}
 	
 	boolean inNextQ = false;
 	boolean stagesSet = false;
@@ -33,20 +33,19 @@ public class Model {
 	int currentStage;
 	int currentSponsor;
 	int endTurnCounter = 0;
-//	boolean currentPlayerNotSponsoring;
 	boolean gameWon = false;
 	boolean stageResolved = false;
 	boolean toggleForStages = false;
 	int stagePlaceHolder = 0;
 	static int stageOverCount = 0;
 
-	Card currentStoryCard;
+	StoryCard currentStoryCard;
 	
 	int numPlayers;
 	int numStages;
 	
-	CardCollection [] stages;
-	CardCollection [] getStages() {return stages;}
+	CardCollection<AdventureCard> [] stages;
+	CardCollection<AdventureCard> [] getStages() {return stages;}
 	
 	StoryCardState questManger;
 	StoryCardState eventManger;
@@ -70,7 +69,6 @@ public class Model {
 		
 		currentPlayer = 0;
 		currentSponsor = 0;
-//		currentPlayerNotSponsoring = false;
 	}
 	
 	public void instantiatePlayers(int numPlayers){
@@ -86,10 +84,10 @@ public class Model {
 	public void instantiateStages(){
 		logger.debug("instantiateStages() called - hard coded to 5");
 
-		stages = new CardCollection[5];
+		stages = new AdventureDeck[5];
 		
 		for(int i = 0; i < 5; ++i){
-			stages[i] = new CardCollection();
+			stages[i] = new AdventureDeck();
 		}
 		
 		currentStage = 0;
@@ -194,8 +192,8 @@ public class Model {
 	public void party(String iD) {
 		logger.debug("party() called");
 
-		CardCollection hand = getActivePlayer().getHand();
-		Card c = hand.getByID(iD);
+		CardCollection<AdventureCard> hand = getActivePlayer().getHand();
+		AdventureCard c =   hand.getByID(iD);
 		
 		if((((AdventureCard) c).getSubType().equals(AdventureCard.AMOUR)) 
 				&& containsAmour(getActivePlayer().getParty())) {
@@ -212,8 +210,8 @@ public class Model {
 	public void stage(String iD) {
 		logger.debug("stage() called");
 
-		CardCollection hand = this.players[this.currentPlayer].getHand();
-		Card c = hand.getByID(iD);
+		CardCollection<AdventureCard> hand = this.players[this.currentPlayer].getHand();
+		AdventureCard c = hand.getByID(iD);
 		if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
 				&& containsFoe(this.stages[currentStage])) {
 			control.alert("Cannot stage more than one foe per quest stage.");
@@ -234,7 +232,7 @@ public class Model {
 		logger.debug("unstage() called");
 
 		
-		Card c = this.stages[currentStage].getByID(iD);
+		AdventureCard c = this.stages[currentStage].getByID(iD);
 		
 		this.stages[currentStage].remove(c);
 		
@@ -263,16 +261,14 @@ public class Model {
 	
 	public Player getActivePlayer(){
 		logger.debug("getActivePlayer() called");
-
-		
 		return this.players[this.currentPlayer];
 	}
 	
 	public void discard(String iD) {
 		logger.debug("discard() called");
 
-		CardCollection hand = getActivePlayer().getHand();
-		Card c = hand.getByID(iD);
+		CardCollection<AdventureCard> hand = getActivePlayer().getHand();
+		AdventureCard c = hand.getByID(iD);
 		
 		
 		hand.remove(c);
@@ -286,7 +282,7 @@ public class Model {
 		
 		boolean hasMordred = false;
 		int indexMordred = 0;
-		CardCollection hand = getActivePlayer().getHand();
+		CardCollection <AdventureCard> hand = getActivePlayer().getHand();
 		
 		for(int i=0;i< hand.size();i++) {
 			if(hand.get(i).getName().equals("Mordred")){
@@ -307,13 +303,13 @@ public class Model {
 				}
 			}
 			//remove the ally 
-			CardCollection party = state.players[playerHoldingAlly].getParty();
-			Card c = party.getByID(iD);
+			CardCollection<AdventureCard> party = state.players[playerHoldingAlly].getParty();
+			AdventureCard c = party.getByID(iD);
 			party.remove(c);
 			adventureDeckDiscard.add(c);
 			
 			//remove mordred
-			Card mordred = hand.get(indexMordred);
+			AdventureCard mordred = hand.get(indexMordred);
 			hand.remove(mordred);
 			adventureDeckDiscard.add(mordred);
 
@@ -327,8 +323,8 @@ public class Model {
 	public void queue(String iD) {
 		logger.debug("queue() called");
 
-		CardCollection hand = getActivePlayer().getHand();
-		Card c = hand.getByID(iD);
+		CardCollection<AdventureCard> hand = getActivePlayer().getHand();
+		AdventureCard c = hand.getByID(iD);
 		
 		if(containsSameWeapon(getActivePlayer().getQueue(), ((WeaponCard) c).getName())) {
 			control.alert("Cannot have duplicate weapons in queue.");
@@ -341,7 +337,7 @@ public class Model {
 
 	}
 	
-	public boolean containsSameWeapon(CardCollection collection, String cardName) {
+	public boolean containsSameWeapon(CardCollection<AdventureCard> collection, String cardName) {
 		logger.debug("containsSameWeapon(" + cardName + ") called");
 
 		for (int i=0; i<collection.size(); i++) {
@@ -356,8 +352,8 @@ public class Model {
 
 	public void dequeue(String iD) {
 		logger.debug("dequeue(" + iD + ") called");
-		CardCollection queue = getActivePlayer().getQueue();
-		Card c = queue.getByID(iD);
+		CardCollection<AdventureCard> queue = getActivePlayer().getQueue();
+		AdventureCard c = queue.getByID(iD);
 		queue.remove(c);
 		getActivePlayer().addToHand(c);
 		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from queue to hand");
@@ -442,7 +438,7 @@ public class Model {
 				if(players[i].passedQuest) {
 					players[i].addShields(numShields);
 					for(int j=0;j<numStages;j++) {
-						Card c = this.adventureDeck.pop();
+						AdventureCard c = this.adventureDeck.pop();
 						this.players[i].addToHand(c);
 						adventureDeckDiscard.add(c);
 					}
@@ -460,7 +456,6 @@ public class Model {
 		return 0;
 	}
 	
-
 	public void resolveStage(){
 		/**
 		 * To resolve a stage, we need to count the following data structures:
@@ -501,7 +496,7 @@ public class Model {
 					players[i].passedQuest =true;
 
 					System.out.println("true turned ");
-					Card c = this.adventureDeck.pop();
+					AdventureCard c = this.adventureDeck.pop();
 					this.players[i].addToHand(c);
 					adventureDeckDiscard.add(c);
 				}
@@ -521,8 +516,7 @@ public class Model {
 
 
 	}
-	
-	
+		
 	public void stageOver(){
 		logger.info("stageOver() called");
 
@@ -548,11 +542,11 @@ public class Model {
 		control.updateViewState();
 	}
 	
-	public boolean containsFoe(CardCollection collection) {
+	public boolean containsFoe(CardCollection<AdventureCard> collection) {
 		logger.debug("containsFoe() called");
 
 		for (int i=0; i<collection.size(); i++) {
-			if(((AdventureCard) collection.get(i)).getSubType().equals(AdventureCard.FOE)) {
+			if(collection.get(i).getSubType().equals(AdventureCard.FOE)) {
 				//TODO need to ALERT the View
 
 				return true;
@@ -562,11 +556,11 @@ public class Model {
 		return false;
 	}
 	
-	public boolean containsAmour(CardCollection collection) {
+	public boolean containsAmour(CardCollection<AdventureCard> collection) {
 		logger.debug("containsAmour() called");
 
 		for (int i=0; i<collection.size(); i++) {
-			if(((AdventureCard) collection.get(i)).getSubType().equals(AdventureCard.AMOUR)) {
+			if(collection.get(i).getSubType().equals(AdventureCard.AMOUR)) {
 				//TODO need to ALERT the View
 
 				return true;
@@ -576,7 +570,7 @@ public class Model {
 		return false;
 	}
 	
-	public boolean containsWeapon(CardCollection collection, String cardName) {
+	public boolean containsWeapon(CardCollection<AdventureCard> collection, String cardName) {
 		logger.debug("containsWeapon() called");
 
 		for (int i=0; i<collection.size(); i++) {
@@ -588,7 +582,6 @@ public class Model {
 		return false;
 	}
 	
-
 	public String getSubType(String ID, int currentPlayer){
 		logger.debug("getSubType() called");
 		String result = "";
@@ -598,7 +591,6 @@ public class Model {
 		}
 		return result;
 	}
-
 
 	private void playQuest(){
 		
@@ -682,16 +674,15 @@ public class Model {
 			instantiateStages(); //TODO - DO PROPERLY
 			
 			//remove amours
-			CardCollection queue = players[i].getQueue();
+			CardCollection<AdventureCard> queue = players[i].getQueue();
 			for(int j = 0; j < queue.size(); ++j){
-				if(((AdventureCard) queue.get(j)).getSubType().equals(AdventureCard.AMOUR)){
-					Card c = queue.get(j);
+				if(queue.get(j).getSubType().equals(AdventureCard.AMOUR)){
+					AdventureCard c = queue.get(j);
 					queue.remove(j);
 					adventureDeckDiscard.add(c);
 				}
 			}
 		}
-		
 		
 		storyDeckDiscard.add(this.currentStoryCard);
 		this.currentStoryCard = storyDeck.pop();
@@ -706,12 +697,10 @@ public class Model {
 		
 		this.stagePlaceHolder = 0;
 		
-		
 		this.currentViewer = this.currentPlayer;
 		control.updateViewState();
 		playGame();
 	}
-	
 	
 	public void setScenario1() {
 		logger.debug("setScenario1() called - Setting up SCENARIO ONE");
@@ -742,9 +731,11 @@ public class Model {
 //		ID: 74, type: Adventure, subtype: Foe, name: SaxonKnight, battle points: 15, alternative battle points: 25, special: <NO SPECIAL>
 		this.currentPlayer = 0;
 		this.currentStoryCard = this.storyDeck.getByID("126"); //BOAR  hUNT
-		Card c = this.getStoryDeck().pop();
-		storyDeckDiscard.add(c);
+		StoryCard sC = this.getStoryDeck().pop();
+		storyDeckDiscard.add(sC);
 //		ID: 58, type: Adventure, subtype: Foe, name: Boar, battle points: 5, alternative battle points: 15, special: <NO SPECIAL>
+		
+		AdventureCard c;
 		c = this.adventureDeck.getByID("58");
 		this.players[0].addToHand(c);
 		adventureDeckDiscard.add(c);
@@ -990,7 +981,6 @@ public class Model {
 		this.adventureDeck.shuffle();
 	} //end set scenario 1
 	
-	
 	public void setScenario2() {
 		logger.debug("setScenario2() called - Setting up SCENARIO TWO");
 
@@ -1233,5 +1223,3 @@ public class Model {
 		
 	}
 }
-
-
