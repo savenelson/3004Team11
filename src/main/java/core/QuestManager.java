@@ -26,21 +26,22 @@ public class QuestManager implements StoryCardState{
 	
 	boolean questersReady = false;
 	
-	int numberOfquesters = 0;
+	int numOfansewers;
 	
 	
 	int numberOfrequests = 0;
 	
 	
-	
-	ArrayQueue<Integer> questers;
+	QuesterQueque questers ; 
+
 	
 	
 	
 	public QuestManager(Model model) {
 		this.model = model;
 		players = model.getPlayers();
-		this. questers = new ArrayQueue<Integer>(5);
+		
+		questers = new QuesterQueque();
 		
 		
 		
@@ -51,47 +52,59 @@ public class QuestManager implements StoryCardState{
 	
 	public void handle() {
 		logger.info("Handling questing info");
-		// if I do not have a sponsor askk the person if they want to sponsor 
+		
+		// if I do not have a sponsor ask the person if they want to sponsor 
 		if(!hasSponsor) {
+			
+		// if I haven't ask to sponsor yet then ask
 		if(!this.model.getActivePlayer().declinedToSponsor) {
 		boolean wantToSponsor= model.control.getSponsorDecision();
+		// if they do want to sponsor then make them the sponsors
 		if(wantToSponsor) {
 			logger.info("Found a sponsor ");
 			hasSponsor = true;
 			
 			model.getActivePlayer().isSponsor = true;
 			model.control.updateViewState();
-
-			for(int i=0; i<model.numPlayers;i++) {
-				players = model.getPlayers();
-				if(!players[i].isSponsor) {
-					logger.info("adding Player" + players[i].getPlayerNumber());
-					this.questers.add(players[i].getPlayerNumber());
-				}
-			}
 			
 		}
-		
+		// changed that they have asked 
 		model.getActivePlayer().declinedToSponsor = true;
+		
+		}else {// I have went around all the players and no want to sponsor 
+			//go to next story Cards}
+			logger.info(" No one wanted to Sponsor lets go to the NEXT STORY GUY");
 		}
+	}
 		
 		
-		}
-		//if I haveent asked everyone then keep on asking next player
-		//if(!questersReady)
-		
-		if(hasSponsor && !questersReady &&!this.model.getActivePlayer().isSponsor ) {
-			if(!this.model.getActivePlayer().declinedQuesting) {
+		// Questers asking
+		// if I have a sponsor and the quester are not ready then ask the current player
+		if(hasSponsor && !questersReady) {
+			// if I have a sponsor and the quester are not ready then ask the current plater
+			if(!this.model.getActivePlayer().declinedQuesting && !this.model.getActivePlayer().isSponsor) {
 				boolean isQuesting = model.control.getQuestingDecision();
 				if(isQuesting) {
 					logger.info("THe Player has decidied to quest ");
 					model.getActivePlayer().isQuesting = true;
-					
-					numberOfrequests++;
+					questers.add(model.getActivePlayer().getPlayerNumber());
 					
 				}
+				//they have answered
 				this.model.getActivePlayer().declinedQuesting = true;
+			}else {
+				// I return to the sponor 
+				if(questers.isEmpty()) {
+					
+					logger.info("I have no  any questers ");
+					// should go to the next story hard 
+				}else {
+					logger.info("I do have some questers. Let us begin our adventures ");
+				}
+				
 			}
+			
+			
 		}
 	}
 
@@ -200,6 +213,13 @@ public class QuestManager implements StoryCardState{
 		
 
 			
+	}
+
+
+
+	public void setPlayer() {
+		// TODO Auto-generated method stub
+		
 	}   	 
 
 }
