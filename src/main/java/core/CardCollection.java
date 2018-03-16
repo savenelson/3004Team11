@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
-public class CardCollection {
+public class CardCollection<T extends Card> {
 	
 	public static final int DISTICT_ADV_CARDS = 32;
-
-	protected ArrayList<Card> cards;
 	
-
+	private T t;
 	
-	public Card get(int i){return cards.get(i);}
+	protected ArrayList<T> cards;
 	
-	public Card pop(){
-		Card c = cards.get(0);
+	public T get(int i){return cards.get(i);}
+	
+	public T pop(){
+		T c = cards.get(0);
 		cards.remove(0);
 		return c;
 	}
@@ -35,22 +35,22 @@ public class CardCollection {
 //	}
 	
 	// returns cards array size after adding 
-	public int add(Card c){cards.add(c); return cards.size();}
+	public int add(T c){cards.add(c); return cards.size();}
 	
 	// returns cards array size after adding
-	public void addAll(Collection<? extends Card> c){cards.addAll(c);}
+	public void addAll(Collection<? extends T> c){cards.addAll(c);}
 	
 	public int size(){return cards.size();}
 	
 	protected CardCollection(){
-		cards = new ArrayList<Card>();
+		cards = new ArrayList<T>();
 	}
 	
 	public void shuffle(){
 		Collections.shuffle(cards);
 	}
 	
-	public Card getByID(String ID){
+	public T getByID(String ID){
 		
 		for (int i = 0; i < cards.size(); ++i){
 			if(ID.equals(cards.get(i).getID())){
@@ -68,7 +68,7 @@ public class CardCollection {
 		}	
 		
 	}
-	public void remove(Card c){
+	public void remove(T c){
 		for (int i = 0; i < cards.size(); ++i){
 			if(c.equals(cards.get(i))){
 				cards.remove(i);
