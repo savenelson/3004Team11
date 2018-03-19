@@ -135,6 +135,8 @@ public class QuestManager implements StoryCardState{
 		}
 		if(questersReady ) {
 			//begins the stage
+			logger.info("Done  hh"+ numOfRepsonders);
+			
 			
 			
 			numOfQuester = questers.size();
@@ -142,12 +144,11 @@ public class QuestManager implements StoryCardState{
 				//all the questers made their choice time to resolve stage;
 				logger.info("Done  hh"+ numOfRepsonders);
 				
-			
-				//model.resolveStage();
+				model.resolveQuest();
 				
 			}else {
-				logger.info("Done  "+ numOfRepsonders);
-				numOfRepsonders++;
+				logger.info("Current "+ numOfRepsonders);
+				
 			}
 			
 			
@@ -278,6 +279,9 @@ public class QuestManager implements StoryCardState{
 			model.control.stagesSet();
 			return true;
 		}else {
+			if(questersReady) {
+				numOfRepsonders++;
+			}
 			return true;
 		}
 

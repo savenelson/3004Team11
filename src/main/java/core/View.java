@@ -366,6 +366,37 @@ public class View extends Application {
 		}
 	}
 	
+	public void nextPlayer() {
+
+		Label playerLabel = new Label("Player " + (control.getActivePlayer().getPlayerNumber()+1) + " ready?");
+		playerLabel.setFont(new Font("Ariel", 30));
+		
+		Button readyButton = new Button("Ready");
+		readyButton.setFont(new Font("Ariel", 30));
+		
+		readyButton.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				logger.info("Ready clicked");
+
+				control.view.update();
+			}
+		});
+		StackPane layout = new StackPane();
+		layout.getChildren().addAll(playerLabel, readyButton);
+		layout.setPrefHeight(720);
+		layout.setPrefWidth(1280);
+		
+		readyButton.setTranslateY(65);
+		playerLabel.setTranslateY(-45);			
+
+		Scene scene = new Scene(layout);
+		scene.getStylesheets().add("style.css");
+		stage.setScene(scene);
+
+		
+		
+	}
+	
 	public void resolveQuest(){
 		logger.debug("resolveQuest() called");
 
@@ -1091,25 +1122,6 @@ public class View extends Application {
 		
 	}
 	
-	private boolean stageHarder(State state) {
-		logger.debug("stageHarder() called");
-
-		int numStages = ((QuestCard) state.currentStoryCard).getNumStages();
-		
-		
-		if (numStages == 1) return true;
-		
-		else {
-			for(int i =0; i<numStages-1; i++) {
-				
-				if(totalNumOfBP(state.stages[i])>=totalNumOfBP(state.stages[i+1])) {
-					System.out.println("");
-					return false;
-				}
-			}	
-		}
-		return true;
-	}
 	
 	private int totalNumOfBP(CardCollection stage) {
 		logger.debug("totalNumOfBP() called");

@@ -229,6 +229,9 @@ public class Control{
 		view.alert(message);
 	}
 
+	public void nextPlayer() {
+		view.nextPlayer();
+	}
 
 
 	public View getView() {

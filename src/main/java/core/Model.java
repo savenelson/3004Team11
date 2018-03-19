@@ -462,7 +462,7 @@ public class Model {
 		 *    - players Rank
 		 *    - get a card if they pass
 		 */
-		logger.debug("resolveStage() called");
+		logger.info("resolveStage() called");
 
 		
 		CardCollection currStage = this.stages[this.currentStage+stageOverCount];
@@ -661,6 +661,7 @@ public class Model {
 		}
 		logger.info("Player changed to " + this.currentPlayer);
 		
+		//control.nextPlayer();
 		control.view.update();
 		
 	}
