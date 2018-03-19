@@ -5,6 +5,5 @@ public interface StoryCardState {
 	void nextPlayer();
 	void setPlayer();
 	
-	
 
 }

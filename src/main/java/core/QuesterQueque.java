@@ -8,6 +8,8 @@ public class QuesterQueque {
 	
 	ArrayDeque<Integer> oldQuesters;
 	
+	int numberOfTurns= 0;
+	
 	
 	public QuesterQueque() {
 		currentQuesters = new ArrayDeque<Integer>();
@@ -26,10 +28,14 @@ public class QuesterQueque {
 	}
 	public int nextPlayer() {
 		
+		int next = currentQuesters.getFirst();
 		int lastPlayer = currentQuesters.pop();
 		currentQuesters.addLast(lastPlayer);
 		
-		return currentQuesters.getFirst();
+		numberOfTurns++;
+		
+		
+		return next;
 	}
 	
 	
@@ -40,6 +46,7 @@ public class QuesterQueque {
 	
 	
 	public void survivorsLeft() {
+		numberOfTurns = 0;
 		 int numOfCurrentQuesters = size();
 		 oldQuesters = new ArrayDeque<Integer>(currentQuesters);
 		 
@@ -53,5 +60,14 @@ public class QuesterQueque {
 		
 	}
 	
+	
+	public boolean isDone() {
+		
+		
+		return numberOfTurns == currentQuesters.size();
+		
+	}
+	
+
 }
 

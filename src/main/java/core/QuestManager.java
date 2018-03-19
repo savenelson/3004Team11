@@ -2,6 +2,8 @@ package core;
 
 import java.util.*;
 
+import javax.print.attribute.standard.NumberOfDocuments;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,7 +35,13 @@ public class QuestManager implements StoryCardState{
 	
 	
 	QuesterQueque questers ; 
-
+	
+	int numOfQuesterPotential;
+	
+	boolean isReadyToStage = false;
+	int numOfQuester = 0;
+	
+	int numOfRepsonders = 0 ;
 	
 	
 	
@@ -46,6 +54,8 @@ public class QuestManager implements StoryCardState{
 		
 		
 		
+		
+		
 	}
 	
 	
@@ -53,12 +63,15 @@ public class QuestManager implements StoryCardState{
 	public void handle() {
 		logger.info("Handling questing info");
 		
+		numOfQuesterPotential = model.numPlayers -1;
+		
 		// if I do not have a sponsor ask the person if they want to sponsor 
 		if(!hasSponsor) {
 			
 		// if I haven't ask to sponsor yet then ask
 		if(!this.model.getActivePlayer().declinedToSponsor) {
 		boolean wantToSponsor= model.control.getSponsorDecision();
+		
 		// if they do want to sponsor then make them the sponsors
 		if(wantToSponsor) {
 			logger.info("Found a sponsor ");
@@ -84,6 +97,8 @@ public class QuestManager implements StoryCardState{
 			// if I have a sponsor and the quester are not ready then ask the current plater
 			if(!this.model.getActivePlayer().declinedQuesting && !this.model.getActivePlayer().isSponsor) {
 				boolean isQuesting = model.control.getQuestingDecision();
+				
+				
 				if(isQuesting) {
 					logger.info("THe Player has decidied to quest ");
 					model.getActivePlayer().isQuesting = true;
@@ -92,29 +107,67 @@ public class QuestManager implements StoryCardState{
 				}
 				//they have answered
 				this.model.getActivePlayer().declinedQuesting = true;
-			}else {
-				// I return to the sponor 
-				if(questers.isEmpty()) {
-					
-					logger.info("I have no  any questers ");
-					// should go to the next story hard 
-				}else {
-					logger.info("I do have some questers. Let us begin our adventures ");
-				}
 				
+				numberOfrequests++;
+				
+			}
+			
+			
+		}if(numOfQuesterPotential == numberOfrequests ) {
+			// I return to the sponor 
+			if(questers.isEmpty()) {
+				numberOfrequests = 0;
+				
+				logger.info("I have no  any questers ");
+				// should go to the next story hard 
+			}else {
+				// The questers are ready adn we are ready to begin questing
+				
+				//logger.info("I do have some questers. Let us begin our adventures ");
+				questersReady = true;
+				logger.info("I do have some questers. Let us begin our adventures ");
+				isReadyToStage = true;
+				numberOfrequests = 0 ;
+				
+				
+			}
+			
+		}
+		if(questersReady ) {
+			//begins the stage
+			
+			
+			numOfQuester = questers.size();
+			if(numOfQuester==numOfRepsonders) {
+				//all the questers made their choice time to resolve stage;
+				logger.info("Done  hh"+ numOfRepsonders);
+				
+			
+				//model.resolveStage();
+				
+			}else {
+				logger.info("Done  "+ numOfRepsonders);
+				numOfRepsonders++;
 			}
 			
 			
 		}
 	}
-
-
-
-	public void nextPlayer() {
-		if(canEndTurn()) {
-			model.nextPlayer();
-			}
+	
 		
+
+
+	public void  nextPlayer() {
+		if(canEndTurn() && !questersReady) {
+			// If not ready for sponsor then loop
+			
+			model.nextPlayer();
+			
+			}
+		else if (questersReady) {
+			
+			model.setNextPlayer(questers.nextPlayer());
+		}
 	}
 	private boolean stageHarder() {
 		logger.debug("stageHarder() called");
@@ -183,7 +236,20 @@ public class QuestManager implements StoryCardState{
 	  return foeInEachStage;
 	  	}
 	
+
+	public boolean checkHandSize() {
+		logger.debug("checkHandSize() called");
+
 	
+			if(model.getActivePlayer().getHand().size() > 12) {
+				model.control.alert("Hand Size is too large, please discard");
+				logger.info("Player " + model.getActivePlayer().getPlayerNumber()+ " hand too large");
+
+				return false;
+			
+		}
+		return true;
+	}
 	
 	
 	public boolean canEndTurn() {
@@ -192,7 +258,8 @@ public class QuestManager implements StoryCardState{
 		isHarder = stageHarder();
 		
 		boolean foeInEachStage = isfoeEachStage();
-	
+		
+		boolean isHandSizeOk = checkHandSize();
 
 		// check if its a sponsor and if it is then check if they sponsor correctly 
 		if(model.getActivePlayer().isSponsor && !foeInEachStage){	    			
@@ -202,11 +269,15 @@ public class QuestManager implements StoryCardState{
 			model.control.alert("The stages are not progressively harder");
 			return false;
 		// if they put the right material then go time and thye can end there turn
-		} else if(model.getActivePlayer().isSponsor){	    			
+		} else if(!isHandSizeOk){	
+			model.control.alert("Your hand size is to big with "+ model.getActivePlayer().getHand().size());
+			return false;
+			
+			
+		}else if (model.getActivePlayer().isSponsor)  {
 			model.control.stagesSet();
 			return true;
-			
-		}else  {
+		}else {
 			return true;
 		}
 
@@ -218,7 +289,8 @@ public class QuestManager implements StoryCardState{
 
 
 	public void setPlayer() {
-		// TODO Auto-generated method stub
+		// if my questers are ready then get the first person in my 	quest
+		//model.setNextPlayer(questers.nextPlayer());
 		
 	}   	 
 

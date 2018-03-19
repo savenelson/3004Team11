@@ -50,6 +50,8 @@ public class Model {
 	
 	StoryCardState questManger;
 	StoryCardState eventManger;
+	
+	StoryCardState currentState;
 	Model(Control control){
 		
 		logger.info("Model created");
@@ -115,6 +117,7 @@ public class Model {
 			}
 			
 			this.currentStoryCard = storyDeck.pop();
+		
 			logger.info("setting current story card to" + this.currentStoryCard);
 		}
 	}
@@ -145,6 +148,8 @@ public class Model {
 		state.players = this.players;
 		
 		state.currentPlayer = this.currentPlayer;
+		
+		state.isQuesting = this.getActivePlayer().isQuesting;
 		
 		state.currentSponsor = this.currentSponsor;
 		
@@ -177,19 +182,6 @@ public class Model {
 		return state;
 	}
 	
-	public boolean checkHandSize() {
-		logger.debug("checkHandSize() called");
-
-		for(int i=0;i<state.numPlayers;i++) {
-			if(players[i].getHand().size() > 12) {
-				control.alert("Hand Size is too large, please discard");
-				logger.info("Player " + i + " hand too large");
-
-				return false;
-			}
-		}
-		return true;
-	}
 
 	public void party(String iD) {
 		logger.debug("party() called");
@@ -376,8 +368,8 @@ public class Model {
 		
 		
 		
-		questManger.nextPlayer();
-		questManger.handle();
+		currentState.nextPlayer();
+		
 		
 		
 		//nextPlayer();
@@ -394,6 +386,7 @@ public class Model {
 		
 	}
 	
+	/*
 	public void viewerChanged(){
 		logger.debug("viewerChanged() called");
 
@@ -407,7 +400,7 @@ public class Model {
 			currentViewer++;
 			this.stageResolved = true;
 		}
-	}
+	}*/
 	
 	public void stagesSet(){
 		logger.debug("stagesSet() called");
@@ -603,10 +596,12 @@ public class Model {
 	private void playQuest(){
 		
 
-		logger.debug("playQuest() called");
+		logger.info("playQuest() called");
+		
+		currentState = questManger;
 		
 		
-		questManger.handle();
+		
 		/*boolean decision = control.getSponsorDecision();
 		if(decision){
 			players[currentPlayer].isSponsor = true;
@@ -628,7 +623,9 @@ public class Model {
 	private void playEvent() {
 		logger.debug("playEvent() called");
 		
-		eventManger.handle();
+		currentState = eventManger;
+		
+		currentState.handle();
 		((EventManger) eventManger).handleEvent(((StoryCard) currentStoryCard).getName());
 
 	
@@ -639,6 +636,7 @@ public class Model {
 
 		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
 			playQuest();
+			currentState.handle();
 		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.EVENT)){
 			playEvent();
 		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)){
@@ -647,7 +645,7 @@ public class Model {
 			adventureDeck = adventureDeckDiscard;
 			adventureDeck.shuffle();
 		}
-		checkHandSize();
+	
 	}
 	
 	public void nextPlayer(){
@@ -662,10 +660,17 @@ public class Model {
 			this.currentSponsor = this.currentPlayer;
 		}
 		logger.info("Player changed to " + this.currentPlayer);
+		
 		control.view.update();
 		
 	}
-
+	public void setNextPlayer(int nextplayer) {
+		
+		currentPlayer = nextplayer;
+		
+		control.view.update();
+		
+	}
 	public void nextStory() {
 		logger.debug("nextStory() called");
 		//get ready for the next person
@@ -710,6 +715,7 @@ public class Model {
 		this.currentViewer = this.currentPlayer;
 		control.updateViewState();
 		playGame();
+		currentState.handle();
 	}
 	
 	
@@ -988,6 +994,8 @@ public class Model {
 		this.adventureDeck.remove(c);
 		
 		this.adventureDeck.shuffle();
+		
+		
 	} //end set scenario 1
 	
 	
@@ -1045,6 +1053,8 @@ public class Model {
 		this.players[3].addToHand(this.adventureDeck.getByID("93"));
 		this.players[3].addToHand(this.adventureDeck.getByID("100"));
 		this.players[3].addToHand(this.adventureDeck.getByID("101"));
+		
+		
 	}
 	
 	public void setScenarioTest() {
@@ -1231,6 +1241,7 @@ public class Model {
 		this.players[3].addToHand(this.adventureDeck.getByID("36"));
 		this.players[3].addToHand(this.adventureDeck.getByID("44"));
 		
+	
 	}
 }
 

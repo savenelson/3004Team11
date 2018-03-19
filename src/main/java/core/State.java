@@ -36,4 +36,6 @@ public class State {
 	
 	public int stageOverCount;
 	
+	public boolean isQuesting;
+	
 }

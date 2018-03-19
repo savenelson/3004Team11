@@ -338,7 +338,7 @@ public class View extends Application {
 			tile.relocate(colStage, rowStage);
 			
 			canvas.getChildren().add(tile);
-		} else if(state.stagesSet){
+		} else if(state.stagesSet && state.isQuesting){
 			state = control.getState();
 						
 			if (state.toggleForStages)

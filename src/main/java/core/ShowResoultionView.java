@@ -66,7 +66,7 @@ public class ShowResoultionView extends Pane{
 	int cardXLargeHeight = 300;
 	int cardXLargeWidth = 225;
 	
-	public ShowResoultionView(final Pane toChange, State state, View view) {
+	public ShowResoultionView(final Pane toChange, State state, final View view) {
 		this.state = state;
 		Label  label = new Label("Resolution");
 		label.setPrefHeight(10);

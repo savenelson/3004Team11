@@ -117,12 +117,15 @@ public class Control{
 		
 	}
 	
+	
+	
+	/*
 	public void viewerChanged(){
 		logger.debug("viewerChanged() called");
 
 		model.viewerChanged();
 	}
-	
+	*/
 	public void setNumPlayers(int i){
 		logger.debug("setNumPlayers() called");
 
