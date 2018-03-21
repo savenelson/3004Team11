@@ -46,6 +46,8 @@ public class Model {
 	int numStages;
 	
 	CardCollection [] stages;
+	
+	Stage stage;
 	CardCollection [] getStages() {return stages;}
 	
 	StoryCardState questManger;
@@ -62,6 +64,8 @@ public class Model {
 		eventManger = new EventManger(this);
 		
 		
+		stage = new Stage();
+		
 		this.adventureDeck = new AdventureDeck();
 		this.storyDeck = new StoryDeck();
 		
@@ -72,7 +76,7 @@ public class Model {
 		
 		currentPlayer = 0;
 		currentSponsor = 0;
-//		currentPlayerNotSponsoring = false;
+
 	}
 	
 	public void instantiatePlayers(int numPlayers){
@@ -216,6 +220,8 @@ public class Model {
 			return;
 		}
 		hand.remove(c);
+		
+		//Change To add to my new Stages
 		stages[currentStage].add(c);
 		logger.info("Player " + this.currentPlayer + " moves " + c.getName() + " from hand to Stage " + currentStage);
 		
@@ -232,23 +238,7 @@ public class Model {
 		
 		this.players[this.currentPlayer].getHand().add(c);
 		
-//		for (int i = 0; i < this.stages[currentStage].size(); ++i){
-//			
-//		}
-//		
-//		CardCollection hand = this.players[this.currentPlayer].getHand();
-//		Card c = hand.getByID(iD);
-//		if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
-//				&& containsFoe(this.stages[currentStage])) {
-//			control.alert("Cannot stage more than one foe per quest stage.");
-//			return;
-//		}
-//		if(containsWeapon(this.stages[currentStage], c.getImgName())) {
-//			control.alert("Cannot stage duplicate weapons.");
-//			return;
-//		}
-//		hand.remove(c);
-//		stages[currentStage].add(c);
+
 		logger.info("Player " + this.currentPlayer + " moves " + c.getName() + " from Stage back to Hand");
 
 	}
@@ -362,6 +352,16 @@ public class Model {
 		control.updateViewState();
 	}
 	
+
+	
+
+	
+	public void stagesSet(){
+		logger.info("stagesSet() called");
+
+		this.stagesSet = true;
+		control.updateViewState();
+	}
 	public void endTurn() {
 		logger.debug("endTurn() called");
 		logger.info("I end turn called changing s ");
@@ -370,47 +370,13 @@ public class Model {
 		
 		currentState.nextPlayer();
 		
-		
-		
-		//nextPlayer();
-		
+	
 
-		/*if(players[currentPlayer].isSponsor){
-			viewerChanged();	
-		}
-		else{
-			nextPlayer();
-			endTurnCounter++;
-		}*/
-		
+	
 		
 	}
-	
-	/*
-	public void viewerChanged(){
-		logger.debug("viewerChanged() called");
-
-		if (currentViewer == ((numPlayers-1)%numPlayers)){
-			currentViewer = 0;
-		} else {
-			currentViewer++;
-		}
-		
-		if(players[currentPlayer].isSponsor && currentPlayer == currentViewer){
-			currentViewer++;
-			this.stageResolved = true;
-		}
-	}*/
-	
-	public void stagesSet(){
-		logger.debug("stagesSet() called");
-
-		this.stagesSet = true;
-		control.updateViewState();
-	}
-	
 	public int resolveQuest(){
-		logger.debug("resolveQuest() called");
+		logger.info("resolveQuest() called");
 
 		int numStages = this.state.numStages;
 
@@ -488,9 +454,11 @@ public class Model {
 			
 			//Check if player passed quest
 
-			if(playerBP >= stageBP && (! players[i].isSponsor) && stageBP > 0){
+			if(playerBP >= stageBP && (players[i].isQuesting) && stageBP > 0){
 				players[i].passedStage = true;
+				logger.info("Player " + players[i].getPlayerNumber() +"and has passed ");
 				if(state.currentStage +1==((QuestCard)state.currentStoryCard).getNumStages() ) {
+					
 					players[i].passedQuest =true;
 
 					System.out.println("true turned ");
@@ -501,6 +469,9 @@ public class Model {
 			
 		//
 				this.toggleForStages = true;
+		}else {players[i].isQuesting = false;
+		
+		
 		}
 			
 		}
@@ -626,7 +597,7 @@ public class Model {
 		currentState = eventManger;
 		
 		currentState.handle();
-		((EventManger) eventManger).handleEvent(((StoryCard) currentStoryCard).getName());
+	
 
 	
 	}
@@ -639,6 +610,7 @@ public class Model {
 			currentState.handle();
 		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.EVENT)){
 			playEvent();
+			currentState.handle();
 		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)){
 //			playTournament();
 		} else {

@@ -338,7 +338,7 @@ public class View extends Application {
 			tile.relocate(colStage, rowStage);
 			
 			canvas.getChildren().add(tile);
-		} else if(state.stagesSet && state.isQuesting){
+		} else if( state.isQuesting){
 			state = control.getState();
 						
 			if (state.toggleForStages)
@@ -792,36 +792,7 @@ public class View extends Application {
 		stageItem.setOnAction(eh);
 		fileMenu.getItems().add(stageItem);
 		
-//		MenuItem playItem = new MenuItem(PLAY);
-//		playItem.setOnAction(eh);
-//		fileMenu.getItems().add(playItem);
-//		
-//		MenuItem discardItem = new MenuItem(DISCARD);
-//		discardItem.setOnAction(eh);
-//		fileMenu.getItems().add(discardItem);
-//		
-//		MenuItem stageItem = new MenuItem(STAGE);
-//		stageItem.setOnAction(eh);
-//		fileMenu.getItems().add(stageItem);
-//		
-//		MenuItem queueItem = new MenuItem(QUEUE);
-//		queueItem.setOnAction(eh);
-//		fileMenu.getItems().add(queueItem);
-//
-//		fileMenu.getItems().add(new MenuItem("Discard"));
-//		
-//		fileMenu.getItems().add(new MenuItem("Play"));
-//		
-//		MenuItem campaigne =  new MenuItem("Campaigne");
-		
-//		campaigne.setOnAction(new EventHandler<ActionEvent>() {
-//		    public void handle(ActionEvent e) {
-//		        addCardToStage(Stage, imgView);
-//		    }
-//		});
-//		
-//		fileMenu.getItems().add(campaigne);
-//
+
 
 		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 

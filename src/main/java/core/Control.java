@@ -87,7 +87,7 @@ public class Control{
 	}
 	
 	public void stageIncrement(){
-		logger.debug("stageIncrement() called");
+		logger.info("stageIncrement() called");
 
 		model.state.currentStage = model.state.stagePlaceHolder;
 		model.state.toggleForStages = false;

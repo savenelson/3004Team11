@@ -144,7 +144,8 @@ public class QuestManager implements StoryCardState{
 				//all the questers made their choice time to resolve stage;
 				logger.info("Done  hh"+ numOfRepsonders);
 				
-				model.resolveQuest();
+				
+				
 				
 			}else {
 				logger.info("Current "+ numOfRepsonders);
@@ -166,8 +167,20 @@ public class QuestManager implements StoryCardState{
 			
 			}
 		else if (questersReady) {
+			logger.info("Number of TUrns is "+(numOfRepsonders++));
+
 			
-			model.setNextPlayer(questers.nextPlayer());
+			//should have looped and rady to do the next Player
+			if(numOfRepsonders  >questers.size()) {
+				//all the players of made there turns lets move on to the next stage
+				numOfRepsonders = 0;
+			model.stageResolved = true;
+			model.control.view.stageResolved();
+			}else {
+
+				model.setNextPlayer(questers.nextPlayer());
+			}
+			
 		}
 	}
 	private boolean stageHarder() {
@@ -279,9 +292,7 @@ public class QuestManager implements StoryCardState{
 			model.control.stagesSet();
 			return true;
 		}else {
-			if(questersReady) {
-				numOfRepsonders++;
-			}
+			
 			return true;
 		}
 
