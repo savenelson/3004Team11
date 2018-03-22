@@ -3,8 +3,8 @@ package core;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Stage {
-	private static final Logger logger = LogManager.getLogger(Stage.class);
+public class QuestingStage {
+	private static final Logger logger = LogManager.getLogger(QuestingStage.class);
 	
 	CardCollection [] stages;
 	boolean stageResolved = false;
@@ -13,7 +13,9 @@ public class Stage {
 	static int stageOverCount = 0;
 	int currentStage = 0;
 	
-	public Stage() {
+	
+	
+	public QuestingStage() {
 	stages = new CardCollection[5];
 		
 		for(int i = 0; i < 5; ++i){
@@ -27,6 +29,7 @@ public class Stage {
 	public void resetCurrentStage(){
 		logger.info("resetCurrentStage() called");
 		
+		this.currentStage = 0;
 
 	}
 	
@@ -34,7 +37,29 @@ public class Stage {
 		logger.debug("setCurrentStage(" + num + ") called");
 
 		this.currentStage = num;
-		control.updateViewState();
+		
+	}
+	
+	public CardCollection getStageAt(int stageNum) {
+		
+		
+		return stages[stageNum];
+		
+		
+		
+	}
+	
+	public CardCollection[] getStage() {
+		return stages;
+	}
+	
+	public void nextStage() {
+		currentStage++;
+	}
+	
+	public int getCurrentStage() {
+		
+		return currentStage;
 	}
 	
 

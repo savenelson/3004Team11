@@ -160,6 +160,13 @@ public class QuestManager implements StoryCardState{
 
 
 	public void  nextPlayer() {
+		
+		if(canEndTurn() && model.getActivePlayer().isSponsor) {
+			//making sure the Stage starts at 1 
+			
+			model.resetCurrentStage();
+			
+		}
 		if(canEndTurn() && !questersReady) {
 			// If not ready for sponsor then loop
 			
@@ -172,10 +179,17 @@ public class QuestManager implements StoryCardState{
 			
 			//should have looped and rady to do the next Player
 			if(numOfRepsonders  >questers.size()) {
-				//all the players of made there turns lets move on to the next stage
-				numOfRepsonders = 0;
-			model.stageResolved = true;
+			//all the players of made there turns lets move on to the next stage
+			numOfRepsonders = 0;
+			
+			//reolve stage
+			model.resolveStage();
+			// fix later 
 			model.control.view.stageResolved();
+			
+			
+			
+			//this.questers.survivorsLeft();
 			}else {
 
 				model.setNextPlayer(questers.nextPlayer());
@@ -194,7 +208,7 @@ public class QuestManager implements StoryCardState{
 		else {
 			for(int i =0; i<numStages-1; i++) {
 				
-				if(totalNumOfBP(model.stages[i])>=totalNumOfBP(model.stages[i+1])) {
+				if(totalNumOfBP(model.stage.getStageAt(i))>=totalNumOfBP(model.stage.getStageAt(i+1))) {
 					logger.info("stages ar not harder");
 					return false;
 				}
@@ -234,8 +248,8 @@ public class QuestManager implements StoryCardState{
     			foesPresent[i] = false;
 			}		    		
     		for (int i = 0; i < numStages; ++i){
-    			for (int j = 0; j < model.stages[i].size(); ++j){
-    				if(((AdventureCard) model.stages[i].get(j)).subType.equals(AdventureCard.FOE)){
+    			for (int j = 0; j < model.stage.getStageAt(i).size(); ++j){
+    				if(((AdventureCard) model.stage.getStageAt(i).get(j)).subType.equals(AdventureCard.FOE)){
     					foesPresent[i] = true;
     					break;
     				}

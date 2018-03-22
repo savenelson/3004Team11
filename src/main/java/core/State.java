@@ -26,7 +26,7 @@ public class State {
 	
 	public CardCollection [] stages;
 	
-	public boolean stagesSet;
+
 	
 	public boolean stageResolved;
 	

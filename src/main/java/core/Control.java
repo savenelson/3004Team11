@@ -89,9 +89,11 @@ public class Control{
 	public void stageIncrement(){
 		logger.info("stageIncrement() called");
 
-		model.state.currentStage = model.state.stagePlaceHolder;
-		model.state.toggleForStages = false;
-		model.resolveStage();
+		
+		model.stage.nextStage();
+		updateViewState();
+	//	model.state.toggleForStages = false;
+		
 	}
 	
 	public void stageOver(){
@@ -220,7 +222,7 @@ public class Control{
 
 		startStageCycle();
 
-		model.stagesSet();
+		
 	}
 	
 	public void alert(String message){

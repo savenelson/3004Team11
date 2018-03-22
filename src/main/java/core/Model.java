@@ -27,7 +27,7 @@ public class Model {
 	public AdventureDeck getStoryDeckDiscard(){return this.adventureDeck;}
 	
 	boolean inNextQ = false;
-	boolean stagesSet = false;
+	
 	int currentViewer;
 	int currentPlayer;
 	int currentStage;
@@ -35,7 +35,7 @@ public class Model {
 	int endTurnCounter = 0;
 //	boolean currentPlayerNotSponsoring;
 	boolean gameWon = false;
-	boolean stageResolved = false;
+
 	boolean toggleForStages = false;
 	int stagePlaceHolder = 0;
 	static int stageOverCount = 0;
@@ -45,10 +45,10 @@ public class Model {
 	int numPlayers;
 	int numStages;
 	
-	CardCollection [] stages;
+	//CardCollection [] stages;
 	
-	Stage stage;
-	CardCollection [] getStages() {return stages;}
+	QuestingStage stage;
+	//CardCollection [] getStages() {return stages;}
 	
 	StoryCardState questManger;
 	StoryCardState eventManger;
@@ -64,7 +64,7 @@ public class Model {
 		eventManger = new EventManger(this);
 		
 		
-		stage = new Stage();
+		stage = new QuestingStage();
 		
 		this.adventureDeck = new AdventureDeck();
 		this.storyDeck = new StoryDeck();
@@ -76,6 +76,8 @@ public class Model {
 		
 		currentPlayer = 0;
 		currentSponsor = 0;
+		
+		currentStage = stage.getCurrentStage();
 
 	}
 	
@@ -92,13 +94,15 @@ public class Model {
 	public void instantiateStages(){
 		logger.debug("instantiateStages() called - hard coded to 5");
 
-		stages = new CardCollection[5];
+		/*stages = new CardCollection[5];
 		
 		for(int i = 0; i < 5; ++i){
 			stages[i] = new CardCollection();
 		}
 		
-		currentStage = 0;
+		currentStage = 0;*/
+		
+		stage = new QuestingStage();
 	}
 	
 	public void initialShuffle(){
@@ -143,7 +147,9 @@ public class Model {
 	public void resetCurrentStage(){
 		logger.debug("resetCurrentStage() called");
 
-		setCurrentStage(0);
+		//setCurrentStage(0);
+		
+		stage.resetCurrentStage();;
 	}
 	
 	public State getState(){
@@ -163,21 +169,25 @@ public class Model {
 		
 		state.currentViewer = this.currentViewer;
 		
-		if (stages[currentStage]!=null) {
+		/*if (stages[currentStage]!=null) {
 			state.stage = this.stages[currentStage];
+		}*/
+		
+		
+		if (stage.getStageAt(currentStage)!=null) {
+		state.stage = this.stage.getStageAt(stage.getCurrentStage());
 		}
+		state.currentStage = this.stage.getCurrentStage();
 		
-		state.currentStage = this.currentStage;
-		
-		state.stages = this.stages;
+		state.stages = this.stage.getStage();
 		
 		state.numPlayers = this.numPlayers;
 		
 		state.numStages = this.numStages;
 		
-		state.stagesSet = this.stagesSet;
+
 		
-		state.stageResolved = this.stageResolved;
+	
 		
 		state.toggleForStages = this.toggleForStages;
 		
@@ -211,18 +221,18 @@ public class Model {
 		CardCollection hand = this.players[this.currentPlayer].getHand();
 		Card c = hand.getByID(iD);
 		if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
-				&& containsFoe(this.stages[currentStage])) {
+				&& containsFoe(this.stage.getStageAt(currentStage))) {
 			control.alert("Cannot stage more than one foe per quest stage.");
 			return;
 		}
-		if(containsWeapon(this.stages[currentStage], c.getImgName())) {
+		if(containsWeapon(this.stage.getStageAt(currentStage), c.getImgName())) {
 			control.alert("Cannot stage duplicate weapons.");
 			return;
 		}
 		hand.remove(c);
 		
 		//Change To add to my new Stages
-		stages[currentStage].add(c);
+		this.stage.getStageAt(currentStage).add(c);
 		logger.info("Player " + this.currentPlayer + " moves " + c.getName() + " from hand to Stage " + currentStage);
 		
 		
@@ -232,9 +242,9 @@ public class Model {
 		logger.debug("unstage() called");
 
 		
-		Card c = this.stages[currentStage].getByID(iD);
+		Card c = this.stage.getStageAt(currentStage).getByID(iD);
 		
-		this.stages[currentStage].remove(c);
+		this.stage.getStageAt(currentStage).remove(c);
 		
 		this.players[this.currentPlayer].getHand().add(c);
 		
@@ -347,8 +357,11 @@ public class Model {
 	
 	public void setCurrentStage(int num) {
 		logger.debug("setCurrentStage(" + num + ") called");
-
-		this.currentStage = num;
+		
+		
+		this.currentStage= num;
+		this.stage.setCurrentStage(num);
+	
 		control.updateViewState();
 	}
 	
@@ -356,12 +369,7 @@ public class Model {
 	
 
 	
-	public void stagesSet(){
-		logger.info("stagesSet() called");
-
-		this.stagesSet = true;
-		control.updateViewState();
-	}
+	
 	public void endTurn() {
 		logger.debug("endTurn() called");
 		logger.info("I end turn called changing s ");
@@ -431,7 +439,7 @@ public class Model {
 		logger.info("resolveStage() called");
 
 		
-		CardCollection currStage = this.stages[this.currentStage+stageOverCount];
+		CardCollection currStage = this.stage.getStageAt(stage.getCurrentStage());
 		
 		int stageBP = 0;
 
@@ -453,29 +461,31 @@ public class Model {
 			}
 			
 			//Check if player passed quest
+			
 
 			if(playerBP >= stageBP && (players[i].isQuesting) && stageBP > 0){
+				
 				players[i].passedStage = true;
 				logger.info("Player " + players[i].getPlayerNumber() +"and has passed ");
 				if(state.currentStage +1==((QuestCard)state.currentStoryCard).getNumStages() ) {
 					
 					players[i].passedQuest =true;
 
-					System.out.println("true turned ");
+				
 					Card c = this.adventureDeck.pop();
 					this.players[i].addToHand(c);
 					adventureDeckDiscard.add(c);
 				}
 			
 		//
-				this.toggleForStages = true;
+				
 		}else {players[i].isQuesting = false;
 		
 		
 		}
 			
 		}
-		if(stageOverCount == ((QuestCard)currentStoryCard).getNumStages()&& stageOverCount != 0){
+		if(stage.getCurrentStage()+1== ((QuestCard)currentStoryCard).getNumStages()){
 			resolveQuest();
 
 		}
@@ -501,14 +511,13 @@ public class Model {
 				players[i].passedStage = false;
 			}
 		}
-		stageOverCount++;
-		
+	
 		//this.currentViewer--;// TODO ??? MAYBE A REALLY BAD FIX MAYBE NOT, WHO KNOWS ANYMORE...
-		this.stagesSet = false;
-		this.stageResolved = false;
-		this.toggleForStages = true;
-		this.stagePlaceHolder = this.currentStage + stageOverCount;
-		state.stage = this.stages[currentStage];
+	
+
+
+		
+		state.stage = this.stage.getStageAt(currentStage);
 		control.updateViewState();
 	}
 	
@@ -573,22 +582,7 @@ public class Model {
 		
 		
 		
-		/*boolean decision = control.getSponsorDecision();
-		if(decision){
-			players[currentPlayer].isSponsor = true;
-			logger.info("Player " + currentPlayer + " will sponsor");
-			control.updateViewState();
-			for(int i=0;i<numPlayers;i++) {
-				if(!players[i].isSponsor) {
-					players[i].getHand().add(this.getAdventureDeck().pop());
-				}
-			}
-		} else {
-			players[currentPlayer].isSponsor = false;
-			logger.info("Player " + currentPlayer + " will not sponsor");
-			control.updateViewState();
-			endTurn();
-		} */
+
 	}
 	
 	private void playEvent() {
@@ -653,7 +647,6 @@ public class Model {
 			players[i].isQuesting = false;
 			players[i].passedQuest = false;
 			players[i].passedStage = false;
-			stagesSet = false;
 			
 			
 			//remove stage cards
@@ -672,13 +665,16 @@ public class Model {
 		
 		
 		storyDeckDiscard.add(this.currentStoryCard);
+		
 		this.currentStoryCard = storyDeck.pop();
+		logger.info(currentStoryCard.getName());
 
 		this.currentStage = 0;
+		stage.resetCurrentStage();
 		
 		this.currentSponsor = -1;
 		
-		this.stageResolved = false;
+
 		
 		this.toggleForStages = false;
 		
@@ -1040,8 +1036,8 @@ public class Model {
 		this.players[1].addShields(6);
 		this.players[2].addShields(14);
 		
-		stages[0].add(this.adventureDeck.getByID("57"));
-		stages[1].add(this.adventureDeck.getByID("86"));
+		//stages[0].add(this.adventureDeck.getByID("57"));
+		//stages[1].add(this.adventureDeck.getByID("86"));
 
 		this.currentStoryCard = this.storyDeck.getByID("126"); //BOAR  hUNT 		
 		this.players[0].addToParty(this.adventureDeck.getByID("100"));
@@ -1133,8 +1129,8 @@ public class Model {
 		this.players[2].addShields(14);
 		this.players[3].addShields(10);
 		
-		stages[0].add(this.adventureDeck.getByID("57"));
-		stages[1].add(this.adventureDeck.getByID("86"));
+		//stages[0].add(this.adventureDeck.getByID("57"));
+		//stages[1].add(this.adventureDeck.getByID("86"));
 
 		this.currentStoryCard = this.storyDeck.getByID("151");
 		this.players[0].addToParty(this.adventureDeck.getByID("100"));

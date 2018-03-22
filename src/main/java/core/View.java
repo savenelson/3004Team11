@@ -176,13 +176,10 @@ public class View extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		
-		if (!state.stagesSet){
-			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer+1));
-			logger.info("Current View: Player " + state.currentPlayer);
-		} else {
-			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer+1));
-			logger.info("Current View: Player " + state.currentPlayer);
-		}
+		
+		primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer+1));
+		logger.info("Current View: Player " + state.currentPlayer);
+		
 		primaryStage.show();
 	}
 	
@@ -265,12 +262,9 @@ public class View extends Application {
 
 		CardCollection hand = null;
 		
-		if (!state.stagesSet){
-			hand = state.players[state.currentPlayer].getHand();
-		}
-		else{
-			hand = state.players[state.currentPlayer].getHand();
-		}
+		
+		hand = state.players[state.currentPlayer].getHand();
+		
 		
 		tile = new TilePane();
 		tile.setPrefRows(2);
@@ -341,10 +335,8 @@ public class View extends Application {
 		} else if( state.isQuesting){
 			state = control.getState();
 						
-			if (state.toggleForStages)
-			{
-				control.stageIncrement();
-			}
+			
+			
 			stage = state.stages[state.stageOverCount];
 
 			Label queueCardsLabel;
@@ -1057,10 +1049,7 @@ public class View extends Application {
 		    	logger.info("End Turn clicked");
 		    	state = control.getState();
 		    control.model.endTurn();
-				if (state.toggleForStages)
-				{
-					control.stageIncrement();
-				}
+				
 		    }
 		});
 		/*
@@ -1204,8 +1193,9 @@ public class View extends Application {
 		
 		final StackPane layout = new StackPane();
 		state = control.getState();
+	
 		for (int i = 0; i < state.numPlayers; ++i){
-			control.stageIncrement();  //TODO THIS SEEMS IT MAY ADD numPlayers stages
+			
 			
 			if(!state.players[i].isSponsor){
 				Label passed = new Label("Player "+ (i+1));
@@ -1222,7 +1212,7 @@ public class View extends Application {
 				layout.setPrefWidth(1280);
 				passed.setTranslateY(-180+(60*i));			
 				if(state.players[i].passedStage) {
-					logger.info("Player " + i + " passed stage " + (state.currentStage+1));
+					logger.info("Player " + i + " passed stage  " + (state.currentStage+1));
 				} else {
 					logger.info("Player " + i + " failed stage " + (state.currentStage+1));
 				}
@@ -1238,8 +1228,8 @@ public class View extends Application {
 
 				control.stageOver();
 				state = control.getState();
-				control.model.endTurn();
 				control.stageIncrement();
+				
 			}
 		});
 		
