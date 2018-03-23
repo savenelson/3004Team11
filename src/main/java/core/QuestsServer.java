@@ -10,7 +10,7 @@ public class QuestsServer {
 	private static final Logger logger = LogManager.getLogger(QuestsServer.class);
 	
     private static final int DEFAULT_PORT = 44444;                      // default server port
-    private static final int DEFAULT_PLAYERS_PER_TABLE = 1;             // default number of players per table
+    private static final int DEFAULT_PLAYERS_PER_TABLE = 2;             // default number of players per table
     private static final int DEFAULT_STARTING_MONEY = 2500;             // default amount of money players start with
     private static final int DEFAULT_MINIMUM_BET = 500;                 // default minimum player bet
     private static final int DEFAULT_NUMBER_OF_DECKS = 6;               // default number of decks in shoe

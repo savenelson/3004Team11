@@ -78,7 +78,6 @@ public class ServerPlayer implements Runnable {
     /**
      * Player thread run method.
      */
-    @Override
     public void run() {
         out.println("SERVERMESSAGE--WELCOME");
         do {

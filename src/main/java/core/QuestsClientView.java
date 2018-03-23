@@ -30,7 +30,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-
 public class QuestsClientView extends Application {
 	
 	public static final String PLAY = "Play";
@@ -118,8 +117,6 @@ public class QuestsClientView extends Application {
 	private Stage stage;
 	private Pane canvas;
 	private TilePane tile;
-	
-	MainMenu menu = new MainMenu(this,null);
 
 	public QuestsClientView (QuestsClient control) {
 		logger.info("View created");
@@ -162,6 +159,19 @@ public class QuestsClientView extends Application {
 		initUI(primaryStage);
 	}
 
+	public void update() {
+		logger.debug("update(Stage) called");
+
+		state = control.getState();
+		
+		canvas = new Pane();
+		canvas.setId("pane");
+		canvas = drawCards(canvas);
+		addStage(canvas);
+		Scene scene = new Scene(canvas, 1280, 720);
+		scene.getStylesheets().add("style.css");
+	}
+	
 	private void update(Stage primaryStage) {
 		logger.debug("update(Stage) called");
 
@@ -184,14 +194,6 @@ public class QuestsClientView extends Application {
 			logger.info("Current View: Player " + state.currentPlayer);
 		}
 		primaryStage.show();
-	}
-	
-	public void update(){
-		logger.debug("update() called");
-
-		control.setNumPlayers(menu.numberSelected());
-		update(stage);
-		control.mainLoop();
 	}
 	
 	public Pane drawCards(Pane canvas){
@@ -244,14 +246,8 @@ public class QuestsClientView extends Application {
 		canvas.setId("pane");
 		
 		canvas = drawCards(canvas);
-		MainMenu menu = new MainMenu(this,canvas);
-		
-		this.menu = menu;
 
-		
-		menu.setId("pane");
-		
-		Scene scene = new Scene(menu, 1280, 720);
+		Scene scene = new Scene(canvas, 1280, 720);
 		scene.getStylesheets().add("style.css");	
 		
 		primaryStage.setScene(scene);
@@ -1290,12 +1286,6 @@ public class QuestsClientView extends Application {
 
 		scene.getStylesheets().add("style.css");	
 		stage.setScene(scene);
-	}
-	
-	public void setNumPlayers(int i){
-		logger.debug("setNumPlayers() called");
-
-		control.setNumPlayers(menu.numberSelected());
 	}
 	
 }
