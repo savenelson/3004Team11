@@ -2,12 +2,17 @@ package core;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.io.*;
+import java.net.Socket;
 
-public class Model {
-
-	private static final Logger logger = LogManager.getLogger(Model.class);
-
-	public Control control;
+public class QuestsClientModel {
+	private static final Logger logger = LogManager.getLogger(QuestsClientModel.class);
+    private static final int MESSAGE_WAIT_TIME = 500;                           // time to wait between server messages
+    private Socket socket;                                                      // socket on server address and port
+    private BufferedReader in;                                                  // in to server
+    private PrintWriter out;                                                    // out from server
+	
+	public QuestsClient control;
 	
 	State state;
 	
@@ -49,15 +54,36 @@ public class Model {
 	
 	StoryCardState questManger;
 	StoryCardState eventManger;
-	Model(Control control){
-		
+	
+
+	/**
+	 * Constructor for Client Model
+	 * 
+	 * @param serverAddress Server address
+	 * @param serverPort Server port
+	 */
+	QuestsClientModel(QuestsClient control, String serverAddress, int serverPort){
 		logger.info("Model created");
+
+        try {
+            socket = new Socket(serverAddress, serverPort);
+        } catch (IOException e) {
+            System.err.println("No Quests server running on port " + serverPort + " at address " + serverAddress);
+            System.exit(1);
+        }
+        try {
+            InputStreamReader isr = new InputStreamReader(socket.getInputStream());    // input stream reader from socket
+            in = new BufferedReader(isr);
+            out = new PrintWriter(socket.getOutputStream(), true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 		this.control = control;
 		
-		questManger= new QuestManager(this);
-		eventManger = new EventManger(this);
-		
+//		questManger= new QuestManager(this);
+//		eventManger = new EventManger(this);
+
 		
 		this.adventureDeck = new AdventureDeck();
 		this.storyDeck = new StoryDeck();
@@ -70,6 +96,53 @@ public class Model {
 		currentPlayer = 0;
 		currentSponsor = 0;
 	}
+	
+    /**
+     * Gets a message sent by the server.
+     *
+     * @return message sent by the server
+     */
+
+    public String getServerMessage() {
+        String serverMessage = null;
+        try {
+            Thread.sleep(MESSAGE_WAIT_TIME);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        while (serverMessage == null) {
+            try {
+                serverMessage = in.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return serverMessage;
+    }
+    
+    /**
+     * Sends a message to the server.
+     *
+     * @param clientMessage Message to send to server
+     */
+
+    public void sendClientMessage(String clientMessage) {
+        out.println(clientMessage);
+    }
+    
+    /**
+     * Sends a message to the server to quit the game and closes the socket.
+     */
+
+    public void quitGame() {
+        sendClientMessage("CLIENTMESSAGE--QUITGAME");
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.exit(0);
+    }
 	
 	public void instantiatePlayers(int numPlayers){
 		logger.debug("instantiatePlayers(" + numPlayers + ") called");
@@ -621,7 +694,7 @@ public class Model {
 		logger.debug("playEvent() called");
 		
 		eventManger.handle();
-		((EventManger) eventManger).handleEvent(((StoryCard) currentStoryCard).getName());
+//		((EventManger) eventManger).handleEvent(((StoryCard) currentStoryCard).getName());
 
 	
 	}
@@ -654,7 +727,7 @@ public class Model {
 			this.currentSponsor = this.currentPlayer;
 		}
 		logger.info("Player changed to " + this.currentPlayer);
-		control.view.update();
+		control.viewUpdate();
 		
 	}
 
@@ -1132,7 +1205,6 @@ public class Model {
 	public void eventTesting() {
 		logger.info("seve");
 
-
 		this.currentPlayer = 0;
 
 		this.players[0].addShields(10);
@@ -1221,5 +1293,32 @@ public class Model {
 		this.players[3].addToHand(this.adventureDeck.getByID("36"));
 		this.players[3].addToHand(this.adventureDeck.getByID("44"));
 		
+	}
+	
+	/**
+	 * TEMPORARY Constructor for Client Model
+	 * 	//FIXME to work with 3 arg constructor.
+	 * @param serverAddress Server address
+	 * @param serverPort Server port
+	 */
+	QuestsClientModel(QuestsClient control){
+		logger.info("Model created");
+
+		this.control = control;
+		
+//		questManger= new QuestManager(this);
+//		eventManger = new EventManger(this);
+		
+		
+		this.adventureDeck = new AdventureDeck();
+		this.storyDeck = new StoryDeck();
+		
+		this.adventureDeckDiscard = new AdventureDeck();
+		this.storyDeckDiscard = new StoryDeck();
+		
+		state = new State();
+		
+		currentPlayer = 0;
+		currentSponsor = 0;
 	}
 }

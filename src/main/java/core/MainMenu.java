@@ -26,7 +26,7 @@ public class MainMenu extends Pane{
 	public static final String KNIGHT = "Knight";
 	public static final String CHAMPION_KNIGHT = "ChampionKnight";
 	public int numberPlayers;
-	public MainMenu(final View aView, Pane toChange) {
+	public MainMenu(final QuestsClientView aView, Pane toChange) {
 
 		Label  label = new Label("Pick one of the following the options below to begin your quest");
 		label.setPrefHeight(10);

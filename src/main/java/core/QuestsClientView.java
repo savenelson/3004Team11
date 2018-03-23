@@ -31,7 +31,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 
-public class View extends Application {
+public class QuestsClientView extends Application {
 	
 	public static final String PLAY = "Play";
 	public static final String PARTY = "Party";
@@ -49,7 +49,7 @@ public class View extends Application {
 	public static final String STAGE5 = "Stage 5";
 	public static final String ENDTURN = "End Turn";
 	
-	public Control control;
+	public QuestsClient control;
 	private State state;
 		
 	public static final String IMG_DIR = "src/main/resources/core/cards/";
@@ -111,7 +111,7 @@ public class View extends Application {
 	public static final	int cardXLargeHeight = 300;
 	public static final	int cardXLargeWidth = 225;
 	
-	private static final Logger logger = LogManager.getLogger(View.class);
+	private static final Logger logger = LogManager.getLogger(QuestsClientView.class);
 
 	private ImageView imgView;
 	
@@ -121,15 +121,15 @@ public class View extends Application {
 	
 	MainMenu menu = new MainMenu(this,null);
 
-	public View () {
+	public QuestsClientView (QuestsClient control) {
 		logger.info("View created");
-
-	}
-
-	public static void main(String [] args){
-		logger.info("main() running");
-
-		launch(args);
+		this.control = control;
+		
+		//TODO THIS IS FROM BLACKJACK - How do we make it work in ours?
+//        setupWindowListener(this.controller);
+//        setupFrame();
+//        createPanels();
+//        setupActionListeners();
 	}
 
 	private HBox Stage; 
@@ -156,8 +156,8 @@ public class View extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		logger.info("start() running");
-
-		control = new Control(this);
+//
+//		control = new QuestsClient(server);
 		stage = primaryStage;
 		initUI(primaryStage);
 	}
@@ -1054,7 +1054,7 @@ public class View extends Application {
 		    public void handle(ActionEvent e) {
 		    	logger.info("End Turn clicked");
 		    	state = control.getState();
-		    control.model.endTurn();
+		    control.endTurn();
 				if (state.toggleForStages)
 				{
 					control.stageIncrement();
@@ -1255,7 +1255,7 @@ public class View extends Application {
 
 				control.stageOver();
 				state = control.getState();
-				control.model.endTurn();
+				control.endTurn();
 				control.stageIncrement();
 			}
 		});
