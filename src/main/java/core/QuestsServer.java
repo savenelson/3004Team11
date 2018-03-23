@@ -123,5 +123,10 @@ public class QuestsServer {
 //		BROKEN: the below call FIXME to talk to client
 //		view.resolveQuest();
 	}
+
+	public void update() {
+		// TODO Auto-generated method stub
+		//BROKEN FIXME . This is being called from QuestsServerModel and needs to maybe talk to Clients?
+	}
 }
 

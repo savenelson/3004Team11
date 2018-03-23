@@ -20,6 +20,7 @@ public class Table implements Runnable{
 	 * Thread run method
 	 */
 	public void run() {
+        out.println("SERVERMESSAGE--WELCOME");
 		model = new QuestsServerModel();
 	}
 

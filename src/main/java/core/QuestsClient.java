@@ -3,6 +3,8 @@ package core;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javafx.application.Application;
+
 public class QuestsClient {
 	private static final Logger logger = LogManager.getLogger(QuestsClient.class);
     private static final String DEFAULT_SERVER_ADDRESS = "localhost";   // default server address
@@ -450,18 +452,14 @@ public class QuestsClient {
 //    }
     
   public static void main(String[] args) {
-  String serverAddress = DEFAULT_SERVER_ADDRESS;
-  int serverPort = DEFAULT_SERVER_PORT;
-  QuestsClient controller = new QuestsClient(serverAddress, serverPort);
-  controller.start();
+	  logger.info("main() running");
+	  String serverAddress = DEFAULT_SERVER_ADDRESS;
+	  int serverPort = DEFAULT_SERVER_PORT;
+	  QuestsClient controller = new QuestsClient(serverAddress, serverPort);
+	  controller.start();
+	  Application.launch(QuestsClientView.class, args);
 }
-    
-//	public static void main(String [] args){
-//		logger.info("main() running");
-//
-//		launch(args);
-//	}
-    
+
 	public void gameInit(String args []){
 		
 		logger.info("gameInit() running");
@@ -477,7 +475,6 @@ public class QuestsClient {
 		
 		if(numPlayers >= 2 && numPlayers <= 4)
 		{
-
 			model = new QuestsClientModel(this);
 			logger.info("passing numPlayers = " + numPlayers + " to model");
 			

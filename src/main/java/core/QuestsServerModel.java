@@ -49,11 +49,35 @@ public class QuestsServerModel {
 	
 	StoryCardState questManger;
 	StoryCardState eventManger;
+	
+	/**
+	 * One of two Constructors 
+	 * @param control
+	 */
 	QuestsServerModel(QuestsServer control){
 		
 		logger.info("Model created");
 
 		this.control = control;
+		
+		this.adventureDeck = new AdventureDeck();
+		this.storyDeck = new StoryDeck();
+		
+		this.adventureDeckDiscard = new AdventureDeck();
+		this.storyDeckDiscard = new StoryDeck();
+		
+		state = new State();
+		
+		currentPlayer = 0;
+		currentSponsor = 0;
+	}
+	
+	/**
+	 * One of two Constructors. No params
+	 */
+	QuestsServerModel(){
+		
+		logger.info("Model created");
 		
 		this.adventureDeck = new AdventureDeck();
 		this.storyDeck = new StoryDeck();
@@ -613,22 +637,14 @@ public class QuestsServerModel {
 		} */
 	}
 	
-	private void playEvent() {
-		logger.debug("playEvent() called");
-		
-		eventManger.handle();
-		((EventManger) eventManger).handleEvent(((StoryCard) currentStoryCard).getName());
 
-	
-	}
-	
 	public void playGame() {
 		logger.debug("playGame() called");
 
 		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
 			playQuest();
 		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.EVENT)){
-			playEvent();
+//			playEvent();
 		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)){
 //			playTournament();
 		} else {
@@ -650,7 +666,7 @@ public class QuestsServerModel {
 			this.currentSponsor = this.currentPlayer;
 		}
 		logger.info("Player changed to " + this.currentPlayer);
-		control.view.update();
+		control.update();
 		
 	}
 
