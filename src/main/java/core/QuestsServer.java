@@ -3,8 +3,12 @@ package core;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class QuestsServer {
+	private static final Logger logger = LogManager.getLogger(QuestsServer.class);
+	
     private static final int DEFAULT_PORT = 44444;                      // default server port
     private static final int DEFAULT_PLAYERS_PER_TABLE = 1;             // default number of players per table
     private static final int DEFAULT_STARTING_MONEY = 2500;             // default amount of money players start with
@@ -97,4 +101,27 @@ public class QuestsServer {
          QuestsServer questsServer = new QuestsServer(serverPort, playersPerTable);
         questsServer.start();
     }
+    
+	public void alert(String message){
+		logger.info("alert() called: " + message);
+
+//		BROKEN: the below call FIXME to talk to client
+//		view.alert(message);
+	}
+
+	public void updateViewState(){
+		logger.debug("updateViewState() called");
+		
+//		BROKEN: the below call FIXME to talk to client
+//		view.updateState();
+		
+	}
+	
+	public void resolveQuest(){
+		logger.debug("resolveQuest() called");
+
+//		BROKEN: the below call FIXME to talk to client
+//		view.resolveQuest();
+	}
 }
+
