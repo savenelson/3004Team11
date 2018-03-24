@@ -371,59 +371,7 @@ public class Model {
 	
 	
 	
-	public int resolveQuest(){
-		//Left it here because of  one of the event cards 
-		
-		/**
-		 * To resolve a Quest, we need to count the following data structures:
-		 *    - players Queue
-		 *    - players Party
-		 *    - players Rank
-		 *    - get a card if they pass
-		 */
-		logger.info("resolveQuest() called");
 
-		int numStages = this.state.numStages;
-
-		
-		if(inNextQ) {
-			
-			for (int i = 0; i < this.state.numPlayers; i++) {
-				if(!players[i].isSponsor){
-
-				this.players[i].addShields(2);
-			}
-			inNextQ = false;
-			}
-		}
-
-		int numShields = ((QuestCard) state.currentStoryCard).getNumStages();
-		logger.info("Number of Stages: " + numShields);
-
-		//TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
-		for (int i = 0; i < state.numPlayers; ++i){
-			if(!players[i].isSponsor){
-
-				
-
-				if(players[i].passedQuest) {
-					players[i].addShields(numShields);
-					for(int j=0;j<numStages;j++) {
-						Card c = this.adventureDeck.pop();
-						this.players[i].addToHand(c);
-						adventureDeckDiscard.add(c);
-					}
-				}
-
-			}
-		}
-		
-		//TODO ADD SHIELDS HERE
-		
-		control.resolveQuest();
-		
-		return 0;
-	}
 	
 
 		
