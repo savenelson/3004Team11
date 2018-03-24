@@ -241,6 +241,8 @@ public class Model {
 	
 		Card c = this.stage.getStageAt(currentStage).getByID(iD);
 		
+		this.stage.getStageAt(currentStage).remove(iD);;
+		
 		
 		
 		this.players[this.currentPlayer].getHand().add(c);
