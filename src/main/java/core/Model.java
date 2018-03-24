@@ -372,7 +372,20 @@ public class Model {
 	
 		
 	}
+	
+	
+	
+	
 	public int resolveQuest(){
+		//Left it here because of  one of the event cards 
+		
+		/**
+		 * To resolve a Quest, we need to count the following data structures:
+		 *    - players Queue
+		 *    - players Party
+		 *    - players Rank
+		 *    - get a card if they pass
+		 */
 		logger.info("resolveQuest() called");
 
 		int numStages = this.state.numStages;
@@ -419,79 +432,7 @@ public class Model {
 	}
 	
 
-	public void resolveStage(){
-		/**
-		 * To resolve a stage, we need to count the following data structures:
-		 *    - players Queue
-		 *    - players Party
-		 *    - players Rank
-		 *    - get a card if they pass
-		 */
-		logger.info("resolveStage() called");
-
 		
-		CardCollection currStage = this.stage.getStageAt(stage.getCurrentStage());
-		
-		int stageBP = 0;
-
-		for (int i = 0; i < currStage.size(); ++i){
-			stageBP += ((AdventureCard)currStage.get(i)).getBattlePoints();
-		}
-		
-		for(int i = 0; i < numPlayers; ++i){
-			int playerBP = players[i].getRank().getBattlePoints();
-			if (players[i].getQueue() != null) {
-				for(int j = 0; j < players[i].getQueue().size(); ++j){
-					playerBP += ((AdventureCard) players[i].getQueue().get(j)).getBattlePoints();
-				}
-			}
-			if (players[i].getParty() != null) {
-				for(int j = 0; j < players[i].getParty().size(); ++j){
-					playerBP += ((AdventureCard) players[i].getParty().get(j)).getBattlePoints();
-				}
-			}
-			
-			//Check if player passed quest
-			
-
-			if(playerBP >= stageBP && (players[i].isQuesting) && stageBP > 0){
-				
-				players[i].passedStage = true;
-				logger.info("Player " + players[i].getPlayerNumber() +"and has passed ");
-				if(state.currentStage +1==((QuestCard)state.currentStoryCard).getNumStages() ) {
-					
-					players[i].passedQuest =true;
-
-				
-					Card c = this.adventureDeck.pop();
-					this.players[i].addToHand(c);
-					adventureDeckDiscard.add(c);
-				}
-			
-		//
-				
-		}else {players[i].isQuesting = false;
-		
-		
-		}
-			
-		}
-		if(stage.getCurrentStage()+1== ((QuestCard)currentStoryCard).getNumStages()){
-			this.isDoneQuestingMode = true;
-			resolveQuest();
-			
-			
-			
-
-		}
-		
-		
-	
-
-
-	}
-	
-	
 	public void stageOver(){
 		logger.info("stageOver() called");
 
@@ -569,14 +510,9 @@ public class Model {
 
 
 	private void playQuest(){
-		
-
 		logger.info("playQuest() called");
 		
-		currentState = questManger;
-		
-		
-		
+		currentState = questManger;	
 
 	}
 	
@@ -584,9 +520,6 @@ public class Model {
 		logger.debug("playEvent() called");
 		
 		currentState = eventManger;
-		
-		
-	
 
 	
 	}

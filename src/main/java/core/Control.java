@@ -253,6 +253,7 @@ public class Control{
 			view.resolveQuest(); 
 			
 		}else {
+			//move to the next stage
 			this.stageIncrement();
 			nextPlayer();
 		}

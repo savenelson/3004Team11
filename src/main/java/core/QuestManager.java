@@ -195,7 +195,8 @@ public class QuestManager implements StoryCardState{
 			numOfRepsonders = 0;
 			
 			//reolve stage
-			model.resolveStage();
+			//model.resolveStage();
+			this.resolveStage();
 			
 			
 			// fix later 
@@ -203,11 +204,9 @@ public class QuestManager implements StoryCardState{
 			
 			
 			this.questers.survivorsLeft(model.getPlayers());
-			}else {
-
-				//model.setNextPlayer(questers.nextPlayer());
-			}
 			
+			
+		}
 		}
 	}
 	private boolean stageHarder() {
@@ -389,6 +388,75 @@ public class QuestManager implements StoryCardState{
 		// if my questers are ready then get the first person in my 	quest
 		//model.setNextPlayer(questers.nextPlayer());
 		
-	}   	 
+	}
+	
+	public void resolveStage(){
+		/**
+		 * To resolve a stage, we need to count the following data structures:
+		 *    - players Queue
+		 *    - players Party
+		 *    - players Rank
+		 *    - get a card if they pass
+		 */
+		logger.info("resolveStage() called");
+
+		
+		CardCollection currStage = model.stage.getStageAt(model.stage.getCurrentStage());
+		
+		int stageBP = 0;
+
+		for (int i = 0; i < currStage.size(); ++i){
+			stageBP += ((AdventureCard)currStage.get(i)).getBattlePoints();
+		}
+		players = model.getPlayers();
+		for(int i = 0; i < model.numPlayers; ++i){
+			int playerBP = players[i].getRank().getBattlePoints();
+			if (players[i].getQueue() != null) {
+				for(int j = 0; j < players[i].getQueue().size(); ++j){
+					playerBP += ((AdventureCard) players[i].getQueue().get(j)).getBattlePoints();
+				}
+			}
+			if (players[i].getParty() != null) {
+				for(int j = 0; j < players[i].getParty().size(); ++j){
+					playerBP += ((AdventureCard) players[i].getParty().get(j)).getBattlePoints();
+				}
+			}
+			
+			//Check if player passed quest
+			
+
+			if(playerBP >= stageBP && (players[i].isQuesting) && stageBP > 0){
+				
+				players[i].passedStage = true;
+				logger.info("Player " + players[i].getPlayerNumber() +"and has passed ");
+				if(model.state.currentStage +1==((QuestCard)model.state.currentStoryCard).getNumStages() ) {
+					
+					players[i].passedQuest =true;
+
+				
+					Card c = model.getAdventureDeck().pop();
+					this.players[i].addToHand(c);
+					model.getAdventureDeckDiscard().add(c);
+				}
+			
+		//
+				
+		}else {players[i].isQuesting = false;
+		
+		
+		}
+			
+		}
+		if(model.stage.getCurrentStage()+1== ((QuestCard) model.currentStoryCard).getNumStages()){
+			model.isDoneQuestingMode = true;
+			model.resolveQuest();
+
+		}
+	
+
+
+	}
+	
+	
 
 }
