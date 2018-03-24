@@ -390,6 +390,70 @@ public class QuestManager implements StoryCardState{
 		
 	}
 	
+	
+	public int resolveQuest(){
+		//Left it here because of  one of the event cards 
+		
+		/**
+		 * To resolve a Quest, we need to count the following data structures:
+		 *    - players Queue
+		 *    - players Party
+		 *    - players Rank
+		 *    - get a card if they pass
+		 */
+		logger.info("resolveQuest() called");
+
+		int numStages = model.numStages;
+
+		
+		boolean inNextQ = false;
+		if(inNextQ) {
+			
+			for (int i = 0; i <model.numPlayers; i++) {
+				if(!players[i].isSponsor){
+
+				this.players[i].addShields(2);
+			}
+			inNextQ = false;
+			}
+		}
+
+		int numShields = ((QuestCard) model.currentStoryCard).getNumStages();
+		logger.info("Number of Stages: " + numShields);
+
+		//TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
+		for (int i = 0; i < model.numPlayers; ++i){
+			if(players[i].isSponsor) {
+				logger.info("Sponsor is getting "+ numberOfCardsToReturn);
+				for(int j = 0 ; j< numberOfCardsToReturn; j ++) {
+	
+					//players[i].addToHand(new WeaponCard(WeaponCard.SWORD_NAME, WeaponCard.SWORD_BATTLE_POINTS));
+					players[j].addToHand(model.getAdventureDeck().pop());
+				}
+			}
+			if(!players[i].isSponsor){
+
+				
+
+				if(players[i].passedQuest) {
+					players[i].addShields(numShields);
+					for(int j=0;j<numStages;j++) {
+						Card c = model.getAdventureDeck().pop();
+						this.players[i].addToHand(c);
+						model.getAdventureDeckDiscard().add(c);
+					}
+				}
+
+			}
+		}
+		
+
+		
+		model.control.resolveQuest();
+		
+		return 0;
+	}
+	
 	public void resolveStage(){
 		/**
 		 * To resolve a stage, we need to count the following data structures:
@@ -469,17 +533,8 @@ public class QuestManager implements StoryCardState{
 			
 			model.isDoneQuestingMode = true;
 			
-			
-			logger.info("The sposnor is receiving this many cards "+ numberOfCardsToReturn);
-			for(int i =0 ; i<model.getPlayers().length; i++) {
-				if(model.getPlayers()[i].isSponsor) {
-					for(int j=0; i<numberOfCardsToReturn; j++) {
-						//might be numm becoems the adventure deck 
-						model.getPlayers()[i].addToHand(model.getAdventureDeck().pop());
-					}
-				}
-			}
-			model.resolveQuest();
+
+			resolveQuest();
 
 		}
 	

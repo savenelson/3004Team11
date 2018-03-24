@@ -164,14 +164,11 @@ public class Model {
 		
 		state.currentViewer = this.currentViewer;
 		
-		/*if (stages[currentStage]!=null) {
-			state.stage = this.stages[currentStage];
-		}*/
-		
 		
 		if (stage.getStageAt(currentStage)!=null) {
 		state.stage = this.stage.getStageAt(stage.getCurrentStage());
 		}
+		
 		state.currentStage = this.stage.getCurrentStage();
 		
 		state.stages = this.stage.getStage();
@@ -444,11 +441,7 @@ public class Model {
 				players[i].passedStage = false;
 			}
 		}
-	
-		//this.currentViewer--;// TODO ??? MAYBE A REALLY BAD FIX MAYBE NOT, WHO KNOWS ANYMORE...
-	
-
-
+		
 		
 		state.stage = this.stage.getStageAt(currentStage);
 		control.updateViewState();
@@ -602,16 +595,8 @@ public class Model {
 		this.currentStage = 0;
 		stage.resetCurrentStage();
 		
-		this.currentSponsor = -1;
 		
-
-		
-
-		
-		this.stagePlaceHolder = 0;
-		
-		
-		this.currentViewer = this.currentPlayer;
+	
 		control.updateViewState();
 		playGame();
 		currentState.handle();
