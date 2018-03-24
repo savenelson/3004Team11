@@ -180,12 +180,6 @@ public class Control{
 		model.nextStory();
 	}
 	
-	public void resolveStage(){
-		logger.debug("resolveStage() called");
-
-		model.resolveStage();
-	}
-	
 	public void buttonClick(String clickType) {
 		logger.debug("buttonClick() called");
 

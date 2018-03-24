@@ -305,7 +305,6 @@ public Player nextPlayer1() {
 	return null;
 }
 
-
 @Override
 public void nextPlayer() {
 	// TODO Auto-generated method stub		
