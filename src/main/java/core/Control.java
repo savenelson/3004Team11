@@ -60,11 +60,11 @@ public class Control{
 
 //		model.deal(); 			//COMMENT OUT FOR SET SCENEARIOS
 		
-		model.setScenario1();	//UNCOMMENT FOR SCEN 1
+//		model.setScenario1();	//UNCOMMENT FOR SCEN 1
 		
 //		model.setScenario2();	//UNCOMMENT FOR SCEN 2
 		
-//		model.setScenarioTest();
+		model.setScenarioTest();
 		
 		//model.eventTesting();
 	}
