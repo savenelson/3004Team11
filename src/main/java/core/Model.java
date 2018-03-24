@@ -36,7 +36,7 @@ public class Model {
 //	boolean currentPlayerNotSponsoring;
 	boolean gameWon = false;
 
-	boolean toggleForStages = false;
+
 	int stagePlaceHolder = 0;
 	static int stageOverCount = 0;
 
@@ -52,8 +52,10 @@ public class Model {
 	
 	StoryCardState questManger;
 	StoryCardState eventManger;
-	
 	StoryCardState currentState;
+	boolean isDoneQuestingMode = false;
+	
+	
 	Model(Control control){
 		
 		logger.info("Model created");
@@ -94,13 +96,7 @@ public class Model {
 	public void instantiateStages(){
 		logger.debug("instantiateStages() called - hard coded to 5");
 
-		/*stages = new CardCollection[5];
-		
-		for(int i = 0; i < 5; ++i){
-			stages[i] = new CardCollection();
-		}
-		
-		currentStage = 0;*/
+
 		
 		stage = new QuestingStage();
 	}
@@ -147,9 +143,8 @@ public class Model {
 	public void resetCurrentStage(){
 		logger.debug("resetCurrentStage() called");
 
-		//setCurrentStage(0);
 		
-		stage.resetCurrentStage();;
+		stage.resetCurrentStage();
 	}
 	
 	public State getState(){
@@ -184,12 +179,6 @@ public class Model {
 		state.numPlayers = this.numPlayers;
 		
 		state.numStages = this.numStages;
-		
-
-		
-	
-		
-		state.toggleForStages = this.toggleForStages;
 		
 		state.stagePlaceHolder = this.stagePlaceHolder;
 
@@ -404,7 +393,7 @@ public class Model {
 		for (int i = 0; i < state.numPlayers; ++i){
 			if(!players[i].isSponsor){
 
-				System.out.println("Players "+ i+1+ players[i].isQuesting + players[i].passedQuest);
+				
 
 				if(players[i].passedQuest) {
 					players[i].addShields(numShields);
@@ -417,6 +406,8 @@ public class Model {
 
 			} else {
 				//TODO GIVE SPONSOR CARDS BACK 
+				
+				
 			}
 		}
 		
@@ -486,7 +477,11 @@ public class Model {
 			
 		}
 		if(stage.getCurrentStage()+1== ((QuestCard)currentStoryCard).getNumStages()){
+			this.isDoneQuestingMode = true;
 			resolveQuest();
+			
+			
+			
 
 		}
 		
@@ -590,14 +585,14 @@ public class Model {
 		
 		currentState = eventManger;
 		
-		currentState.handle();
+		
 	
 
 	
 	}
 	
 	public void playGame() {
-		logger.debug("playGame() called");
+		logger.info("playGame() called");
 
 		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
 			playQuest();
@@ -639,7 +634,7 @@ public class Model {
 		
 	}
 	public void nextStory() {
-		logger.debug("nextStory() called");
+		logger.info("nextStory() called");
 		//get ready for the next person
 		for(int i = 0; i < numPlayers; ++i){
 			
@@ -666,8 +661,10 @@ public class Model {
 		
 		storyDeckDiscard.add(this.currentStoryCard);
 		
+	
+		
 		this.currentStoryCard = storyDeck.pop();
-		logger.info(currentStoryCard.getName());
+		logger.info("Story card up next "+ currentStoryCard.getName());
 
 		this.currentStage = 0;
 		stage.resetCurrentStage();
@@ -676,7 +673,7 @@ public class Model {
 		
 
 		
-		this.toggleForStages = false;
+
 		
 		this.stagePlaceHolder = 0;
 		
@@ -961,6 +958,8 @@ public class Model {
 		this.players[3].addToHand(c);
 		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
+		
+	
 		
 		this.adventureDeck.shuffle();
 		

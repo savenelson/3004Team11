@@ -1226,9 +1226,8 @@ public class View extends Application {
 			public void handle(ActionEvent event) {
 				logger.info("nextStageButton clicked");
 
-				control.stageOver();
-				state = control.getState();
-				control.stageIncrement();
+				control.nextStage();
+				
 				
 			}
 		});

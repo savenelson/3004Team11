@@ -45,13 +45,16 @@ public class QuesterQueque {
 	}
 	
 	
-	public void survivorsLeft() {
+	public void survivorsLeft(Player players[]) {
+		this.players = players;
 		numberOfTurns = 0;
 		 int numOfCurrentQuesters = size();
 		 oldQuesters = new ArrayDeque<Integer>(currentQuesters);
 		 
-		for(int i =0; i< numOfCurrentQuesters ; i++) {
-			Player player = this.players[currentQuesters.pop()];
+		 currentQuesters.clear();
+		 
+		for(int  quester : oldQuesters) {
+			Player player = this.players[quester];
 			if(player.isQuesting) {
 			currentQuesters.addLast(player.getPlayerNumber());
 			}

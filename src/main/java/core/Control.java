@@ -175,7 +175,7 @@ public class Control{
 	}
 
 	public void nextStory(){
-		logger.debug("nextStory() called");
+		logger.info("nextStory() called");
 
 		model.nextStory();
 	}
@@ -232,7 +232,11 @@ public class Control{
 	}
 
 	public void nextPlayer() {
-		view.nextPlayer();
+		
+		logger.info("next playr");
+		
+		model.currentState.nextPlayer();
+		//view.nextPlayer();
 	}
 
 
@@ -240,6 +244,20 @@ public class Control{
 		logger.debug("getView() called");
 
 		return view;
+	}
+	
+	public void nextStage() {
+		this.stageOver();
+		logger.info("Hello this is the model stafe in the control "+ model.isDoneQuestingMode);
+		if (model.isDoneQuestingMode) {
+			view.resolveQuest(); 
+			
+		}else {
+			this.stageIncrement();
+			nextPlayer();
+		}
+		
+		
 	}
 	
 }
