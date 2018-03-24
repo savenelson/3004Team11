@@ -238,10 +238,10 @@ public class Model {
 		logger.debug("unstage() called");
 
 		
-		AdventureCard c = this.stages[currentStage].getByID(iD);
+	
 		Card c = this.stage.getStageAt(currentStage).getByID(iD);
 		
-		this.stage.getStageAt(currentStage).remove(c);
+		
 		
 		this.players[this.currentPlayer].getHand().add(c);
 		
@@ -377,74 +377,7 @@ public class Model {
 		
 	}
 	
-	
-	
-	
 
-
-	
-
-	public void resolveStage(){
-		/**
-		 * To resolve a stage, we need to count the following data structures:
-		 *    - players Queue
-		 *    - players Party
-		 *    - players Rank
-		 *    - get a card if they pass
-		 */
-		logger.debug("resolveStage() called");
-
-		
-		CardCollection currStage = this.stages[this.currentStage+stageOverCount];
-		
-		int stageBP = 0;
-
-		for (int i = 0; i < currStage.size(); ++i){
-			stageBP += ((AdventureCard)currStage.get(i)).getBattlePoints();
-		}
-		
-		for(int i = 0; i < numPlayers; ++i){
-			int playerBP = players[i].getRank().getBattlePoints();
-			if (players[i].getQueue() != null) {
-				for(int j = 0; j < players[i].getQueue().size(); ++j){
-					playerBP += ((AdventureCard) players[i].getQueue().get(j)).getBattlePoints();
-				}
-			}
-			if (players[i].getParty() != null) {
-				for(int j = 0; j < players[i].getParty().size(); ++j){
-					playerBP += ((AdventureCard) players[i].getParty().get(j)).getBattlePoints();
-				}
-			}
-			
-			//Check if player passed quest
-
-			if(playerBP >= stageBP && (! players[i].isSponsor) && stageBP > 0){
-				players[i].passedStage = true;
-				if(state.currentStage +1==((QuestCard)state.currentStoryCard).getNumStages() ) {
-					players[i].passedQuest =true;
-
-					System.out.println("true turned ");
-					AdventureCard c = this.adventureDeck.pop();
-					this.players[i].addToHand(c);
-					adventureDeckDiscard.add(c);
-				}
-			
-		//
-				this.toggleForStages = true;
-		}
-			
-		}
-		if(stageOverCount == ((QuestCard)currentStoryCard).getNumStages()&& stageOverCount != 0){
-			resolveQuest();
-
-		}
-		
-		
-	
-
-
-	}
-	
 
 		
 
