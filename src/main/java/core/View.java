@@ -342,14 +342,14 @@ public class View extends Application {
 			Label queueCardsLabel;
 			Label stageLabel;
 			if(stage.size() > 1)
-				stageLabel = new Label("Stage " + (state.currentStage+1) + ": " + stage.size() + " cards");
+				stageLabel = new Label("Stage " + (state.stageOverCount+1) + ": " + stage.size() + " cards");
 			else
-				stageLabel = new Label("Stage " + (state.currentStage+1) + ": " + stage.size() + " card");
+				stageLabel = new Label("Stage " + (state.stageOverCount+1) + ": " + stage.size() + " card");
 			
 			stageLabel.setFont(Font.font("Serif", FontWeight.BOLD, 60));
 			stageLabel.relocate(colStage + 100, rowStage + 20);
 			
-			queueCardsLabel = new Label("Queue your cards for Stage " + (state.currentStage+1) );
+			queueCardsLabel = new Label("Queue your cards for Stage " + (state.stageOverCount+1) );
 			queueCardsLabel.setFont(Font.font("Serif", FontWeight.BOLD, 32));
 			queueCardsLabel.relocate(colStage + 95, rowStage + 100);
 			

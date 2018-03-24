@@ -21,14 +21,14 @@ public class Player {
 	private RankCard rankCard;
 	public RankCard getRank(){return rankCard;}
 	
-	private CardCollection hand;
-	public CardCollection getHand(){return hand;}
+	private CardCollection<AdventureCard> hand;
+	public CardCollection<AdventureCard> getHand(){return hand;}
 	
-	private CardCollection party;
-	public CardCollection getParty() {return party;}
+	private CardCollection<AdventureCard> party;
+	public CardCollection<AdventureCard> getParty() {return party;}
 	
-	private CardCollection queue;
-	public CardCollection getQueue() {return queue;}
+	private CardCollection<AdventureCard> queue;
+	public CardCollection<AdventureCard> getQueue() {return queue;}
 	
 	private int shieldCount;
 	public int getShieldCount() {return shieldCount;}
@@ -49,11 +49,11 @@ public class Player {
 	public Player(int playerNumber){
 		
 		
-		hand = new CardCollection();
+		hand = new CardCollection<AdventureCard>();
 		
-		queue = new CardCollection();
+		queue = new CardCollection<AdventureCard>();
 		
-		party = new CardCollection();
+		party = new CardCollection<AdventureCard>();
 		
 		this.playerNumber = playerNumber;
 		
@@ -66,17 +66,17 @@ public class Player {
 		return "Player " + this.playerNumber;
 	}
 	
-	public void addToHand(Card c){
+	public void addToHand(AdventureCard c){
 		logger.info(this.playerNumber + "s hand changed - added " + c.getName());
 		hand.add(c);
 	}
 	
-	public void addToQueue(Card c){
+	public void addToQueue(AdventureCard c){
 		logger.info(this.playerNumber + "s queue changed - added " + c.getName());
 		queue.add(c);
 	}
 	
-	public void addToParty(Card c){
+	public void addToParty(AdventureCard c){
 		logger.info(this.playerNumber + "s party changed - added " + c.getName());
 		party.add(c);
 	}

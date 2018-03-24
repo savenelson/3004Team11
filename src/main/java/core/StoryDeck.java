@@ -3,7 +3,7 @@ package core;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class StoryDeck extends CardCollection{
+public class StoryDeck extends CardCollection<StoryCard>{
 
 	private static final Logger logger = LogManager.getLogger(StoryDeck.class);
 
@@ -52,7 +52,7 @@ public class StoryDeck extends CardCollection{
 
 	public static void main(String args[]){
 		StoryDeck aD = new StoryDeck();
-			}
+	}
 	
 }
 
