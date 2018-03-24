@@ -174,14 +174,11 @@ public class Model {
 		
 		state.currentViewer = this.currentViewer;
 		
-		/*if (stages[currentStage]!=null) {
-			state.stage = this.stages[currentStage];
-		}*/
-		
 		
 		if (stage.getStageAt(currentStage)!=null) {
 		state.stage = this.stage.getStageAt(stage.getCurrentStage());
 		}
+		
 		state.currentStage = this.stage.getCurrentStage();
 		
 		state.stages = this.stage.getStage();
@@ -383,59 +380,8 @@ public class Model {
 	
 	
 	
-	public int resolveQuest(){
-		//Left it here because of  one of the event cards 
-		
-		/**
-		 * To resolve a Quest, we need to count the following data structures:
-		 *    - players Queue
-		 *    - players Party
-		 *    - players Rank
-		 *    - get a card if they pass
-		 */
-		logger.info("resolveQuest() called");
 
-		int numStages = this.state.numStages;
 
-		
-		if(inNextQ) {
-			
-			for (int i = 0; i < this.state.numPlayers; i++) {
-				if(!players[i].isSponsor){
-
-				this.players[i].addShields(2);
-			}
-			inNextQ = false;
-			}
-		}
-
-		int numShields = ((QuestCard) state.currentStoryCard).getNumStages();
-		logger.info("Number of Stages: " + numShields);
-
-		//TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
-		for (int i = 0; i < state.numPlayers; ++i){
-			if(!players[i].isSponsor){
-
-				
-
-				if(players[i].passedQuest) {
-					players[i].addShields(numShields);
-					for(int j=0;j<numStages;j++) {
-						AdventureCard c = this.adventureDeck.pop();
-						this.players[i].addToHand(c);
-						adventureDeckDiscard.add(c);
-					}
-				}
-
-			}
-		}
-		
-		//TODO ADD SHIELDS HERE
-		
-		control.resolveQuest();
-		
-		return 0;
-	}
 	
 
 	public void resolveStage(){
@@ -516,11 +462,7 @@ public class Model {
 				players[i].passedStage = false;
 			}
 		}
-	
-		//this.currentViewer--;// TODO ??? MAYBE A REALLY BAD FIX MAYBE NOT, WHO KNOWS ANYMORE...
-	
-
-
+		
 		
 		state.stage = this.stage.getStageAt(currentStage);
 		control.updateViewState();
@@ -671,15 +613,7 @@ public class Model {
 		this.currentStage = 0;
 		stage.resetCurrentStage();
 		
-		this.currentSponsor = -1;
-		
 
-		
-
-		
-		this.stagePlaceHolder = 0;
-		
-		this.currentViewer = this.currentPlayer;
 		control.updateViewState();
 		playGame();
 		currentState.handle();
