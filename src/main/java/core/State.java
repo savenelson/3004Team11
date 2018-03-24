@@ -26,7 +26,7 @@ public class State {
 	
 	public CardCollection [] stages;
 	
-	public boolean stagesSet;
+
 	
 	public boolean stageResolved;
 	
@@ -35,5 +35,7 @@ public class State {
 	public int stagePlaceHolder;
 	
 	public int stageOverCount;
+	
+	public boolean isQuesting;
 	
 }

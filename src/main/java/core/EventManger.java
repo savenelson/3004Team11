@@ -1,8 +1,11 @@
 package core;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 // class to handle event cards
 public class EventManger implements StoryCardState{
+private static final Logger logger = LogManager.getLogger(EventManger.class);
 Player [] players;
 int numPlayers;
 AdventureDeck adventureDeck;
@@ -32,7 +35,7 @@ public void handleEvent(String eventName) {
 			}else if(eventName.equals("KingsCallToArms")) {
 				KingCallToArms();
 			}else if(eventName.equals("ProsperityThroughoutTheRealm")) {
-				ProsperityThroughoutTheRealm();
+			//	ProsperityThroughoutTheRealm();
 				
 			}else if(eventName.equals("ChivalrousDeed")) {
 				ChilvarousDeed();
@@ -174,8 +177,14 @@ public void KingCallToArms() {
 	
 }
 public void ProsperityThroughoutTheRealm() {
-	for (int i = 0; i < this.players.length; i++) {
+	logger.info("Handling ProsperityThroughoutTheRealm event ");
+	
+	int nummOfPlayers = model.getPlayers().length;
+	for (int i = 0; i < nummOfPlayers; i++) {
 		// need to draw from  story card 
+		logger.info(players[i].getPlayerNumber());
+		
+		//need to add cards to adventure deck will give erroe 
 		this.players[i].addToHand(this.adventureDeck.pop());
 		this.players[i].addToHand(this.adventureDeck.pop());
 	}
@@ -260,14 +269,57 @@ public void Plague() {
 
 public void handle() {
 	// TODO Auto-generated method stub
-	model.ge
+	
+	String eventName = model.currentStoryCard.getName();
+	System.out.println(model.currentStoryCard.getName());
+
+
+	if(eventName.equals("KingsRecognition")) {
+		KingsRecognition();
+	}else if(eventName.equals("QueensFavor")) {
+		QueenFavor();
+		
+	}else if(eventName.equals("Pox")) {
+		Pox();
+	}else if(eventName.equals("KingsCallToArms")) {
+		KingCallToArms();
+	}else if(eventName.equals("ProsperityThroughoutTheRealm")) {
+		ProsperityThroughoutTheRealm();
+		
+	}else if(eventName.equals("ChivalrousDeed")) {
+		ChilvarousDeed();
+	
+	}else if(eventName.equals("Plague")) {
+		Plague();
+		
+	}else if(eventName.equals("CourtCalled")) {
+		CourtCalled();
+	}
+	
 	
 }
 
 
-public Player nextPlayer() {
+public Player nextPlayer1() {
 	// TODO Auto-generated method stub
 	return null;
+}
+
+
+@Override
+public void nextPlayer() {
+	// TODO Auto-generated method stub		
+			
+	model.nextPlayer();
+	model.nextStory();
+	
+}
+
+
+@Override
+public void setPlayer() {
+	// TODO Auto-generated method stub
+	
 }
 
 

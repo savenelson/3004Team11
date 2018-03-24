@@ -87,11 +87,13 @@ public class Control{
 	}
 	
 	public void stageIncrement(){
-		logger.debug("stageIncrement() called");
+		logger.info("stageIncrement() called");
 
-		model.state.currentStage = model.state.stagePlaceHolder;
-		model.state.toggleForStages = false;
-		model.resolveStage();
+		
+		model.stage.nextStage();
+		updateViewState();
+	//	model.state.toggleForStages = false;
+		
 	}
 	
 	public void stageOver(){
@@ -117,12 +119,15 @@ public class Control{
 		
 	}
 	
+	
+	
+	/*
 	public void viewerChanged(){
 		logger.debug("viewerChanged() called");
 
 		model.viewerChanged();
 	}
-	
+	*/
 	public void setNumPlayers(int i){
 		logger.debug("setNumPlayers() called");
 
@@ -170,7 +175,7 @@ public class Control{
 	}
 
 	public void nextStory(){
-		logger.debug("nextStory() called");
+		logger.info("nextStory() called");
 
 		model.nextStory();
 	}
@@ -217,7 +222,7 @@ public class Control{
 
 		startStageCycle();
 
-		model.stagesSet();
+		
 	}
 	
 	public void alert(String message){
@@ -226,12 +231,34 @@ public class Control{
 		view.alert(message);
 	}
 
+	public void nextPlayer() {
+		
+		logger.info("next playr");
+		
+		model.currentState.nextPlayer();
+		//view.nextPlayer();
+	}
 
 
 	public View getView() {
 		logger.debug("getView() called");
 
 		return view;
+	}
+	
+	public void nextStage() {
+		this.stageOver();
+		logger.info("Hello this is the model stafe in the control "+ model.isDoneQuestingMode);
+		if (model.isDoneQuestingMode) {
+			view.resolveQuest(); 
+			
+		}else {
+			//move to the next stage
+			this.stageIncrement();
+			nextPlayer();
+		}
+		
+		
 	}
 	
 }
