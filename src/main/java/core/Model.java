@@ -366,9 +366,7 @@ public class Model {
 		
 		
 		currentState.nextPlayer();
-		
 	
-
 	
 		
 	}
@@ -393,11 +391,14 @@ public class Model {
 		
 		if(inNextQ) {
 			
-			for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
+			for (int i = 0; i < this.state.numPlayers; i++) {
+				if(!players[i].isSponsor){
+
 				this.players[i].addShields(2);
 			}
 			inNextQ = false;
 			}
+		}
 
 		int numShields = ((QuestCard) state.currentStoryCard).getNumStages();
 		logger.info("Number of Stages: " + numShields);
@@ -417,10 +418,6 @@ public class Model {
 					}
 				}
 
-			} else {
-				//TODO GIVE SPONSOR CARDS BACK 
-				
-				
 			}
 		}
 		
@@ -555,7 +552,7 @@ public class Model {
 		}
 		logger.info("Player changed to " + this.currentPlayer);
 		
-		//control.nextPlayer();
+		
 		control.view.update();
 		
 	}
@@ -569,12 +566,15 @@ public class Model {
 	public void nextStory() {
 		logger.info("nextStory() called");
 		//get ready for the next person
+		
+		this.isDoneQuestingMode = false;;
 		for(int i = 0; i < numPlayers; ++i){
 			
 			players[i].isSponsor = false;
 			players[i].isQuesting = false;
 			players[i].passedQuest = false;
 			players[i].passedStage = false;
+			
 			
 			
 			//remove stage cards

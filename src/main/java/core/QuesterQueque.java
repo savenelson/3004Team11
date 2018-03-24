@@ -48,7 +48,7 @@ public class QuesterQueque {
 	public void survivorsLeft(Player players[]) {
 		this.players = players;
 		numberOfTurns = 0;
-		 int numOfCurrentQuesters = size();
+		 
 		 oldQuesters = new ArrayDeque<Integer>(currentQuesters);
 		 
 		 currentQuesters.clear();
@@ -64,13 +64,17 @@ public class QuesterQueque {
 	}
 	
 	
-	public boolean isDone() {
+	public void clear() {
 		
-		
-		return numberOfTurns == currentQuesters.size();
-		
+		currentQuesters.clear();
+	
+	
+	
+	
 	}
 	
+	
+
 
 }
 

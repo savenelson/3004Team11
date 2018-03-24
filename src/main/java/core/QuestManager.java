@@ -30,7 +30,7 @@ public class QuestManager implements StoryCardState{
 	
 	int numOfansewers;
 	
-	int numberOfCardsToReturn= 0;
+	private int numberOfCardsToReturn= 0;
 	
 	
 	int numberOfrequests = 0;
@@ -344,7 +344,7 @@ public class QuestManager implements StoryCardState{
 		// let start the quest baby
 		}else if (model.getActivePlayer().isSponsor)  {
 			
-				numberOfCardsToReturn= numberOfCardsForSponsor();
+				numberOfCardsToReturn = numberOfCardsForSponsor();
 				model.control.stagesSet();
 			return true;
 			
@@ -448,7 +448,37 @@ public class QuestManager implements StoryCardState{
 			
 		}
 		if(model.stage.getCurrentStage()+1== ((QuestCard) model.currentStoryCard).getNumStages()){
+			//restart the Questmanger
+			hasSponsor = false;
+			questersReady = false;
+			
+			numOfansewers =0 ;
+			
+			numberOfrequests = 0;
+			
+			questers.clear(); 
+			numOfQuesterPotential = 0;
+			
+			isReadyToStage = false;
+			numOfQuester = 0;
+			numOfRepsonders = 0 ;
+			nextPersonToDraw= 0;
+			
+			
+			
+			
 			model.isDoneQuestingMode = true;
+			
+			
+			logger.info("The sposnor is receiving this many cards "+ numberOfCardsToReturn);
+			for(int i =0 ; i<model.getPlayers().length; i++) {
+				if(model.getPlayers()[i].isSponsor) {
+					for(int j=0; i<numberOfCardsToReturn; j++) {
+						//might be numm becoems the adventure deck 
+						model.getPlayers()[i].addToHand(model.getAdventureDeck().pop());
+					}
+				}
+			}
 			model.resolveQuest();
 
 		}
@@ -456,7 +486,13 @@ public class QuestManager implements StoryCardState{
 
 
 	}
+
+
 	
+
+
+
+
 	
 
 }
