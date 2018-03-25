@@ -19,16 +19,11 @@ public class Server {
     private int playersPerTable;                                        // number of players per table
 
     /**
-     * Constructor for BlackjackServer object.
+     * Constructor for Server object.
      *
      * @param serverPort Server port
      * @param playersPerTable Number of players per table
-     * @param startingMoney Amount of money players start with
-     * @param minimumBet Minimum player bet
-     * @param numberOfDecks Number of decks in shoe
-     * @param minimumCardsBeforeShuffle Minimum number of cards remaining before shuffling the shoe
-     * @return 
-     * @return 
+
      */
 
     public Server(int serverPort, int playersPerTable) {
