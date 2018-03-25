@@ -81,11 +81,7 @@ public class Model {
 		currentPlayer = 0;
 		currentSponsor = 0;
 
-
-		
 		currentStage = stage.getCurrentStage();
-
-
 	}
 	
 	public void instantiatePlayers(int numPlayers){
