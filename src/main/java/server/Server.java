@@ -19,7 +19,7 @@ public class Server {
     private int playersPerTable;                                        // number of players per table
 
     /**
-     * Constructor for BlackjackServer object.
+     * Constructor for QuestmodelServer object.
      *
      * @param serverPort Server port
      * @param playersPerTable Number of players per table

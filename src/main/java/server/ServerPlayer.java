@@ -122,7 +122,7 @@ public class ServerPlayer implements Runnable {
     }
     
     /**
-     * Sets the player up for a new round of Blackjack.
+     * Sets the player to play a game 
      */
 
     private void setupPlayer() {
