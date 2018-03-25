@@ -22,7 +22,9 @@ public class Server {
     private int playersPerTable;                                        // number of players per table
 
     /**
+
      * Constructor for Server object.
+
      *
      * @param serverPort Server port
      * @param playersPerTable Number of players per table

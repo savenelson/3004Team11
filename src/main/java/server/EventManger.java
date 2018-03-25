@@ -322,6 +322,23 @@ public void setPlayer() {
 }
 
 
+@Override
+public void nextPlayer() {
+	// TODO Auto-generated method stub		
+			
+	model.nextPlayer();
+	model.nextStory();
+	
+}
+
+
+@Override
+public void setPlayer() {
+	// TODO Auto-generated method stub
+	
+}
+
+
 }
 
 	
