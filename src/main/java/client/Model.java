@@ -204,7 +204,6 @@ public class Model {
 		hand.remove(c);
 		getActivePlayer().addToParty(c);
 		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from hand to party");
-
 	}
 	
 	public void stage(String iD) {
