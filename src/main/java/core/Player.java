@@ -34,12 +34,11 @@ public class Player {
 	public int getShieldCount() {return shieldCount;}
 	
 	public void addShields(int num) {
-		num= num/2; //TODO this is so wrong
+		
 		logger.info(this.playerNumber + " gains " + num + " shields");
 		this.shieldCount += num;
 		promote();
-		promote(); //added to catch rigging scenarios
-		promote(); //added to catch rigging scenarios
+		
 	}
 	public void removeShields(int num) {
 		logger.info(this.playerNumber + " loses " + num + " shields");
@@ -67,7 +66,7 @@ public class Player {
 		return "Player " + this.playerNumber;
 	}
 	
-	public void addToHand(AdventureCard c){
+	public void addToHand(Card c){
 		logger.info(this.playerNumber + "s hand changed - added " + c.getName());
 		hand.add(c);
 	}

@@ -2,17 +2,12 @@ package core;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.io.*;
-import java.net.Socket;
 
-public class QuestsClientModel {
-	private static final Logger logger = LogManager.getLogger(QuestsClientModel.class);
-    private static final int MESSAGE_WAIT_TIME = 500;                           // time to wait between server messages
-    private Socket socket;                                                      // socket on server address and port
-    private BufferedReader in;                                                  // in to server
-    private PrintWriter out;                                                    // out from server
-	
-	public QuestsClient control;
+public class Model {
+
+	private static final Logger logger = LogManager.getLogger(Model.class);
+
+	public Control control;
 	
 	State state;
 	
@@ -32,15 +27,15 @@ public class QuestsClientModel {
 	public StoryDeck getStoryDeckDiscard(){return storyDeckDiscard;}
 	
 	boolean inNextQ = false;
-	boolean stagesSet = false;
+	
 	int currentViewer;
 	int currentPlayer;
 	int currentStage;
 	int currentSponsor;
 	int endTurnCounter = 0;
 	boolean gameWon = false;
-	boolean stageResolved = false;
-	boolean toggleForStages = false;
+
+
 	int stagePlaceHolder = 0;
 	static int stageOverCount = 0;
 
@@ -51,39 +46,29 @@ public class QuestsClientModel {
 	
 	CardCollection<AdventureCard> [] stages;
 	CardCollection<AdventureCard> [] getStages() {return stages;}
+	//CardCollection [] stages;
+	
+	QuestingStage stage;
+	//CardCollection [] getStages() {return stages;}
+
 	
 	StoryCardState questManger;
 	StoryCardState eventManger;
+	StoryCardState currentState;
+	boolean isDoneQuestingMode = false;
 	
-
-	/**
-	 * Constructor for Client Model
-	 * 
-	 * @param serverAddress Server address
-	 * @param serverPort Server port
-	 */
-	QuestsClientModel(QuestsClient control, String serverAddress, int serverPort){
+	
+	Model(Control control){
+		
 		logger.info("Model created");
-
-        try {
-            socket = new Socket(serverAddress, serverPort);
-        } catch (IOException e) {
-            System.err.println("No Quests server running on port " + serverPort + " at address " + serverAddress);
-            System.exit(1);
-        }
-        try {
-            InputStreamReader isr = new InputStreamReader(socket.getInputStream());    // input stream reader from socket
-            in = new BufferedReader(isr);
-            out = new PrintWriter(socket.getOutputStream(), true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 		this.control = control;
 		
-//		questManger= new QuestManager(this);
-//		eventManger = new EventManger(this);
-
+		questManger= new QuestManager(this);
+		eventManger = new EventManger(this);
+		
+		
+		stage = new QuestingStage();
 		
 		this.adventureDeck = new AdventureDeck();
 		this.storyDeck = new StoryDeck();
@@ -95,54 +80,13 @@ public class QuestsClientModel {
 		
 		currentPlayer = 0;
 		currentSponsor = 0;
+
+
+		
+		currentStage = stage.getCurrentStage();
+
+
 	}
-	
-    /**
-     * Gets a message sent by the server.
-     *
-     * @return message sent by the server
-     */
-
-    public String getServerMessage() {
-        String serverMessage = null;
-        try {
-            Thread.sleep(MESSAGE_WAIT_TIME);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        while (serverMessage == null) {
-            try {
-                serverMessage = in.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return serverMessage;
-    }
-    
-    /**
-     * Sends a message to the server.
-     *
-     * @param clientMessage Message to send to server
-     */
-
-    public void sendClientMessage(String clientMessage) {
-        out.println(clientMessage);
-    }
-    
-    /**
-     * Sends a message to the server to quit the game and closes the socket.
-     */
-
-    public void quitGame() {
-        sendClientMessage("CLIENTMESSAGE--QUITGAME");
-        try {
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.exit(0);
-    }
 	
 	public void instantiatePlayers(int numPlayers){
 		logger.debug("instantiatePlayers(" + numPlayers + ") called");
@@ -162,8 +106,9 @@ public class QuestsClientModel {
 		for(int i = 0; i < 5; ++i){
 			stages[i] = new AdventureDeck();
 		}
+
 		
-		currentStage = 0;
+		stage = new QuestingStage();
 	}
 	
 	public void initialShuffle(){
@@ -186,6 +131,7 @@ public class QuestsClientModel {
 			}
 			
 			this.currentStoryCard = storyDeck.pop();
+		
 			logger.info("setting current story card to" + this.currentStoryCard);
 		}
 	}
@@ -207,7 +153,8 @@ public class QuestsClientModel {
 	public void resetCurrentStage(){
 		logger.debug("resetCurrentStage() called");
 
-		setCurrentStage(0);
+		
+		stage.resetCurrentStage();
 	}
 	
 	public State getState(){
@@ -217,6 +164,8 @@ public class QuestsClientModel {
 		
 		state.currentPlayer = this.currentPlayer;
 		
+		state.isQuesting = this.getActivePlayer().isQuesting;
+		
 		state.currentSponsor = this.currentSponsor;
 		
 		state.inNextQ = this.inNextQ;
@@ -225,42 +174,24 @@ public class QuestsClientModel {
 		
 		state.currentViewer = this.currentViewer;
 		
-		if (stages[currentStage]!=null) {
-			state.stage = this.stages[currentStage];
+		
+		if (stage.getStageAt(currentStage)!=null) {
+		state.stage = this.stage.getStageAt(stage.getCurrentStage());
 		}
 		
-		state.currentStage = this.currentStage;
+		state.currentStage = this.stage.getCurrentStage();
 		
-		state.stages = this.stages;
+		state.stages = this.stage.getStage();
 		
 		state.numPlayers = this.numPlayers;
 		
 		state.numStages = this.numStages;
-		
-		state.stagesSet = this.stagesSet;
-		
-		state.stageResolved = this.stageResolved;
-		
-		state.toggleForStages = this.toggleForStages;
 		
 		state.stagePlaceHolder = this.stagePlaceHolder;
 
 		return state;
 	}
 	
-	public boolean checkHandSize() {
-		logger.debug("checkHandSize() called");
-
-		for(int i=0;i<state.numPlayers;i++) {
-			if(players[i].getHand().size() > 12) {
-				control.alert("Hand Size is too large, please discard");
-				logger.info("Player " + i + " hand too large");
-
-				return false;
-			}
-		}
-		return true;
-	}
 
 	public void party(String iD) {
 		logger.debug("party() called");
@@ -286,16 +217,18 @@ public class QuestsClientModel {
 		CardCollection<AdventureCard> hand = this.players[this.currentPlayer].getHand();
 		AdventureCard c = hand.getByID(iD);
 		if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
-				&& containsFoe(this.stages[currentStage])) {
+				&& containsFoe(this.stage.getStageAt(currentStage))) {
 			control.alert("Cannot stage more than one foe per quest stage.");
 			return;
 		}
-		if(containsWeapon(this.stages[currentStage], c.getImgName())) {
+		if(containsWeapon(this.stage.getStageAt(currentStage), c.getImgName())) {
 			control.alert("Cannot stage duplicate weapons.");
 			return;
 		}
 		hand.remove(c);
-		stages[currentStage].add(c);
+		
+		//Change To add to my new Stages
+		this.stage.getStageAt(currentStage).add(c);
 		logger.info("Player " + this.currentPlayer + " moves " + c.getName() + " from hand to Stage " + currentStage);
 		
 		
@@ -305,29 +238,16 @@ public class QuestsClientModel {
 		logger.debug("unstage() called");
 
 		
-		AdventureCard c = this.stages[currentStage].getByID(iD);
+	
+		Card c = this.stage.getStageAt(currentStage).getByID(iD);
 		
-		this.stages[currentStage].remove(c);
+		this.stage.getStageAt(currentStage).remove(iD);;
+		
+		
 		
 		this.players[this.currentPlayer].getHand().add(c);
 		
-//		for (int i = 0; i < this.stages[currentStage].size(); ++i){
-//			
-//		}
-//		
-//		CardCollection hand = this.players[this.currentPlayer].getHand();
-//		Card c = hand.getByID(iD);
-//		if((((AdventureCard) c).getSubType().equals(AdventureCard.FOE)) 
-//				&& containsFoe(this.stages[currentStage])) {
-//			control.alert("Cannot stage more than one foe per quest stage.");
-//			return;
-//		}
-//		if(containsWeapon(this.stages[currentStage], c.getImgName())) {
-//			control.alert("Cannot stage duplicate weapons.");
-//			return;
-//		}
-//		hand.remove(c);
-//		stages[currentStage].add(c);
+
 		logger.info("Player " + this.currentPlayer + " moves " + c.getName() + " from Stage back to Hand");
 
 	}
@@ -434,10 +354,18 @@ public class QuestsClientModel {
 	
 	public void setCurrentStage(int num) {
 		logger.debug("setCurrentStage(" + num + ") called");
-
-		this.currentStage = num;
+		
+		
+		this.currentStage= num;
+		this.stage.setCurrentStage(num);
+	
 		control.updateViewState();
 	}
+	
+
+	
+
+	
 	
 	public void endTurn() {
 		logger.debug("endTurn() called");
@@ -445,151 +373,16 @@ public class QuestsClientModel {
 		
 		
 		
-		questManger.nextPlayer();
-		questManger.handle();
-		
-		
-		//nextPlayer();
-		
-
-		/*if(players[currentPlayer].isSponsor){
-			viewerChanged();	
-		}
-		else{
-			nextPlayer();
-			endTurnCounter++;
-		}*/
-		
+		currentState.nextPlayer();
+	
+	
 		
 	}
 	
-	public void viewerChanged(){
-		logger.debug("viewerChanged() called");
 
-		if (currentViewer == ((numPlayers-1)%numPlayers)){
-			currentViewer = 0;
-		} else {
-			currentViewer++;
-		}
-		
-		if(players[currentPlayer].isSponsor && currentPlayer == currentViewer){
-			currentViewer++;
-			this.stageResolved = true;
-		}
-	}
-	
-	public void stagesSet(){
-		logger.debug("stagesSet() called");
-
-		this.stagesSet = true;
-		control.updateViewState();
-	}
-	
-	public int resolveQuest(){
-		logger.debug("resolveQuest() called");
-
-		int numStages = this.state.numStages;
 
 		
-		if(inNextQ) {
-			
-			for (int i = 0; i < this.state.players[i].getQueue().size(); i++) {
-				this.players[i].addShields(2);
-			}
-			inNextQ = false;
-			}
 
-		int numShields = ((QuestCard) state.currentStoryCard).getNumStages();
-		logger.info("Number of Stages: " + numShields);
-
-		//TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
-		for (int i = 0; i < state.numPlayers; ++i){
-			if(!players[i].isSponsor){
-
-				System.out.println("Players "+ i+1+ players[i].isQuesting + players[i].passedQuest);
-
-				if(players[i].passedQuest) {
-					players[i].addShields(numShields);
-					for(int j=0;j<numStages;j++) {
-						AdventureCard c = this.adventureDeck.pop();
-						this.players[i].addToHand(c);
-						adventureDeckDiscard.add(c);
-					}
-				}
-
-			} else {
-				//TODO GIVE SPONSOR CARDS BACK 
-			}
-		}
-		
-		//TODO ADD SHIELDS HERE
-		
-		control.resolveQuest();
-		
-		return 0;
-	}
-	
-	public void resolveStage(){
-		/**
-		 * To resolve a stage, we need to count the following data structures:
-		 *    - players Queue
-		 *    - players Party
-		 *    - players Rank
-		 *    - get a card if they pass
-		 */
-		logger.debug("resolveStage() called");
-
-		
-		CardCollection currStage = this.stages[this.currentStage+stageOverCount];
-		
-		int stageBP = 0;
-
-		for (int i = 0; i < currStage.size(); ++i){
-			stageBP += ((AdventureCard)currStage.get(i)).getBattlePoints();
-		}
-		
-		for(int i = 0; i < numPlayers; ++i){
-			int playerBP = players[i].getRank().getBattlePoints();
-			if (players[i].getQueue() != null) {
-				for(int j = 0; j < players[i].getQueue().size(); ++j){
-					playerBP += ((AdventureCard) players[i].getQueue().get(j)).getBattlePoints();
-				}
-			}
-			if (players[i].getParty() != null) {
-				for(int j = 0; j < players[i].getParty().size(); ++j){
-					playerBP += ((AdventureCard) players[i].getParty().get(j)).getBattlePoints();
-				}
-			}
-			
-			//Check if player passed quest
-
-			if(playerBP >= stageBP && (! players[i].isSponsor) && stageBP > 0){
-				players[i].passedStage = true;
-				if(state.currentStage +1==((QuestCard)state.currentStoryCard).getNumStages() ) {
-					players[i].passedQuest =true;
-
-					System.out.println("true turned ");
-					AdventureCard c = this.adventureDeck.pop();
-					this.players[i].addToHand(c);
-					adventureDeckDiscard.add(c);
-				}
-			
-		//
-				this.toggleForStages = true;
-		}
-			
-		}
-		if(stageOverCount == ((QuestCard)currentStoryCard).getNumStages()&& stageOverCount != 0){
-			resolveQuest();
-
-		}
-		
-		
-	
-
-
-	}
-		
 	public void stageOver(){
 		logger.info("stageOver() called");
 
@@ -604,14 +397,9 @@ public class QuestsClientModel {
 				players[i].passedStage = false;
 			}
 		}
-		stageOverCount++;
 		
-		//this.currentViewer--;// TODO ??? MAYBE A REALLY BAD FIX MAYBE NOT, WHO KNOWS ANYMORE...
-		this.stagesSet = false;
-		this.stageResolved = false;
-		this.toggleForStages = true;
-		this.stagePlaceHolder = this.currentStage + stageOverCount;
-		state.stage = this.stages[currentStage];
+		
+		state.stage = this.stage.getStageAt(currentStage);
 		control.updateViewState();
 	}
 	
@@ -666,53 +454,36 @@ public class QuestsClientModel {
 	}
 
 	private void playQuest(){
+		logger.info("playQuest() called");
 		
+		currentState = questManger;	
 
-		logger.debug("playQuest() called");
-		
-		
-		questManger.handle();
-		/*boolean decision = control.getSponsorDecision();
-		if(decision){
-			players[currentPlayer].isSponsor = true;
-			logger.info("Player " + currentPlayer + " will sponsor");
-			control.updateViewState();
-			for(int i=0;i<numPlayers;i++) {
-				if(!players[i].isSponsor) {
-					players[i].getHand().add(this.getAdventureDeck().pop());
-				}
-			}
-		} else {
-			players[currentPlayer].isSponsor = false;
-			logger.info("Player " + currentPlayer + " will not sponsor");
-			control.updateViewState();
-			endTurn();
-		} */
 	}
 	
 	private void playEvent() {
 		logger.debug("playEvent() called");
 		
-		eventManger.handle();
-//		((EventManger) eventManger).handleEvent(((StoryCard) currentStoryCard).getName());
+		currentState = eventManger;
 
 	
 	}
 	
 	public void playGame() {
-		logger.debug("playGame() called");
+		logger.info("playGame() called");
 
 		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)){
 			playQuest();
+			currentState.handle();
 		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.EVENT)){
 			playEvent();
+			currentState.handle();
 		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)){
 //			playTournament();
 		} else {
 			adventureDeck = adventureDeckDiscard;
 			adventureDeck.shuffle();
 		}
-		checkHandSize();
+	
 	}
 	
 	public void nextPlayer(){
@@ -727,20 +498,30 @@ public class QuestsClientModel {
 			this.currentSponsor = this.currentPlayer;
 		}
 		logger.info("Player changed to " + this.currentPlayer);
-		control.viewUpdate();
+		
+		
+		control.view.update();
 		
 	}
-
+	public void setNextPlayer(int nextplayer) {
+		
+		currentPlayer = nextplayer;
+		
+		control.view.update();
+		
+	}
 	public void nextStory() {
-		logger.debug("nextStory() called");
+		logger.info("nextStory() called");
 		//get ready for the next person
+		
+		this.isDoneQuestingMode = false;;
 		for(int i = 0; i < numPlayers; ++i){
 			
 			players[i].isSponsor = false;
 			players[i].isQuesting = false;
 			players[i].passedQuest = false;
 			players[i].passedStage = false;
-			stagesSet = false;
+			
 			
 			
 			//remove stage cards
@@ -758,21 +539,19 @@ public class QuestsClientModel {
 		}
 		
 		storyDeckDiscard.add(this.currentStoryCard);
+		
+	
+		
 		this.currentStoryCard = storyDeck.pop();
+		logger.info("Story card up next "+ currentStoryCard.getName());
 
 		this.currentStage = 0;
+		stage.resetCurrentStage();
 		
-		this.currentSponsor = -1;
-		
-		this.stageResolved = false;
-		
-		this.toggleForStages = false;
-		
-		this.stagePlaceHolder = 0;
-		
-		this.currentViewer = this.currentPlayer;
+
 		control.updateViewState();
 		playGame();
+		currentState.handle();
 	}
 	
 	public void setScenario1() {
@@ -1051,7 +830,11 @@ public class QuestsClientModel {
 		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		
+	
+		
 		this.adventureDeck.shuffle();
+		
+		
 	} //end set scenario 1
 	
 	public void setScenario2() {
@@ -1108,6 +891,8 @@ public class QuestsClientModel {
 		this.players[3].addToHand(this.adventureDeck.getByID("93"));
 		this.players[3].addToHand(this.adventureDeck.getByID("100"));
 		this.players[3].addToHand(this.adventureDeck.getByID("101"));
+		
+		
 	}
 	
 	public void setScenarioTest() {
@@ -1120,8 +905,8 @@ public class QuestsClientModel {
 		this.players[1].addShields(6);
 		this.players[2].addShields(14);
 		
-		stages[0].add(this.adventureDeck.getByID("57"));
-		stages[1].add(this.adventureDeck.getByID("86"));
+		//stages[0].add(this.adventureDeck.getByID("57"));
+		//stages[1].add(this.adventureDeck.getByID("86"));
 
 		this.currentStoryCard = this.storyDeck.getByID("126"); //BOAR  hUNT 		
 		this.players[0].addToParty(this.adventureDeck.getByID("100"));
@@ -1205,6 +990,7 @@ public class QuestsClientModel {
 	public void eventTesting() {
 		logger.info("seve");
 
+
 		this.currentPlayer = 0;
 
 		this.players[0].addShields(10);
@@ -1212,8 +998,8 @@ public class QuestsClientModel {
 		this.players[2].addShields(14);
 		this.players[3].addShields(10);
 		
-		stages[0].add(this.adventureDeck.getByID("57"));
-		stages[1].add(this.adventureDeck.getByID("86"));
+		//stages[0].add(this.adventureDeck.getByID("57"));
+		//stages[1].add(this.adventureDeck.getByID("86"));
 
 		this.currentStoryCard = this.storyDeck.getByID("151");
 		this.players[0].addToParty(this.adventureDeck.getByID("100"));
@@ -1293,32 +1079,6 @@ public class QuestsClientModel {
 		this.players[3].addToHand(this.adventureDeck.getByID("36"));
 		this.players[3].addToHand(this.adventureDeck.getByID("44"));
 		
-	}
 	
-	/**
-	 * TEMPORARY Constructor for Client Model
-	 * 	//FIXME to work with 3 arg constructor.
-	 * @param serverAddress Server address
-	 * @param serverPort Server port
-	 */
-	QuestsClientModel(QuestsClient control){
-		logger.info("Model created");
-
-		this.control = control;
-		
-//		questManger= new QuestManager(this);
-//		eventManger = new EventManger(this);
-		
-		
-		this.adventureDeck = new AdventureDeck();
-		this.storyDeck = new StoryDeck();
-		
-		this.adventureDeckDiscard = new AdventureDeck();
-		this.storyDeckDiscard = new StoryDeck();
-		
-		state = new State();
-		
-		currentPlayer = 0;
-		currentSponsor = 0;
 	}
 }

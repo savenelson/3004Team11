@@ -35,7 +35,7 @@ public class CardCollection<T extends Card> {
 //	}
 	
 	// returns cards array size after adding 
-	public int add(T c){cards.add(c); return cards.size();}
+	public int add(Card c){cards.add((T) c); return cards.size();}
 	
 	// returns cards array size after adding
 	public void addAll(Collection<? extends T> c){cards.addAll(c);}

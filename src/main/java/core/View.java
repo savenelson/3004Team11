@@ -30,7 +30,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
-public class QuestsClientView extends Application {
+
+public class View extends Application {
 	
 	public static final String PLAY = "Play";
 	public static final String PARTY = "Party";
@@ -48,7 +49,7 @@ public class QuestsClientView extends Application {
 	public static final String STAGE5 = "Stage 5";
 	public static final String ENDTURN = "End Turn";
 	
-	public QuestsClient control;
+	public Control control;
 	private State state;
 		
 	public static final String IMG_DIR = "src/main/resources/core/cards/";
@@ -110,23 +111,25 @@ public class QuestsClientView extends Application {
 	public static final	int cardXLargeHeight = 300;
 	public static final	int cardXLargeWidth = 225;
 	
-	private static final Logger logger = LogManager.getLogger(QuestsClientView.class);
+	private static final Logger logger = LogManager.getLogger(View.class);
 
 	private ImageView imgView;
 	
 	private Stage stage;
 	private Pane canvas;
 	private TilePane tile;
+	
+	MainMenu menu = new MainMenu(this,null);
 
-	public QuestsClientView (QuestsClient control) {
+	public View () {
 		logger.info("View created");
-		this.control = control;
-		
-		//TODO THIS IS FROM BLACKJACK - How do we make it work in ours?
-//        setupWindowListener(this.controller);
-//        setupFrame();
-//        createPanels();
-//        setupActionListeners();
+
+	}
+
+	public static void main(String [] args){
+		logger.info("main() running");
+
+		launch(args);
 	}
 
 	private HBox Stage; 
@@ -153,25 +156,12 @@ public class QuestsClientView extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		logger.info("start() running");
-//
-//		control = new QuestsClient(server);
+
+		control = new Control(this);
 		stage = primaryStage;
 		initUI(primaryStage);
 	}
 
-	public void update() {
-		logger.debug("update(Stage) called");
-
-		state = control.getState();
-		
-		canvas = new Pane();
-		canvas.setId("pane");
-		canvas = drawCards(canvas);
-		addStage(canvas);
-		Scene scene = new Scene(canvas, 1280, 720);
-		scene.getStylesheets().add("style.css");
-	}
-	
 	private void update(Stage primaryStage) {
 		logger.debug("update(Stage) called");
 
@@ -186,14 +176,19 @@ public class QuestsClientView extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 		
-		if (!state.stagesSet){
-			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer+1));
-			logger.info("Current View: Player " + state.currentPlayer);
-		} else {
-			primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer+1));
-			logger.info("Current View: Player " + state.currentPlayer);
-		}
+		
+		primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer+1));
+		logger.info("Current View: Player " + state.currentPlayer);
+		
 		primaryStage.show();
+	}
+	
+	public void update(){
+		logger.debug("update() called");
+
+		control.setNumPlayers(menu.numberSelected());
+		update(stage);
+		control.mainLoop();
 	}
 	
 	public Pane drawCards(Pane canvas){
@@ -246,8 +241,14 @@ public class QuestsClientView extends Application {
 		canvas.setId("pane");
 		
 		canvas = drawCards(canvas);
+		MainMenu menu = new MainMenu(this,canvas);
+		
+		this.menu = menu;
 
-		Scene scene = new Scene(canvas, 1280, 720);
+		
+		menu.setId("pane");
+		
+		Scene scene = new Scene(menu, 1280, 720);
 		scene.getStylesheets().add("style.css");	
 		
 		primaryStage.setScene(scene);
@@ -261,12 +262,9 @@ public class QuestsClientView extends Application {
 
 		CardCollection hand = null;
 		
-		if (!state.stagesSet){
-			hand = state.players[state.currentPlayer].getHand();
-		}
-		else{
-			hand = state.players[state.currentPlayer].getHand();
-		}
+		
+		hand = state.players[state.currentPlayer].getHand();
+		
 		
 		tile = new TilePane();
 		tile.setPrefRows(2);
@@ -334,13 +332,11 @@ public class QuestsClientView extends Application {
 			tile.relocate(colStage, rowStage);
 			
 			canvas.getChildren().add(tile);
-		} else if(state.stagesSet){
+		} else if( state.isQuesting){
 			state = control.getState();
 						
-			if (state.toggleForStages)
-			{
-				control.stageIncrement();
-			}
+			
+			
 			stage = state.stages[state.stageOverCount];
 
 			Label queueCardsLabel;
@@ -360,6 +356,37 @@ public class QuestsClientView extends Application {
 			canvas.getChildren().add(stageLabel);
 			canvas.getChildren().add(queueCardsLabel);
 		}
+	}
+	
+	public void nextPlayer() {
+
+		Label playerLabel = new Label("Player " + (control.getActivePlayer().getPlayerNumber()+1) + " ready?");
+		playerLabel.setFont(new Font("Ariel", 30));
+		
+		Button readyButton = new Button("Ready");
+		readyButton.setFont(new Font("Ariel", 30));
+		
+		readyButton.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				logger.info("Ready clicked");
+
+				control.view.update();
+			}
+		});
+		StackPane layout = new StackPane();
+		layout.getChildren().addAll(playerLabel, readyButton);
+		layout.setPrefHeight(720);
+		layout.setPrefWidth(1280);
+		
+		readyButton.setTranslateY(65);
+		playerLabel.setTranslateY(-45);			
+
+		Scene scene = new Scene(layout);
+		scene.getStylesheets().add("style.css");
+		stage.setScene(scene);
+
+		
+		
 	}
 	
 	public void resolveQuest(){
@@ -757,36 +784,7 @@ public class QuestsClientView extends Application {
 		stageItem.setOnAction(eh);
 		fileMenu.getItems().add(stageItem);
 		
-//		MenuItem playItem = new MenuItem(PLAY);
-//		playItem.setOnAction(eh);
-//		fileMenu.getItems().add(playItem);
-//		
-//		MenuItem discardItem = new MenuItem(DISCARD);
-//		discardItem.setOnAction(eh);
-//		fileMenu.getItems().add(discardItem);
-//		
-//		MenuItem stageItem = new MenuItem(STAGE);
-//		stageItem.setOnAction(eh);
-//		fileMenu.getItems().add(stageItem);
-//		
-//		MenuItem queueItem = new MenuItem(QUEUE);
-//		queueItem.setOnAction(eh);
-//		fileMenu.getItems().add(queueItem);
-//
-//		fileMenu.getItems().add(new MenuItem("Discard"));
-//		
-//		fileMenu.getItems().add(new MenuItem("Play"));
-//		
-//		MenuItem campaigne =  new MenuItem("Campaigne");
-		
-//		campaigne.setOnAction(new EventHandler<ActionEvent>() {
-//		    public void handle(ActionEvent e) {
-//		        addCardToStage(Stage, imgView);
-//		    }
-//		});
-//		
-//		fileMenu.getItems().add(campaigne);
-//
+
 
 		anAdventure.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>(){
 
@@ -1050,11 +1048,8 @@ public class QuestsClientView extends Application {
 		    public void handle(ActionEvent e) {
 		    	logger.info("End Turn clicked");
 		    	state = control.getState();
-		    control.endTurn();
-				if (state.toggleForStages)
-				{
-					control.stageIncrement();
-				}
+		    control.model.endTurn();
+				
 		    }
 		});
 		/*
@@ -1087,25 +1082,6 @@ public class QuestsClientView extends Application {
 		
 	}
 	
-	private boolean stageHarder(State state) {
-		logger.debug("stageHarder() called");
-
-		int numStages = ((QuestCard) state.currentStoryCard).getNumStages();
-		
-		
-		if (numStages == 1) return true;
-		
-		else {
-			for(int i =0; i<numStages-1; i++) {
-				
-				if(totalNumOfBP(state.stages[i])>=totalNumOfBP(state.stages[i+1])) {
-					System.out.println("");
-					return false;
-				}
-			}	
-		}
-		return true;
-	}
 	
 	private int totalNumOfBP(CardCollection stage) {
 		logger.debug("totalNumOfBP() called");
@@ -1217,8 +1193,9 @@ public class QuestsClientView extends Application {
 		
 		final StackPane layout = new StackPane();
 		state = control.getState();
+	
 		for (int i = 0; i < state.numPlayers; ++i){
-			control.stageIncrement();  //TODO THIS SEEMS IT MAY ADD numPlayers stages
+			
 			
 			if(!state.players[i].isSponsor){
 				Label passed = new Label("Player "+ (i+1));
@@ -1235,7 +1212,7 @@ public class QuestsClientView extends Application {
 				layout.setPrefWidth(1280);
 				passed.setTranslateY(-180+(60*i));			
 				if(state.players[i].passedStage) {
-					logger.info("Player " + i + " passed stage " + (state.currentStage+1));
+					logger.info("Player " + i + " passed stage  " + (state.currentStage+1));
 				} else {
 					logger.info("Player " + i + " failed stage " + (state.currentStage+1));
 				}
@@ -1249,10 +1226,9 @@ public class QuestsClientView extends Application {
 			public void handle(ActionEvent event) {
 				logger.info("nextStageButton clicked");
 
-				control.stageOver();
-				state = control.getState();
-				control.endTurn();
-				control.stageIncrement();
+				control.nextStage();
+				
+				
 			}
 		});
 		
@@ -1286,6 +1262,12 @@ public class QuestsClientView extends Application {
 
 		scene.getStylesheets().add("style.css");	
 		stage.setScene(scene);
+	}
+	
+	public void setNumPlayers(int i){
+		logger.debug("setNumPlayers() called");
+
+		control.setNumPlayers(menu.numberSelected());
 	}
 	
 }
