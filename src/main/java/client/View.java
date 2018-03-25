@@ -719,7 +719,7 @@ public class View extends Application {
 		shieldsPlayerA.relocate(colPlayerDRank+11,rowPlayerDRank+72	);
 		
 		
-		
+
 		canvas.getChildren().addAll(shieldsPlayerA);
 	}
 	
@@ -876,6 +876,8 @@ public class View extends Application {
 
 			public void handle(ActionEvent event) {
 				control.handClick(((MenuItem) event.getSource()).getText(), anAlly.getId());
+				
+				
 				state = control.getState();
 				update(stage);
 			}

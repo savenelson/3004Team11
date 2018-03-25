@@ -44,24 +44,24 @@ public class Control{
      * TODO: From BlackJack - and needs to be integrated
      * Gets a message from the server and calls the changeView method with the message.
      */
-//    private void getServerMessage() {
-//        SwingWorker swingWorker = new SwingWorker<String, String>() {
-//            @Override
-//            public String doInBackground() throws Exception {
-//                return model.getServerMessage();
-//            }
-//
-//            @Override
-//            public void done() {
-//                try {
-//                    changeView(get());
-//                } catch (InterruptedException | ExecutionException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        };
-//        swingWorker.execute();
-//    }
+    private void getServerMessage() {
+        SwingWorker swingWorker = new SwingWorker<String, String>() {
+            @Override
+            public String doInBackground() throws Exception {
+                return model.getServerMessage();
+            }
+
+            @Override
+            public void done() {
+                try {
+                    changeView(get());
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        swingWorker.execute();
+    }
 //
 //    /**
 //     * Changes the client view based on which message was received from the server.
@@ -500,6 +500,7 @@ public class Control{
 
 		boolean win = false;
 		while(!win){
+			//TODO send messsage to server with "CLIENTMESSAGE--playGame"
 			model.playGame();
 			win = !win;
 		}
@@ -583,6 +584,7 @@ public class Control{
 			model.dequeue(ID);
 		}
 		else if(clickType.equals(View.DISCARD)){
+			//TODO send message to server with "CLIENTMESSAGE--DISCARD-CURRENTPLAYER-ID"
 			model.discard(ID);
 		}
 		else if(clickType.equals(View.ASSASSINATE)){
