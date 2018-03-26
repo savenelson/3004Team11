@@ -6,12 +6,14 @@ import java.io.*;
 public class ServerThread extends Thread {
 	private Socket socket = null;
 	private Server server;
+	private int currentPlayer;
 
-	public ServerThread(Socket socket, Server server) {
+	public ServerThread(Socket socket, Server server, int currentPlayer) {
 		super("ServerModel");
 		System.out.println("ServerThread Created with socket:" + socket);
 		this.socket = socket;
 		this.server = server;
+		this.currentPlayer = currentPlayer;
 	}
 
 	public void run() {
@@ -19,6 +21,7 @@ public class ServerThread extends Thread {
 				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));) {
 			String clientMessage, outputLine;
 			out.println("SERVERMESSAGE--WELCOME");
+			out.println("SERVERMESSAGE--CURRENTPLAYER--" + currentPlayer);
 			System.out.println("SERVERMESSAGE--WELCOME/n");
 
 			while ((clientMessage = in.readLine()) != null) {

@@ -320,7 +320,7 @@ public class Model {
 		CardCollection<AdventureCard> hand = getActivePlayer().getHand();
 		AdventureCard c = hand.getByID(iD);
 
-		if (containsSameWeapon(getActivePlayer().getQueue(), ((WeaponCard) c).getName())) {
+		if (containsSameWeapon(players[this.currentPlayer].getQueue(), ((WeaponCard) c).getName())) {
 			control.alert("Cannot have duplicate weapons in queue.");
 			return;
 		}

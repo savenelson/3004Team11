@@ -14,10 +14,7 @@ public class Server {
 	
     private static final int DEFAULT_PORT = 44444;                      // default server port
     private static final int DEFAULT_PLAYERS_PER_TABLE = 4;             // default number of players per table
-    private static final int DEFAULT_STARTING_MONEY = 2500;             // default amount of money players start with
-    private static final int DEFAULT_MINIMUM_BET = 500;                 // default minimum player bet
-    private static final int DEFAULT_NUMBER_OF_DECKS = 6;               // default number of decks in shoe
-    private static final int DEFAULT_MINIMUM_CARDS_BEFORE_SHUFFLE = 78; // default minimum number of cards remaining before shuffling the shoe
+    private static final int maxPlayers = 4;							// max players for table
     private int serverPort;                                             // server port
     private int playersPerTable;                                        // number of players per table
     public Model model;
@@ -60,7 +57,11 @@ public class Server {
         try (ServerSocket serverSocket = new ServerSocket(serverPort)){
         	
         	while(listening) {
-        		new ServerThread(serverSocket.accept(), this).start();
+        		for(int g = 0; g<maxPlayers; g++) {
+        			System.out.println("g count:" + g);
+            		new ServerThread(serverSocket.accept(), this, g).start();
+        		}
+
         	}
         } catch (IOException e) {
             System.err.println("Could not listen on port " + 4444);

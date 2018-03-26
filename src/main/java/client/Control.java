@@ -17,9 +17,10 @@ public class Control{
     private static final int DEFAULT_SERVER_PORT = 44444;               // default server port
     private String serverAddress;                                       // server address
     private int serverPort;                                             // server port
-    private Socket socket;                                                      // socket on server address and port
-    private BufferedReader in;                                                  // in to server
-    private PrintWriter out;                                                    // out from server
+    private Socket socket;                                              // socket on server address and port
+    private BufferedReader in;                                          // in to server
+    private PrintWriter out;											// out from server
+    private int playerNumber;											//everyclienthas a unique playernum
 	Model model;
 	View view;
 	
@@ -50,15 +51,10 @@ public class Control{
 
 		gameInit(null);
 		
-		String returnedMessage;
-		returnedMessage = getServerMessage();
-		logger.info(returnedMessage);
-		
 		sendClientMessage("CLIENTMESSAGE--HELLO");
 		
-//		TEST
-//		model.CardsTest();
-//		END TEST
+		getServerMessage();  //this will start the readline, and wait for server messages to come in
+
 	}
 	
     /**
@@ -78,6 +74,7 @@ public class Control{
         while (serverMessage == null) {
             try {
                 serverMessage = in.readLine();
+                processServerMessage(serverMessage);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -102,29 +99,32 @@ public class Control{
 //        getServerMessage();
     }
 	
-//
-//    /**
-//     * Changes the client view based on which message was received from the server.
-//     *
-//     * @param serverMessage Message received from server
-//     */
-//
-//    private void changeView (String serverMessage) {
-//        String[] serverMessageComponents = serverMessage.split("--");   // array containing the components of the server message
-//        switch (serverMessageComponents[1]) {
-//            case "WELCOME":
-//                view.showWelcomePanel();
-//                getServerMessage();
-//                break;
-//            case "GETBET":
-//                view.setWelcomeWaiting(false);
-//                view.setContinuePlayingWaiting(false);
-//                view.showBetPanel();
-//                view.setBetMoneyLabel(serverMessageComponents[2]);
-//                view.setMinimumBetLabel(serverMessageComponents[3]);
-//                getServerMessage();
-//                break;
-//            case "BETRESPONSE":
+
+    /**
+     * Changes the client view based on which message was received from the server.
+     *
+     * @param serverMessage Message received from server
+     */
+
+    private void processServerMessage (String serverMessage) {
+        String[] serverMessageComponents = serverMessage.split("--");   // array containing the components of the server message
+        switch (serverMessageComponents[1]) {
+            case "WELCOME":
+            	logger.info("welcome recieved!");
+                getServerMessage();
+                break;
+            case "CURRENTPLAYER":
+            	this.model.currentPlayer = Integer.parseInt(serverMessageComponents[2]);
+            	logger.info("currentPlayer for client on port:" + socket.getPort() + ", currentPlayer: "+ model.currentPlayer);
+                getServerMessage();
+                break;
+    		default:
+    			System.err.println("Unknown message received from server: \"" + serverMessage + "\"");
+    			break;
+    		}
+    }
+            	
+            	
 //                switch (serverMessageComponents[2]) {
 //                    case "INVALID":
 //                        view.betError("Your bet must be a positive whole number.");
@@ -489,7 +489,7 @@ public class Control{
 		
 //		model.setScenarioTest();
 		
-		//model.eventTesting();
+//		model.eventTesting();
 	}
 
 	public void mainLoop(){
