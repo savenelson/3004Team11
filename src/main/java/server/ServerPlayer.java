@@ -67,7 +67,6 @@ public class ServerPlayer implements Runnable {
      * @param table Table the player joined
      */
 	public ServerPlayer(Socket socket, Table table ){
-		
         try {
             InputStreamReader isr = new InputStreamReader(socket.getInputStream());     // input stream reader from socket
             in = new BufferedReader(isr);

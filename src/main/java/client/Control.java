@@ -21,22 +21,16 @@ public class Control{
         this.serverAddress = serverAddress;
         this.serverPort = serverPort;
 		gameInit(null);
-
-//		TEST
-//		model.CardsTest();
-//		END TEST
 	}
 	
 	public Control(View view) {
-		
 		logger.info("Control created");
 		
 		this.view = view;
 		gameInit(null);
-
-		//TEST
-		model.CardsTest();
-		//END TEST
+//		TEST
+//		model.CardsTest();
+//		END TEST
 	}
 	
     public void start() {
@@ -50,27 +44,24 @@ public class Control{
      * TODO: From BlackJack - and needs to be integrated
      * Gets a message from the server and calls the changeView method with the message.
      */
+    private void getServerMessage() {
+        SwingWorker swingWorker = new SwingWorker<String, String>() {
+            @Override
+            public String doInBackground() throws Exception {
+                return model.getServerMessage();
+            }
 
-//    private void getServerMessage() {
-//        SwingWorker swingWorker = new SwingWorker<String, String>() {
-//            @Override
-//            public String doInBackground() throws Exception {
-//                return model.getServerMessage();
-//            }
-//
-//            @Override
-//            public void done() {
-//                try {
-//                    changeView(get());
-//                } catch (InterruptedException | ExecutionException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        };
-//        swingWorker.execute();
-//    }
-//
-//    
+            @Override
+            public void done() {
+                try {
+                    changeView(get());
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        swingWorker.execute();
+    }
 //
 //    /**
 //     * Changes the client view based on which message was received from the server.
@@ -509,6 +500,7 @@ public class Control{
 
 		boolean win = false;
 		while(!win){
+			//TODO send messsage to server with "CLIENTMESSAGE--playGame"
 			model.playGame();
 			win = !win;
 		}
@@ -553,16 +545,7 @@ public class Control{
 		return model.getState();
 		
 	}
-	
-	
-	
-	/*
-	public void viewerChanged(){
-		logger.debug("viewerChanged() called");
 
-		model.viewerChanged();
-	}
-	*/
 	public void setNumPlayers(int i){
 		logger.debug("setNumPlayers() called");
 
@@ -577,14 +560,19 @@ public class Control{
 	
 	public void printTestString(){System.out.println(testString);}
 
+	
+	
+	//FIXME !! Here's where we're adding in the MESSAGES TO SERVER
 	public void handClick(String clickType, String ID) {
 		logger.debug("handClick() called");
 
 		if(clickType.equals(View.PARTY)){
 			model.party(ID);
+			//TODO send messsage to server with "CURRENTPLAYER--PARTY--ID"
 		} 
 		else if (clickType.equals(View.STAGE)) {
 			model.stage(ID);
+			//TODO send messsage to server with "CURRENTPLAYER--PARTY--ID"
 		} 		
 		else if (clickType.equals(View.UNSTAGE)) {
 			model.unstage(ID);
@@ -596,6 +584,7 @@ public class Control{
 			model.dequeue(ID);
 		}
 		else if(clickType.equals(View.DISCARD)){
+			//TODO send message to server with "CLIENTMESSAGE--DISCARD-CURRENTPLAYER-ID"
 			model.discard(ID);
 		}
 		else if(clickType.equals(View.ASSASSINATE)){
