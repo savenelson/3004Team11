@@ -50,6 +50,12 @@ public class Control{
 
 		gameInit(null);
 		
+		String returnedMessage;
+		returnedMessage = getServerMessage();
+		logger.info(returnedMessage);
+		
+		sendClientMessage("CLIENTMESSAGE--HELLO");
+		
 //		TEST
 //		model.CardsTest();
 //		END TEST
@@ -62,6 +68,7 @@ public class Control{
      */
 
     public String getServerMessage() {
+    	logger.info("getServerMessage() called");
         String serverMessage = null;
         try {
             Thread.sleep(MESSAGE_WAIT_TIME);
@@ -472,15 +479,15 @@ public class Control{
 		
 		model.instantiateStages(); //TODO set properly
 		
-//		model.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
+		model.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
 
-//		model.deal(); 			//COMMENT OUT FOR SET SCENEARIOS
+		model.deal(); 			//COMMENT OUT FOR SET SCENEARIOS
 		
 //		model.setScenario1();	//UNCOMMENT FOR SCEN 1
 		
 //		model.setScenario2();	//UNCOMMENT FOR SCEN 2
 		
-		model.setScenarioTest();
+//		model.setScenarioTest();
 		
 		//model.eventTesting();
 	}
@@ -567,6 +574,7 @@ public class Control{
 		} 
 		else if (clickType.equals(View.QUEUE)) {
 			model.queue(ID);
+			sendClientMessage("CLIENTMESSAGE--QUEUE--" + ID);
 		} 
 		else if (clickType.equals(View.DEQUEUE)) {
 			model.dequeue(ID);

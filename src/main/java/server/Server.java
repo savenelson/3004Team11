@@ -20,7 +20,7 @@ public class Server {
     private static final int DEFAULT_MINIMUM_CARDS_BEFORE_SHUFFLE = 78; // default minimum number of cards remaining before shuffling the shoe
     private int serverPort;                                             // server port
     private int playersPerTable;                                        // number of players per table
-
+    public Model model;
     /**
      * Constructor for Server object.
      *
@@ -38,30 +38,37 @@ public class Server {
      * Starts the server and adds connected clients to new tables as new players.
      * 
      * FOR ONE CLIENT ONLY - TESTING MODE
+     * @return 
      */
+    
+    public void setModel(Model model) {
+    	this.model = model;
+    }
 
     public void start() {
         System.out.println("Starting Quests server\nServer port: " + serverPort + "\nPlayers per table: " + playersPerTable);
         
         System.out.println("Listening on port " + serverPort);
         	
-    	Model model = new Model(this);
+    	model = new Model(this);
 		model.instantiatePlayers(playersPerTable);
 		model.instantiateStages(); //TODO set properly
-		model.setScenarioTest(); 
+//		model.setScenarioTest(); 
     		
 		boolean listening = true;
     		
         try (ServerSocket serverSocket = new ServerSocket(serverPort)){
         	
         	while(listening) {
-        		new ServerThread(serverSocket.accept()).start();
+        		new ServerThread(serverSocket.accept(), this).start();
         	}
         } catch (IOException e) {
             System.err.println("Could not listen on port " + 4444);
             System.exit(-1);
         }
     }
+    
+    
 //ORIGINAL LOOP FOR MORE THAN ONE PLAYER
 //    public void start() {
 //        System.out.println("Starting Quests server\nServer port: " + serverPort + "\nPlayers per table: " + playersPerTable);
