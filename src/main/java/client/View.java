@@ -51,6 +51,11 @@ public class View extends Application {
 	
 	public Control control;
 	private State state;
+	
+    private static final String DEFAULT_SERVER_ADDRESS = "localhost";   // default server address
+    private static final int DEFAULT_SERVER_PORT = 44444;               // default server port
+    private String serverAddress = DEFAULT_SERVER_ADDRESS;              // server address
+    private int serverPort = DEFAULT_SERVER_PORT;                       // server port
 		
 	public static final String IMG_DIR = "src/main/resources/core/cards/";
 	public static final String GIF = ".gif";
@@ -154,7 +159,7 @@ public class View extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		logger.info("start() running");
 
-		control = new Control(this);
+		control = new Control(this, serverAddress, serverPort);
 		stage = primaryStage;
 		initUI(primaryStage);
 	}
