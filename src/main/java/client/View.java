@@ -51,6 +51,11 @@ public class View extends Application {
 	
 	public Control control;
 	private State state;
+	
+    private static final String DEFAULT_SERVER_ADDRESS = "localhost";   // default server address
+    private static final int DEFAULT_SERVER_PORT = 44444;               // default server port
+    private String serverAddress = DEFAULT_SERVER_ADDRESS;              // server address
+    private int serverPort = DEFAULT_SERVER_PORT;                       // server port
 		
 	public static final String IMG_DIR = "src/main/resources/core/cards/";
 	public static final String GIF = ".gif";
@@ -154,7 +159,7 @@ public class View extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		logger.info("start() running");
 
-		control = new Control(this);
+		control = new Control(this, serverAddress, serverPort);
 		stage = primaryStage;
 		initUI(primaryStage);
 	}
@@ -719,7 +724,7 @@ public class View extends Application {
 		shieldsPlayerA.relocate(colPlayerDRank+11,rowPlayerDRank+72	);
 		
 		
-		
+
 		canvas.getChildren().addAll(shieldsPlayerA);
 	}
 	
@@ -767,15 +772,13 @@ public class View extends Application {
 
 		 }
 	}
-	
+
 	private void setHandCardControl(final ImageView anAdventure) {
 		logger.debug("setHandCardControl() called");
 
 		final ContextMenu fileMenu = new ContextMenu();
 		
 		EventHandler<ActionEvent> eh = new EventHandler<ActionEvent>(){
-
-
 			public void handle(ActionEvent event) {
 				state = control.getState();				
 				control.handClick(((MenuItem) event.getSource()).getText(), anAdventure.getId());			
@@ -878,6 +881,8 @@ public class View extends Application {
 
 			public void handle(ActionEvent event) {
 				control.handClick(((MenuItem) event.getSource()).getText(), anAlly.getId());
+				
+				
 				state = control.getState();
 				update(stage);
 			}
@@ -932,7 +937,6 @@ public class View extends Application {
 	        	  Tooltip.install(aRankCard, t);
 	          }
 	        });
-		 
 	}
 	
 	private void addControlsToCanvas(Pane canvas) {
@@ -1013,34 +1017,15 @@ public class View extends Application {
 				
 		    }
 		});
-		/*
-		if((state.currentPlayer == state.currentSponsor) && (state.currentSponsor == state.currentPlayer)){
-			
-			if(((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST)){
-				
-				int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
-				for(int i = 4; i!=numStages-1; i--) {
-					stageButtons[i].setDisable(true);
-				}
-				canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
-			} else {
-				canvas.getChildren().add(endTurn);
-			}
-		}
-		else{
-			canvas.getChildren().add(endTurn);
-		}*/
+
 	if((state.players[state.currentPlayer].isSponsor&& ((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST))){
 			
 				int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
 				for(int i = 4; i!=numStages-1; i--) {stageButtons[i].setDisable(true);} 
 				canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
-			
-		}
-		else{
+		} else {
 			canvas.getChildren().add(endTurn);
 		}
-		
 	}
 	
 	
@@ -1064,93 +1049,10 @@ public class View extends Application {
 		return numberOfBP;
 		
 	}
-	private void normalEndTurn(){
-		logger.info("normalEndTurn() called");
-		
-		/*boolean isHarder = false;
-		boolean foeInEachStage = true;
-		boolean [] foesPresent = null;
-		if(((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST)) {
-			isHarder = stageHarder(state);
-		}
-
-		int numStages = 0;
-
-    	if(state.players[state.currentPlayer].isSponsor){
-    		numStages = ((QuestCard)state.currentStoryCard).getNumStages();
-    		foesPresent  = new boolean [numStages];
-    		for (int i = 0; i < numStages; ++i){
-    			foesPresent[i] = false;
-			}		    		
-    		for (int i = 0; i < numStages; ++i){
-    			for (int j = 0; j < state.stages[i].size(); ++j){
-    				if(((AdventureCard) state.stages[i].get(j)).subType.equals(AdventureCard.FOE)){
-    					foesPresent[i] = true;
-    					break;
-    				}
-    			}
-    		}
-    		for (int i = 0; i < numStages; ++i){
-    			if(foesPresent[i] == false){
-    				foeInEachStage = false;
-    			}
-			}
-    	}
-		if(state.players[state.currentPlayer].isSponsor && !foeInEachStage){	    			
-			alert("Foe not present in every stage.");
-			return;
-		} else if(state.players[state.currentPlayer].isSponsor && isHarder==false) {
-			alert("The stages are not progressively harder");
-			return;
-			
-		} else if(state.players[state.currentPlayer].isSponsor){	    			
-			control.stagesSet();
-			control.buttonClick(ENDTURN);
-		}else if (state.players[state.currentPlayer].declinedQuesting) {
-			control.buttonClick(ENDTURN);
-		}
-
-		
-
-		state = control.getState();
-    	if(state.stageResolved){
-    		stageResolved();
-    	} else {
-    			//control.buttonClick(ENDTURN);
-			update(stage);
-			
-			
-			Label playerLabel = new Label("Player " + (control.getActivePlayer().getPlayerNumber()+1) + " ready?");
-			playerLabel.setFont(new Font("Ariel", 30));
-			
-			Button readyButton = new Button("Ready");
-			readyButton.setFont(new Font("Ariel", 30));
-			
-			readyButton.setOnAction(new EventHandler<ActionEvent>() {
-				public void handle(ActionEvent event) {
-					logger.info("Ready clicked");
-
-					update(stage);
-				}
-			});
-			StackPane layout = new StackPane();
-			layout.getChildren().addAll(playerLabel, readyButton);
-			layout.setPrefHeight(720);
-			layout.setPrefWidth(1280);
-			
-			readyButton.setTranslateY(65);
-			playerLabel.setTranslateY(-45);			
-	
-			Scene scene = new Scene(layout);
-			scene.getStylesheets().add("style.css");
-			stage.setScene(scene);
-    	} */
-    }
 	
 	public void stageResolved(){
 		logger.debug("stageResolved() called");
 		logger.info("Stage Over");
-
 		
 		final StackPane layout = new StackPane();
 		state = control.getState();

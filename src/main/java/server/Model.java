@@ -7,8 +7,7 @@ public class Model {
 
 	private static final Logger logger = LogManager.getLogger(Model.class);
 
-	public Control control;
-	
+	public Server control;
 	State state;
 	
 	private Player [] players;
@@ -58,7 +57,7 @@ public class Model {
 	boolean isDoneQuestingMode = false;
 	
 	
-	Model(Control control){
+	Model(Server control){
 		
 		logger.info("Model created");
 
@@ -499,15 +498,13 @@ public class Model {
 		}
 		logger.info("Player changed to " + this.currentPlayer);
 		
-		
-		control.view.update();
-		
+		control.update();
 	}
 	public void setNextPlayer(int nextplayer) {
 		
 		currentPlayer = nextplayer;
 		
-		control.view.update();
+		control.update();
 		
 	}
 	public void nextStory() {
@@ -903,7 +900,7 @@ public class Model {
 
 		this.players[0].addShields(10);
 		this.players[1].addShields(6);
-		this.players[2].addShields(14);
+		this.players[2].addShields(10);
 		
 		//stages[0].add(this.adventureDeck.getByID("57"));
 		//stages[1].add(this.adventureDeck.getByID("86"));

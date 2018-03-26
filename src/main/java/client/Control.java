@@ -1,43 +1,92 @@
 package client;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Control{
 	
 	private static final Logger logger = LogManager.getLogger(Control.class);
+    private static final int MESSAGE_WAIT_TIME = 500;                   // time to wait between server messages
     private static final String DEFAULT_SERVER_ADDRESS = "localhost";   // default server address
     private static final int DEFAULT_SERVER_PORT = 44444;               // default server port
     private String serverAddress;                                       // server address
     private int serverPort;                                             // server port
+    private Socket socket;                                                      // socket on server address and port
+    private BufferedReader in;                                                  // in to server
+    private PrintWriter out;                                                    // out from server
 	Model model;
 	View view;
 	
 	private static String testString;
 	
-	public Control(String serverAddress, int serverPort) {
+	public Control(View view, String serverAddress, int serverPort) {
 		logger.info("Control created");
 
         this.serverAddress = serverAddress;
         this.serverPort = serverPort;
-		gameInit(null);
+		this.view = view;
+		
+        try {
+            socket = new Socket(serverAddress, serverPort);
+    		logger.info("Socket created" + socket);
 
+        } catch (IOException e) {
+            System.err.println("No Quests server running on port " + serverPort + " at address " + serverAddress);
+            System.exit(1);
+        }
+        try {
+            InputStreamReader isr = new InputStreamReader(socket.getInputStream());    // input stream reader from socket
+            in = new BufferedReader(isr);
+            out = new PrintWriter(socket.getOutputStream(), true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+		gameInit(null);
+		
 //		TEST
 //		model.CardsTest();
 //		END TEST
 	}
 	
-	public Control(View view) {
-		
-		logger.info("Control created");
-		
-		this.view = view;
-		gameInit(null);
+    /**
+     * Gets a message sent by the server.
+     *
+     * @return message sent by the server
+     */
 
-		//TEST
-		model.CardsTest();
-		//END TEST
-	}
+    public String getServerMessage() {
+        String serverMessage = null;
+        try {
+            Thread.sleep(MESSAGE_WAIT_TIME);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        while (serverMessage == null) {
+            try {
+                serverMessage = in.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return serverMessage;
+    }
+
+    /**
+     * Sends a message to the server.
+     *
+     * @param clientMessage Message to send to server
+     */
+
+    public void sendClientMessage(String clientMessage) {
+        out.println(clientMessage);
+    }
 	
     public void start() {
         System.out.println("Starting Quests client\nServer address: " + serverAddress + "\nServer port: " + serverPort);
@@ -46,31 +95,6 @@ public class Control{
 //        getServerMessage();
     }
 	
-    /**
-     * TODO: From BlackJack - and needs to be integrated
-     * Gets a message from the server and calls the changeView method with the message.
-     */
-
-//    private void getServerMessage() {
-//        SwingWorker swingWorker = new SwingWorker<String, String>() {
-//            @Override
-//            public String doInBackground() throws Exception {
-//                return model.getServerMessage();
-//            }
-//
-//            @Override
-//            public void done() {
-//                try {
-//                    changeView(get());
-//                } catch (InterruptedException | ExecutionException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        };
-//        swingWorker.execute();
-//    }
-//
-//    
 //
 //    /**
 //     * Changes the client view based on which message was received from the server.
@@ -404,15 +428,7 @@ public class Control{
 //        }
 //    }
 //
-//    /**
-//     * Calls the model sendClientMessage method with the given clientMessage.
-//     *
-//     * @param clientMessage Message to send to server
-//     */
-//
-//    public void sendClientMessage(String clientMessage) {
-//        model.sendClientMessage(clientMessage);
-//    }
+
 //
 //    /**
 //     * Calls the model quitGame method.
@@ -428,42 +444,7 @@ public class Control{
 //     * @param args String array of arguments passed to the client
 //     */
 //
-//    public static void main(String[] args) {
-//        String serverAddress = DEFAULT_SERVER_ADDRESS;
-//        int serverPort = DEFAULT_SERVER_PORT;
-//        for (int i = 0; i < args.length; i += 2) {
-//            String input = args[i];
-//            String argument = null;
-//            try {
-//                argument = args[i + 1];
-//            } catch (ArrayIndexOutOfBoundsException e) {
-//                System.err.println("Options: [-a serverAddress] [-p serverPort]");
-//                System.exit(1);
-//            }
-//            switch (input) {
-//                case "-a":
-//                    serverAddress = argument;
-//                    break;
-//                case "-p":
-//                    try {
-//                        serverPort = Integer.parseInt(argument);
-//                    } catch (NumberFormatException e) {
-//                        System.err.println("Server port must be an integer");
-//                        System.exit(1);
-//                    }
-//                    break;
-//                default:
-//                    System.err.println("Options: [-a serverAddress] [-p serverPort]");
-//                    System.exit(1);
-//                    break;
-//            }
-//        }
-//        Control controller = new Control(serverAddress, serverPort);
-//        controller.start();
-//    }
     
-
-
 	public void gameInit(String args []){
 		
 		logger.info("gameInit() running");
@@ -509,6 +490,7 @@ public class Control{
 
 		boolean win = false;
 		while(!win){
+			//TODO send messsage to server with "CLIENTMESSAGE--playGame"
 			model.playGame();
 			win = !win;
 		}
@@ -549,20 +531,9 @@ public class Control{
 	}
 	public State getState(){
 		logger.debug("getState() called");
-
 		return model.getState();
-		
 	}
-	
-	
-	
-	/*
-	public void viewerChanged(){
-		logger.debug("viewerChanged() called");
 
-		model.viewerChanged();
-	}
-	*/
 	public void setNumPlayers(int i){
 		logger.debug("setNumPlayers() called");
 
@@ -577,14 +548,19 @@ public class Control{
 	
 	public void printTestString(){System.out.println(testString);}
 
+	
+	
+	//FIXME !! Here's where we're adding in the MESSAGES TO SERVER
 	public void handClick(String clickType, String ID) {
 		logger.debug("handClick() called");
 
 		if(clickType.equals(View.PARTY)){
 			model.party(ID);
+			//TODO send messsage to server with "CURRENTPLAYER--PARTY--ID"
 		} 
 		else if (clickType.equals(View.STAGE)) {
 			model.stage(ID);
+			//TODO send messsage to server with "CURRENTPLAYER--PARTY--ID"
 		} 		
 		else if (clickType.equals(View.UNSTAGE)) {
 			model.unstage(ID);
@@ -596,6 +572,7 @@ public class Control{
 			model.dequeue(ID);
 		}
 		else if(clickType.equals(View.DISCARD)){
+			//TODO send message to server with "CLIENTMESSAGE--DISCARD-CURRENTPLAYER-ID"
 			model.discard(ID);
 		}
 		else if(clickType.equals(View.ASSASSINATE)){
@@ -677,7 +654,7 @@ public class Control{
 	
 	public void nextStage() {
 		this.stageOver();
-		logger.info("Hello this is the model stafe in the control "+ model.isDoneQuestingMode);
+		logger.info("Hello this is the model stage in the control "+ model.isDoneQuestingMode);
 		if (model.isDoneQuestingMode) {
 			view.resolveQuest(); 
 			

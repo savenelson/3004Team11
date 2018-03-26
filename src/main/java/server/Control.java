@@ -98,8 +98,9 @@ public class Control{
 	
 	public void stageOver(){
 		logger.debug("stageOver() called");
-
+		
 		model.stageOver();
+		servermessage--ADDSHIELDS--PLAYER1--10"
 	}
 
 	public boolean getSponsorDecision(){
@@ -114,20 +115,14 @@ public class Control{
 	}
 	public State getState(){
 		logger.debug("getState() called");
-
-		return model.getState();
+		String result = "// "SERVERMESSAGE--STATE--""
+				+ model.
+		
+		return model.getState(); 
 		
 	}
 	
 	
-	
-	/*
-	public void viewerChanged(){
-		logger.debug("viewerChanged() called");
-
-		model.viewerChanged();
-	}
-	*/
 	public void setNumPlayers(int i){
 		logger.debug("setNumPlayers() called");
 

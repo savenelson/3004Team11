@@ -84,6 +84,8 @@ public class Model {
 		currentStage = stage.getCurrentStage();
 	}
 	
+
+	
 	public void instantiatePlayers(int numPlayers){
 		logger.debug("instantiatePlayers(" + numPlayers + ") called");
 		players = new Player[numPlayers];
@@ -204,7 +206,6 @@ public class Model {
 		hand.remove(c);
 		getActivePlayer().addToParty(c);
 		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from hand to party");
-
 	}
 	
 	public void stage(String iD) {
@@ -335,7 +336,6 @@ public class Model {
 				return true;
 			}
 		}
-		
 		return false;
 	}
 
@@ -350,34 +350,17 @@ public class Model {
 	
 	public void setCurrentStage(int num) {
 		logger.debug("setCurrentStage(" + num + ") called");
-		
-		
 		this.currentStage= num;
 		this.stage.setCurrentStage(num);
-	
 		control.updateViewState();
 	}
-	
 
-	
-
-	
-	
 	public void endTurn() {
 		logger.debug("endTurn() called");
 		logger.info("I end turn called changing s ");
-		
-		
-		
 		currentState.nextPlayer();
-	
-	
-		
+
 	}
-	
-
-
-		
 
 	public void stageOver(){
 		logger.info("stageOver() called");
@@ -393,8 +376,6 @@ public class Model {
 				players[i].passedStage = false;
 			}
 		}
-		
-		
 		state.stage = this.stage.getStageAt(currentStage);
 		control.updateViewState();
 	}
