@@ -8,6 +8,7 @@ public class ServerThread extends Thread {
 
     public ServerThread(Socket socket) {
         super("ServerModel");
+        System.out.println("ServerThread Created with socket:" + socket);
         this.socket = socket;
     }
     
