@@ -1018,8 +1018,7 @@ public class View extends Application {
 		    }
 		});
 
-	if((state.players[state.currentPlayer].isSponsor&& ((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST))){
-			
+	if((state.players[state.currentPlayer].isSponsor && ((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST))){
 				int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
 				for(int i = 4; i!=numStages-1; i--) {stageButtons[i].setDisable(true);} 
 				canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);

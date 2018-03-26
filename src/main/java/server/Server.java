@@ -1,5 +1,7 @@
 package server;
 
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -50,7 +52,7 @@ public class Server {
     	model = new Model(this);
 		model.instantiatePlayers(playersPerTable);
 		model.instantiateStages(); //TODO set properly
-//		model.setScenarioTest(); 
+		model.setScenarioTest();
     		
 		boolean listening = true;
     		
@@ -61,7 +63,6 @@ public class Server {
         			System.out.println("g count:" + g);
             		new ServerThread(serverSocket.accept(), this, g).start();
         		}
-
         	}
         } catch (IOException e) {
             System.err.println("Could not listen on port " + 4444);

@@ -29,7 +29,7 @@ public class Model {
 	boolean inNextQ = false;
 	
 	int currentViewer;
-	int currentPlayer;
+	int currentPlayer = 0;
 	int currentStage;
 	int currentSponsor;
 	int endTurnCounter = 0;
@@ -66,8 +66,7 @@ public class Model {
 		
 		questManger= new QuestManager(this);
 		eventManger = new EventManger(this);
-		
-		
+
 		stage = new QuestingStage();
 		
 		this.adventureDeck = new AdventureDeck();
@@ -78,8 +77,8 @@ public class Model {
 		
 		state = new State();
 		
-		currentPlayer = 0;
-		currentSponsor = 0;
+//		currentPlayer = 0;
+//		currentSponsor = 0; //nelson commented while solving view problems
 
 		currentStage = stage.getCurrentStage();
 	}
@@ -93,7 +92,6 @@ public class Model {
 		for(int i = 0; i < numPlayers; ++i){
 			players[i] = new Player(i);
 		}
-		currentPlayer = 0;
 	}
 	
 	public void instantiateStages(){
@@ -161,9 +159,10 @@ public class Model {
 		state.players = this.players;
 		
 		state.currentPlayer = this.currentPlayer;
+		logger.debug("state.currentPlayer: " + state.currentPlayer);
 		
-		state.isQuesting = this.getActivePlayer().isQuesting;
-		
+//		state.isQuesting = this.getActivePlayer().isQuesting;
+//		
 		state.currentSponsor = this.currentSponsor;
 		
 		state.inNextQ = this.inNextQ;
@@ -251,6 +250,7 @@ public class Model {
 	
 	public Player getActivePlayer(){
 		logger.debug("getActivePlayer() called");
+		logger.debug("currentPlayer: " + this.currentPlayer);
 		return this.players[this.currentPlayer];
 	}
 	

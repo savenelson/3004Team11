@@ -6,6 +6,8 @@ import java.io.*;
 public class ServerThread extends Thread {
 	private Socket socket = null;
 	private Server server;
+	PrintWriter out;
+	BufferedReader in;
 	private int currentPlayer;
 
 	public ServerThread(Socket socket, Server server, int currentPlayer) {
@@ -20,10 +22,8 @@ public class ServerThread extends Thread {
 		try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));) {
 			String clientMessage, outputLine;
-			out.println("SERVERMESSAGE--WELCOME");
 			out.println("SERVERMESSAGE--CURRENTPLAYER--" + currentPlayer);
-			System.out.println("SERVERMESSAGE--WELCOME/n");
-
+			out.println("SERVERMESSAGE--WELCOME");
 			while ((clientMessage = in.readLine()) != null) {
 				getClientMessage(clientMessage);
 			}
@@ -42,6 +42,26 @@ public class ServerThread extends Thread {
 			break;
 		case "QUEUE":
 			server.model.queue(clientMessageComponents[2]);
+			break;
+		case "PARTY":
+			server.model.party(clientMessageComponents[2]);
+			break;
+		case "DEQUEUE":
+			server.model.dequeue(clientMessageComponents[2]);
+			break;
+		case "UNSTAGE":
+			server.model.unstage(clientMessageComponents[2]);
+			break;
+		case "DISCARD":
+			server.model.discard(clientMessageComponents[2]);
+			break;
+		case "ASSASSINATE":
+			server.model.assassinate(clientMessageComponents[2]);
+			break;
+		case "GETSTATE":
+			String stateString = server.model.getState().toString();
+			System.out.println(stateString);
+			out.println("SERVERMESSAGE--GETSTATE--" + stateString);
 			break;
 		default:
 			System.err.println("Unknown message received from server: \"" + clientMessage + "\"");
