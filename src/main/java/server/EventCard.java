@@ -1,6 +1,10 @@
 
 
+<<<<<<< HEAD:src/main/java/core/EventCard.java
+package core;
+=======
 package server;
+>>>>>>> master:src/main/java/server/EventCard.java
 
 public class EventCard extends StoryCard{
 	
