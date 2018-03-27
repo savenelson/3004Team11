@@ -20,10 +20,9 @@ public class Server {
     private int serverPort;                                             // server port
     private int playersPerTable;                                        // number of players per table
     public Model model;
+    
     /**
-
      * Constructor for Server object.
-
      *
      * @param serverPort Server port
      * @param playersPerTable Number of players per table
@@ -31,6 +30,7 @@ public class Server {
      */
 
     public Server(int serverPort, int playersPerTable) {
+    	logger.debug("Server(int serverPort, int playersPerTable) called");
     	this.serverPort = serverPort;
     	this.playersPerTable = playersPerTable;
     }
@@ -43,10 +43,14 @@ public class Server {
      */
     
     public void setModel(Model model) {
+    	logger.debug("setModel(Model model)  called");
+
     	this.model = model;
     }
 
     public void start() {
+    	logger.debug("start()  called");
+
         System.out.println("Starting Quests server\nServer port: " + serverPort + "\nPlayers per table: " + playersPerTable);
         
         System.out.println("Listening on port " + serverPort);
@@ -54,7 +58,17 @@ public class Server {
     	model = new Model(this);
 		model.instantiatePlayers(playersPerTable);
 		model.instantiateStages(); //TODO set properly
-		model.setScenarioTest();
+		
+//		model.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
+
+//		model.deal(); 			//COMMENT OUT FOR SET SCENEARIOS
+
+		model.setScenario1();	//UNCOMMENT FOR SCEN 1
+
+//		model.setScenario2();	//UNCOMMENT FOR SCEN 2
+
+//		model.setScenarioTest(); //UNCOMMENT FOR end game testing
+
     		
 		boolean listening = true;
     		
@@ -130,7 +144,6 @@ public class Server {
 		
 //		BROKEN: the below call FIXME to talk to client
 //		view.updateState();
-		
 	}
 	
 	public void resolveQuest(){

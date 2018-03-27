@@ -73,11 +73,11 @@ public class Model {
 	StoryCardState currentState;
 	boolean isDoneQuestingMode = false;
 
-	Model(Server control) {
+	Model(Server server) {
 
 		logger.info("Model created");
 
-		this.control = control;
+		this.control = server;
 
 		questManger = new QuestManager(this);
 		eventManger = new EventManger(this);
@@ -563,8 +563,6 @@ public class Model {
 		StoryCard sC = this.getStoryDeck().pop();
 		storyDeckDiscard.add(sC);
 		// ID: 58, type: Adventure, subtype: Foe, name: Boar, battle points: 5,
-		// alternative battle points: 15, special: <NO SPECIAL>
-
 		AdventureCard c;
 		c = this.adventureDeck.getByID("58");
 		this.players[0].addToHand(c);
@@ -832,9 +830,6 @@ public class Model {
 		this.players[3].addToHand(c);
 		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
-
-		this.adventureDeck.shuffle();
-
 	} // end set scenario 1
 
 	public void setScenario2() {

@@ -35,7 +35,6 @@ public class Model {
 	int endTurnCounter = 0;
 	boolean gameWon = false;
 
-
 	int stagePlaceHolder = 0;
 	static int stageOverCount = 0;
 
@@ -50,13 +49,11 @@ public class Model {
 	
 	QuestingStage stage;
 	//CardCollection [] getStages() {return stages;}
-
 	
 	StoryCardState questManger;
 	StoryCardState eventManger;
 	StoryCardState currentState;
 	boolean isDoneQuestingMode = false;
-	
 	
 	Model(Control control){
 		
@@ -82,9 +79,7 @@ public class Model {
 
 		currentStage = stage.getCurrentStage();
 	}
-	
 
-	
 	public void instantiatePlayers(int numPlayers){
 		logger.debug("instantiatePlayers(" + numPlayers + ") called");
 		players = new Player[numPlayers];
@@ -98,49 +93,37 @@ public class Model {
 		logger.debug("instantiateStages() called - hard coded to 5");
 
 		stages = new AdventureDeck[5];
-		
+
 		for(int i = 0; i < 5; ++i){
 			stages[i] = new AdventureDeck();
 		}
-
-		
 		stage = new QuestingStage();
 	}
 	
 	public void initialShuffle(){
 		logger.debug("initialShuffle() called");
-
 		this.adventureDeck.shuffle();
-		
 		this.storyDeck.shuffle();
-		
 	}
 	
 	public void deal(){
 		logger.info("deal() called");
-
 			            // 12 cards in hand
 		for(int i = 0; i < 12; ++i){
 			for(int j = 0; j < players.length; ++j){
 				
 				players[j].addToHand(this.adventureDeck.pop()); 
 			}
-			
 			this.currentStoryCard = storyDeck.pop();
-		
 			logger.info("setting current story card to" + this.currentStoryCard);
 		}
 	}
 	
 	public void CardsTest(){
 		logger.debug("CardsTest() called");
-
 		System.out.println("Adventure Deck: \n" + this.adventureDeck.toString());
-
 		System.out.println("Story Deck: \n" + this.storyDeck.toString());
-		
 		System.out.println("Players Hands: \n\n");
-			
 		for(int i = 0; i < players.length; ++i){
 			System.out.println("Player " + (i+1) + " Hand: \n" + players[i].getHand().toString());
 		}
@@ -149,7 +132,6 @@ public class Model {
 	public void resetCurrentStage(){
 		logger.debug("resetCurrentStage() called");
 
-		
 		stage.resetCurrentStage();
 	}
 	
@@ -162,7 +144,7 @@ public class Model {
 		logger.debug("state.currentPlayer: " + state.currentPlayer);
 		
 //		state.isQuesting = this.getActivePlayer().isQuesting;
-//		
+		
 		state.currentSponsor = this.currentSponsor;
 		
 		state.inNextQ = this.inNextQ;
@@ -171,9 +153,8 @@ public class Model {
 		
 		state.currentViewer = this.currentViewer;
 		
-		
 		if (stage.getStageAt(currentStage)!=null) {
-		state.stage = this.stage.getStageAt(stage.getCurrentStage());
+			state.stage = this.stage.getStageAt(stage.getCurrentStage());
 		}
 		
 		state.currentStage = this.stage.getCurrentStage();
@@ -189,7 +170,6 @@ public class Model {
 		return state;
 	}
 	
-
 	public void party(String iD) {
 		logger.debug("party() called");
 
@@ -226,26 +206,18 @@ public class Model {
 		//Change To add to my new Stages
 		this.stage.getStageAt(currentStage).add(c);
 		logger.info("Player " + this.currentPlayer + " moves " + c.getName() + " from hand to Stage " + currentStage);
-		
-		
-	}	
+	}
 	
 	public void unstage(String iD) {
 		logger.debug("unstage() called");
 
-		
-	
 		Card c = this.stage.getStageAt(currentStage).getByID(iD);
 		
 		this.stage.getStageAt(currentStage).remove(iD);;
-		
-		
-		
+				
 		this.players[this.currentPlayer].getHand().add(c);
 		
-
 		logger.info("Player " + this.currentPlayer + " moves " + c.getName() + " from Stage back to Hand");
-
 	}
 	
 	public Player getActivePlayer(){
@@ -260,11 +232,9 @@ public class Model {
 		CardCollection<AdventureCard> hand = getActivePlayer().getHand();
 		AdventureCard c = hand.getByID(iD);
 		
-		
 		hand.remove(c);
 		adventureDeckDiscard.add(c);
 		logger.info("Player " + this.currentPlayer + " discarded " + c.getName());
-
 	}
 	
 	public void assassinate(String iD) {
@@ -416,7 +386,6 @@ public class Model {
 				return true;
 			}
 		}
-		
 		return false;
 	}
 	
@@ -434,15 +403,12 @@ public class Model {
 		logger.info("playQuest() called");
 		
 		currentState = questManger;	
-
 	}
 	
 	private void playEvent() {
 		logger.debug("playEvent() called");
 		
 		currentState = eventManger;
-
-	
 	}
 	
 	public void playGame() {
@@ -460,7 +426,6 @@ public class Model {
 			adventureDeck = adventureDeckDiscard;
 			adventureDeck.shuffle();
 		}
-	
 	}
 	
 	public void nextPlayer(){
@@ -468,7 +433,6 @@ public class Model {
 		
 		if(this.currentPlayer == numPlayers - 1){
 			this.currentPlayer = 0;
-
 		}
 		else{
 			this.currentPlayer++;
@@ -476,10 +440,9 @@ public class Model {
 		}
 		logger.info("Player changed to " + this.currentPlayer);
 		
-		
 		control.view.update();
-		
 	}
+	
 	public void setNextPlayer(int nextplayer) {
 		
 		currentPlayer = nextplayer;
@@ -487,6 +450,7 @@ public class Model {
 		control.view.update();
 		
 	}
+	
 	public void nextStory() {
 		logger.info("nextStory() called");
 		//get ready for the next person
@@ -498,8 +462,6 @@ public class Model {
 			players[i].isQuesting = false;
 			players[i].passedQuest = false;
 			players[i].passedStage = false;
-			
-			
 			
 			//remove stage cards
 			instantiateStages(); //TODO - DO PROPERLY
@@ -516,15 +478,12 @@ public class Model {
 		}
 		
 		storyDeckDiscard.add(this.currentStoryCard);
-		
-	
-		
+
 		this.currentStoryCard = storyDeck.pop();
 		logger.info("Story card up next "+ currentStoryCard.getName());
 
 		this.currentStage = 0;
 		stage.resetCurrentStage();
-		
 
 		control.updateViewState();
 		playGame();
@@ -563,7 +522,6 @@ public class Model {
 		StoryCard sC = this.getStoryDeck().pop();
 		storyDeckDiscard.add(sC);
 //		ID: 58, type: Adventure, subtype: Foe, name: Boar, battle points: 5, alternative battle points: 15, special: <NO SPECIAL>
-		
 		AdventureCard c;
 		c = this.adventureDeck.getByID("58");
 		this.players[0].addToHand(c);
@@ -601,7 +559,6 @@ public class Model {
 		this.adventureDeck.remove(c);
 
 //		ID: 65, type: Adventure, subtype: Foe, name: Saxons, battle points: 10, alternative battle points: 20, special: <NO SPECIAL>
-
 		c = this.adventureDeck.getByID("65");
 		this.players[0].addToHand(c);
 		adventureDeckDiscard.add(c);
@@ -806,12 +763,7 @@ public class Model {
 		this.players[3].addToHand(c);
 		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
-		
-	
-		
-		this.adventureDeck.shuffle();
-		
-		
+
 	} //end set scenario 1
 	
 	public void setScenario2() {
