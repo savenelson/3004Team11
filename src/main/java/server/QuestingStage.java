@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 public class QuestingStage {
 	private static final Logger logger = LogManager.getLogger(QuestingStage.class);
 	
-	CardCollection [] stages;
+	CardCollection<AdventureCard>[] stages;
 	boolean stageResolved = false;
 	boolean toggleForStages = false;
 	int stagePlaceHolder = 0;
@@ -15,11 +15,12 @@ public class QuestingStage {
 	
 	
 	
+	@SuppressWarnings("unchecked")
 	public QuestingStage() {
-	stages = new CardCollection[5];
+		stages = new CardCollection[5];
 		
 		for(int i = 0; i < 5; ++i){
-			stages[i] = new CardCollection();
+			stages[i] = new CardCollection<AdventureCard>();
 		}
 		
 		currentStage = 0;
@@ -40,7 +41,7 @@ public class QuestingStage {
 		
 	}
 	
-	public CardCollection getStageAt(int stageNum) {
+	public CardCollection<AdventureCard> getStageAt(int stageNum) {
 		
 		
 		return stages[stageNum];

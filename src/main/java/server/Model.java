@@ -1,8 +1,12 @@
-
 package server;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import server.AdventureCard;
+import server.AdventureDeck;
+import server.CardCollection;
+import server.StoryCard;
 
 public class Model {
 
@@ -19,25 +23,25 @@ public class Model {
 
 	private AdventureDeck adventureDeck;
 
-	public AdventureDeck getAdventureDeck() {
+	public CardCollection<AdventureCard> getAdventureDeck() {
 		return this.adventureDeck;
 	}
 
-	private AdventureDeck adventureDeckDiscard;
+	private CardCollection<AdventureCard> adventureDeckDiscard;
 
-	public AdventureDeck getAdventureDeckDiscard() {
+	public CardCollection<AdventureCard> getAdventureDeckDiscard() {
 		return this.adventureDeck;
 	}
-
+	
 	private StoryDeck storyDeck;
 
 	public StoryDeck getStoryDeck() {
 		return storyDeck;
 	}
 
-	private StoryDeck storyDeckDiscard;
+	private CardCollection<StoryCard> storyDeckDiscard;
 
-	public StoryDeck getStoryDeckDiscard() {
+	public CardCollection<StoryCard> getStoryDeckDiscard() {
 		return storyDeckDiscard;
 	}
 
@@ -87,8 +91,8 @@ public class Model {
 		this.adventureDeck = new AdventureDeck();
 		this.storyDeck = new StoryDeck();
 
-		this.adventureDeckDiscard = new AdventureDeck();
-		this.storyDeckDiscard = new StoryDeck();
+		this.adventureDeckDiscard = new CardCollection<AdventureCard>();
+		this.storyDeckDiscard = new CardCollection<StoryCard>();
 
 		state = new State();
 
@@ -112,10 +116,10 @@ public class Model {
 	public void instantiateStages() {
 		logger.debug("instantiateStages() called - hard coded to 5");
 
-		stages = new AdventureDeck[5];
+		stages = new CardCollection[5];
 
 		for (int i = 0; i < 5; ++i) {
-			stages[i] = new AdventureDeck();
+			stages[i] = new CardCollection<AdventureCard>();
 		}
 
 		stage = new QuestingStage();
@@ -286,13 +290,16 @@ public class Model {
 		}
 
 		if (hasMordred) {
-			int playerHoldingAlly = 0;
+			int playerHoldingAlly = -1;
 			// find who is holding the Ally
 			for (int i = 0; i < this.numPlayers; ++i) {
-				CardCollection party = state.players[i].getParty();
+				CardCollection<AdventureCard> party = state.players[i].getParty();
 				for (int j = 0; j < party.size(); j++) {
+					logger.info("running j loop");
+
 					if (party.get(j).getID().equals(iD)) {
 						playerHoldingAlly = i;
+						logger.info("playerHoldingAlly is:" + playerHoldingAlly);
 					}
 				}
 			}
@@ -466,7 +473,7 @@ public class Model {
 		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)) {
 			// playTournament();
 		} else {
-			adventureDeck = adventureDeckDiscard;
+			adventureDeck = (AdventureDeck) adventureDeckDiscard;
 			adventureDeck.shuffle();
 		}
 
@@ -536,7 +543,7 @@ public class Model {
 	}
 
 	public void setScenario1() {
-		logger.debug("setScenario1() called - Setting up SCENARIO ONE");
+		logger.info("setScenario1() called - Setting up SCENARIO ONE");
 
 		/**
 		 * Scenario 1 Story Card: Board Hunt Number of Players: 2 Current Player: Player

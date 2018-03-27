@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 public class AdventureDeck extends CardCollection<AdventureCard>{
 	private static final Logger logger = LogManager.getLogger(AdventureDeck.class);
 
-	
 	public AdventureDeck() {
 		
 		super();

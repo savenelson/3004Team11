@@ -11,7 +11,7 @@ public class ServerThread extends Thread {
 	private int currentPlayer;
 
 	public ServerThread(Socket socket, Server server, int currentPlayer) {
-		super("ServerModel");
+		super("Server");
 		System.out.println("ServerThread Created with socket:" + socket);
 		this.socket = socket;
 		this.server = server;

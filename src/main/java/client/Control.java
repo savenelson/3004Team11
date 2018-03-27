@@ -142,39 +142,20 @@ public class Control{
 		
 		logger.info("gameInit() running");
 		
-		int numPlayers;
-
-		//TODO this if/else can use some polish - always passes 4
-		if(args == null || args.length == 0){
-			numPlayers = 4;
-		} else {
-			numPlayers = Integer.parseInt(args[0]);
-		}
-		
-		if(numPlayers >= 2 && numPlayers <= 4)
-		{
-
-			model = new Model(this);
-			logger.info("passing numPlayers = " + numPlayers + " to model");
-			
-		} else {
-			logger.fatal("number of players ERROR");
-		}
-		
 		model.instantiatePlayers(numPlayers);
 		
-		model.instantiateStages();
+		model.instantiateStages(); 
 		
 //		model.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
 
 //		model.deal(); 			//COMMENT OUT FOR SET SCENEARIOS
-
+		
 		model.setScenario1();	//UNCOMMENT FOR SCEN 1
-
+		
 //		model.setScenario2();	//UNCOMMENT FOR SCEN 2
-
+		
 //		model.setScenarioTest();
-
+		
 //		model.eventTesting();
 		
 		start();
