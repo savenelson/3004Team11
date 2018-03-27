@@ -1,5 +1,7 @@
 package client;
 
+import java.util.ArrayList;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -62,9 +64,9 @@ public class Model {
 	int numPlayers;
 	int numStages;
 
-	CardCollection<AdventureCard>[] stages;
+	ArrayList<CardCollection<AdventureCard>> stages;
 
-	CardCollection<AdventureCard>[] getStages() {
+	ArrayList<CardCollection<AdventureCard>> getStages() {
 		return stages;
 	}
 	// CardCollection [] stages;
@@ -114,10 +116,7 @@ public class Model {
 	public void instantiateStages() {
 		logger.debug("instantiateStages() called - hard coded to 5");
 
-		stages = new CardCollection[5];
-		for (int i = 0; i < 5; ++i) {
-			stages[i] = new CardCollection<AdventureCard>();
-		}
+		
 		stage = new QuestingStage();
 	}
 

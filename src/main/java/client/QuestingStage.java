@@ -1,12 +1,14 @@
 package client;
 
+import java.util.ArrayList;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class QuestingStage {
 	private static final Logger logger = LogManager.getLogger(QuestingStage.class);
 	
-	CardCollection<AdventureCard> [] stages;
+	ArrayList<CardCollection<AdventureCard>> stages;
 	boolean stageResolved = false;
 	boolean toggleForStages = false;
 	int stagePlaceHolder = 0;
@@ -15,11 +17,8 @@ public class QuestingStage {
 
 	@SuppressWarnings("unchecked")
 	public QuestingStage() {
-	stages = new CardCollection[5];
+	stages = new ArrayList<CardCollection<AdventureCard>>();
 		
-		for(int i = 0; i < 5; ++i){
-			stages[i] = new CardCollection<AdventureCard>();
-		}
 		
 		currentStage = 0;
 	}
@@ -41,11 +40,11 @@ public class QuestingStage {
 	
 	public CardCollection<AdventureCard> getStageAt(int stageNum) {
 		
-		return stages[stageNum];
+		return this.stages.get(stageNum);
 
 	}
 	
-	public CardCollection<AdventureCard>[] getStage() {
+	public ArrayList<CardCollection<AdventureCard>> getStage() {
 		return stages;
 	}
 	
