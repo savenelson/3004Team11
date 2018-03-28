@@ -23,7 +23,7 @@ public class Model {
 
 	private AdventureDeck adventureDeck;
 
-	public CardCollection<AdventureCard> getAdventureDeck() {
+	public AdventureDeck getAdventureDeck() {
 		return this.adventureDeck;
 	}
 
