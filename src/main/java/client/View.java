@@ -121,6 +121,7 @@ public class View extends Application {
 	private ImageView imgView;
 	
 	private Stage stage;
+	
 	private Pane canvas;
 	private TilePane tile;
 	
@@ -309,7 +310,7 @@ public class View extends Application {
 			
 			
 			state = control.getState();		
-			stage = state.stages;
+//			stage = state.stages;
 			Label queueCardsLabel;
 			Label stageLabel;
 			if(stage.size() > 1)

@@ -17,9 +17,8 @@ public class QuestingStage {
 
 	@SuppressWarnings("unchecked")
 	public QuestingStage() {
-	stages = new ArrayList<CardCollection<AdventureCard>>();
 		
-		
+		stages = new ArrayList<CardCollection<AdventureCard>>();
 		currentStage = 0;
 	}
 	
@@ -39,9 +38,14 @@ public class QuestingStage {
 	}
 	
 	public CardCollection<AdventureCard> getStageAt(int stageNum) {
-		
-		return this.stages.get(stageNum);
-
+		logger.debug("getStageAt(int stageNum = " + stageNum + ")");
+		if(stages.isEmpty()) {
+			logger.debug("Error: stages is null");
+			return null;
+		} else {
+			System.out.println("stageNum: " + stageNum);
+			return stages.get(stageNum);
+		}
 	}
 	
 	public ArrayList<CardCollection<AdventureCard>> getStage() {

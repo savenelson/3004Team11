@@ -69,10 +69,8 @@ public class Model {
 	ArrayList<CardCollection<AdventureCard>> getStages() {
 		return stages;
 	}
-	// CardCollection [] stages;
 
 	QuestingStage stage;
-	// CardCollection [] getStages() {return stages;}
 
 	StoryCardState questManger;
 	StoryCardState eventManger;
@@ -84,11 +82,12 @@ public class Model {
 		logger.info("Model created");
 
 		this.control = control;
+		this.state = new State();
+		
+		this.questManger = new QuestManager(this);
+		this.eventManger = new EventManger(this);
 
-		questManger = new QuestManager(this);
-		eventManger = new EventManger(this);
-
-		stage = new QuestingStage();
+		this.stage = new QuestingStage();
 
 		this.adventureDeck = new AdventureDeck();
 		this.storyDeck = new StoryDeck();
@@ -96,12 +95,10 @@ public class Model {
 		this.adventureDeckDiscard = new CardCollection<AdventureCard>();
 		this.storyDeckDiscard = new CardCollection<StoryCard>();
 
-		state = new State();
-
 		// currentPlayer = 0;
 		// currentSponsor = 0; //nelson commented while solving view problems
 
-		currentStage = stage.getCurrentStage();
+		this.currentStage = stage.getCurrentStage();
 	}
 
 	public void instantiatePlayers(int numPlayers) {
@@ -116,7 +113,6 @@ public class Model {
 	public void instantiateStages() {
 		logger.debug("instantiateStages() called - hard coded to 5");
 
-		
 		stage = new QuestingStage();
 	}
 
@@ -163,7 +159,7 @@ public class Model {
 		state.currentPlayer = this.currentPlayer;
 		logger.debug("state.currentPlayer: " + state.currentPlayer);
 
-		// state.isQuesting = this.getActivePlayer().isQuesting;
+		state.isQuesting = this.getActivePlayer().isQuesting;
 
 		state.currentSponsor = this.currentSponsor;
 
@@ -173,7 +169,7 @@ public class Model {
 
 		state.currentViewer = this.currentViewer;
 
-		if (stage.getStageAt(currentStage) != null) {
+		if (stage.getStageAt(stage.getCurrentStage()) != null) {
 			state.stage = this.stage.getStageAt(stage.getCurrentStage());
 		}
 

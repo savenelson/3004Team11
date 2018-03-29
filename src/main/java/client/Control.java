@@ -31,14 +31,28 @@ public class Control{
 	
 	public Control(View view, String serverAddress, int serverPort) {
 		logger.info("Control created");
-
+		
         this.serverAddress = serverAddress;
         this.serverPort = serverPort;
 		this.view = view;
 		this.model = new Model(this);
 		
-        gameInit(null);
+		model.instantiateStages(); 
 		
+		model.instantiatePlayers(numPlayers);
+		
+//		model.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
+
+//		model.deal(); 			//COMMENT OUT FOR SET SCENEARIOS
+		
+		model.setScenario1();	//UNCOMMENT FOR SCEN 1
+		
+//		model.setScenario2();	//UNCOMMENT FOR SCEN 2
+		
+//		model.setScenarioTest();
+		
+//		model.eventTesting();
+
         try {
             socket = new Socket(serverAddress, serverPort);
     		logger.info("Socket created" + socket);
@@ -137,29 +151,6 @@ public class Control{
     public void quitGame() {
 //        model.quitGame();   //still need to write this in the model
     }
-
-	public void gameInit(String args []){
-		
-		logger.info("gameInit() running");
-		
-		model.instantiatePlayers(numPlayers);
-		
-		model.instantiateStages(); 
-		
-//		model.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
-
-//		model.deal(); 			//COMMENT OUT FOR SET SCENEARIOS
-		
-		model.setScenario1();	//UNCOMMENT FOR SCEN 1
-		
-//		model.setScenario2();	//UNCOMMENT FOR SCEN 2
-		
-//		model.setScenarioTest();
-		
-//		model.eventTesting();
-		
-		start();
-	}
 
 	public void mainLoop(){
 		logger.info("mainLoop() running");
