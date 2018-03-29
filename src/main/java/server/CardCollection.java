@@ -73,7 +73,7 @@ public class CardCollection<T extends Card> {
 			if(c.equals(cards.get(i))){
 				cards.remove(i);
 			}
-		}	
+		}
 		
 	}
 	public void remove(int index){
