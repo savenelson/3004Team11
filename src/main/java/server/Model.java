@@ -104,6 +104,7 @@ public class Model {
 	}
 
 	public void instantiatePlayers(int numPlayers) {
+		this.numPlayers = numPlayers;
 		logger.debug("instantiatePlayers(" + numPlayers + ") called");
 		players = new Player[numPlayers];
 
@@ -204,31 +205,31 @@ public class Model {
 		return state;
 	}
 
-	public void party(String iD) {
+	public void party(String iD, int currentPlayer) {
 		logger.debug("party() called");
 
-		CardCollection<AdventureCard> hand = getActivePlayer().getHand();
+		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(iD);
 
 		if ((((AdventureCard) c).getSubType().equals(AdventureCard.AMOUR))
-				&& containsAmour(getActivePlayer().getParty())) {
+				&& containsAmour(players[currentPlayer].getParty())) {
 			control.alert("Cannot have more than one amour in party.");
 			return;
 		}
 
 		hand.remove(c);
-		getActivePlayer().addToParty(c);
-		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from hand to party");
+		players[currentPlayer].addToParty(c);
+		logger.info("Player " + currentPlayer + " moved " + c.getName() + " from hand to party");
 
 	}
 
-	public void stage(String iD) {
+	public void stage(String iD, int currentPlayer) {
 		logger.debug("stage() called");
 
-		CardCollection<AdventureCard> hand = this.players[this.currentPlayer].getHand();
+		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(iD);
 		if ((((AdventureCard) c).getSubType().equals(AdventureCard.FOE))
-				&& containsFoe(this.stage.getStageAt(currentStage))) {
+				&& containsFoe(stage.getStageAt(currentStage))) {
 			control.alert("Cannot stage more than one foe per quest stage.");
 			return;
 		}
@@ -239,48 +240,48 @@ public class Model {
 		hand.remove(c);
 
 		// Change To add to my new Stages
-		this.stage.getStageAt(currentStage).add(c);
-		logger.info("Player " + this.currentPlayer + " moves " + c.getName() + " from hand to Stage " + currentStage);
+		stage.getStageAt(currentStage).add(c);
+		logger.info("Player " + currentPlayer + " moves " + c.getName() + " from hand to Stage " + currentStage);
 
 	}
 
-	public void unstage(String iD) {
+	public void unstage(String iD, int currentPlayer) {
 		logger.debug("unstage() called");
 
-		Card c = this.stage.getStageAt(currentStage).getByID(iD);
+		Card c = stage.getStageAt(currentStage).getByID(iD);
 
-		this.stage.getStageAt(currentStage).remove(iD);
-		;
+		stage.getStageAt(currentStage).remove(iD);
 
-		this.players[this.currentPlayer].getHand().add(c);
+		players[currentPlayer].getHand().add(c);
 
-		logger.info("Player " + this.currentPlayer + " moves " + c.getName() + " from Stage back to Hand");
+		logger.info("Player " + currentPlayer + " moves " + c.getName() + " from Stage back to Hand");
 
 	}
 
 	public Player getActivePlayer() {
 		logger.debug("getActivePlayer() called");
+		
 		return this.players[this.currentPlayer];
 	}
 
-	public void discard(String iD) {
+	public void discard(String iD, int currentPlayer) {
 		logger.debug("discard() called");
 
-		CardCollection<AdventureCard> hand = getActivePlayer().getHand();
+		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(iD);
 
 		hand.remove(c);
 		adventureDeckDiscard.add(c);
-		logger.info("Player " + this.currentPlayer + " discarded " + c.getName());
+		logger.info("Player " + currentPlayer + " discarded " + c.getName());
 
 	}
 
-	public void assassinate(String iD) {
+	public void assassinate(String iD, int currentPlayer) {
 		logger.debug("assassinate() called");
 
 		boolean hasMordred = false;
 		int indexMordred = 0;
-		CardCollection<AdventureCard> hand = getActivePlayer().getHand();
+		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
 
 		for (int i = 0; i < hand.size(); i++) {
 			if (hand.get(i).getName().equals("Mordred")) {
@@ -292,11 +293,9 @@ public class Model {
 		if (hasMordred) {
 			int playerHoldingAlly = -1;
 			// find who is holding the Ally
-			for (int i = 0; i < this.numPlayers; ++i) {
-				CardCollection<AdventureCard> party = state.players[i].getParty();
+			for (int i = 0; i < numPlayers; ++i) {
+				CardCollection<AdventureCard> party = players[i].getParty();
 				for (int j = 0; j < party.size(); j++) {
-					logger.info("running j loop");
-
 					if (party.get(j).getID().equals(iD)) {
 						playerHoldingAlly = i;
 						logger.info("playerHoldingAlly is:" + playerHoldingAlly);
@@ -304,7 +303,7 @@ public class Model {
 				}
 			}
 			// remove the ally
-			CardCollection<AdventureCard> party = state.players[playerHoldingAlly].getParty();
+			CardCollection<AdventureCard> party = players[playerHoldingAlly].getParty();
 			AdventureCard c = party.getByID(iD);
 			party.remove(c);
 			adventureDeckDiscard.add(c);
@@ -314,21 +313,22 @@ public class Model {
 			hand.remove(mordred);
 			adventureDeckDiscard.add(mordred);
 
-			logger.info("Player " + this.currentPlayer + " assaniated Player " + playerHoldingAlly + "s ally "
+			logger.info("Player " + currentPlayer + " assaniated Player " + playerHoldingAlly + "s ally "
 					+ c.getName());
 		} else {
 			control.alert("You do not have Mordred in your hand!");
 		}
-
 	}
 
-	public void queue(String iD) {
+	public void queue(String id, int currentPlayer) {
 		logger.debug("queue() called");
+		System.out.println("Current player, in queue called" + currentPlayer);
 
-		CardCollection<AdventureCard> hand = getActivePlayer().getHand();
-		AdventureCard c = hand.getByID(iD);
+		CardCollection<AdventureCard> hand = new CardCollection<AdventureCard>();
+		hand = players[currentPlayer].getHand();
+		AdventureCard c = hand.getByID(id);
 
-		if (containsSameWeapon(state.players[currentPlayer].getQueue(), ((WeaponCard) c).getName())) {
+		if (containsSameWeapon(players[currentPlayer].getQueue(), ((WeaponCard) c).getName())) {
 			control.alert("Cannot have duplicate weapons in queue.");
 			return;
 		}
@@ -352,13 +352,13 @@ public class Model {
 		return false;
 	}
 
-	public void dequeue(String iD) {
+	public void dequeue(String iD, int currentPlayer) {
 		logger.debug("dequeue(" + iD + ") called");
-		CardCollection<AdventureCard> queue = getActivePlayer().getQueue();
+		CardCollection<AdventureCard> queue = players[currentPlayer].getQueue();
 		AdventureCard c = queue.getByID(iD);
 		queue.remove(c);
-		getActivePlayer().addToHand(c);
-		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from queue to hand");
+		players[currentPlayer].addToHand(c);
+		logger.info("Player " + currentPlayer + " moved " + c.getName() + " from queue to hand");
 	}
 
 	public void setCurrentStage(int num) {

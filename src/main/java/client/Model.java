@@ -347,7 +347,6 @@ public class Model {
 		logger.debug("endTurn() called");
 		logger.info("I end turn called changing s ");
 		currentState.nextPlayer();
-
 	}
 
 	public void stageOver() {

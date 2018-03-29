@@ -18,7 +18,7 @@ public class Server {
     private static final int DEFAULT_PLAYERS_PER_TABLE = 4;             // default number of players per table
     private static final int maxPlayers = 4;							// max players for table
     private int serverPort;                                             // server port
-    private int playersPerTable;                                        // number of players per table
+    private int playersPerTable = 4;                                        // number of players per table
     public Model model;
     
     /**

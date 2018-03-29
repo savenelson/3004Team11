@@ -41,22 +41,22 @@ public class ServerThread extends Thread {
 			System.out.println("Client has responded!!!");
 			break;
 		case "QUEUE":
-			server.model.queue(clientMessageComponents[2]);
+			server.model.queue(clientMessageComponents[2], currentPlayer);
 			break;
 		case "PARTY":
-			server.model.party(clientMessageComponents[2]);
+			server.model.party(clientMessageComponents[2], currentPlayer);
 			break;
 		case "DEQUEUE":
-			server.model.dequeue(clientMessageComponents[2]);
+			server.model.dequeue(clientMessageComponents[2], currentPlayer);
 			break;
 		case "UNSTAGE":
-			server.model.unstage(clientMessageComponents[2]);
+			server.model.unstage(clientMessageComponents[2], currentPlayer);
 			break;
 		case "DISCARD":
-			server.model.discard(clientMessageComponents[2]);
+			server.model.discard(clientMessageComponents[2], currentPlayer);
 			break;
 		case "ASSASSINATE":
-			server.model.assassinate(clientMessageComponents[2]);
+			server.model.assassinate(clientMessageComponents[2], currentPlayer);
 			break;
 		case "GETSTATE":
 			String stateString = server.model.getState().toString();
