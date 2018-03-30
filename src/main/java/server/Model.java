@@ -209,7 +209,9 @@ public class Model {
 		logger.debug("party() called");
 
 		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
+		logger.info(hand);
 		AdventureCard c = hand.getByID(iD);
+		logger.info(c);
 
 		if ((((AdventureCard) c).getSubType().equals(AdventureCard.AMOUR))
 				&& containsAmour(players[currentPlayer].getParty())) {

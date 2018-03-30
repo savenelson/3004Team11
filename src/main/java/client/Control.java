@@ -134,7 +134,7 @@ public class Control{
    private void processServerMessage (String serverMessage) {
         String[] serverMessageComponents = serverMessage.split("--");   // array containing the components of the server message
         switch (serverMessageComponents[1]) {
-	        case "BROADCAST":
+	        case "UPDATE":
 	        	 if (serverMessageComponents[2] == Integer.toString(playerNumber)) {
 	        		 getServerMessage();
 	        	 }
@@ -169,7 +169,7 @@ public class Control{
     }
 
 	public void mainLoop(){
-		logger.info("mainLoop() running");
+		logger.debug("mainLoop() running");
 
 		boolean win = false;
 		while(!win){
@@ -187,7 +187,7 @@ public class Control{
 	}
 	
 	public void stageIncrement(){
-		logger.info("stageIncrement() called");
+		logger.debug("stageIncrement() called");
 
 		
 		model.stage.nextStage();
@@ -203,12 +203,12 @@ public class Control{
 	}
 
 	public boolean getSponsorDecision(){
-		logger.info("getSponsorDecision() called");
+		logger.debug("getSponsorDecision() called");
 
 		return view.popup("Player " + (getActivePlayer().getPlayerNumber()+1) + " - Would you like to sponsor this quest?");
 	}
 	public boolean getQuestingDecision(){
-		logger.info("getQuesting() called");
+		logger.debug("getQuesting() called");
 
 		return view.popup("Player " + (getActivePlayer().getPlayerNumber()+1) + " - Would you like to quest quest?");
 	}
@@ -281,7 +281,7 @@ public class Control{
 	}
 
 	public void nextStory(){
-		logger.info("nextStory() called");
+		logger.debug("nextStory() called");
 
 		model.nextStory();
 	}
@@ -330,7 +330,7 @@ public class Control{
 	}
 
 	public void nextPlayer() {
-		logger.info("next playr");
+		logger.debug("next player");
 		
 		model.currentState.nextPlayer();
 		//view.nextPlayer();
@@ -344,7 +344,7 @@ public class Control{
 
 	public void nextStage() {
 		this.stageOver();
-		logger.info("Hello this is the model stage in the control "+ model.isDoneQuestingMode);
+		logger.debug("Hello this is the model stage in the control "+ model.isDoneQuestingMode);
 		if (model.isDoneQuestingMode) {
 			view.resolveQuest(); 
 
