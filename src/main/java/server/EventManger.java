@@ -8,8 +8,8 @@ public class EventManger implements StoryCardState{
 private static final Logger logger = LogManager.getLogger(EventManger.class);
 Player [] players;
 int numPlayers;
-AdventureDeck adventureDeck;
-AdventureDeck adventureDeckDiscard;
+CardCollection<AdventureCard> adventureDeck;
+CardCollection<AdventureCard> adventureDeckDiscard;
 boolean nextQ;
 int currentPlayer;
 Model model; 
@@ -300,19 +300,8 @@ public void handle() {
 }
 
 
-public Player nextPlayer1() {
-	// TODO Auto-generated method stub
-	return null;
-}
 
-@Override
-public void nextPlayer() {
-	// TODO Auto-generated method stub		
-			
-	model.nextPlayer();
-	model.nextStory();
-	
-}
+
 
 
 @Override
@@ -332,11 +321,7 @@ public void nextPlayer() {
 }
 
 
-@Override
-public void setPlayer() {
-	// TODO Auto-generated method stub
-	
-}
+
 
 
 }
