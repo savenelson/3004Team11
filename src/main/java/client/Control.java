@@ -72,7 +72,7 @@ public class Control{
 		sendClientMessage("CLIENTMESSAGE--HELLO");
 		
 //		FIXME: WHEN YOU UNCOMMENT THIS, YOU WONT GET THE VIEW TO SHOW, but you'll get and send messages.
-//		getServerMessage();  //this will start the readline, and wait for server messages to come in
+		getServerMessage();  //this will start the readline, and wait for server messages to come in
 	}
 	
     /**
@@ -120,8 +120,7 @@ public class Control{
      *
      * @param serverMessage Message received from server
      */
-
-    private void processServerMessage (String serverMessage) {
+   private void processServerMessage (String serverMessage) {
         String[] serverMessageComponents = serverMessage.split("--");   // array containing the components of the server message
         switch (serverMessageComponents[1]) {
             case "WELCOME":
@@ -134,6 +133,7 @@ public class Control{
                 getServerMessage();
                 break;
             case "GETSTATE":
+ 
 //            	model.state = Integer.parseInt(serverMessageComponents[2]);
 //            	logger.info("currentPlayer for client on port:" + socket.getPort() + ", currentPlayer: "+ model.currentPlayer);
 //                getServerMessage();

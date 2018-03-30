@@ -24,6 +24,9 @@ public class ServerThread extends Thread {
 			String clientMessage, outputLine;
 			out.println("SERVERMESSAGE--CURRENTPLAYER--" + currentPlayer);
 			out.println("SERVERMESSAGE--WELCOME");
+			out.println("SERVERMESSAGE--WELCOME");
+			out.println("SERVERMESSAGE--WELCOME");
+			out.println("SERVERMESSAGE--WELCOME");
 			while ((clientMessage = in.readLine()) != null) {
 				getClientMessage(clientMessage);
 			}
