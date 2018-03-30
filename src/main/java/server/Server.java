@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -68,24 +69,48 @@ public class Server {
 //		model.setScenario2();	//UNCOMMENT FOR SCEN 2
 
 //		model.setScenarioTest(); //UNCOMMENT FOR end game testing
-
-    		
+		
 		boolean listening = true;
+		
+		ArrayList<ServerThread> clientThreads = new ArrayList<>();
     		
         try (ServerSocket serverSocket = new ServerSocket(serverPort)){
         	
-        	while(listening) {
-        		for(int g = 0; g<maxPlayers; g++) {
-        			System.out.println("g count:" + g);
-            		new ServerThread(serverSocket.accept(), this, g).start();
-        		}
-        	}
+	    	while(listening) {
+	    		for(int g = 0; g<maxPlayers; g++) {
+	    			System.out.println("g count:" + g);
+	        		clientThreads.add(new ServerThread(serverSocket.accept(), this, g));
+	        		clientThreads.get(g).start();
+	    		}
+	    	}
+        	
+//            String inputLine, outputLine;
+//            
+//            // Initiate conversation with client
+//            KnockKnockProtocol kkp = new KnockKnockProtocol();
+//            outputLine = kkp.processInput(null);
+//            out.println(outputLine);
+        	
         } catch (IOException e) {
             System.err.println("Could not listen on port " + 4444);
             System.exit(-1);
         }
     }
     
+    
+    
+    /**
+     * broadcast to all for Yes/No (ie questing, tournaments, sponsoring)
+     * 									 	
+     * 
+     * @param serverMessage
+     */
+    public void sendServerMessage(String serverMessage) {
+
+//    	for() {
+//            Thread[i].out.println(serverMessage);
+//    	}
+    }
     
 //ORIGINAL LOOP FOR MORE THAN ONE PLAYER
 //    public void start() {

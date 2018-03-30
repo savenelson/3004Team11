@@ -35,6 +35,10 @@ public class ServerThread extends Thread {
 			e.printStackTrace();
 		}
 	}
+	
+    public void sendServerMessage(String serverMessage) {
+        out.println(serverMessage);
+    }
 
 	private void getClientMessage(String clientMessage) {
 		String[] clientMessageComponents = clientMessage.split("--"); // array containing the components of the server
@@ -44,10 +48,10 @@ public class ServerThread extends Thread {
 			System.out.println("Client has responded!!!");
 			break;
 		case "QUEUE":
-			server.model.queue(clientMessageComponents[2], currentPlayer);
+			server.model.queue(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
 			break;
 		case "PARTY":
-			server.model.party(clientMessageComponents[2], currentPlayer);
+			server.model.party(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
 			break;
 		case "DEQUEUE":
 			server.model.dequeue(clientMessageComponents[2], currentPlayer);

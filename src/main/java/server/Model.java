@@ -302,6 +302,7 @@ public class Model {
 					}
 				}
 			}
+			
 			// remove the ally
 			CardCollection<AdventureCard> party = players[playerHoldingAlly].getParty();
 			AdventureCard c = party.getByID(iD);
@@ -315,6 +316,10 @@ public class Model {
 
 			logger.info("Player " + currentPlayer + " assaniated Player " + playerHoldingAlly + "s ally "
 					+ c.getName());
+			
+			//SEND MESSAGE OF THIS CHANGE TO ALL OTHER THREADS
+			// server.sendServerMessage(SERVERMESSAGE-ID-CURRENTPLAYER);
+			
 		} else {
 			control.alert("You do not have Mordred in your hand!");
 		}

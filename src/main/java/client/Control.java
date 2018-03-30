@@ -70,15 +70,19 @@ public class Control{
         }
 		
 		sendClientMessage("CLIENTMESSAGE--HELLO");
-		
+
 //		FIXME: WHEN YOU UNCOMMENT THIS, YOU WONT GET THE VIEW TO SHOW, but you'll get and send messages.
 		getServerMessage();  //this will start the readline, and wait for server messages to come in
+
 	}
+
+
 	
     /**
      * Gets a message sent by the server.
      *
      * @return message sent by the server
+     * @throws IOException 
      */
 
     public String getServerMessage() {
@@ -91,12 +95,18 @@ public class Control{
         }
         while (serverMessage == null) {
             try {
-                serverMessage = in.readLine();
-                processServerMessage(serverMessage);
+            	if(in.ready()) {
+	                serverMessage = in.readLine();
+	                processServerMessage(serverMessage);
+            	}
+            	else {
+            		break;
+            	}
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+
         return serverMessage;
     }
 
@@ -112,6 +122,7 @@ public class Control{
 	
     public void start() {
         System.out.println("Starting Quests client\nServer address: " + serverAddress + "\nServer port: " + serverPort);
+
     }
 	
 
@@ -123,6 +134,11 @@ public class Control{
    private void processServerMessage (String serverMessage) {
         String[] serverMessageComponents = serverMessage.split("--");   // array containing the components of the server message
         switch (serverMessageComponents[1]) {
+	        case "BROADCAST":
+	        	 if (serverMessageComponents[2] == Integer.toString(playerNumber)) {
+	        		 getServerMessage();
+	        	 }
+	            break;
             case "WELCOME":
             	logger.info("welcome recieved!");
                 getServerMessage();
@@ -229,7 +245,7 @@ public class Control{
 		logger.debug("handClick() called");
 
 		if(clickType.equals(View.PARTY)){
-			sendClientMessage("CLIENTMESSAGE--PARTY--" + ID);
+			sendClientMessage("CLIENTMESSAGE--PARTY--" + ID + "--" + playerNumber);
 			model.party(ID);
 		} 
 		else if (clickType.equals(View.STAGE)) {
@@ -242,7 +258,7 @@ public class Control{
 		} 
 		else if (clickType.equals(View.QUEUE)) {
 			model.queue(ID);
-			sendClientMessage("CLIENTMESSAGE--QUEUE--" + ID);
+			sendClientMessage("CLIENTMESSAGE--QUEUE--" + ID + "--" + playerNumber);
 		} 
 		else if (clickType.equals(View.DEQUEUE)) {
 			sendClientMessage("CLIENTMESSAGE--DEQUEUE--" + ID);
@@ -305,8 +321,6 @@ public class Control{
 		logger.debug("stagesSet() called");
 
 		startStageCycle();
-
-		
 	}
 	
 	public void alert(String message){
@@ -316,33 +330,28 @@ public class Control{
 	}
 
 	public void nextPlayer() {
-		
 		logger.info("next playr");
 		
 		model.currentState.nextPlayer();
 		//view.nextPlayer();
 	}
 
-
 	public View getView() {
 		logger.debug("getView() called");
 
 		return view;
 	}
-	
+
 	public void nextStage() {
 		this.stageOver();
 		logger.info("Hello this is the model stage in the control "+ model.isDoneQuestingMode);
 		if (model.isDoneQuestingMode) {
 			view.resolveQuest(); 
-			
+
 		}else {
 			//move to the next stage
 			this.stageIncrement();
 			nextPlayer();
 		}
-		
-		
 	}
-	
 }
