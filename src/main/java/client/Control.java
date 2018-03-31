@@ -37,6 +37,7 @@ public class Control{
 		this.view = view;
 		this.model = new Model(this);
 		
+		
 		model.instantiateStages(); 
 		
 		model.instantiatePlayers(numPlayers);
@@ -134,6 +135,10 @@ public class Control{
      * Message Convention: SERVERMESSAGE--CALL--CALLARGS
      */
    private void processServerMessage (String serverMessage) {
+	  // playerNumber = model.getActivePlayer().getPlayerNumber();
+	   playerNumber = model.getActivePlayer().getPlayerNumber();
+	  
+	   System.out.println("processing the player number " + playerNumber);
         String[] serverMessageComponents = serverMessage.split("--");   // array containing the components of the server message
         switch (serverMessageComponents[1]) {
 	        case "UPDATE":
