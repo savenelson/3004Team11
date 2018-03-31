@@ -1028,7 +1028,6 @@ public class View extends Application {
 		}
 	}
 	
-	
 	private int totalNumOfBP(final CardCollection<AdventureCard> stage) {
 		logger.debug("totalNumOfBP() called");
 		

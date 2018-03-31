@@ -74,7 +74,6 @@ public class Server {
 		boolean listening = true;
     		
         try (ServerSocket serverSocket = new ServerSocket(serverPort)){
-        	
 	    	while(listening) {
 	    		for(int g = 0; g<maxPlayers; g++) {
 	    			System.out.println("g count:" + g);
@@ -89,7 +88,10 @@ public class Server {
     }
     
     public void sendServerMessage(String serverMessage) {
+    	logger.info(serverMessage);
     	for(ServerThread thread : clientThreads) {
+    		logger.info(thread);
+    		logger.info("Current threads playernumber: " + thread.currentPlayer);
     		thread.out.println(serverMessage);
     	}
     }

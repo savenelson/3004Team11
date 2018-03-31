@@ -143,29 +143,28 @@ public class Control{
 	        		 /**
 	        		  * convention of UPDATE case: "SERVERMESSAGE--UPDATE--CURRENTPLAYER--QUEUE--ID"
 	        		  */
-	        		 //
 	        		 switch (serverMessageComponents[3]) {
 	        		 case "QUEUE":
-	        				model.queue(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
+	        				model.queue(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
 	        				break;
 	        			case "PARTY":
-	        				model.party(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
+	        				model.party(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
 	        				break;
 	        			case "DEQUEUE":
-	        				model.dequeue(clientMessageComponents[2], currentPlayer);
+	        				model.dequeue(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
 	        				break;
 	        			case "UNSTAGE":
-	        				model.unstage(clientMessageComponents[2], currentPlayer);
+	        				model.unstage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
 	        				break;
 	        			case "DISCARD":
-	        				model.discard(clientMessageComponents[2], currentPlayer);
+	        				model.discard(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
 	        				break;
 	        			case "ASSASSINATE":
-	        				server.model.assassinate(clientMessageComponents[2], currentPlayer);
+	        				model.assassinate(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
 	        				break;
-
-	        		 
-	        		 
+	        			default:
+	        				logger.info("Couldnt parse message from SERVERMESSAGE--UPDATE-- ?!?!?!");
+	        				break;
 	        		 }
 	        	 }
 	            break;
@@ -276,31 +275,31 @@ public class Control{
 
 		if(clickType.equals(View.PARTY)){
 			sendClientMessage("CLIENTMESSAGE--PARTY--" + ID + "--" + playerNumber);
-			model.party(ID);
+			model.party(ID,playerNumber);
 		} 
 		else if (clickType.equals(View.STAGE)) {
 			sendClientMessage("CLIENTMESSAGE--STAGE--" + ID);
-			model.stage(ID);
+			model.stage(ID,playerNumber);
 		} 		
 		else if (clickType.equals(View.UNSTAGE)) {
 			sendClientMessage("CLIENTMESSAGE--UNSTAGE--" + ID);
-			model.unstage(ID);
+			model.unstage(ID,playerNumber);
 		} 
 		else if (clickType.equals(View.QUEUE)) {
-			model.queue(ID);
+			model.queue(ID,playerNumber);
 			sendClientMessage("CLIENTMESSAGE--QUEUE--" + ID + "--" + playerNumber);
 		} 
 		else if (clickType.equals(View.DEQUEUE)) {
 			sendClientMessage("CLIENTMESSAGE--DEQUEUE--" + ID);
-			model.dequeue(ID);
+			model.dequeue(ID,playerNumber);
 		}
 		else if(clickType.equals(View.DISCARD)){
 			sendClientMessage("CLIENTMESSAGE--DISCARD--" + ID);
-			model.discard(ID);
+			model.discard(ID,playerNumber);
 		}
 		else if(clickType.equals(View.ASSASSINATE)){
 			sendClientMessage("CLIENTMESSAGE--ASSASSINATE--" + ID);
-			model.assassinate(ID);
+			model.assassinate(ID,playerNumber);
 		}
 	}
 	

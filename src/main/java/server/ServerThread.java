@@ -6,9 +6,9 @@ import java.io.*;
 public class ServerThread extends Thread {
 	private Socket socket = null;
 	private Server server;
-	PrintWriter out;
-	BufferedReader in;
-	private int currentPlayer;
+	public PrintWriter out;
+	public BufferedReader in;
+	public int currentPlayer;
 
 	public ServerThread(Socket socket, Server server, int currentPlayer) {
 		super("Server");

@@ -10,6 +10,7 @@ import client.AdventureDeck;
 import client.CardCollection;
 import client.StoryCard;
 import client.WeaponCard;
+import client.Player;
 
 public class Model {
 
@@ -100,6 +101,11 @@ public class Model {
 		// currentSponsor = 0; //nelson commented while solving view problems
 
 		this.currentStage = stage.getCurrentStage();
+	}
+	
+	public Player getActivePlayer() {
+
+		return players[this.currentPlayer];
 	}
 
 	public void instantiatePlayers(int numPlayers) {

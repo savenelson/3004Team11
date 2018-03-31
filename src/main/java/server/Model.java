@@ -66,10 +66,10 @@ public class Model {
 	int numStages;
 
 	ArrayList<CardCollection<AdventureCard>> stages;
+
 	ArrayList<CardCollection<AdventureCard>> getStages() {
 		return stages;
 	}
-	
 	// CardCollection [] stages;
 
 	QuestingStage stage;
@@ -128,7 +128,9 @@ public class Model {
 		logger.debug("initialShuffle() called");
 
 		this.adventureDeck.shuffle();
+
 		this.storyDeck.shuffle();
+
 	}
 
 	public void deal() {
@@ -190,7 +192,7 @@ public class Model {
 
 		state.currentStage = this.stage.getCurrentStage();
 
-		state.stages = this.stages.getStage();
+		state.stages = this.stage.getStage();
 
 		state.numPlayers = this.numPlayers;
 
@@ -257,8 +259,7 @@ public class Model {
 	}
 
 	public Player getActivePlayer() {
-		logger.debug("THIS SHOULD NOT BE CALLEDDDDD -!!@!@!@!@ getActivePlayer() called");
-		
+
 		return this.players[this.currentPlayer];
 	}
 
@@ -335,6 +336,7 @@ public class Model {
 		hand.remove(c);
 		players[currentPlayer].addToQueue(c);
 		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from hand to queue");
+		logger.info("SERVERMESSAGE--UPDATE--" + currentPlayer + "--QUEUE--" + id);
 		server.sendServerMessage("SERVERMESSAGE--UPDATE--" + currentPlayer + "--QUEUE--" + id);
 	}
 
