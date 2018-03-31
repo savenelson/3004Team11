@@ -130,6 +130,8 @@ public class Control{
      * Changes the client view based on which message was received from the server.
      *
      * @param serverMessage Message received from server
+     * 
+     * Message Convention: SERVERMESSAGE--CALL--CALLARGS
      */
    private void processServerMessage (String serverMessage) {
         String[] serverMessageComponents = serverMessage.split("--");   // array containing the components of the server message
@@ -137,13 +139,41 @@ public class Control{
 	        case "UPDATE":
 	        	 if (serverMessageComponents[2] == Integer.toString(playerNumber)) {
 	        		 getServerMessage();
+	        	 } else {
+	        		 /**
+	        		  * convention of UPDATE case: "SERVERMESSAGE--UPDATE--CURRENTPLAYER--QUEUE--ID"
+	        		  */
+	        		 //
+	        		 switch (serverMessageComponents[3]) {
+	        		 case "QUEUE":
+	        				model.queue(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
+	        				break;
+	        			case "PARTY":
+	        				model.party(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
+	        				break;
+	        			case "DEQUEUE":
+	        				model.dequeue(clientMessageComponents[2], currentPlayer);
+	        				break;
+	        			case "UNSTAGE":
+	        				model.unstage(clientMessageComponents[2], currentPlayer);
+	        				break;
+	        			case "DISCARD":
+	        				model.discard(clientMessageComponents[2], currentPlayer);
+	        				break;
+	        			case "ASSASSINATE":
+	        				server.model.assassinate(clientMessageComponents[2], currentPlayer);
+	        				break;
+
+	        		 
+	        		 
+	        		 }
 	        	 }
 	            break;
             case "WELCOME":
             	logger.info("welcome recieved!");
                 getServerMessage();
                 break;
-            case "CURRENTPLAYER":
+            case "SETTHREADPLAYER":
             	model.currentPlayer = Integer.parseInt(serverMessageComponents[2]);
             	logger.info("currentPlayer for client on port:" + socket.getPort() + ", currentPlayer: "+ model.currentPlayer);
                 getServerMessage();

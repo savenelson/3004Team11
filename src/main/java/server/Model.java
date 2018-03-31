@@ -1,8 +1,11 @@
 package server;
 
+import java.util.ArrayList;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import client.QuestingStage;
 import server.AdventureCard;
 import server.AdventureDeck;
 import server.CardCollection;
@@ -12,7 +15,7 @@ public class Model {
 
 	private static final Logger logger = LogManager.getLogger(Model.class);
 
-	public Server control;
+	public Server server;
 	State state;
 
 	private Player[] players;
@@ -62,11 +65,11 @@ public class Model {
 	int numPlayers;
 	int numStages;
 
-	CardCollection<AdventureCard>[] stages;
-
-	CardCollection<AdventureCard>[] getStages() {
+	ArrayList<CardCollection<AdventureCard>> stages;
+	ArrayList<CardCollection<AdventureCard>> getStages() {
 		return stages;
 	}
+	
 	// CardCollection [] stages;
 
 	QuestingStage stage;
@@ -81,7 +84,7 @@ public class Model {
 
 		logger.info("Model created");
 
-		this.control = server;
+		this.server = server;
 
 		questManger = new QuestManager(this);
 		eventManger = new EventManger(this);
@@ -117,22 +120,15 @@ public class Model {
 	public void instantiateStages() {
 		logger.debug("instantiateStages() called - hard coded to 5");
 
-		stages = new CardCollection[5];
-
-		for (int i = 0; i < 5; ++i) {
-			stages[i] = new CardCollection<AdventureCard>();
-		}
-
 		stage = new QuestingStage();
 	}
+
 
 	public void initialShuffle() {
 		logger.debug("initialShuffle() called");
 
 		this.adventureDeck.shuffle();
-
 		this.storyDeck.shuffle();
-
 	}
 
 	public void deal() {
@@ -178,7 +174,7 @@ public class Model {
 
 		state.currentPlayer = this.currentPlayer;
 
-		state.isQuesting = this.getActivePlayer().isQuesting;
+		state.isQuesting = this.players[currentPlayer].isQuesting;
 
 		state.currentSponsor = this.currentSponsor;
 
@@ -194,7 +190,7 @@ public class Model {
 
 		state.currentStage = this.stage.getCurrentStage();
 
-		state.stages = this.stage.getStage();
+		state.stages = this.stages.getStage();
 
 		state.numPlayers = this.numPlayers;
 
@@ -215,7 +211,7 @@ public class Model {
 
 		if ((((AdventureCard) c).getSubType().equals(AdventureCard.AMOUR))
 				&& containsAmour(players[currentPlayer].getParty())) {
-			control.alert("Cannot have more than one amour in party.");
+			server.alert("Cannot have more than one amour in party.");
 			return;
 		}
 
@@ -232,11 +228,11 @@ public class Model {
 		AdventureCard c = hand.getByID(iD);
 		if ((((AdventureCard) c).getSubType().equals(AdventureCard.FOE))
 				&& containsFoe(stage.getStageAt(currentStage))) {
-			control.alert("Cannot stage more than one foe per quest stage.");
+			server.alert("Cannot stage more than one foe per quest stage.");
 			return;
 		}
 		if (containsWeapon(this.stage.getStageAt(currentStage), c.getImgName())) {
-			control.alert("Cannot stage duplicate weapons.");
+			server.alert("Cannot stage duplicate weapons.");
 			return;
 		}
 		hand.remove(c);
@@ -261,21 +257,18 @@ public class Model {
 	}
 
 	public Player getActivePlayer() {
-		logger.debug("getActivePlayer() called");
+		logger.debug("THIS SHOULD NOT BE CALLEDDDDD -!!@!@!@!@ getActivePlayer() called");
 		
 		return this.players[this.currentPlayer];
 	}
 
 	public void discard(String iD, int currentPlayer) {
 		logger.debug("discard() called");
-
 		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(iD);
-
 		hand.remove(c);
 		adventureDeckDiscard.add(c);
 		logger.info("Player " + currentPlayer + " discarded " + c.getName());
-
 	}
 
 	public void assassinate(String iD, int currentPlayer) {
@@ -323,7 +316,7 @@ public class Model {
 			// server.sendServerMessage(SERVERMESSAGE-ID-CURRENTPLAYER);
 			
 		} else {
-			control.alert("You do not have Mordred in your hand!");
+			server.alert("You do not have Mordred in your hand!");
 		}
 	}
 
@@ -336,14 +329,13 @@ public class Model {
 		AdventureCard c = hand.getByID(id);
 
 		if (containsSameWeapon(players[currentPlayer].getQueue(), ((WeaponCard) c).getName())) {
-			control.alert("Cannot have duplicate weapons in queue.");
+			server.alert("Cannot have duplicate weapons in queue.");
 			return;
 		}
-
 		hand.remove(c);
-		getActivePlayer().addToQueue(c);
+		players[currentPlayer].addToQueue(c);
 		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from hand to queue");
-
+		server.sendServerMessage("SERVERMESSAGE--UPDATE--" + currentPlayer + "--QUEUE--" + id);
 	}
 
 	public boolean containsSameWeapon(CardCollection<AdventureCard> collection, String cardName) {
@@ -374,7 +366,7 @@ public class Model {
 		this.currentStage = num;
 		this.stage.setCurrentStage(num);
 
-		control.updateViewState();
+		server.updateViewState();
 	}
 
 	public void endTurn() {
@@ -401,7 +393,7 @@ public class Model {
 		}
 
 		state.stage = this.stage.getStageAt(currentStage);
-		control.updateViewState();
+		server.updateViewState();
 	}
 
 	public boolean containsFoe(CardCollection<AdventureCard> collection) {
@@ -448,8 +440,8 @@ public class Model {
 		logger.debug("getSubType() called");
 		String result = "";
 
-		if (((AdventureCard) getActivePlayer().getHand().getByID(ID)) != null) {
-			result = ((AdventureCard) getActivePlayer().getHand().getByID(ID)).getSubType();
+		if (((AdventureCard) players[currentPlayer].getHand().getByID(ID)) != null) {
+			result = ((AdventureCard) players[currentPlayer].getHand().getByID(ID)).getSubType();
 		}
 		return result;
 	}
@@ -498,14 +490,14 @@ public class Model {
 		}
 		logger.info("Player changed to " + this.currentPlayer);
 
-		control.update();
+		server.update();
 	}
 
 	public void setNextPlayer(int nextplayer) {
 
 		currentPlayer = nextplayer;
 
-		control.update();
+		server.update();
 
 	}
 
@@ -544,7 +536,7 @@ public class Model {
 		this.currentStage = 0;
 		stage.resetCurrentStage();
 
-		control.updateViewState();
+		server.updateViewState();
 		playGame();
 		currentState.handle();
 	}

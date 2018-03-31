@@ -22,7 +22,7 @@ public class ServerThread extends Thread {
 		try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));) {
 			String clientMessage, outputLine;
-			out.println("SERVERMESSAGE--CURRENTPLAYER--" + currentPlayer);
+			out.println("SERVERMESSAGE--SETTHREADPLAYER--" + currentPlayer);
 			out.println("SERVERMESSAGE--WELCOME");
 			while ((clientMessage = in.readLine()) != null) {
 				getClientMessage(clientMessage);
@@ -32,10 +32,6 @@ public class ServerThread extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
-    public void sendServerMessage(String serverMessage) {
-        out.println(serverMessage);
-    }
 
 	private void getClientMessage(String clientMessage) {
 		String[] clientMessageComponents = clientMessage.split("--"); // array containing the components of the server

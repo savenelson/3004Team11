@@ -20,6 +20,7 @@ public class Server {
     private static final int maxPlayers = 4;							// max players for table
     private int serverPort;                                             // server port
     private int playersPerTable = 4;                                        // number of players per table
+	ArrayList<ServerThread> clientThreads = new ArrayList<>();
     public Model model;
     
     /**
@@ -71,8 +72,6 @@ public class Server {
 //		model.setScenarioTest(); //UNCOMMENT FOR end game testing
 		
 		boolean listening = true;
-		
-		ArrayList<ServerThread> clientThreads = new ArrayList<>();
     		
         try (ServerSocket serverSocket = new ServerSocket(serverPort)){
         	
@@ -83,72 +82,18 @@ public class Server {
 	        		clientThreads.get(g).start();
 	    		}
 	    	}
-        	
-//            String inputLine, outputLine;
-//            
-//            // Initiate conversation with client
-//            KnockKnockProtocol kkp = new KnockKnockProtocol();
-//            outputLine = kkp.processInput(null);
-//            out.println(outputLine);
-        	
         } catch (IOException e) {
             System.err.println("Could not listen on port " + 4444);
             System.exit(-1);
         }
     }
     
-    
-    
-    /**
-     * broadcast to all for Yes/No (ie questing, tournaments, sponsoring)
-     * 									 	
-     * 
-     * @param serverMessage
-     */
     public void sendServerMessage(String serverMessage) {
-
-//    	for() {
-//            Thread[i].out.println(serverMessage);
-//    	}
+    	for(ServerThread thread : clientThreads) {
+    		thread.out.println(serverMessage);
+    	}
     }
     
-//ORIGINAL LOOP FOR MORE THAN ONE PLAYER
-//    public void start() {
-//        System.out.println("Starting Quests server\nServer port: " + serverPort + "\nPlayers per table: " + playersPerTable);
-//        ServerSocket serverSocket = null;
-//        try {
-//            System.out.println("Creating server socket");
-//            serverSocket = new ServerSocket(serverPort);
-//        } catch (IOException e) {
-//            System.err.println("Could not start Quests server on port " + serverPort);
-//            System.exit(1);
-//        }
-//        try {
-//            System.out.println("Listening on port " + serverPort);
-//            while (true) {
-//                Table newTable = new Table();
-//                Thread newTableThread = new Thread(newTable);
-//                for (int i = 0; i < playersPerTable; i++) {
-//                    Socket socket = serverSocket.accept();
-//                    System.out.println("Received request from port " + socket.getPort());
-//                    ServerPlayer newPlayer = new ServerPlayer(socket, newTable);
-//                    newTable.addPlayer(newPlayer);
-//                    Thread newPlayerThread = new Thread(newPlayer);
-//                    newPlayerThread.start();
-//                }
-//                newTableThread.start();
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-    /**
-     * Main method of the server that creates objects and executes other methods.
-     *
-     * @param args String array of arguments passed to the server
-     */
-
     public static void main(String[] args) {
         int serverPort = DEFAULT_PORT;
         int playersPerTable = DEFAULT_PLAYERS_PER_TABLE;

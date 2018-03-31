@@ -27,7 +27,6 @@ public class QuestingStage {
 		logger.info("resetCurrentStage() called");
 		
 		this.currentStage = 0;
-
 	}
 	
 	public void setCurrentStage(int num) {
