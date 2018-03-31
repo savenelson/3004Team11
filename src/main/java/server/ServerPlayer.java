@@ -10,6 +10,14 @@ import java.util.concurrent.CountDownLatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Player objects represent a player in Quest Of the royal knights.
+ *
+ * @author 3004 Team 
+ */
+
+
+
 public class ServerPlayer implements Runnable {
 	private static final Logger logger = LogManager.getLogger(ServerPlayer.class);
 
@@ -89,6 +97,11 @@ public class ServerPlayer implements Runnable {
      * Plays Quests.
      */
 
+    
+    /**
+     * The model will assigning their player Number by model 
+     */
+    public void setPlayerNumber(int playerNumber) {this.playerNumber = playerNumber;}
     private void playQuests() {
         setupPlayer();
 //        try {
@@ -170,12 +183,11 @@ public class ServerPlayer implements Runnable {
 	}
 	
 	public void addShields(int num) {
-		num= num/2; //TODO this is so wrong
+	
 		logger.info(this.playerNumber + " gains " + num + " shields");
 		this.shieldCount += num;
 		promote();
-		promote(); //added to catch rigging scenarios
-		promote(); //added to catch rigging scenarios
+		
 	}
 	public void removeShields(int num) {
 		logger.info(this.playerNumber + " loses " + num + " shields");

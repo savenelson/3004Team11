@@ -37,6 +37,7 @@ public class Control{
 		this.view = view;
 		this.model = new Model(this);
 		
+		
 		model.instantiateStages(); 
 		
 		model.instantiatePlayers(numPlayers);
@@ -131,7 +132,14 @@ public class Control{
      * 						SERVERMESSAGE--UPDATE--0--QUEUE--1
      */
    private void processServerMessage (String serverMessage) {
+
 	   logger.info("Message Recieved:" + serverMessage);
+
+	  
+	   playerNumber = model.getActivePlayer().getPlayerNumber();
+	  
+	   System.out.println("processing the player number " + playerNumber);
+
         String[] serverMessageComponents = serverMessage.split("--");   // array containing the components of the server message
         switch (serverMessageComponents[1]) {
 	        case "UPDATE":
