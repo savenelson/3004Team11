@@ -15,7 +15,6 @@ public abstract class AdventureCard extends Card{
 	
 	AdventureCard(String subType) {
 		super(ADVENTURE);
-		
 		this.subType = subType;
 	}
 	

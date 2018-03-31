@@ -1,27 +1,24 @@
 package client;
 
+import java.util.ArrayList;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class QuestingStage {
 	private static final Logger logger = LogManager.getLogger(QuestingStage.class);
 	
-	CardCollection [] stages;
+	ArrayList<CardCollection<AdventureCard>> stages;
 	boolean stageResolved = false;
 	boolean toggleForStages = false;
 	int stagePlaceHolder = 0;
 	static int stageOverCount = 0;
 	int currentStage = 0;
-	
-	
-	
+
+	@SuppressWarnings("unchecked")
 	public QuestingStage() {
-	stages = new CardCollection[5];
 		
-		for(int i = 0; i < 5; ++i){
-			stages[i] = new CardCollection();
-		}
-		
+		stages = new ArrayList<CardCollection<AdventureCard>>();
 		currentStage = 0;
 	}
 	
@@ -30,7 +27,6 @@ public class QuestingStage {
 		logger.info("resetCurrentStage() called");
 		
 		this.currentStage = 0;
-
 	}
 	
 	public void setCurrentStage(int num) {
@@ -40,16 +36,18 @@ public class QuestingStage {
 		
 	}
 	
-	public CardCollection getStageAt(int stageNum) {
-		
-		
-		return stages[stageNum];
-		
-		
-		
+	public CardCollection<AdventureCard> getStageAt(int stageNum) {
+		logger.debug("getStageAt(int stageNum = " + stageNum + ")");
+		if(stages.isEmpty()) {
+			logger.debug("Error: stages is null");
+			return null;
+		} else {
+			System.out.println("stageNum: " + stageNum);
+			return stages.get(stageNum);
+		}
 	}
 	
-	public CardCollection[] getStage() {
+	public ArrayList<CardCollection<AdventureCard>> getStage() {
 		return stages;
 	}
 	

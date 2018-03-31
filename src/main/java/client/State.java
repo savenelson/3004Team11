@@ -1,5 +1,7 @@
 package client;
 
+import java.util.ArrayList;
+
 public class State {
 	
 	public Player [] players;	
@@ -8,7 +10,7 @@ public class State {
 	
 	public int currentPlayer;
 
-	public CardCollection stage;
+	public CardCollection<AdventureCard> stage;
 	
 	public int currentViewer;
 	
@@ -24,9 +26,7 @@ public class State {
 	
 	public boolean currentPlayerNotSponsoring;
 	
-	public CardCollection [] stages;
-	
-
+	public ArrayList<CardCollection<AdventureCard>> stages;
 	
 	public boolean stageResolved;
 	

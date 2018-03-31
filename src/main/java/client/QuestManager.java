@@ -228,7 +228,7 @@ public class QuestManager implements StoryCardState{
 		}
 		return true;
 	}
-	private int totalNumOfBP(CardCollection stage) {
+	private int totalNumOfBP(CardCollection<AdventureCard> stage) {
 		logger.debug("totalNumOfBP() called");
 		
 		int numberOfBP =  0;
@@ -263,7 +263,7 @@ public class QuestManager implements StoryCardState{
 			}		    		
     		for (int i = 0; i < numStages; ++i){
     			for (int j = 0; j < model.stage.getStageAt(i).size(); ++j){
-    				if(((AdventureCard) model.stage.getStageAt(i).get(j)).subType.equals(AdventureCard.FOE)){
+    				if(( model.stage.getStageAt(i).get(j)).subType.equals(AdventureCard.FOE)){
     					foesPresent[i] = true;
     					break;
     				}
@@ -465,7 +465,7 @@ public class QuestManager implements StoryCardState{
 		logger.info("resolveStage() called");
 
 		
-		CardCollection currStage = model.stage.getStageAt(model.stage.getCurrentStage());
+		CardCollection<AdventureCard> currStage = model.stage.getStageAt(model.stage.getCurrentStage());
 		
 		int stageBP = 0;
 

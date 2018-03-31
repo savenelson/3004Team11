@@ -121,6 +121,7 @@ public class View extends Application {
 	private ImageView imgView;
 	
 	private Stage stage;
+	
 	private Pane canvas;
 	private TilePane tile;
 	
@@ -243,7 +244,7 @@ public class View extends Application {
 	private void addHandToCanvas(Pane canvas) {
 		logger.debug("addHandToCanvas() called");
 
-		CardCollection hand = null;
+		CardCollection<AdventureCard> hand = null;
 		hand = state.players[state.currentPlayer].getHand();
 		tile = new TilePane();
 		tile.setPrefRows(2);
@@ -277,7 +278,7 @@ public class View extends Application {
 		logger.debug("addStageToCanvas() called");
 
 		state = control.getState();
-		CardCollection stage = state.stage;
+		CardCollection<AdventureCard> stage = state.stage;
 		if(state.players[state.currentPlayer].isSponsor){
 			tile = new TilePane();
 			tile.setPrefRows(1);
@@ -309,7 +310,7 @@ public class View extends Application {
 			
 			
 			state = control.getState();		
-			stage = state.stages[state.stageOverCount];
+//			stage = state.stages;
 			Label queueCardsLabel;
 			Label stageLabel;
 			if(stage.size() > 1)
@@ -404,7 +405,7 @@ public class View extends Application {
 	private void addQueueToCanvas(Pane canvas) {
 		logger.debug("addQueueToCanvas() called");
 
-		CardCollection queue = control.getActivePlayer().getQueue();
+		CardCollection<AdventureCard> queue = control.getActivePlayer().getQueue();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -516,7 +517,7 @@ public class View extends Application {
 	private void addPlayerAPartyToCanvas(Pane canvas) {
 		logger.debug("addPlayerAPartyToCanvas() called");
 
-		CardCollection party = state.players[0].getParty();
+		CardCollection<AdventureCard> party = state.players[0].getParty();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -552,7 +553,7 @@ public class View extends Application {
 	private void addPlayerBPartyToCanvas(Pane canvas) {
 		logger.debug("addPlayerBPartyToCanvas() called");
 
-		CardCollection party = state.players[1].getParty();
+		CardCollection<AdventureCard> party = state.players[1].getParty();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -588,7 +589,7 @@ public class View extends Application {
 	private void addPlayerCPartyToCanvas(Pane canvas) {
 		logger.debug("addPlayerCPartyToCanvas() called");
 
-		CardCollection party = state.players[2].getParty();
+		CardCollection<AdventureCard> party = state.players[2].getParty();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -624,7 +625,7 @@ public class View extends Application {
 	private void addPlayerDPartyToCanvas(Pane canvas) {
 		logger.debug("addPlayerDPartyToCanvas() called");
 
-		CardCollection party = state.players[3].getParty();
+		CardCollection<AdventureCard> party = state.players[3].getParty();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -1018,8 +1019,7 @@ public class View extends Application {
 		    }
 		});
 
-	if((state.players[state.currentPlayer].isSponsor&& ((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST))){
-			
+	if((state.players[state.currentPlayer].isSponsor && ((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST))){
 				int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
 				for(int i = 4; i!=numStages-1; i--) {stageButtons[i].setDisable(true);} 
 				canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
@@ -1028,18 +1028,17 @@ public class View extends Application {
 		}
 	}
 	
-	
-	private int totalNumOfBP(CardCollection stage) {
+	private int totalNumOfBP(final CardCollection<AdventureCard> stage) {
 		logger.debug("totalNumOfBP() called");
 		
 		int numberOfBP =  0;
 
 		for(int i=0; i<stage.size(); i++) {
-		  if (((AdventureCard) stage.get(i)).getSubType().equals("Foe")) {
+		  if (( stage.get(i)).getSubType().equals("Foe")) {
 		    numberOfBP+=((FoeCard) stage.get(i)).getBattlePoints();
 		  
 		    
-		  }else if (((AdventureCard) stage.get(i)).getSubType().equals("Weapon")) {
+		  }else if ((stage.get(i)).getSubType().equals("Weapon")) {
 		    
 		    numberOfBP+=((WeaponCard) stage.get(i)).getBattlePoints();
 		  }
