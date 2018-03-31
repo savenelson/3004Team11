@@ -335,7 +335,7 @@ public class Model {
 		}
 		hand.remove(c);
 		players[currentPlayer].addToQueue(c);
-		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from hand to queue");
+		logger.info("Player " + currentPlayer + " moved " + c.getName() + " from hand to queue");
 	}
 
 	public boolean containsSameWeapon(CardCollection<AdventureCard> collection, String cardName) {
