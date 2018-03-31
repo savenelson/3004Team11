@@ -72,20 +72,16 @@ public class Control{
 		
 		sendClientMessage("CLIENTMESSAGE--HELLO");
 
-//		FIXME: WHEN YOU UNCOMMENT THIS, YOU WONT GET THE VIEW TO SHOW, but you'll get and send messages.
-		getServerMessage();  //this will start the readline, and wait for server messages to come in
+		getServerMessage(); 
 
 	}
 
-
-	
     /**
      * Gets a message sent by the server.
      *
      * @return message sent by the server
      * @throws IOException 
      */
-
     public String getServerMessage() {
     	logger.info("getServerMessage() called");
         String serverMessage = null;
@@ -132,22 +128,29 @@ public class Control{
      *
      * @param serverMessage Message received from server
      * 
-     * Message Convention: SERVERMESSAGE--CALL--CALLARGS
+     * Message Convention:	SERVERMESSAGE--CALL--CALLARGS
+     * 						SERVERMESSAGE--UPDATE--0--QUEUE--1
      */
    private void processServerMessage (String serverMessage) {
-	  // playerNumber = model.getActivePlayer().getPlayerNumber();
+
+	   logger.info("Message Recieved:" + serverMessage);
+
+	  
 	   playerNumber = model.getActivePlayer().getPlayerNumber();
 	  
 	   System.out.println("processing the player number " + playerNumber);
+
         String[] serverMessageComponents = serverMessage.split("--");   // array containing the components of the server message
         switch (serverMessageComponents[1]) {
 	        case "UPDATE":
-	        	 if (serverMessageComponents[2] == Integer.toString(playerNumber)) {
+	        	 if (serverMessageComponents[2].equals(Integer.toString(this.playerNumber))) {
+	        		 logger.info("Message was instigated by this client and not processed");
 	        		 getServerMessage();
 	        	 } else {
 	        		 /**
 	        		  * convention of UPDATE case: "SERVERMESSAGE--UPDATE--CURRENTPLAYER--QUEUE--ID"
 	        		  */
+	        		 logger.info("Message was instigated by another client, and will update this model");
 	        		 switch (serverMessageComponents[3]) {
 	        		 case "QUEUE":
 	        				model.queue(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
@@ -177,8 +180,13 @@ public class Control{
             	logger.info("welcome recieved!");
                 getServerMessage();
                 break;
+            case "TEST":
+            	logger.info("TESTGOOD!!!!");
+                getServerMessage();
+                break;
             case "SETTHREADPLAYER":
             	model.currentPlayer = Integer.parseInt(serverMessageComponents[2]);
+            	playerNumber = Integer.parseInt(serverMessageComponents[2]);
             	logger.info("currentPlayer for client on port:" + socket.getPort() + ", currentPlayer: "+ model.currentPlayer);
                 getServerMessage();
                 break;
@@ -283,11 +291,11 @@ public class Control{
 			model.party(ID,playerNumber);
 		} 
 		else if (clickType.equals(View.STAGE)) {
-			sendClientMessage("CLIENTMESSAGE--STAGE--" + ID);
+			sendClientMessage("CLIENTMESSAGE--STAGE--" + ID + "--" + playerNumber);
 			model.stage(ID,playerNumber);
 		} 		
 		else if (clickType.equals(View.UNSTAGE)) {
-			sendClientMessage("CLIENTMESSAGE--UNSTAGE--" + ID);
+			sendClientMessage("CLIENTMESSAGE--UNSTAGE--" + ID + "--" + playerNumber);
 			model.unstage(ID,playerNumber);
 		} 
 		else if (clickType.equals(View.QUEUE)) {
@@ -295,15 +303,15 @@ public class Control{
 			sendClientMessage("CLIENTMESSAGE--QUEUE--" + ID + "--" + playerNumber);
 		} 
 		else if (clickType.equals(View.DEQUEUE)) {
-			sendClientMessage("CLIENTMESSAGE--DEQUEUE--" + ID);
+			sendClientMessage("CLIENTMESSAGE--DEQUEUE--" + ID + "--" + playerNumber);
 			model.dequeue(ID,playerNumber);
 		}
 		else if(clickType.equals(View.DISCARD)){
-			sendClientMessage("CLIENTMESSAGE--DISCARD--" + ID);
+			sendClientMessage("CLIENTMESSAGE--DISCARD--" + ID + "--" + playerNumber);
 			model.discard(ID,playerNumber);
 		}
 		else if(clickType.equals(View.ASSASSINATE)){
-			sendClientMessage("CLIENTMESSAGE--ASSASSINATE--" + ID);
+			sendClientMessage("CLIENTMESSAGE--ASSASSINATE--" + ID + "--" + playerNumber);
 			model.assassinate(ID,playerNumber);
 		}
 	}

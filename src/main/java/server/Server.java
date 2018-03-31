@@ -90,7 +90,6 @@ public class Server {
     public void sendServerMessage(String serverMessage) {
     	logger.info(serverMessage);
     	for(ServerThread thread : clientThreads) {
-    		logger.info(thread);
     		logger.info("Current threads playernumber: " + thread.currentPlayer);
     		thread.out.println(serverMessage);
     	}
