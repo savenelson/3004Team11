@@ -207,7 +207,7 @@ public class Model {
 
 		hand.remove(c);
 		players[currentPlayer].addToParty(c);
-		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from hand to party");
+		logger.info("Player " + currentPlayer + " moved " + c.getName() + " from hand to party");
 	}
 
 	public void stage(String iD, int currentPlayer) {
@@ -228,7 +228,7 @@ public class Model {
 
 		// Change To add to my new Stages
 		this.stage.getStageAt(currentStage).add(c);
-		logger.info("Player " + this.currentPlayer + " moves " + c.getName() + " from hand to Stage " + currentStage);
+		logger.info("Player " + currentPlayer + " moves " + c.getName() + " from hand to Stage " + currentStage);
 	}
 
 	public void unstage(String iD, int currentPlayer) {
@@ -241,7 +241,7 @@ public class Model {
 
 		this.players[this.currentPlayer].getHand().add(c);
 
-		logger.info("Player " + this.currentPlayer + " moves " + c.getName() + " from Stage back to Hand");
+		logger.info("Player " + currentPlayer + " moves " + c.getName() + " from Stage back to Hand");
 	}
 
 	public void discard(String iD, int currentPlayer) {
