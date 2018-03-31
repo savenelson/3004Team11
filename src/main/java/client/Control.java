@@ -24,6 +24,7 @@ public class Control{
     private PrintWriter out;											// out from server
     private int playerNumber;											//everyclienthas a unique playernum
 	private int numPlayers = 4; 
+    String serverMessage = null;
 	Model model;
 	View view;
 	
@@ -35,7 +36,8 @@ public class Control{
         this.serverAddress = serverAddress;
         this.serverPort = serverPort;
 		this.view = view;
-		this.model = new Model(this);
+        
+        this.model = new Model(this);
 		
 		model.instantiateStages(); 
 		
@@ -68,11 +70,10 @@ public class Control{
         } catch (IOException e) {
             e.printStackTrace();
         }
-		
+
 		sendClientMessage("CLIENTMESSAGE--HELLO");
 
 		getServerMessage(); 
-
 	}
 
     /**
@@ -81,29 +82,29 @@ public class Control{
      * @return message sent by the server
      * @throws IOException 
      */
-    public String getServerMessage() {
+    public void getServerMessage() {
     	logger.info("getServerMessage() called");
-        String serverMessage = null;
+        serverMessage = null;
         try {
             Thread.sleep(MESSAGE_WAIT_TIME);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        while (serverMessage == null) {
-            try {
-            	if(in.ready()) {
-	                serverMessage = in.readLine();
-	                processServerMessage(serverMessage);
-            	}
-            	else {
-            		break;
-            	}
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return serverMessage;
+		final Thread thread = new Thread(
+		        new Runnable(){
+		            public void run(){
+		                while(serverMessage == null){
+			                try {
+								serverMessage = in.readLine();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+			                processServerMessage(serverMessage);
+		                }
+		            }
+		        }
+		);
+		thread.start();
     }
 
     /**
