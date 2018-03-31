@@ -336,8 +336,6 @@ public class Model {
 		hand.remove(c);
 		players[currentPlayer].addToQueue(c);
 		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from hand to queue");
-		logger.info("SERVERMESSAGE--UPDATE--" + currentPlayer + "--QUEUE--" + id);
-		server.sendServerMessage("SERVERMESSAGE--UPDATE--" + currentPlayer + "--QUEUE--" + id);
 	}
 
 	public boolean containsSameWeapon(CardCollection<AdventureCard> collection, String cardName) {
@@ -457,9 +455,7 @@ public class Model {
 
 	private void playEvent() {
 		logger.debug("playEvent() called");
-
 		currentState = eventManger;
-
 	}
 
 	public void playGame() {
