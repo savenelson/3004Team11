@@ -33,9 +33,7 @@ public class Control {
 	public Control(View view, String serverAddress, int serverPort) {
 		logger.info("Control created");
 
-		this.serverAddress = serverAddress;
-		this.serverPort = serverPort;
-		this.view = view;
+		
 
 		this.model = new Model(this);
 
@@ -54,6 +52,9 @@ public class Control {
 		// model.setScenarioTest();
 
 		// model.eventTesting();
+		this.serverAddress = serverAddress;
+		this.serverPort = serverPort;
+		this.view = view;
 
 		try {
 			socket = new Socket(serverAddress, serverPort);

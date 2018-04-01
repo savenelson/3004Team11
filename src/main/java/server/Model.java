@@ -229,7 +229,7 @@ public class Model {
 
 		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(iD);
-		if ((((AdventureCard) c).getSubType().equals(AdventureCard.FOE))
+		if ( c.getSubType().equals(AdventureCard.FOE)
 				&& containsFoe(stage.getStageAt(currentStage))) {
 			server.alert("Cannot stage more than one foe per quest stage.");
 			return;
@@ -249,7 +249,7 @@ public class Model {
 	public void unstage(String iD, int currentPlayer) {
 		logger.debug("unstage() called");
 
-		server.AdventureCard c = stage.getStageAt(currentStage).getByID(iD);
+		client.AdventureCard c = stage.getStageAt(currentStage).getByID(iD);
 
 		stage.getStageAt(currentStage).remove(iD);
 
@@ -397,11 +397,11 @@ public class Model {
 		server.updateViewState();
 	}
 
-	public boolean containsFoe(CardCollection<AdventureCard> collection) {
+	public boolean containsFoe(client.CardCollection<client.AdventureCard> cardCollection) {
 		logger.debug("containsFoe() called");
 
-		for (int i = 0; i < collection.size(); i++) {
-			if (collection.get(i).getSubType().equals(AdventureCard.FOE)) {
+		for (int i = 0; i < cardCollection.size(); i++) {
+			if (cardCollection.get(i).getSubType().equals(AdventureCard.FOE)) {
 				// TODO need to ALERT the View
 
 				return true;

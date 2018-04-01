@@ -57,7 +57,6 @@ public class QuestManager implements StoryCardState{
 	
 	private int  numOfQuesterPotential;
 	
-
 	private int numOfQuester = 0;
 	
 	private int numOfRepsonders = 0 ;
@@ -551,7 +550,7 @@ public class QuestManager implements StoryCardState{
 			questers.clear(); 
 			numOfQuesterPotential = 0;
 			
-			isReadyToStage = false;
+			
 			numOfQuester = 0;
 			numOfRepsonders = 0 ;
 			nextPersonToDraw= 0;

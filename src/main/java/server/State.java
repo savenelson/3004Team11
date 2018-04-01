@@ -12,7 +12,7 @@ public class State {
 	public int currentPlayer;
 
 
-	public CardCollection<AdventureCard> stage;
+	public CardCollection<AdventureCard>stage;
 
 	
 	public int currentViewer;

@@ -435,7 +435,7 @@ public class QuestManager implements StoryCardState{
 				logger.info("Sponsor is getting "+ numberOfCardsToReturn);
 				for(int j = 0 ; j< numberOfCardsToReturn; j ++) {
 	
-					//players[i].addToHand(new WeaponCard(WeaponCard.SWORD_NAME, WeaponCard.SWORD_BATTLE_POINTS));
+					
 					players[j].addToHand(model.getAdventureDeck().pop());
 				}
 			}
@@ -446,7 +446,7 @@ public class QuestManager implements StoryCardState{
 				if(players[i].passedQuest) {
 					players[i].addShields(numShields);
 					for(int j=0;j<numStages;j++) {
-						Card c = model.getAdventureDeck().pop();
+						AdventureCard c = model.getAdventureDeck().pop();
 						this.players[i].addToHand(c);
 						model.getAdventureDeckDiscard().add(c);
 					}
