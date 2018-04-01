@@ -1,12 +1,15 @@
 package core;
 
+
 import org.apache.logging.log4j.LogManager;
+import java.util.*;
 import org.apache.logging.log4j.Logger;
 
 public class QuestingStage {
 	private static final Logger logger = LogManager.getLogger(QuestingStage.class);
 	
-	CardCollection [] stages;
+	
+	ArrayList<CardCollection<AdventureCard>>  stages;
 	boolean stageResolved = false;
 	boolean toggleForStages = false;
 	int stagePlaceHolder = 0;
@@ -16,11 +19,14 @@ public class QuestingStage {
 	
 	
 	public QuestingStage() {
-	stages = new CardCollection[5];
 		
-		for(int i = 0; i < 5; ++i){
-			stages[i] = new CardCollection();
-		}
+	stages = new ArrayList<CardCollection<AdventureCard>> ();
+	
+	for (int i = 0; i < 5; i++) {
+		stages.add(new CardCollection<AdventureCard>());
+		
+	} 
+		
 		
 		currentStage = 0;
 	}
@@ -40,16 +46,16 @@ public class QuestingStage {
 		
 	}
 	
-	public CardCollection getStageAt(int stageNum) {
+	public CardCollection<AdventureCard> getStageAt(int stageNum) {
 		
 		
-		return stages[stageNum];
+		return stages.get(stageNum);
 		
 		
 		
 	}
 	
-	public CardCollection[] getStage() {
+	public ArrayList<CardCollection<AdventureCard>>  getStage() {
 		return stages;
 	}
 	

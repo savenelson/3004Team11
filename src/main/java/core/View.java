@@ -260,7 +260,7 @@ public class View extends Application {
 	private void addHandToCanvas(Pane canvas) {
 		logger.debug("addHandToCanvas() called");
 
-		CardCollection hand = null;
+		CardCollection<AdventureCard>hand = null;
 		
 		
 		hand = state.players[state.currentPlayer].getHand();
@@ -299,7 +299,7 @@ public class View extends Application {
 		logger.debug("addStageToCanvas() called");
 
 		state = control.getState();
-		CardCollection stage = state.stage;
+		CardCollection<AdventureCard>stage = state.stage;
 
 		if(state.players[state.currentPlayer].isSponsor){
 			
@@ -337,7 +337,7 @@ public class View extends Application {
 						
 			
 			
-			stage = state.stages[state.stageOverCount];
+			//stage = state.stages[state.stageOverCount];
 
 			Label queueCardsLabel;
 			Label stageLabel;
@@ -438,7 +438,7 @@ public class View extends Application {
 	private void addQueueToCanvas(Pane canvas) {
 		logger.debug("addQueueToCanvas() called");
 
-		CardCollection queue = control.getActivePlayer().getQueue();
+		CardCollection<AdventureCard>queue = control.getActivePlayer().getQueue();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -550,7 +550,7 @@ public class View extends Application {
 	private void addPlayerAPartyToCanvas(Pane canvas) {
 		logger.debug("addPlayerAPartyToCanvas() called");
 
-		CardCollection party = state.players[0].getParty();
+		CardCollection<AdventureCard>party = state.players[0].getParty();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -586,7 +586,7 @@ public class View extends Application {
 	private void addPlayerBPartyToCanvas(Pane canvas) {
 		logger.debug("addPlayerBPartyToCanvas() called");
 
-		CardCollection party = state.players[1].getParty();
+		CardCollection<AdventureCard>party = state.players[1].getParty();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -622,7 +622,7 @@ public class View extends Application {
 	private void addPlayerCPartyToCanvas(Pane canvas) {
 		logger.debug("addPlayerCPartyToCanvas() called");
 
-		CardCollection party = state.players[2].getParty();
+		CardCollection<AdventureCard>party = state.players[2].getParty();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -658,7 +658,7 @@ public class View extends Application {
 	private void addPlayerDPartyToCanvas(Pane canvas) {
 		logger.debug("addPlayerDPartyToCanvas() called");
 
-		CardCollection party = state.players[3].getParty();
+		CardCollection<AdventureCard>party = state.players[3].getParty();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -1083,7 +1083,7 @@ public class View extends Application {
 	}
 	
 	
-	private int totalNumOfBP(CardCollection stage) {
+	private int totalNumOfBP(CardCollection<AdventureCard>stage) {
 		logger.debug("totalNumOfBP() called");
 		
 		int numberOfBP =  0;
@@ -1103,88 +1103,8 @@ public class View extends Application {
 		return numberOfBP;
 		
 	}
-	private void normalEndTurn(){
-		logger.info("normalEndTurn() called");
-		
-		/*boolean isHarder = false;
-		boolean foeInEachStage = true;
-		boolean [] foesPresent = null;
-		if(((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST)) {
-			isHarder = stageHarder(state);
-		}
 
-		int numStages = 0;
-
-    	if(state.players[state.currentPlayer].isSponsor){
-    		numStages = ((QuestCard)state.currentStoryCard).getNumStages();
-    		foesPresent  = new boolean [numStages];
-    		for (int i = 0; i < numStages; ++i){
-    			foesPresent[i] = false;
-			}		    		
-    		for (int i = 0; i < numStages; ++i){
-    			for (int j = 0; j < state.stages[i].size(); ++j){
-    				if(((AdventureCard) state.stages[i].get(j)).subType.equals(AdventureCard.FOE)){
-    					foesPresent[i] = true;
-    					break;
-    				}
-    			}
-    		}
-    		for (int i = 0; i < numStages; ++i){
-    			if(foesPresent[i] == false){
-    				foeInEachStage = false;
-    			}
-			}
-    	}
-		if(state.players[state.currentPlayer].isSponsor && !foeInEachStage){	    			
-			alert("Foe not present in every stage.");
-			return;
-		} else if(state.players[state.currentPlayer].isSponsor && isHarder==false) {
-			alert("The stages are not progressively harder");
-			return;
-			
-		} else if(state.players[state.currentPlayer].isSponsor){	    			
-			control.stagesSet();
-			control.buttonClick(ENDTURN);
-		}else if (state.players[state.currentPlayer].declinedQuesting) {
-			control.buttonClick(ENDTURN);
-		}
-
-		
-
-		state = control.getState();
-    	if(state.stageResolved){
-    		stageResolved();
-    	} else {
-    			//control.buttonClick(ENDTURN);
-			update(stage);
-			
-			
-			Label playerLabel = new Label("Player " + (control.getActivePlayer().getPlayerNumber()+1) + " ready?");
-			playerLabel.setFont(new Font("Ariel", 30));
-			
-			Button readyButton = new Button("Ready");
-			readyButton.setFont(new Font("Ariel", 30));
-			
-			readyButton.setOnAction(new EventHandler<ActionEvent>() {
-				public void handle(ActionEvent event) {
-					logger.info("Ready clicked");
-
-					update(stage);
-				}
-			});
-			StackPane layout = new StackPane();
-			layout.getChildren().addAll(playerLabel, readyButton);
-			layout.setPrefHeight(720);
-			layout.setPrefWidth(1280);
-			
-			readyButton.setTranslateY(65);
-			playerLabel.setTranslateY(-45);			
-	
-			Scene scene = new Scene(layout);
-			scene.getStylesheets().add("style.css");
-			stage.setScene(scene);
-    	} */
-    }
+    
 	
 	public void stageResolved(){
 		logger.debug("stageResolved() called");

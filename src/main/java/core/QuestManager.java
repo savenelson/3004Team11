@@ -1,6 +1,9 @@
 package core;
 
+
+
 import java.util.*;
+import core.*;
 
 import javax.print.attribute.standard.NumberOfDocuments;
 
@@ -9,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.sun.jmx.remote.internal.ArrayQueue;
 
-import core.*;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
