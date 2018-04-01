@@ -169,7 +169,7 @@ public class ShowResoultionView extends Pane{
 	}
 	
 	private void addStageToCanvas(Pane canvas) {
-		CardCollection stage = state.stages[state.currentStage];
+		CardCollection<AdventureCard> stage = state.stages.get(state.currentStage);
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
