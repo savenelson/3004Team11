@@ -70,7 +70,7 @@ public class Model {
 	ArrayList<CardCollection<AdventureCard>> getStages() {
 		return stages;
 	}
-	// CardCollection [] stages;
+	
 
 	QuestingStage stage;
 	// CardCollection [] getStages() {return stages;}
@@ -249,7 +249,7 @@ public class Model {
 	public void unstage(String iD, int currentPlayer) {
 		logger.debug("unstage() called");
 
-		Card c = stage.getStageAt(currentStage).getByID(iD);
+		server.AdventureCard c = stage.getStageAt(currentStage).getByID(iD);
 
 		stage.getStageAt(currentStage).remove(iD);
 

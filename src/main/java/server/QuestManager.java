@@ -18,50 +18,78 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 
+
+/*
+ * The model will delegate the job to the Questmanger 
+ * 
+ *Has important Data structures:
+ * -  QuesterQueque to hold all the questers who embark on the adventure 
+ * -
+ * 
+ *
+ * The class Purpose is to handle all Questing events 
+ * Using the State Design Pattern 
+ * Implements the StoryCardState to share similar roles 
+ * 
+ * 
+ * 
+ * 
+ */
 public class QuestManager implements StoryCardState{
 	private static final Logger logger = LogManager.getLogger(QuestManager.class);
 	private static final String ENDTURN = "End turn";
 	Model  model;
 	Player[] players ; 
 	
-	boolean hasSponsor = false;
+	private boolean hasSponsor = false;
 	
-	boolean questersReady = false;
+	private boolean questersReady = false;
 	
-	int numOfansewers;
+	private int numOfansewers;
 	
 	private int numberOfCardsToReturn= 0;
 	
 	
-	int numberOfrequests = 0;
+	private int numberOfrequests = 0;
 	
 	
-	QuesterQueque questers ; 
+	private QuesterQueque questers ; 
 	
-	int numOfQuesterPotential;
+	private int  numOfQuesterPotential;
 	
-	boolean isReadyToStage = false;
-	int numOfQuester = 0;
+
+	private int numOfQuester = 0;
 	
-	int numOfRepsonders = 0 ;
-	
-	
-	int nextPersonToDraw= 0;
+	private int numOfRepsonders = 0 ;
 	
 	
+	private int nextPersonToDraw= 0;
+	
+	
+	
+	
+	/**
+	 * 
+	 * Constructor Takes a model 
+	 * gets its player and copies it 
+	 * make a new Questerquue 
+	 */
 	public QuestManager(Model model) {
 		this.model = model;
-		players = model.getPlayers();
-		
-		questers = new QuesterQueque();	
-		
+		this.players = model.getPlayers();
+		this.questers = new QuesterQueque();		
 		
 	}
 	
-	
+	/**
+	 * 
+	 * This will handle the Questing events 
+	 * 
+	 * 
+	 */
 	
 	public void handle() {
-		logger.info("Handling questing info");
+	
 		
 		numOfQuesterPotential = model.numPlayers -1;
 		
