@@ -219,6 +219,7 @@ public class Model {
 
 		hand.remove(c);
 		players[currentPlayer].addToParty(c);
+		
 		logger.info("Player " + currentPlayer + " moved " + c.getName() + " from hand to party");
 
 	}

@@ -17,7 +17,7 @@ public class QuestingStage {
 	
 	@SuppressWarnings("unchecked")
 	public QuestingStage() {
-		stages = new CardCollection[5];
+		stages = new CardCollection<AdventureCard>[5];
 		
 		for(int i = 0; i < 5; ++i){
 			stages[i] = new CardCollection<AdventureCard>();

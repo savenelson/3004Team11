@@ -8,7 +8,7 @@ public class State {
 	
 	public int currentPlayer;
 
-	public CardCollection stage;
+	public CardCollection<AdeventureCard> stage;
 	
 	public int currentViewer;
 	
