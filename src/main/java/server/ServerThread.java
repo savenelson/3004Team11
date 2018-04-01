@@ -1,9 +1,15 @@
 package server;
 
 import java.net.*;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.*;
 
+
 public class ServerThread extends Thread {
+	private static final Logger logger = LogManager.getLogger(ServerThread.class);
 	private Socket socket = null;
 	private Server server;
 	public PrintWriter out;
@@ -12,7 +18,7 @@ public class ServerThread extends Thread {
 
 	public ServerThread(Socket socket, Server server, int currentPlayer) {
 		super("Server");
-		System.out.println("ServerThread Created with socket:" + socket);
+		logger.info("ServerThread Created on " + socket);
 		this.socket = socket;
 		this.server = server;
 		this.currentPlayer = currentPlayer;
@@ -45,7 +51,7 @@ public class ServerThread extends Thread {
 																		// message
 		switch (clientMessageComponents[1]) {
 		case "HELLO":
-			System.out.println("Client has responded!!!");
+			logger.info("Client has responded!!!");
 			break;
 		case "QUEUE":
 			server.model.queue(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
@@ -68,7 +74,7 @@ public class ServerThread extends Thread {
 			break;
 		case "GETSTATE":
 			String stateString = server.model.getState().toString();
-			System.out.println(stateString);
+			logger.info(stateString);
 			out.println("SERVERMESSAGE--GETSTATE--" + stateString);
 			break;
 		default:

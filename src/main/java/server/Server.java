@@ -76,7 +76,6 @@ public class Server {
         try (ServerSocket serverSocket = new ServerSocket(serverPort)){
 	    	while(listening) {
 	    		for(int g = 0; g<maxPlayers; g++) {
-	    			System.out.println("g count:" + g);
 	        		clientThreads.add(new ServerThread(serverSocket.accept(), this, g));
 	        		clientThreads.get(g).start();
 	    		}
