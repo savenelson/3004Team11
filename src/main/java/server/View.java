@@ -338,19 +338,19 @@ public class View extends Application {
 						
 			
 			
-			//stage = state.stages[state.stageOverCount];
+			\
 
 			Label queueCardsLabel;
 			Label stageLabel;
 			if(stage.size() > 1)
-				stageLabel = new Label("Stage " + (state.stageOverCount+1) + ": " + stage.size() + " cards");
+				stageLabel = new Label("Stage " + (state.currentStage+1) + ": " + stage.size() + " cards");
 			else
-				stageLabel = new Label("Stage " + (state.stageOverCount+1) + ": " + stage.size() + " card");
+				stageLabel = new Label("Stage " + (state.currentStage+1) + ": " + stage.size() + " card");
 			
 			stageLabel.setFont(Font.font("Serif", FontWeight.BOLD, 60));
 			stageLabel.relocate(colStage + 100, rowStage + 20);
 			
-			queueCardsLabel = new Label("Queue your cards for Stage " + (state.stageOverCount+1) );
+			queueCardsLabel = new Label("Queue your cards for Stage " + (state.currentStage+1) );
 			queueCardsLabel.setFont(Font.font("Serif", FontWeight.BOLD, 32));
 			queueCardsLabel.relocate(colStage + 95, rowStage + 100);
 			
@@ -1053,23 +1053,8 @@ public class View extends Application {
 				
 		    }
 		});
-		/*
-		if((state.currentPlayer == state.currentSponsor) && (state.currentSponsor == state.currentPlayer)){
-			
-			if(((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST)){
-				
-				int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
-				for(int i = 4; i!=numStages-1; i--) {
-					stageButtons[i].setDisable(true);
-				}
-				canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
-			} else {
-				canvas.getChildren().add(endTurn);
-			}
-		}
-		else{
-			canvas.getChildren().add(endTurn);
-		}*/
+		
+		
 	if((state.players[state.currentPlayer].isSponsor&& ((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST))){
 			
 				int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
