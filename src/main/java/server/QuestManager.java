@@ -97,8 +97,11 @@ public class QuestManager implements StoryCardState{
 			
 		// if I haven't ask to sponsor yet then ask
 		if(!this.model.getActivePlayer().declinedToSponsor) {
-		boolean wantToSponsor= model.control.getSponsorDecision();
-		
+		boolean wantToSponsor;
+		model.server.getSponsorDecision();
+		}
+		}
+	/*	
 		if(numberOfrequests == 0 ) { nextPersonToDraw = model.getActivePlayer().getPlayerNumber() +1; 
 		if(nextPersonToDraw> model.getPlayers().length){nextPersonToDraw = 0;}
 		}
@@ -188,7 +191,7 @@ public class QuestManager implements StoryCardState{
 			}
 			
 			
-		}
+		}*/
 	}
 	
 		

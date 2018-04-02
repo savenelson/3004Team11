@@ -75,11 +75,11 @@ public class Server {
     		
         try (ServerSocket serverSocket = new ServerSocket(serverPort)){
 	    	while(listening) {
-	    		for(int g = 0; g<maxPlayers; g++) {
+	    		for(int g = 0; g<2; g++) {
 	        		clientThreads.add(new ServerThread(serverSocket.accept(), this, g));
 	        		clientThreads.get(g).start();
 	        		
-	        		if(clientThreads.size()== playersPerTable) {
+	        		if(clientThreads.size()==2) {
 	        			System.out.println("Beginning to Quest lets go model");
 	        			model.playGame();
 	        		}
@@ -129,11 +129,11 @@ public class Server {
     	
     	
     }
-    public boolean getSponsorDecision(){
+    public void getSponsorDecision(){
 		logger.info("getSponsorDecision() called");
 
-
-		sendServerMessageToOne("SERVERMESSAGE--UPDATE--"+model.getActivePlayer().getPlayerNumber()+"--HANDLE--CARDID", model.getActivePlayer().getPlayerNumber());
+		
+		sendServerMessageToOne("SERVERMESSAGE--GAMEHANDLE--"+model.getActivePlayer().getPlayerNumber()+"--GETSPONSOR", model.getActivePlayer().getPlayerNumber());
 	}
     
     

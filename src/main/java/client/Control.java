@@ -6,10 +6,13 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.net.ConnectException;
 import java.net.Socket;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import javafx.application.Platform;
 
 public class Control {
 
@@ -186,6 +189,44 @@ public class Control {
 					"Player: " + model.currentPlayer + " on port: " + socket.getPort());
 			getServerMessage();
 			break;
+			
+		case "GAMEHANDLE":
+			
+				/**
+				 * convention of UPDATE case: "SERVERMESSAGE--GAMEHANDLE--PlAYERID--GETSPONSOR"
+				 */
+				logger.info("Message was instigated by ME lient, and will update this model");
+				switch (serverMessageComponents[3]) {
+				case "GETSPONSOR":
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+						    model.control.getSponsorDecision();}
+					});
+					
+					break;
+				case "PARTY":
+					model.party(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					break;
+				case "DEQUEUE":
+					model.dequeue(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					break;
+				case "UNSTAGE":
+					model.unstage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					break;
+				case "DISCARD":
+					model.discard(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					break;
+				case "ASSASSINATE":
+					model.assassinate(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					break;
+				default:
+					logger.info("Couldnt parse message from SERVERMESSAGE--UPDATE-- ?!?!?!");
+					break;
+				}
+			
+	
+			
 		case "GETSTATE":
 
 			// model.state = Integer.parseInt(serverMessageComponents[2]);
@@ -198,6 +239,7 @@ public class Control {
 			break;
 		}
 	}
+
 
 	/**
 	 * Calls the model quitGame method.
