@@ -152,24 +152,31 @@ public class Control {
 				switch (serverMessageComponents[3]) {
 				case "QUEUE":
 					model.queue(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					getServerMessage();
 					break;
 				case "PARTY":
 					model.party(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					getServerMessage();
 					break;
 				case "DEQUEUE":
 					model.dequeue(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					getServerMessage();
 					break;
 				case "UNSTAGE":
 					model.unstage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					getServerMessage();
 					break;
 				case "DISCARD":
 					model.discard(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					getServerMessage();
 					break;
 				case "ASSASSINATE":
 					model.assassinate(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					getServerMessage();
 					break;
 				default:
 					logger.info("Couldnt parse message from SERVERMESSAGE--UPDATE-- ?!?!?!");
+					getServerMessage();
 					break;
 				}
 			}
