@@ -59,18 +59,23 @@ public class ServerThread extends Thread {
 			break;
 		case "PARTY":
 			server.model.party(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
+			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]);
 			break;
 		case "DEQUEUE":
 			server.model.dequeue(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
+			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]);
 			break;
 		case "UNSTAGE":
 			server.model.unstage(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
+			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]);
 			break;
 		case "DISCARD":
 			server.model.discard(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
+			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]);
 			break;
 		case "ASSASSINATE":
 			server.model.assassinate(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
+			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]);
 			break;
 		case "GETSTATE":
 			String stateString = server.model.getState().toString();

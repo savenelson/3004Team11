@@ -323,8 +323,6 @@ public class Model {
 
 	public void queue(String id, int currentPlayer) {
 		logger.debug("queue() called");
-		System.out.println("Current player, in queue called" + currentPlayer);
-
 		CardCollection<AdventureCard> hand = new CardCollection<AdventureCard>();
 		hand = players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(id);
