@@ -23,6 +23,8 @@ public class ServerThread extends Thread {
 		this.server = server;
 		this.currentPlayer = currentPlayer;
 	}
+	
+	public int getPlayerNumber() {return currentPlayer;}
 
 	public void run() {
 		try {

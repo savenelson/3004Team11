@@ -58,8 +58,6 @@ public class Model {
 	int endTurnCounter = 0;
 	boolean gameWon = false;
 
-	int stagePlaceHolder = 0;
-	static int stageOverCount = 0;
 
 	StoryCard currentStoryCard;
 
@@ -111,7 +109,8 @@ public class Model {
 	public void instantiatePlayers(int numPlayers) {
 		logger.debug("instantiatePlayers(" + numPlayers + ") called");
 		players = new Player[numPlayers];
-
+		
+		this.numPlayers = numPlayers;
 		for (int i = 0; i < numPlayers; ++i) {
 			players[i] = new Player(i);
 		}
@@ -161,7 +160,7 @@ public class Model {
 	public State getState() {
 		logger.debug("getState() called");
 
-		state.players = this.players;
+		this.state.players = this.players;
 
 		state.currentPlayer = this.currentPlayer;
 		logger.debug("state.currentPlayer: " + state.currentPlayer);
@@ -188,7 +187,7 @@ public class Model {
 
 		state.numStages = this.numStages;
 
-		state.stagePlaceHolder = this.stagePlaceHolder;
+		
 
 		return state;
 	}
@@ -199,7 +198,7 @@ public class Model {
 		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(iD);
 
-		if ((((AdventureCard) c).getSubType().equals(AdventureCard.AMOUR))
+		if ( c.getSubType().equals(AdventureCard.AMOUR)
 				&& containsAmour(players[currentPlayer].getParty())) {
 			control.alert("Cannot have more than one amour in party.");
 			return;

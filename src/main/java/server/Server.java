@@ -20,7 +20,7 @@ public class Server {
     private static final int maxPlayers = 4;							// max players for table
     private int serverPort;                                             // server port
     private int playersPerTable = 4;                                        // number of players per table
-	ArrayList<ServerThread> clientThreads = new ArrayList<>();
+	ArrayList<ServerThread> clientThreads = new ArrayList<ServerThread>();
     public Model model;
     
     /**
@@ -57,7 +57,7 @@ public class Server {
         
         System.out.println("Listening on port " + serverPort);
         	
-    	model = new Model(this);
+    		model = new Model(this);
 		model.instantiatePlayers(playersPerTable);
 		model.instantiateStages(); //TODO set properly
 		
@@ -75,9 +75,14 @@ public class Server {
     		
         try (ServerSocket serverSocket = new ServerSocket(serverPort)){
 	    	while(listening) {
-	    		for(int g = 0; g<maxPlayers; g++) {
+	    		for(int g = 0; g<2; g++) {
 	        		clientThreads.add(new ServerThread(serverSocket.accept(), this, g));
 	        		clientThreads.get(g).start();
+	        		
+	        		if(clientThreads.size()==2) {
+	        			System.out.println("Beginning to Quest lets go model");
+	        			model.playGame();
+	        		}
 	    		}
 	    	}
         } catch (IOException e) {
@@ -93,6 +98,44 @@ public class Server {
     		thread.out.println(serverMessage);
     	}
     }
+    
+    
+    
+    /**
+     * Used to send a message to a specific Client 
+     * 
+     * Like to ask one if a clients to sponsor 
+     * 
+     * 
+     * 
+     */
+    public void sendServerMessageToOne(String serverMessage, int playerNum) {
+    	for(ServerThread thread : clientThreads) {
+    		logger.info("Current threads playernumber: " + thread.currentPlayer);
+    		for(ServerThread thread1 : clientThreads) {
+    			logger.info("Current threads playernumber: " + thread1.currentPlayer);
+    			
+    			if(thread1.getPlayerNumber()== playerNum) {
+    				thread1.out.println(serverMessage);
+    				
+    			}
+        		
+    		}
+    			
+    		}
+        		
+    	
+    	
+    	
+    	
+    }
+    public void getSponsorDecision(){
+		logger.info("getSponsorDecision() called");
+
+		
+		sendServerMessageToOne("SERVERMESSAGE--GAMEHANDLE--"+model.getActivePlayer().getPlayerNumber()+"--GETSPONSOR", model.getActivePlayer().getPlayerNumber());
+	}
+    
     
     public static void main(String[] args) {
         int serverPort = DEFAULT_PORT;

@@ -192,7 +192,7 @@ public class View extends Application {
 	}
 	
 	public Pane drawCards(Pane canvas){
-		logger.debug("drawCards() called");
+		
 		
 		this.state = control.getState();
 		addControlsToCanvas(canvas);
@@ -203,6 +203,7 @@ public class View extends Application {
 		addPlayerAPartyToCanvas(canvas);
 		addPlayerBPartyToCanvas(canvas);
 		addShieldsBToCanvas(canvas);
+		logger.info(state.numPlayers+"yguyg uu ");
 				
 		if(state.numPlayers == 3){
 			addPlayerCRankToCanvas(canvas);
