@@ -99,8 +99,6 @@ public class Server {
     	}
     }
     
-    
-    
     /**
      * Used to send a message to a specific Client 
      * 

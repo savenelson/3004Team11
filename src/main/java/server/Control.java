@@ -19,7 +19,7 @@ public class Control{
 		
 		this.view = view;
 		gameInit(null);
-
+		
 		//TEST
 		model.CardsTest();
 		//END TEST
@@ -40,10 +40,8 @@ public class Control{
 		
 		if(numPlayers >= 2 && numPlayers <= 4)
 		{
-
 			model = new Model(this);
 			logger.info("passing numPlayers = " + numPlayers + " to model");
-			
 		} else {
 			logger.fatal("number of players ERROR");
 		}
