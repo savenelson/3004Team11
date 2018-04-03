@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import client.QuestingStage;
+import server.QuestingStage;
 import server.AdventureCard;
 import server.AdventureDeck;
 import server.CardCollection;
@@ -49,6 +49,17 @@ public class Model {
 	}
 
 	boolean inNextQ = false;
+	
+	boolean AllyInPlaySirGalahad =  false;
+	boolean AllyInPlaySirLancelot =  false;
+	boolean AllyInPlayKingArthur =  false;
+	boolean AllyInPlaySirTristan =  false;
+	boolean AllyInPlayKingPellinore =  false;
+	boolean AllyInPlaySirGawain =  false;
+	boolean AllyInPlaySirPercival =  false;
+	boolean AllyInPlayQueenGuinevere =  false;
+	boolean AllyInPlayQueenIseult =  false;
+	boolean AllyInPlayMerlin =  false;
 
 	int currentViewer;
 	int currentPlayer;
@@ -249,7 +260,7 @@ public class Model {
 	public void unstage(String iD, int currentPlayer) {
 		logger.debug("unstage() called");
 
-		client.AdventureCard c = stage.getStageAt(currentStage).getByID(iD);
+		AdventureCard c = stage.getStageAt(currentStage).getByID(iD);
 
 		stage.getStageAt(currentStage).remove(iD);
 
@@ -359,6 +370,113 @@ public class Model {
 		logger.info("Player " + currentPlayer + " moved " + c.getName() + " from queue to hand");
 	}
 
+	/**
+	 * This will go through all the allies in play, and update players
+	 * 
+	 * steps psuedo code:
+	 * get an ally that's in play
+	 * set boolean to T
+	 * apply bonuses to Player
+	 */
+	public void allysInPlay() {
+		logger.debug("allysInPlay() called");
+
+		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
+		AdventureCard c;
+
+		for (int i = 0; i < numPlayers; ++i) {
+			CardCollection<AdventureCard> party = players[i].getParty();
+			for (int j = 0; j < party.size(); j++) {
+				if (party.get(j).getID().equals("SirGalahad") && AllyInPlaySirGalahad == false) {
+					AllyInPlaySirGalahad = true;
+					logger.info("SirGalahad is in play and gives +15 Battle points to player " + i);
+					players[i].AllyBattlePoints += 15;
+				}
+				if (party.get(j).getID().equals("SirLancelot") && AllyInPlaySirLancelot == false) {
+					AllyInPlaySirLancelot = true;
+					if(currentStoryCard.name.equals("DefendTheQueensHonor")){
+						logger.info("SirLancelot is in play and on quest Queens honor so, gives +25 Battle points to player " + i);
+						players[i].AllyBattlePoints += 25;
+					} else {
+						logger.info("SirLancelot is in play and gives +25 Battle points to player " + i);
+						players[i].AllyBattlePoints += 15;
+					}
+				}
+				if (party.get(j).getID().equals("KingArthur") && AllyInPlayKingArthur == false) {
+					AllyInPlayKingArthur = true;
+
+					logger.info("KingArthur is in play and gives +10 Battle Points, and +2 bids to player " + i);
+					players[i].AllyBattlePoints += 10;
+					players[i].AllyBidBonus +=2;
+				}
+				if (party.get(j).getID().equals("SirTristan") && AllyInPlaySirTristan == false) {
+					AllyInPlaySirTristan = true;
+					
+					if(AllyInPlayQueenIseult) {
+						logger.info("SirTristan and Queen Iseult are in play and gives +20 Battle Points to player " + i);
+						players[i].AllyBattlePoints += 20;
+					} else {
+						logger.info("SirTristan is in play and gives +10 Battle Points to player " + i);
+						players[i].AllyBattlePoints += 10;
+					}
+				}
+				if (party.get(j).getID().equals("KingPellinore") && AllyInPlayKingPellinore == false) {
+					AllyInPlayKingPellinore = true;
+
+					if(currentStoryCard.name.equals("SearchForTheQuestingBeast")) {
+						logger.info("KingPellinore is in play on Questing Beast and gives +10 Battle Points, +4 Bids to player " + i);
+						players[i].AllyBattlePoints += 10;
+						players[i].AllyBidBonus +=4;
+					} else {
+						logger.info("KingPellinore is in play and gives +10 Battle Points to player " + i);
+						players[i].AllyBattlePoints += 10;
+					}
+				}
+				if (party.get(j).getID().equals("SirGawain") && AllyInPlaySirGawain == false) {
+					AllyInPlaySirGawain = true;
+
+					if(currentStoryCard.name.equals("TestOfTheGreenKnight")) {
+						logger.info("SirGawain is in play and on TestOfTheGreenKnight and gives +20 Battle Points to player " + i);
+						players[i].AllyBattlePoints += 20;
+					} else {
+						logger.info("SirGawain is in play and gives +10 Battle Points to player " + i);
+						players[i].AllyBattlePoints += 10;
+					}
+				}
+				if (party.get(j).getID().equals("SirPercival") && AllyInPlaySirPercival == false) {
+					AllyInPlaySirPercival = true;
+
+					if(currentStoryCard.name.equals("TestOfTheGreenKnight")) {
+						logger.info("SirGawain is in play and on SearchForTheHolyGrail and gives +20 Battle Points to player " + i);
+						players[i].AllyBattlePoints += 20;
+					} else {
+						logger.info("SirGawain is in play and gives +5 Battle Points to player " + i);
+						players[i].AllyBattlePoints += 5;
+					}
+				}
+				if (party.get(j).getID().equals("QueenGuinevere") && AllyInPlayQueenGuinevere == false) {
+					AllyInPlayQueenGuinevere = true;
+					logger.info("QueenGuinevere is in play and gives +3 Bids to player " + i);
+					players[i].AllyBidBonus += 3;
+				}
+				if (party.get(j).getID().equals("QueenIseult") && AllyInPlayQueenIseult == false) {
+					AllyInPlayQueenIseult = true;
+					if(AllyInPlaySirTristan) {
+						logger.info("AllyInPlayQueenIseult is in play and SirTristan is in play and gives 4 Bids to player " + i);
+						players[i].AllyBidBonus += 4;
+					} else {
+					logger.info("AllyInPlayQueenIseult is in play and gives 2 Bids to player " + i);
+					players[i].AllyBidBonus += 2;
+					}
+				}
+				if (party.get(j).getID().equals("Merlin") && AllyInPlayMerlin == false) {
+					AllyInPlayMerlin = true;
+					logger.info("Merlin is in play and gives magical powers to player " + i);
+				}
+			}
+		}
+	}
+	
 	public void setCurrentStage(int num) {
 		logger.debug("setCurrentStage(" + num + ") called");
 
@@ -395,7 +513,7 @@ public class Model {
 		server.updateViewState();
 	}
 
-	public boolean containsFoe(client.CardCollection<client.AdventureCard> cardCollection) {
+	public boolean containsFoe(CardCollection<AdventureCard> cardCollection) {
 		logger.debug("containsFoe() called");
 
 		for (int i = 0; i < cardCollection.size(); i++) {

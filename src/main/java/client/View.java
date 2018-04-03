@@ -203,7 +203,6 @@ public class View extends Application {
 		addPlayerAPartyToCanvas(canvas);
 		addPlayerBPartyToCanvas(canvas);
 		addShieldsBToCanvas(canvas);
-		logger.info(state.numPlayers+"yguyg uu ");
 				
 		if(state.numPlayers == 3){
 			addPlayerCRankToCanvas(canvas);

@@ -47,6 +47,9 @@ public class Player {
 		this.shieldCount = this.shieldCount - num;
 	}
 	
+	public int AllyBattlePoints = 0;
+	
+	public int AllyBidBonus = 0;
 	public Player(int playerNumber){
 		
 		

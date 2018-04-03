@@ -193,7 +193,7 @@ public class Control {
 			model.currentPlayer = Integer.parseInt(serverMessageComponents[2]);
 			playerNumber = Integer.parseInt(serverMessageComponents[2]);
 			logger.info(
-					"Player: " + model.currentPlayer + " on port: " + socket.getPort());
+					"Player: " + model.currentPlayer + " on ip: " + socket.getInetAddress() + " on port: " + socket.getPort());
 			getServerMessage();
 			break;
 			
