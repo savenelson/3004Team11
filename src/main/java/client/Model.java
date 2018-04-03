@@ -5,16 +5,13 @@ import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import client.AdventureCard;
-import client.AdventureDeck;
-import client.CardCollection;
-import client.StoryCard;
+import core.*;
 
 public class Model {
 
 	private static final Logger logger = LogManager.getLogger(Model.class);
 
-	public Control control;
+	public Client control;
 	State state;
 
 	private Player[] players;
@@ -56,8 +53,16 @@ public class Model {
 	int endTurnCounter = 0;
 	boolean gameWon = false;
 
-	int stagePlaceHolder = 0;
-	static int stageOverCount = 0;
+	boolean AllyInPlaySirGalahad =  false;
+	boolean AllyInPlaySirLancelot =  false;
+	boolean AllyInPlayKingArthur =  false;
+	boolean AllyInPlaySirTristan =  false;
+	boolean AllyInPlayKingPellinore =  false;
+	boolean AllyInPlaySirGawain =  false;
+	boolean AllyInPlaySirPercival =  false;
+	boolean AllyInPlayQueenGuinevere =  false;
+	boolean AllyInPlayQueenIseult =  false;
+	boolean AllyInPlayMerlin =  false;
 
 	StoryCard currentStoryCard;
 
@@ -69,26 +74,25 @@ public class Model {
 	ArrayList<CardCollection<AdventureCard>> getStages() {
 		return stages;
 	}
-	// CardCollection [] stages;
 
 	QuestingStage stage;
-	// CardCollection [] getStages() {return stages;}
 
 	StoryCardState questManger;
 	StoryCardState eventManger;
 	StoryCardState currentState;
 	boolean isDoneQuestingMode = false;
 
-	Model(Control control) {
+	Model(Client control) {
 
 		logger.info("Model created");
 
 		this.control = control;
+		this.state = new State();
+		
+		this.questManger = new QuestManager(this);
+		this.eventManger = new EventManger(this);
 
-		questManger = new QuestManager(this);
-		eventManger = new EventManger(this);
-
-		stage = new QuestingStage();
+		this.stage = new QuestingStage();
 
 		this.adventureDeck = new AdventureDeck();
 		this.storyDeck = new StoryDeck();
@@ -96,18 +100,22 @@ public class Model {
 		this.adventureDeckDiscard = new CardCollection<AdventureCard>();
 		this.storyDeckDiscard = new CardCollection<StoryCard>();
 
-		state = new State();
-
 		// currentPlayer = 0;
 		// currentSponsor = 0; //nelson commented while solving view problems
 
-		currentStage = stage.getCurrentStage();
+		this.currentStage = stage.getCurrentStage();
+	}
+	
+	public Player getActivePlayer() {
+
+		return players[this.currentPlayer];
 	}
 
 	public void instantiatePlayers(int numPlayers) {
 		logger.debug("instantiatePlayers(" + numPlayers + ") called");
 		players = new Player[numPlayers];
-
+		
+		this.numPlayers = numPlayers;
 		for (int i = 0; i < numPlayers; ++i) {
 			players[i] = new Player(i);
 		}
@@ -116,7 +124,6 @@ public class Model {
 	public void instantiateStages() {
 		logger.debug("instantiateStages() called - hard coded to 5");
 
-		
 		stage = new QuestingStage();
 	}
 
@@ -158,12 +165,12 @@ public class Model {
 	public State getState() {
 		logger.debug("getState() called");
 
-		state.players = this.players;
+		this.state.players = this.players;
 
 		state.currentPlayer = this.currentPlayer;
 		logger.debug("state.currentPlayer: " + state.currentPlayer);
 
-		// state.isQuesting = this.getActivePlayer().isQuesting;
+		state.isQuesting = this.players[currentPlayer].isQuesting;
 
 		state.currentSponsor = this.currentSponsor;
 
@@ -173,7 +180,7 @@ public class Model {
 
 		state.currentViewer = this.currentViewer;
 
-		if (stage.getStageAt(currentStage) != null) {
+		if (stage.getStageAt(stage.getCurrentStage()) != null) {
 			state.stage = this.stage.getStageAt(stage.getCurrentStage());
 		}
 
@@ -185,29 +192,29 @@ public class Model {
 
 		state.numStages = this.numStages;
 
-		state.stagePlaceHolder = this.stagePlaceHolder;
+		
 
 		return state;
 	}
 
-	public void party(String iD) {
+	public void party(String iD, int currentPlayer) {
 		logger.debug("party() called");
 
-		CardCollection<AdventureCard> hand = getActivePlayer().getHand();
+		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(iD);
 
-		if ((((AdventureCard) c).getSubType().equals(AdventureCard.AMOUR))
-				&& containsAmour(getActivePlayer().getParty())) {
+		if ( c.getSubType().equals(AdventureCard.AMOUR)
+				&& containsAmour(players[currentPlayer].getParty())) {
 			control.alert("Cannot have more than one amour in party.");
 			return;
 		}
 
 		hand.remove(c);
-		getActivePlayer().addToParty(c);
-		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from hand to party");
+		players[currentPlayer].addToParty(c);
+		logger.info("Player " + currentPlayer + " moved " + c.getName() + " from hand to party");
 	}
 
-	public void stage(String iD) {
+	public void stage(String iD, int currentPlayer) {
 		logger.debug("stage() called");
 
 		CardCollection<AdventureCard> hand = this.players[this.currentPlayer].getHand();
@@ -217,7 +224,7 @@ public class Model {
 			control.alert("Cannot stage more than one foe per quest stage.");
 			return;
 		}
-		if (containsWeapon(this.stage.getStageAt(currentStage), c.getImgName())) {
+		if (containsWeapon(this.stage.getStageAt(currentStage), c.getName())) {
 			control.alert("Cannot stage duplicate weapons.");
 			return;
 		}
@@ -225,10 +232,10 @@ public class Model {
 
 		// Change To add to my new Stages
 		this.stage.getStageAt(currentStage).add(c);
-		logger.info("Player " + this.currentPlayer + " moves " + c.getName() + " from hand to Stage " + currentStage);
+		logger.info("Player " + currentPlayer + " moves " + c.getName() + " from hand to Stage " + currentStage);
 	}
 
-	public void unstage(String iD) {
+	public void unstage(String iD, int currentPlayer) {
 		logger.debug("unstage() called");
 
 		Card c = this.stage.getStageAt(currentStage).getByID(iD);
@@ -238,32 +245,24 @@ public class Model {
 
 		this.players[this.currentPlayer].getHand().add(c);
 
-		logger.info("Player " + this.currentPlayer + " moves " + c.getName() + " from Stage back to Hand");
+		logger.info("Player " + currentPlayer + " moves " + c.getName() + " from Stage back to Hand");
 	}
 
-	public Player getActivePlayer() {
-		logger.debug("getActivePlayer() called");
-		logger.debug("currentPlayer: " + this.currentPlayer);
-		return this.players[this.currentPlayer];
-	}
-
-	public void discard(String iD) {
+	public void discard(String iD, int currentPlayer) {
 		logger.debug("discard() called");
-
-		CardCollection<AdventureCard> hand = getActivePlayer().getHand();
+		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(iD);
-
 		hand.remove(c);
 		adventureDeckDiscard.add(c);
-		logger.info("Player " + this.currentPlayer + " discarded " + c.getName());
+		logger.info("Player " + currentPlayer + " discarded " + c.getName());
 	}
 
-	public void assassinate(String iD) {
+	public void assassinate(String iD, int currentPlayer) {
 		logger.debug("assassinate() called");
 
 		boolean hasMordred = false;
 		int indexMordred = 0;
-		CardCollection<AdventureCard> hand = getActivePlayer().getHand();
+		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
 
 		for (int i = 0; i < hand.size(); i++) {
 			if (hand.get(i).getName().equals("Mordred")) {
@@ -273,72 +272,78 @@ public class Model {
 		}
 
 		if (hasMordred) {
-			int playerHoldingAlly = 0;
+			int playerHoldingAlly = -1;
 			// find who is holding the Ally
-			for (int i = 0; i < this.numPlayers; ++i) {
-				CardCollection<AdventureCard> party = state.players[i].getParty();
+			for (int i = 0; i < numPlayers; ++i) {
+				CardCollection<AdventureCard> party = players[i].getParty();
 				for (int j = 0; j < party.size(); j++) {
 					if (party.get(j).getID().equals(iD)) {
 						playerHoldingAlly = i;
+						logger.info("playerHoldingAlly is:" + playerHoldingAlly);
 					}
 				}
 			}
+			
 			// remove the ally
-			CardCollection<AdventureCard> party = state.players[playerHoldingAlly].getParty();
+			CardCollection<AdventureCard> party = players[playerHoldingAlly].getParty();
 			AdventureCard c = party.getByID(iD);
 			party.remove(c);
 			adventureDeckDiscard.add(c);
 
-			// remove mordred
+			// remove Mordred
 			AdventureCard mordred = hand.get(indexMordred);
 			hand.remove(mordred);
 			adventureDeckDiscard.add(mordred);
 
-			logger.info("Player " + this.currentPlayer + " assaniated Player " + playerHoldingAlly + "s ally "
+			logger.info("Player " + currentPlayer + " assaniated Player " + playerHoldingAlly + "s ally "
 					+ c.getName());
+			
 		} else {
 			control.alert("You do not have Mordred in your hand!");
 		}
-
 	}
 
-	public void queue(String iD) {
+
+	public void queue(String id, int currentPlayer) {
 		logger.debug("queue() called");
+		System.out.println("Current player, in queue called" + currentPlayer);
 
-		CardCollection<AdventureCard> hand = getActivePlayer().getHand();
-		AdventureCard c = hand.getByID(iD);
+		CardCollection<AdventureCard> hand = new CardCollection<AdventureCard>();
+		hand = players[currentPlayer].getHand();
+		AdventureCard c = hand.getByID(id);
 
-		if (containsSameWeapon(getActivePlayer().getQueue(), ((WeaponCard) c).getName())) {
+		if (containsSameWeapon(players[currentPlayer].getQueue(), ((WeaponCard) c).getName())) {
 			control.alert("Cannot have duplicate weapons in queue.");
 			return;
 		}
 
 		hand.remove(c);
-		getActivePlayer().addToQueue(c);
+		players[currentPlayer].addToQueue(c);
 		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from hand to queue");
 
 	}
 
+	public void dequeue(String iD, int currentPlayer) {
+		logger.debug("dequeue(" + iD + ") called");
+		CardCollection<AdventureCard> queue = players[currentPlayer].getQueue();
+		AdventureCard c = queue.getByID(iD);
+		queue.remove(c);
+		players[currentPlayer].addToHand(c);
+		logger.info("Player " + currentPlayer + " moved " + c.getName() + " from queue to hand");
+	}
+	
 	public boolean containsSameWeapon(CardCollection<AdventureCard> collection, String cardName) {
 		logger.debug("containsSameWeapon(" + cardName + ") called");
 
 		for (int i = 0; i < collection.size(); i++) {
 			if (((WeaponCard) collection.get(i)).getName().equals(cardName)) {
-				// TODO need to ALERT the View
 				return true;
 			}
 		}
+
 		return false;
 	}
 
-	public void dequeue(String iD) {
-		logger.debug("dequeue(" + iD + ") called");
-		CardCollection<AdventureCard> queue = getActivePlayer().getQueue();
-		AdventureCard c = queue.getByID(iD);
-		queue.remove(c);
-		getActivePlayer().addToHand(c);
-		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from queue to hand");
-	}
 
 	public void setCurrentStage(int num) {
 		logger.debug("setCurrentStage(" + num + ") called");
@@ -351,7 +356,6 @@ public class Model {
 		logger.debug("endTurn() called");
 		logger.info("I end turn called changing s ");
 		currentState.nextPlayer();
-
 	}
 
 	public void stageOver() {
@@ -371,14 +375,125 @@ public class Model {
 		state.stage = this.stage.getStageAt(currentStage);
 		control.updateViewState();
 	}
+	
+	/**
+	 * This will go through all the allies in play, and update players
+	 * 
+	 * steps psuedo code: get an ally that's in play set boolean to T apply bonuses
+	 * to Player
+	 */
+	public void allysInPlay() {
+		logger.debug("allysInPlay() called");
+
+		for (int i = 0; i < numPlayers; ++i) {
+			CardCollection<AdventureCard> party = players[i].getParty();
+			for (int j = 0; j < party.size(); j++) {
+				if (party.get(j).getID().equals("SirGalahad") && AllyInPlaySirGalahad == false) {
+					AllyInPlaySirGalahad = true;
+					logger.info("SirGalahad is in play and gives +15 Battle points to player " + i);
+					players[i].AllyBattlePoints += 15;
+				}
+				if (party.get(j).getID().equals("SirLancelot") && AllyInPlaySirLancelot == false) {
+					AllyInPlaySirLancelot = true;
+					if (currentStoryCard.getName().equals("DefendTheQueensHonor")) {
+						logger.info(
+								"SirLancelot is in play and on quest Queens honor so, gives +25 Battle points to player "
+										+ i);
+						players[i].AllyBattlePoints += 25;
+					} else {
+						logger.info("SirLancelot is in play and gives +25 Battle points to player " + i);
+						players[i].AllyBattlePoints += 15;
+					}
+				}
+				if (party.get(j).getID().equals("KingArthur") && AllyInPlayKingArthur == false) {
+					AllyInPlayKingArthur = true;
+
+					logger.info("KingArthur is in play and gives +10 Battle Points, and +2 bids to player " + i);
+					players[i].AllyBattlePoints += 10;
+					players[i].AllyBidBonus += 2;
+				}
+				if (party.get(j).getID().equals("SirTristan") && AllyInPlaySirTristan == false) {
+					AllyInPlaySirTristan = true;
+
+					if (AllyInPlayQueenIseult) {
+						logger.info(
+								"SirTristan and Queen Iseult are in play and gives +20 Battle Points to player " + i);
+						players[i].AllyBattlePoints += 20;
+					} else {
+						logger.info("SirTristan is in play and gives +10 Battle Points to player " + i);
+						players[i].AllyBattlePoints += 10;
+					}
+				}
+				if (party.get(j).getID().equals("KingPellinore") && AllyInPlayKingPellinore == false) {
+					AllyInPlayKingPellinore = true;
+
+					if (currentStoryCard.getName().equals("SearchForTheQuestingBeast")) {
+						logger.info(
+								"KingPellinore is in play on Questing Beast and gives +10 Battle Points, +4 Bids to player "
+										+ i);
+						players[i].AllyBattlePoints += 10;
+						players[i].AllyBidBonus += 4;
+					} else {
+						logger.info("KingPellinore is in play and gives +10 Battle Points to player " + i);
+						players[i].AllyBattlePoints += 10;
+					}
+				}
+				if (party.get(j).getID().equals("SirGawain") && AllyInPlaySirGawain == false) {
+					AllyInPlaySirGawain = true;
+
+					if (currentStoryCard.getName().equals("TestOfTheGreenKnight")) {
+						logger.info(
+								"SirGawain is in play and on TestOfTheGreenKnight and gives +20 Battle Points to player "
+										+ i);
+						players[i].AllyBattlePoints += 20;
+					} else {
+						logger.info("SirGawain is in play and gives +10 Battle Points to player " + i);
+						players[i].AllyBattlePoints += 10;
+					}
+				}
+				if (party.get(j).getID().equals("SirPercival") && AllyInPlaySirPercival == false) {
+					AllyInPlaySirPercival = true;
+
+					if (currentStoryCard.getName().equals("TestOfTheGreenKnight")) {
+						logger.info(
+								"SirGawain is in play and on SearchForTheHolyGrail and gives +20 Battle Points to player "
+										+ i);
+						players[i].AllyBattlePoints += 20;
+					} else {
+						logger.info("SirGawain is in play and gives +5 Battle Points to player " + i);
+						players[i].AllyBattlePoints += 5;
+					}
+				}
+				if (party.get(j).getID().equals("QueenGuinevere") && AllyInPlayQueenGuinevere == false) {
+					AllyInPlayQueenGuinevere = true;
+					logger.info("QueenGuinevere is in play and gives +3 Bids to player " + i);
+					players[i].AllyBidBonus += 3;
+				}
+				if (party.get(j).getID().equals("QueenIseult") && AllyInPlayQueenIseult == false) {
+					AllyInPlayQueenIseult = true;
+					if (AllyInPlaySirTristan) {
+						logger.info(
+								"AllyInPlayQueenIseult is in play and SirTristan is in play and gives 4 Bids to player "
+										+ i);
+						players[i].AllyBidBonus += 4;
+					} else {
+						logger.info("AllyInPlayQueenIseult is in play and gives 2 Bids to player " + i);
+						players[i].AllyBidBonus += 2;
+					}
+				}
+				if (party.get(j).getID().equals("Merlin") && AllyInPlayMerlin == false) {
+					AllyInPlayMerlin = true;
+					logger.info("Merlin is in play and gives magical powers to player " + i);
+				}
+			}
+		}
+	}
 
 	public boolean containsFoe(CardCollection<AdventureCard> collection) {
 		logger.debug("containsFoe() called");
 
 		for (int i = 0; i < collection.size(); i++) {
 			if (collection.get(i).getSubType().equals(AdventureCard.FOE)) {
-				// TODO need to ALERT the View
-
 				return true;
 			}
 		}
@@ -391,8 +506,6 @@ public class Model {
 
 		for (int i = 0; i < collection.size(); i++) {
 			if (collection.get(i).getSubType().equals(AdventureCard.AMOUR)) {
-				// TODO need to ALERT the View
-
 				return true;
 			}
 		}
@@ -404,7 +517,7 @@ public class Model {
 		logger.debug("containsWeapon() called");
 
 		for (int i = 0; i < collection.size(); i++) {
-			if (collection.get(i).getImgName().equals(cardName)) {
+			if (collection.get(i).getName().equals(cardName)) {
 				return true;
 			}
 		}
@@ -415,8 +528,8 @@ public class Model {
 		logger.debug("getSubType() called");
 		String result = "";
 
-		if (((AdventureCard) getActivePlayer().getHand().getByID(ID)) != null) {
-			result = ((AdventureCard) getActivePlayer().getHand().getByID(ID)).getSubType();
+		if (((AdventureCard) players[currentPlayer].getHand().getByID(ID)) != null) {
+			result = ((AdventureCard) players[currentPlayer].getHand().getByID(ID)).getSubType();
 		}
 		return result;
 	}
@@ -486,7 +599,7 @@ public class Model {
 			players[i].passedStage = false;
 
 			// remove stage cards
-			instantiateStages(); // TODO - DO PROPERLY
+			instantiateStages(); 
 
 			// remove amours
 			CardCollection<AdventureCard> queue = players[i].getQueue();

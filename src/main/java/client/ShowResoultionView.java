@@ -4,6 +4,9 @@ package client;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
+import core.CardCollection;
+import core.State;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
