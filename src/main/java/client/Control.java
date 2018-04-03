@@ -17,7 +17,7 @@ public class Control {
 	private static final int MESSAGE_WAIT_TIME = 500; // time to wait between server messages
 	private static final String DEFAULT_SERVER_ADDRESS = "localhost"; // default server address
 	private static final int DEFAULT_SERVER_PORT = 44444; // default server port
-	private String serverAddress; // server address
+	private String serverAddress = DEFAULT_SERVER_ADDRESS; // server address
 	private int serverPort; // server port
 	private Socket socket; // socket on server address and port
 	private BufferedReader in; // in to server

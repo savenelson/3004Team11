@@ -70,7 +70,7 @@ public class View extends Application {
 	public static final int rowHandTop6 = 390;
 	public static final int colHandTop6 = 10;
 	
-	//	public static final int colAdventureDeck;que
+	//	public static final int colAdventureDeck;
 	
 	public static final int rowStoryCard = 80;
 	public static final int rowHandBottom6 = 565;
