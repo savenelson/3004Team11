@@ -29,6 +29,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import core.AdventureCard;
+import core.CardCollection;
+import core.FoeCard;
+import core.QuestCard;
+import core.State;
+import core.StoryCard;
+import core.WeaponCard;
 
 
 public class View extends Application {

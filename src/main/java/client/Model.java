@@ -5,12 +5,7 @@ import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import client.AdventureCard;
-import client.AdventureDeck;
-import client.CardCollection;
-import client.StoryCard;
-import client.WeaponCard;
-import client.Player;
+import core.*;
 
 public class Model {
 

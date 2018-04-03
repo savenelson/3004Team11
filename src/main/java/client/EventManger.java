@@ -3,6 +3,11 @@ package client;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import core.AdventureCard;
+import core.AdventureDeck;
+import core.CardCollection;
+import core.Player;
+
 // class to handle event cards
 public class EventManger implements StoryCardState{
 private static final Logger logger = LogManager.getLogger(EventManger.class);

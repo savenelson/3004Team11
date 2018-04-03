@@ -2,6 +2,8 @@ package client;
 
 import java.util.*;
 
+import core.Player;
+
 public class QuesterQueque {
 	Player[] players; 
 	ArrayDeque<Integer> currentQuesters;

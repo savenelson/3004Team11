@@ -3,6 +3,12 @@ package server;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import core.AdventureCard;
+import core.AdventureDeck;
+import core.Card;
+import core.CardCollection;
+import core.Player;
+
 // class to handle event cards
 public class EventManger implements StoryCardState {
 	private static final Logger logger = LogManager.getLogger(EventManger.class);
@@ -69,7 +75,7 @@ public class EventManger implements StoryCardState {
 					adventureDeckDiscard.add(c);
 				} else if (hand.getByID("103") != null) {
 					Card c = hand.getByID("103");
-					hand.remove("103" );
+					hand.remove("103");
 					adventureDeckDiscard.add(c);
 				} else if (hand.getByID("104") != null) {
 					Card c = hand.getByID("104");
@@ -305,6 +311,5 @@ public class EventManger implements StoryCardState {
 	@Override
 	public void setPlayer() {
 	}
-
 
 }

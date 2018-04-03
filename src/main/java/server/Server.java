@@ -12,6 +12,7 @@ import java.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+
 public class Server {
 	private static final Logger logger = LogManager.getLogger(Server.class);
 	
@@ -22,13 +23,12 @@ public class Server {
     private int playersPerTable = 4;                                        // number of players per table
 	ArrayList<ServerThread> clientThreads = new ArrayList<ServerThread>();
     public Model model;
-    
+
     /**
      * Constructor for Server object.
      *
      * @param serverPort Server port
      * @param playersPerTable Number of players per table
-
      */
 
     public Server(int serverPort, int playersPerTable) {
@@ -57,7 +57,7 @@ public class Server {
         
         System.out.println("Listening on port " + serverPort);
         	
-    		model = new Model(this);
+    	model = new Model(this);
 		model.instantiatePlayers(playersPerTable);
 		model.instantiateStages(); //TODO set properly
 		
