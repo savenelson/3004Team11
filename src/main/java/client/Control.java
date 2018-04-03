@@ -137,9 +137,20 @@ public class Control {
 
 		logger.info("MSG fm server: " + serverMessage);
 
-		String[] serverMessageComponents = serverMessage.split("--"); // array containing the components of the server
+		final String[] serverMessageComponents = serverMessage.split("--"); // array containing the components of the server
 																		// message
 		switch (serverMessageComponents[1]) {
+		case "MESSAGE":
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+				    model.control.view.alert(serverMessageComponents[2]);}
+			});
+			
+			getServerMessage();
+			break;
+			
+			
 		case "UPDATE":
 			if (serverMessageComponents[2].equals(Integer.toString(this.playerNumber))) {
 				logger.info("Message was instigated by this client and not processed");
@@ -200,7 +211,15 @@ public class Control {
 		case "GAMEHANDLE":
 			
 				/**
-				 * convention of UPDATE case: "SERVERMESSAGE--GAMEHANDLE--PlAYERID--GETSPONSOR"
+				 * convention of GAME LOGIC case: "SERVERMESSAGE--GAMEHANDLE--PlAYERID--GETSPONSOR"
+				 * Ask a player if they would like to sponsor 
+				 * 
+				 * 
+				 * convention of GAME LOGIC case: "SERVERMESSAGE--GAMEHANDLE--PlAYERID--GETQUESTERS"
+				 * Ask a player would like to sponsor 
+				 * 
+				 *  convention of GAME LOGIC case: "SERVERMESSAGE--GAMEHANDLE--PlAYERID--RESOLVESTAGE"
+				 * 
 				 */
 				logger.info("Message was instigated by ME lient, and will update this model");
 				switch (serverMessageComponents[3]) {
@@ -210,23 +229,30 @@ public class Control {
 						public void run() {
 						    model.control.getSponsorDecision();}
 					});
+							
 					
 					break;
-				case "PARTY":
-					model.party(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+				case "GETQUESTERS":
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+						    model.control.getQuestingDecision();}
+					});
 					break;
-				case "DEQUEUE":
-					model.dequeue(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					
+					
+				case "RESOLVESTAGE":
+					
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							
+						   resolveStage();}
+					});
 					break;
-				case "UNSTAGE":
-					model.unstage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
-					break;
-				case "DISCARD":
-					model.discard(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
-					break;
-				case "ASSASSINATE":
-					model.assassinate(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
-					break;
+					
+					
+				
 				default:
 					logger.info("Couldnt parse message from SERVERMESSAGE--UPDATE-- ?!?!?!");
 					break;
@@ -288,18 +314,27 @@ public class Control {
 
 		model.stageOver();
 	}
+	
+	/**
+	 * Ask this Player if they would like to sponsor the  send the message back to the server 
+	 * 
+	 * 
+	 */
 
-	public boolean getSponsorDecision() {
+	public void  getSponsorDecision() {
 		logger.debug("getSponsorDecision() called");
 
-		return view.popup(
-				"Player " + (playerNumber + 1) + " - Would you like to sponsor this quest?");
+		boolean isSponsor= view.popup("Player " + (playerNumber + 1) + " - Would you like to sponsor this quest?");
+		model.getActivePlayer().isSponsor= isSponsor;
+		sendClientMessage("CLIENTMESSAGE--ISSPONSOR--" +isSponsor+ "--" + playerNumber);
+		
+		
 	}
 
 	public boolean getQuestingDecision() {
 		logger.debug("getQuesting() called");
 
-		return view.popup("Player " + (playerNumber + 1) + " - Would you like to quest quest?");
+		return view.popup("Player " + (playerNumber + 1) + " - Would you like to quest?");
 	}
 
 	public State getState() {
@@ -354,6 +389,10 @@ public class Control {
 		} else if (clickType.equals(View.ASSASSINATE)) {
 			sendClientMessage("CLIENTMESSAGE--ASSASSINATE--" + ID + "--" + playerNumber);
 			model.assassinate(ID, playerNumber);
+		} else if (clickType.equals(View.ENDTURN)) {
+			sendClientMessage("CLIENTMESSAGE--ASSASSINATE--" + ID + "--" + playerNumber);
+
+			model.endTurn();
 		}
 	}
 
@@ -424,7 +463,11 @@ public class Control {
 
 		return view;
 	}
-
+	public void resolveStage() {
+		
+		view.stageResolved();
+		
+	}
 	public void nextStage() {
 		this.stageOver();
 		logger.debug("Hello this is the model stage in the control " + model.isDoneQuestingMode);
@@ -437,4 +480,5 @@ public class Control {
 			nextPlayer();
 		}
 	}
+	
 }

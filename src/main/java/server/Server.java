@@ -110,8 +110,8 @@ public class Server {
      * 
      */
     public void sendServerMessageToOne(String serverMessage, int playerNum) {
-    	for(ServerThread thread : clientThreads) {
-    		logger.info("Current threads playernumber: " + thread.currentPlayer);
+    
+
     		for(ServerThread thread1 : clientThreads) {
     			logger.info("Current threads playernumber: " + thread1.currentPlayer);
     			
@@ -121,20 +121,54 @@ public class Server {
     			}
         		
     		}
+    	}
+    
+    /**
+     * Used to send a message to a all but one Client 
+     * 
+     * Like ask the players that is not a sponsor if they would like to quest
+     * 
+     * 
+     * 
+     */
+    public void sendServerMessageToAllButOne(String serverMessage, int playerNum) {
+    
+
+    		for(ServerThread thread1 : clientThreads) {
+    			logger.info("Current threads playernumber: " + thread1.currentPlayer);
     			
-    		}
+    			if(thread1.getPlayerNumber() != playerNum) {
+    				thread1.out.println(serverMessage);
+    				
+    			}
         		
-    	
-    	
-    	
-    	
-    }
+    		}
+    	}
+    /**
+     * ASk for the current player if they would like to sponsor 
+     * 
+     * 
+     */
+    
     public void getSponsorDecision(){
 		logger.info("getSponsorDecision() called");
 
 		
 		sendServerMessageToOne("SERVERMESSAGE--GAMEHANDLE--"+model.getActivePlayer().getPlayerNumber()+"--GETSPONSOR", model.getActivePlayer().getPlayerNumber());
-	}
+		
+    
+    }
+    
+    /**
+     * ASk for the all the playerss except the current player if they would like to sponsnor 
+     * 
+     * 
+     */
+    public void getQuesterDecison() {
+    	
+    	sendServerMessageToAllButOne("SERVERMESSAGE--GAMEHANDLE--"+model.getActivePlayer().getPlayerNumber()+"--GETQUESTER", model.getActivePlayer().getPlayerNumber());
+    	
+    }
     
     
     public static void main(String[] args) {

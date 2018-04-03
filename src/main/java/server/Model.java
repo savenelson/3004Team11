@@ -57,24 +57,22 @@ public class Model {
 	int endTurnCounter = 0;
 	boolean gameWon = false;
 
-	int stagePlaceHolder = 0;
-	static int stageOverCount = 0;
 
 	StoryCard currentStoryCard;
 
 	int numPlayers;
 	int numStages;
 
-	ArrayList<CardCollection<AdventureCard>> stages;
+	
 
-	ArrayList<CardCollection<AdventureCard>> getStages() {
+	
+
+	QuestingStage stages;
+	
+	QuestingStage getStages() {
 		return stages;
 	}
 	
-
-	QuestingStage stage;
-	// CardCollection [] getStages() {return stages;}
-
 	StoryCardState questManger;
 	StoryCardState eventManger;
 	StoryCardState currentState;
@@ -89,7 +87,7 @@ public class Model {
 		questManger = new QuestManager(this);
 		eventManger = new EventManger(this);
 
-		stage = new QuestingStage();
+		stages = new QuestingStage();
 
 		this.adventureDeck = new AdventureDeck();
 		this.storyDeck = new StoryDeck();
@@ -102,7 +100,7 @@ public class Model {
 		currentPlayer = 0;
 		currentSponsor = 0;
 
-		currentStage = stage.getCurrentStage();
+		currentStage = stages.getCurrentStage();
 
 	}
 
@@ -120,7 +118,7 @@ public class Model {
 	public void instantiateStages() {
 		logger.debug("instantiateStages() called - hard coded to 5");
 
-		stage = new QuestingStage();
+		stages = new QuestingStage();
 	}
 
 
@@ -166,13 +164,13 @@ public class Model {
 	public void resetCurrentStage() {
 		logger.debug("resetCurrentStage() called");
 
-		stage.resetCurrentStage();
+		stages.resetCurrentStage();
 	}
 
 	public State getState() {
 		logger.debug("getState() called");
 
-		state.players = this.players;
+		/*state.players = this.players;
 
 		state.currentPlayer = this.currentPlayer;
 
@@ -198,7 +196,7 @@ public class Model {
 
 		state.numStages = this.numStages;
 
-		state.stagePlaceHolder = this.stagePlaceHolder;
+		state.stagePlaceHolder = this.stagePlaceHolder;*/
 
 		return state;
 	}
@@ -230,18 +228,19 @@ public class Model {
 		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(iD);
 		if ( c.getSubType().equals(AdventureCard.FOE)
-				&& containsFoe(stage.getStageAt(currentStage))) {
+				&& containsFoe(stages.getStageAt(currentStage))) {
 			server.alert("Cannot stage more than one foe per quest stage.");
 			return;
 		}
-		if (containsWeapon(this.stage.getStageAt(currentStage), c.getImgName())) {
+		/*if (containsWeapon(this.stage.getStageAt(currentStage), c.getImgName())) {
 			server.alert("Cannot stage duplicate weapons.");
 			return;
-		}
+		}*/
 		hand.remove(c);
 
 		// Change To add to my new Stages
-		stage.getStageAt(currentStage).add(c);
+		stages.add(c);
+		
 		logger.info("Player " + currentPlayer + " moves " + c.getName() + " from hand to Stage " + currentStage);
 
 	}
@@ -249,9 +248,9 @@ public class Model {
 	public void unstage(String iD, int currentPlayer) {
 		logger.debug("unstage() called");
 
-		client.AdventureCard c = stage.getStageAt(currentStage).getByID(iD);
+		client.AdventureCard c = stages.getStageAt(currentStage).getByID(iD);
 
-		stage.getStageAt(currentStage).remove(iD);
+		stages.getStageAt(currentStage).remove(iD);
 
 		players[currentPlayer].getHand().add(c);
 
@@ -363,7 +362,7 @@ public class Model {
 		logger.debug("setCurrentStage(" + num + ") called");
 
 		this.currentStage = num;
-		this.stage.setCurrentStage(num);
+		this.stages.setCurrentStage(num);
 
 		server.updateViewState();
 	}
@@ -391,7 +390,7 @@ public class Model {
 			}
 		}
 
-		state.stage = this.stage.getStageAt(currentStage);
+		state.stage = this.stages.getStageAt(currentStage);
 		server.updateViewState();
 	}
 
@@ -531,7 +530,7 @@ public class Model {
 		logger.info("Story card up next " + currentStoryCard.getName());
 
 		this.currentStage = 0;
-		stage.resetCurrentStage();
+		stages.resetCurrentStage();
 
 		server.updateViewState();
 		playGame();
