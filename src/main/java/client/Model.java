@@ -11,7 +11,7 @@ public class Model {
 
 	private static final Logger logger = LogManager.getLogger(Model.class);
 
-	public Control control;
+	public Client control;
 	State state;
 
 	private Player[] players;
@@ -82,7 +82,7 @@ public class Model {
 	StoryCardState currentState;
 	boolean isDoneQuestingMode = false;
 
-	Model(Control control) {
+	Model(Client control) {
 
 		logger.info("Model created");
 
@@ -224,7 +224,7 @@ public class Model {
 			control.alert("Cannot stage more than one foe per quest stage.");
 			return;
 		}
-		if (containsWeapon(this.stage.getStageAt(currentStage), c.getImgName())) {
+		if (containsWeapon(this.stage.getStageAt(currentStage), c.getName())) {
 			control.alert("Cannot stage duplicate weapons.");
 			return;
 		}
@@ -337,7 +337,6 @@ public class Model {
 
 		for (int i = 0; i < collection.size(); i++) {
 			if (((WeaponCard) collection.get(i)).getName().equals(cardName)) {
-				// TODO need to ALERT the View
 				return true;
 			}
 		}
@@ -380,16 +379,11 @@ public class Model {
 	/**
 	 * This will go through all the allies in play, and update players
 	 * 
-	 * steps psuedo code:
-	 * get an ally that's in play
-	 * set boolean to T
-	 * apply bonuses to Player
+	 * steps psuedo code: get an ally that's in play set boolean to T apply bonuses
+	 * to Player
 	 */
 	public void allysInPlay() {
 		logger.debug("allysInPlay() called");
-
-		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
-		AdventureCard c;
 
 		for (int i = 0; i < numPlayers; ++i) {
 			CardCollection<AdventureCard> party = players[i].getParty();
@@ -401,8 +395,10 @@ public class Model {
 				}
 				if (party.get(j).getID().equals("SirLancelot") && AllyInPlaySirLancelot == false) {
 					AllyInPlaySirLancelot = true;
-					if(currentStoryCard.name.equals("DefendTheQueensHonor")){
-						logger.info("SirLancelot is in play and on quest Queens honor so, gives +25 Battle points to player " + i);
+					if (currentStoryCard.getName().equals("DefendTheQueensHonor")) {
+						logger.info(
+								"SirLancelot is in play and on quest Queens honor so, gives +25 Battle points to player "
+										+ i);
 						players[i].AllyBattlePoints += 25;
 					} else {
 						logger.info("SirLancelot is in play and gives +25 Battle points to player " + i);
@@ -414,13 +410,14 @@ public class Model {
 
 					logger.info("KingArthur is in play and gives +10 Battle Points, and +2 bids to player " + i);
 					players[i].AllyBattlePoints += 10;
-					players[i].AllyBidBonus +=2;
+					players[i].AllyBidBonus += 2;
 				}
 				if (party.get(j).getID().equals("SirTristan") && AllyInPlaySirTristan == false) {
 					AllyInPlaySirTristan = true;
-					
-					if(AllyInPlayQueenIseult) {
-						logger.info("SirTristan and Queen Iseult are in play and gives +20 Battle Points to player " + i);
+
+					if (AllyInPlayQueenIseult) {
+						logger.info(
+								"SirTristan and Queen Iseult are in play and gives +20 Battle Points to player " + i);
 						players[i].AllyBattlePoints += 20;
 					} else {
 						logger.info("SirTristan is in play and gives +10 Battle Points to player " + i);
@@ -430,10 +427,12 @@ public class Model {
 				if (party.get(j).getID().equals("KingPellinore") && AllyInPlayKingPellinore == false) {
 					AllyInPlayKingPellinore = true;
 
-					if(currentStoryCard.name.equals("SearchForTheQuestingBeast")) {
-						logger.info("KingPellinore is in play on Questing Beast and gives +10 Battle Points, +4 Bids to player " + i);
+					if (currentStoryCard.getName().equals("SearchForTheQuestingBeast")) {
+						logger.info(
+								"KingPellinore is in play on Questing Beast and gives +10 Battle Points, +4 Bids to player "
+										+ i);
 						players[i].AllyBattlePoints += 10;
-						players[i].AllyBidBonus +=4;
+						players[i].AllyBidBonus += 4;
 					} else {
 						logger.info("KingPellinore is in play and gives +10 Battle Points to player " + i);
 						players[i].AllyBattlePoints += 10;
@@ -442,8 +441,10 @@ public class Model {
 				if (party.get(j).getID().equals("SirGawain") && AllyInPlaySirGawain == false) {
 					AllyInPlaySirGawain = true;
 
-					if(currentStoryCard.name.equals("TestOfTheGreenKnight")) {
-						logger.info("SirGawain is in play and on TestOfTheGreenKnight and gives +20 Battle Points to player " + i);
+					if (currentStoryCard.getName().equals("TestOfTheGreenKnight")) {
+						logger.info(
+								"SirGawain is in play and on TestOfTheGreenKnight and gives +20 Battle Points to player "
+										+ i);
 						players[i].AllyBattlePoints += 20;
 					} else {
 						logger.info("SirGawain is in play and gives +10 Battle Points to player " + i);
@@ -453,8 +454,10 @@ public class Model {
 				if (party.get(j).getID().equals("SirPercival") && AllyInPlaySirPercival == false) {
 					AllyInPlaySirPercival = true;
 
-					if(currentStoryCard.name.equals("TestOfTheGreenKnight")) {
-						logger.info("SirGawain is in play and on SearchForTheHolyGrail and gives +20 Battle Points to player " + i);
+					if (currentStoryCard.getName().equals("TestOfTheGreenKnight")) {
+						logger.info(
+								"SirGawain is in play and on SearchForTheHolyGrail and gives +20 Battle Points to player "
+										+ i);
 						players[i].AllyBattlePoints += 20;
 					} else {
 						logger.info("SirGawain is in play and gives +5 Battle Points to player " + i);
@@ -468,12 +471,14 @@ public class Model {
 				}
 				if (party.get(j).getID().equals("QueenIseult") && AllyInPlayQueenIseult == false) {
 					AllyInPlayQueenIseult = true;
-					if(AllyInPlaySirTristan) {
-						logger.info("AllyInPlayQueenIseult is in play and SirTristan is in play and gives 4 Bids to player " + i);
+					if (AllyInPlaySirTristan) {
+						logger.info(
+								"AllyInPlayQueenIseult is in play and SirTristan is in play and gives 4 Bids to player "
+										+ i);
 						players[i].AllyBidBonus += 4;
 					} else {
-					logger.info("AllyInPlayQueenIseult is in play and gives 2 Bids to player " + i);
-					players[i].AllyBidBonus += 2;
+						logger.info("AllyInPlayQueenIseult is in play and gives 2 Bids to player " + i);
+						players[i].AllyBidBonus += 2;
 					}
 				}
 				if (party.get(j).getID().equals("Merlin") && AllyInPlayMerlin == false) {
@@ -489,8 +494,6 @@ public class Model {
 
 		for (int i = 0; i < collection.size(); i++) {
 			if (collection.get(i).getSubType().equals(AdventureCard.FOE)) {
-				// TODO need to ALERT the View
-
 				return true;
 			}
 		}
@@ -503,8 +506,6 @@ public class Model {
 
 		for (int i = 0; i < collection.size(); i++) {
 			if (collection.get(i).getSubType().equals(AdventureCard.AMOUR)) {
-				// TODO need to ALERT the View
-
 				return true;
 			}
 		}
@@ -516,7 +517,7 @@ public class Model {
 		logger.debug("containsWeapon() called");
 
 		for (int i = 0; i < collection.size(); i++) {
-			if (collection.get(i).getImgName().equals(cardName)) {
+			if (collection.get(i).getName().equals(cardName)) {
 				return true;
 			}
 		}
@@ -598,7 +599,7 @@ public class Model {
 			players[i].passedStage = false;
 
 			// remove stage cards
-			instantiateStages(); // TODO - DO PROPERLY
+			instantiateStages(); 
 
 			// remove amours
 			CardCollection<AdventureCard> queue = players[i].getQueue();

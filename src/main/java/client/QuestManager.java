@@ -271,7 +271,7 @@ public class QuestManager implements StoryCardState{
 	    		for (int i = 0; i < numStages; ++i){
 	    			
 	    			for (int j = 0; j < model.stage.getStageAt(i).size(); ++j){
-	    				if(( model.stage.getStageAt(i).get(j)).subType.equals(AdventureCard.FOE)){
+	    				if(( model.stage.getStageAt(i).get(j)).getSubType().equals(AdventureCard.FOE)){
 	    					foesPresent[i] = true;
 	    					break;
 	    				}
@@ -302,11 +302,11 @@ public class QuestManager implements StoryCardState{
 		int numStages = ((QuestCard)model.currentStoryCard).getNumStages();
 		for (int i = 0; i < numStages; ++i){
 			for (int j = 0; j < model.stage.getStageAt(i).size(); ++j){
-				if((model.stage.getStageAt(i).get(j)).subType.equals(AdventureCard.FOE)){
+				if((model.stage.getStageAt(i).get(j)).getSubType().equals(AdventureCard.FOE)){
 					numOfCardsInStaging++;
-				}else if(( model.stage.getStageAt(i).get(j)).subType.equals(AdventureCard.WEAPON)){
+				}else if(( model.stage.getStageAt(i).get(j)).getSubType().equals(AdventureCard.WEAPON)){
 					numOfCardsInStaging++;
-				}else if((model.stage.getStageAt(i).get(j)).subType.equals(AdventureCard.TEST)){
+				}else if((model.stage.getStageAt(i).get(j)).getSubType().equals(AdventureCard.TEST)){
 					numOfCardsInStaging++;	
 				}
 			}

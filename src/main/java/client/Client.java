@@ -16,9 +16,9 @@ import javafx.application.Platform;
 import core.Player;
 import core.State;
 
-public class Control {
+public class Client {
 
-	private static final Logger logger = LogManager.getLogger(Control.class);
+	private static final Logger logger = LogManager.getLogger(Client.class);
 	private static final int MESSAGE_WAIT_TIME = 500; // time to wait between server messages
 	private static final String DEFAULT_SERVER_ADDRESS = "localhost"; // default server address
 	private static final int DEFAULT_SERVER_PORT = 44444; // default server port
@@ -35,7 +35,7 @@ public class Control {
 
 	private static String testString;
 
-	public Control(View view, String serverAddress, int serverPort) {
+	public Client(View view, String serverAddress, int serverPort) {
 		logger.info("Control created");
 
 		
@@ -198,13 +198,12 @@ public class Control {
 					"Player: " + model.currentPlayer + " on ip: " + socket.getInetAddress() + " on port: " + socket.getPort());
 			getServerMessage();
 			break;
-			
 		case "GAMEHANDLE":
 			
 				/**
 				 * convention of UPDATE case: "SERVERMESSAGE--GAMEHANDLE--PlAYERID--GETSPONSOR"
 				 */
-				logger.info("Message was instigated by ME lient, and will update this model");
+				logger.info("Message was instigated by this client, and will update this model");
 				switch (serverMessageComponents[3]) {
 				case "GETSPONSOR":
 					Platform.runLater(new Runnable() {
@@ -233,9 +232,7 @@ public class Control {
 					logger.info("Couldnt parse message from SERVERMESSAGE--UPDATE-- ?!?!?!");
 					break;
 				}
-			
-	
-			
+
 		case "GETSTATE":
 
 			// model.state = Integer.parseInt(serverMessageComponents[2]);

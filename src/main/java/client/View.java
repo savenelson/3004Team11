@@ -56,7 +56,7 @@ public class View extends Application {
 	public static final String STAGE5 = "Stage 5";
 	public static final String ENDTURN = "End Turn";
 	
-	public Control control;
+	public Client control;
 	private State state;
 	
     private static final String DEFAULT_SERVER_ADDRESS = "localhost";   // default server address
@@ -167,7 +167,7 @@ public class View extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		logger.info("start() running");
 
-		control = new Control(this, serverAddress, serverPort);
+		control = new Client(this, serverAddress, serverPort);
 		stage = primaryStage;
 		initUI(primaryStage);
 	}
