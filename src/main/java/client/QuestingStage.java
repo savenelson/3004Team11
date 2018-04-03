@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import core.AdventureCard;
+import core.CardCollection;
+
 import org.apache.logging.log4j.LogManager;
 import java.util.*;
 import org.apache.logging.log4j.Logger;

@@ -1,8 +1,8 @@
 package aIDecisons;
 
-import core.Player;
-import core.State;
-import core.TournamentCard;
+import server.*;
+
+import logger
 
 public class Strategy1DoISponsorAQuest implements DoISponsorAQuest {
 	

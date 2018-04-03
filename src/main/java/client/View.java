@@ -29,6 +29,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import core.AdventureCard;
+import core.CardCollection;
+import core.FoeCard;
+import core.QuestCard;
+import core.State;
+import core.StoryCard;
+import core.WeaponCard;
 
 
 public class View extends Application {
@@ -49,7 +56,7 @@ public class View extends Application {
 	public static final String STAGE5 = "Stage 5";
 	public static final String ENDTURN = "End Turn";
 	
-	public Control control;
+	public Client control;
 	private State state;
 	
     private static final String DEFAULT_SERVER_ADDRESS = "localhost";   // default server address
@@ -70,7 +77,7 @@ public class View extends Application {
 	public static final int rowHandTop6 = 390;
 	public static final int colHandTop6 = 10;
 	
-	//	public static final int colAdventureDeck;que
+	//	public static final int colAdventureDeck;
 	
 	public static final int rowStoryCard = 80;
 	public static final int rowHandBottom6 = 565;
@@ -160,7 +167,7 @@ public class View extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		logger.info("start() running");
 
-		control = new Control(this, serverAddress, serverPort);
+		control = new Client(this, serverAddress, serverPort);
 		stage = primaryStage;
 		initUI(primaryStage);
 	}
@@ -203,7 +210,7 @@ public class View extends Application {
 		addPlayerAPartyToCanvas(canvas);
 		addPlayerBPartyToCanvas(canvas);
 		addShieldsBToCanvas(canvas);
-		
+
 				
 		if(state.numPlayers == 3){
 			addPlayerCRankToCanvas(canvas);
