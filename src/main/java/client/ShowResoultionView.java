@@ -5,6 +5,7 @@ package client;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import core.AdventureCard;
 import core.CardCollection;
 import core.State;
 import javafx.event.ActionEvent;
@@ -146,7 +147,7 @@ public class ShowResoultionView extends Pane{
 	}
 	
 	public Pane drawCards(Pane canvas, State state){
-		addStageToCanvas(canvas);
+		//addStageToCanvas(canvas);
 		addPlayerARankToCanvas(canvas);
 		addPlayerBRankToCanvas(canvas);
 		addPlayerAPartyToCanvas(canvas);
@@ -171,8 +172,8 @@ public class ShowResoultionView extends Pane{
 		return canvas;
 	}
 	
-	private void addStageToCanvas(Pane canvas) {
-		CardCollection stage = state.stages[state.currentStage];
+	/*private void addStageToCanvas(Pane canvas) {
+		CardCollection<AdventureCard> stage = state.stages.get(state.currentStage3);
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -202,7 +203,7 @@ public class ShowResoultionView extends Pane{
 			
 			canvas.getChildren().add(tile);
 		}
-	}
+	}*/
 
 	private void addPlayerARankToCanvas(Pane canvas) {
 		try {

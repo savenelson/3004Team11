@@ -210,6 +210,7 @@ public class View extends Application {
 		addPlayerAPartyToCanvas(canvas);
 		addPlayerBPartyToCanvas(canvas);
 		addShieldsBToCanvas(canvas);
+
 				
 		if(state.numPlayers == 3){
 			addPlayerCRankToCanvas(canvas);
@@ -1035,26 +1036,7 @@ public class View extends Application {
 		}
 	}
 	
-	private int totalNumOfBP(final CardCollection<AdventureCard> stage) {
-		logger.debug("totalNumOfBP() called");
-		
-		int numberOfBP =  0;
 
-		for(int i=0; i<stage.size(); i++) {
-		  if (( stage.get(i)).getSubType().equals("Foe")) {
-		    numberOfBP+=((FoeCard) stage.get(i)).getBattlePoints();
-		  
-		    
-		  }else if ((stage.get(i)).getSubType().equals("Weapon")) {
-		    
-		    numberOfBP+=((WeaponCard) stage.get(i)).getBattlePoints();
-		  }
-		}
-
-
-		return numberOfBP;
-		
-	}
 	
 	public void stageResolved(){
 		logger.debug("stageResolved() called");

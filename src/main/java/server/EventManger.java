@@ -10,6 +10,8 @@ import core.CardCollection;
 import core.Player;
 
 // class to handle event cards
+
+
 public class EventManger implements StoryCardState {
 	private static final Logger logger = LogManager.getLogger(EventManger.class);
 	Player[] players;
@@ -27,6 +29,7 @@ public class EventManger implements StoryCardState {
 		this.adventureDeck = model.getAdventureDeck();
 		this.nextQ = model.inNextQ;
 		this.currentPlayer = model.currentPlayer;
+
 
 	}
 
@@ -283,6 +286,7 @@ public class EventManger implements StoryCardState {
 		}
 	}
 
+
 	public void handle() {
 		// TODO Auto-generated method stub
 
@@ -312,11 +316,13 @@ public class EventManger implements StoryCardState {
 		return null;
 	}
 
+
 	@Override
 	public void nextPlayer() {
 		model.nextPlayer();
 		model.nextStory();
 	}
+
 
 	@Override
 	public void setPlayer() {

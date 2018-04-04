@@ -79,6 +79,43 @@ public class ServerThread extends Thread {
 			server.model.assassinate(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
 			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]);
 			break;
+			
+		case "STAGE":
+			server.model.stage(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
+			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]);
+			break;
+			
+			
+			
+		case "ISSPONSOR":
+			boolean ISSPONSOR = Boolean.parseBoolean(clientMessageComponents[2]);
+			server.model.getActivePlayer().isSponsor= ISSPONSOR;
+			if(ISSPONSOR) {
+				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.model.getActivePlayer()+" has decidied to sponsor. Get ready to quest");
+			}else {
+				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.model.getActivePlayer()+" has not decidied to sponsor");
+				server.model.nextPlayer();
+			
+			}
+			
+			break;
+			
+		case "ISQUESTER":
+			boolean ISQUESTER = Boolean.parseBoolean(clientMessageComponents[2]);
+			server.model.getActivePlayer().isQuesting= ISQUESTER;
+			if(ISQUESTER) {
+				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.model.getActivePlayer()+" has decidied to quest");
+			}else {
+				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.model.getActivePlayer()+" has NOT decidied to quest");
+				server.model.nextPlayer();
+			
+			}
+			break;
+		case "ENDTURN":
+			server.model.endTurn();
+			
+			break;
+			
 		case "GETSTATE":
 			String stateString = server.model.getState().toString();
 			logger.info(stateString);

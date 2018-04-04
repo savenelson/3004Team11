@@ -11,7 +11,7 @@ import com.sun.jmx.remote.internal.ArrayQueue;
 
 import core.*;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.event.Ever;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

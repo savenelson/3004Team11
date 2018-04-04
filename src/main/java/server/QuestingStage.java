@@ -74,11 +74,20 @@ public class QuestingStage {
 		return stages;
 	}
 
+	
+	public void add(AdventureCard Card) {
+		getStageAt(currentStage).add(Card);
+		
+		
+	
+	}
+
 	/****
 	 * 
 	 * Move to the next Stage Typically used after a stage has completed
 	 * 
 	 */
+	
 	public void nextStage() {
 		logger.info("Moving onwards to the NextStage ");
 		currentStage++;
