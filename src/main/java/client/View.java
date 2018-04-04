@@ -1022,7 +1022,7 @@ public class View extends Application {
 		    public void handle(ActionEvent e) {
 		    	logger.info("End Turn clicked");
 		    	state = control.getState();
-		    control.model.endTurn();
+		    control.buttonClick(ENDTURN);
 				
 		    }
 		});

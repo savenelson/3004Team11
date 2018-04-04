@@ -486,7 +486,7 @@ public class Model {
 
 	public void endTurn() {
 		logger.debug("endTurn() called");
-		logger.info("I end turn called changing s ");
+		logger.info("CLitent model end");
 
 		currentState.nextPlayer();
 

@@ -1,4 +1,4 @@
-package server;
+package core;
 
 public interface StoryCardState {
 	void handle();

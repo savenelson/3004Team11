@@ -5,6 +5,8 @@ import java.net.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javafx.application.Platform;
+
 import java.io.*;
 
 
@@ -112,6 +114,7 @@ public class ServerThread extends Thread {
 			}
 			break;
 		case "ENDTURN":
+			//Platform.runLater(runnable);
 			server.model.endTurn();
 			
 			break;
