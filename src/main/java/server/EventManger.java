@@ -112,11 +112,13 @@ public class EventManger implements  StoryCardState {
 
 	// execute the special in event here
 	public void KingsRecognition() {
+		logger.info("KingsRecognition is in play and gives the next players to complete a quest 2 shields");
 		this.nextQ = true;
 
 	}
 
 	public void QueenFavor() {
+		logger.info("QueenFavor is in play and gives player 1 and 2 two adventure cards");
 		int squireCount = 0;
 		int championCount = 0;
 		int championKnightCount = 0;
@@ -164,6 +166,8 @@ public class EventManger implements  StoryCardState {
 	}
 
 	public void Pox() {
+	logger.info("Pox in play and all players except  the next players to complete a quest 2 shields");
+
 		Player currentPlayer = players[this.currentPlayer];
 		for (int i = 0; i < this.players.length; i++) {
 			System.out.println("Players " + players[i] + "with this many " + players[i].getShieldCount());
@@ -175,6 +179,8 @@ public class EventManger implements  StoryCardState {
 	}
 
 	public void KingCallToArms() {
+	logger.info("KingCallToArms in play and player 1 placed one weapon in the discard pile");
+
 		// TODO : implement into the model boolean ?
 		Player currentplay = players[this.currentPlayer];
 		int numOfweapons = currentplay.getHand().getnumberOfWeapons();
@@ -205,6 +211,8 @@ public class EventManger implements  StoryCardState {
 	}
 
 	public void ChilvarousDeed() {
+	logger.info("ChilvarousDeed event in play");
+
 		int squireCount = 0;
 		int championCount = 0;
 		int championKnightCount = 0;
@@ -274,6 +282,8 @@ public class EventManger implements  StoryCardState {
 	public void Plague() {
 		if (this.players[currentPlayer].getShieldCount() >= 2) {
 			this.players[currentPlayer].removeShields(2);
+		logger.info("Plague event in play and player " + currentPlayer + " looses two shields");
+
 		}
 	}
 
