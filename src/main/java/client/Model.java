@@ -77,9 +77,9 @@ public class Model {
 
 	QuestingStage stage;
 
-	StoryCardState questManger;
-	StoryCardState eventManger;
-	StoryCardState currentState;
+	private StoryCardState questManger;
+	private StoryCardState eventManger;
+	private StoryCardState currentState;
 	boolean isDoneQuestingMode = false;
 
 	Model(Client control) {
@@ -111,6 +111,7 @@ public class Model {
 		return players[this.currentPlayer];
 	}
 
+	
 	public void instantiatePlayers(int numPlayers) {
 		logger.debug("instantiatePlayers(" + numPlayers + ") called");
 		players = new Player[numPlayers];
@@ -121,6 +122,10 @@ public class Model {
 		}
 	}
 
+	
+	public  StoryCardState getCurrentState() {
+		return this.currentState;
+	}
 	public void instantiateStages() {
 		logger.debug("instantiateStages() called - hard coded to 5");
 

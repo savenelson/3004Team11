@@ -24,21 +24,21 @@ public class QuestManager implements StoryCardState{
 	Model  model;
 	Player[] players ; 
 	
-	boolean hasSponsor = false;
+	private boolean hasSponsor = false;
 	
-	boolean questersReady = false;
+	private boolean questersReady = false;
 	
-	int numOfansewers;
+	private int numOfansewers;
 	
 	private int numberOfCardsToReturn= 0;
 	
 	
-	int numberOfrequests = 0;
+	private int numberOfrequests = 0;
 	
 	
-	QuesterQueque questers ; 
+	private QuesterQueque questers ; 
 	
-	int numOfQuesterPotential;
+	private int numOfQuesterPotential;
 	
 
 	int numOfQuester = 0;

@@ -181,28 +181,22 @@ public class Client {
 				case "STAGE": 
 					model.stage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
 		
-					Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-							
-						    updateViewState();
-						    }
-					});
 					
 					getServerMessage();
+					break;
 				case "UNSTAGE":
 					model.unstage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
-					updateViewState();
+					
 					getServerMessage();
 					break;
 				case "DISCARD":
 					model.discard(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
-					updateViewState();
+			
 					getServerMessage();
 					break;
 				case "ASSASSINATE":
 					model.assassinate(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
-					updateViewState();
+					
 					getServerMessage();
 					break;
 				default:
@@ -413,9 +407,13 @@ public class Client {
 			sendClientMessage("CLIENTMESSAGE--ASSASSINATE--" + ID + "--" + playerNumber);
 			model.assassinate(ID, playerNumber);
 		} else if (clickType.equals(View.ENDTURN)) {
-			sendClientMessage("CLIENTMESSAGE--ASSASSINATE--" + ID + "--" + playerNumber);
+			if(model.getCurrentState().canEndTurn()) {
+				sendClientMessage("CLIENTMESSAGE--ENDTURN--" + ID + "--" + playerNumber);
 
-			model.endTurn();
+				
+			}
+			
+			
 		}
 	}
 
@@ -446,7 +444,7 @@ public class Client {
 			model.setCurrentStage(4);
 		} else if (clickType.equals(View.ENDTURN)) {
 
-			model.endTurn();
+		
 		}
 	}
 
@@ -477,7 +475,7 @@ public class Client {
 	public void nextPlayer() {
 		logger.debug("next player");
 
-		model.currentState.nextPlayer();
+		model.getCurrentState().nextPlayer();
 		// view.nextPlayer();
 	}
 
