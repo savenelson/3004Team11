@@ -82,7 +82,7 @@ public class Model {
 
 
 	QuestingStage stage;
-	// CardCollection [] getStages() {return stages;}
+	
 
 	StoryCardState questManger;
 	StoryCardState eventManger;
@@ -238,15 +238,7 @@ public class Model {
 		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(iD);
 
-		/*if (c.getSubType().equals(AdventureCard.FOE) && containsFoe(stage.getStageAt(currentStage))) {
-			server.alert("Cannot stage more than one foe per quest stage.");
-			return;
-		}
-		if (containsWeapon(this.stage.getStageAt(currentStage), c.getName())) {
-
-			server.alert("Cannot stage duplicate weapons.");
-			return;
-		}*/
+	
 		hand.remove(c);
 
 		// Change To add to my new Stages

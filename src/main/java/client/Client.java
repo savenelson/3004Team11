@@ -165,26 +165,44 @@ public class Client {
 				switch (serverMessageComponents[3]) {
 				case "QUEUE":
 					model.queue(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					updateViewState();
 					getServerMessage();
 					break;
 				case "PARTY":
 					model.party(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					updateViewState();
 					getServerMessage();
 					break;
 				case "DEQUEUE":
 					model.dequeue(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					updateViewState();
 					getServerMessage();
 					break;
+				case "STAGE": 
+					model.stage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+		
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							
+						    updateViewState();
+						    }
+					});
+					
+					getServerMessage();
 				case "UNSTAGE":
 					model.unstage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					updateViewState();
 					getServerMessage();
 					break;
 				case "DISCARD":
 					model.discard(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					updateViewState();
 					getServerMessage();
 					break;
 				case "ASSASSINATE":
 					model.assassinate(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					updateViewState();
 					getServerMessage();
 					break;
 				default:
@@ -228,7 +246,9 @@ public class Client {
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-						    model.control.getSponsorDecision();}
+							getSponsorDecision();
+						    updateViewState();
+						    }
 					});
 							
 					
@@ -237,7 +257,7 @@ public class Client {
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-						    model.control.getQuestingDecision();}
+						    getQuestingDecision();}
 					});
 					break;
 					
@@ -304,8 +324,7 @@ public class Client {
 
 		model.stage.nextStage();
 		updateViewState();
-		// model.state.toggleForStages = false;
-
+		
 	}
 
 	public void stageOver() {
@@ -371,8 +390,13 @@ public class Client {
 			sendClientMessage("CLIENTMESSAGE--PARTY--" + ID + "--" + playerNumber);
 			model.party(ID, playerNumber);
 		} else if (clickType.equals(View.STAGE)) {
-			sendClientMessage("CLIENTMESSAGE--STAGE--" + ID + "--" + playerNumber);
-			model.stage(ID, playerNumber);
+			if(model.stage(ID, playerNumber)){
+				sendClientMessage("CLIENTMESSAGE--STAGE--" + ID + "--" + playerNumber);
+				
+			}
+		
+			
+			
 		} else if (clickType.equals(View.UNSTAGE)) {
 			sendClientMessage("CLIENTMESSAGE--UNSTAGE--" + ID + "--" + playerNumber);
 			model.unstage(ID, playerNumber);

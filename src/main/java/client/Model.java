@@ -214,25 +214,30 @@ public class Model {
 		logger.info("Player " + currentPlayer + " moved " + c.getName() + " from hand to party");
 	}
 
-	public void stage(String iD, int currentPlayer) {
+	public boolean stage(String iD, int currentPlayer) {
 		logger.debug("stage() called");
 
-		CardCollection<AdventureCard> hand = this.players[this.currentPlayer].getHand();
+		CardCollection<AdventureCard> hand = this.players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(iD);
-		if ((((AdventureCard) c).getSubType().equals(AdventureCard.FOE))
+		if ((c.getSubType().equals(AdventureCard.FOE))
 				&& containsFoe(this.stage.getStageAt(currentStage))) {
+			logger.info("The Sponsor tried to stage more than one Foe . NOT ALLOWED");
+			
 			control.alert("Cannot stage more than one foe per quest stage.");
-			return;
+			return false;
 		}
 		if (containsWeapon(this.stage.getStageAt(currentStage), c.getName())) {
+			logger.info("The Sponsor tried to stage duplicate weapons. NOT ALLOWED");
 			control.alert("Cannot stage duplicate weapons.");
-			return;
+			return false;
 		}
 		hand.remove(c);
 
 		// Change To add to my new Stages
 		this.stage.getStageAt(currentStage).add(c);
+		
 		logger.info("Player " + currentPlayer + " moves " + c.getName() + " from hand to Stage " + currentStage);
+		return true;
 	}
 
 	public void unstage(String iD, int currentPlayer) {

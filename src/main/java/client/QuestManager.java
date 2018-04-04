@@ -76,7 +76,7 @@ public class QuestManager implements StoryCardState{
 	
 			if(!this.model.getActivePlayer().declinedToSponsor) {								//If they haven't declined to be a sponsor 
 				
-			boolean wantToSponsor= model.control.getSponsorDecision();						// Get a pop up to ask them if they would like to 
+			model.control.getSponsorDecision();						// Get a pop up to ask them if they would like to 
 			
 			logger.info("Would you like to sponsor? "+ model.getActivePlayer());
 			
@@ -87,7 +87,7 @@ public class QuestManager implements StoryCardState{
 		
 			numberOfrequests++;																//increase the the number of requester 
 		
-		
+		/*
 			if(wantToSponsor) {																//If they would like to sponsor
 				logger.info("Found a sponsor ");
 				hasSponsor = true;															// change the hasSponort to true 
@@ -99,7 +99,7 @@ public class QuestManager implements StoryCardState{
 				
 				model.control.updateViewState();												//update their View to being questing 
 				
-			}
+			}*/
 			model.getActivePlayer().declinedToSponsor = true;									// changed that they have asked 
 
 			// TODO: GEt the model to go to the next story crd
