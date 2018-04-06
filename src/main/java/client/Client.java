@@ -30,7 +30,7 @@ public class Client {
 	private int playerNumber; // everyclienthas a unique playernum
 	private int numPlayers = 4;
 	String serverMessage = null;
-	Model model;
+	ClientModel clientModel;
 	View view;
 
 	private static String testString;
@@ -40,17 +40,17 @@ public class Client {
 
 		
 
-		this.model = new Model(this);
+		this.clientModel = new ClientModel(this);
 
-		model.instantiateStages();
+		clientModel.instantiateStages();
 
-		model.instantiatePlayers(numPlayers);
+		clientModel.instantiatePlayers(numPlayers);
 
 		// model.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
 
 		// model.deal(); //COMMENT OUT FOR SET SCENEARIOS
 
-		model.setScenario1(); // UNCOMMENT FOR SCEN 1
+		clientModel.setScenario1(); // UNCOMMENT FOR SCEN 1
 
 		// model.setScenario2(); //UNCOMMENT FOR SCEN 2
 
@@ -146,7 +146,7 @@ public class Client {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-				    model.control.view.alert(serverMessageComponents[2]);}
+				    clientModel.control.view.alert(serverMessageComponents[2]);}
 			});
 			
 			getServerMessage();
@@ -162,40 +162,43 @@ public class Client {
 				 * convention of UPDATE case: "SERVERMESSAGE--UPDATE--CURRENTPLAYER--METOHDCALL--CARDID"
 				 */
 				logger.info("Message was instigated by another client, and will update this model");
+				logger.info(serverMessageComponents[3]);
 				switch (serverMessageComponents[3]) {
+				
+				
 				case "QUEUE":
-					model.queue(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					clientModel.queue(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
 					updateViewState();
 					getServerMessage();
 					break;
 				case "PARTY":
-					model.party(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					clientModel.party(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
 					updateViewState();
 					getServerMessage();
 					break;
 				case "DEQUEUE":
-					model.dequeue(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					clientModel.dequeue(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
 					updateViewState();
 					getServerMessage();
 					break;
 				case "STAGE": 
-					model.stage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					clientModel.stage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]),Integer.parseInt(serverMessageComponents[5]));
 		
 					
 					getServerMessage();
 					break;
 				case "UNSTAGE":
-					model.unstage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					clientModel.unstage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]),Integer.parseInt(serverMessageComponents[5]));
 					
 					getServerMessage();
 					break;
 				case "DISCARD":
-					model.discard(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					clientModel.discard(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
 			
 					getServerMessage();
 					break;
 				case "ASSASSINATE":
-					model.assassinate(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
+					clientModel.assassinate(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
 					
 					getServerMessage();
 					break;
@@ -215,10 +218,10 @@ public class Client {
 			getServerMessage();
 			break;
 		case "SETTHREADPLAYER":
-			model.currentPlayer = Integer.parseInt(serverMessageComponents[2]);
+			clientModel.currentPlayer = Integer.parseInt(serverMessageComponents[2]);
 			playerNumber = Integer.parseInt(serverMessageComponents[2]);
 			logger.info(
-					"Player: " + model.currentPlayer + " on ip: " + socket.getInetAddress() + " on port: " + socket.getPort());
+					"Player: " + clientModel.currentPlayer + " on ip: " + socket.getInetAddress() + " on port: " + socket.getPort());
 			getServerMessage();
 			break;
 		case "GAMEHANDLE":
@@ -301,7 +304,7 @@ public class Client {
 		boolean win = false;
 		while (!win) {
 			// TODO send messsage to server with "CLIENTMESSAGE--playGame"
-			model.playGame();
+			clientModel.playGame();
 			win = !win;
 		}
 	}
@@ -316,7 +319,7 @@ public class Client {
 	public void stageIncrement() {
 		logger.debug("stageIncrement() called");
 
-		model.stage.nextStage();
+		clientModel.getStage().nextStage();
 		updateViewState();
 		
 	}
@@ -324,7 +327,7 @@ public class Client {
 	public void stageOver() {
 		logger.debug("stageOver() called");
 
-		model.stageOver();
+		clientModel.stageOver();
 	}
 	
 	/**
@@ -337,7 +340,7 @@ public class Client {
 		logger.debug("getSponsorDecision() called");
 
 		boolean isSponsor= view.popup("Player " + (playerNumber + 1) + " - Would you like to sponsor this quest?");
-		model.getActivePlayer().isSponsor= isSponsor;
+		clientModel.getActivePlayer().isSponsor= isSponsor;
 		sendClientMessage("CLIENTMESSAGE--ISSPONSOR--" +isSponsor+ "--" + playerNumber);
 		
 		
@@ -351,7 +354,7 @@ public class Client {
 
 	public State getState() {
 		logger.debug("getState() called");
-		return model.getState();
+		return clientModel.getState();
 	}
 
 	public void getStateString() {
@@ -363,13 +366,13 @@ public class Client {
 	public void setNumPlayers(int i) {
 		logger.debug("setNumPlayers() called");
 
-		model.numPlayers = i;
+		clientModel.numPlayers = i;
 	}
 
 	public Player getActivePlayer() {
 		logger.debug("getActivePlayer() called");
 
-		return model.getActivePlayer();
+		return clientModel.getActivePlayer();
 	}
 
 	public void printTestString() {
@@ -382,33 +385,33 @@ public class Client {
 
 		if (clickType.equals(View.PARTY)) {
 			sendClientMessage("CLIENTMESSAGE--PARTY--" + ID + "--" + playerNumber);
-			model.party(ID, playerNumber);
+			clientModel.party(ID, playerNumber);
 		} else if (clickType.equals(View.STAGE)) {
-			if(model.stage(ID, playerNumber)){
-				sendClientMessage("CLIENTMESSAGE--STAGE--" + ID + "--" + playerNumber);
+			if(clientModel.stage(ID, playerNumber,playerNumber+clientModel.getStage().getCurrentStage())){
+				sendClientMessage("CLIENTMESSAGE--STAGE--" + ID + "--" + playerNumber+"--"+clientModel.getStage().getCurrentStage());
 				
 			}
 		
 			
 			
 		} else if (clickType.equals(View.UNSTAGE)) {
-			sendClientMessage("CLIENTMESSAGE--UNSTAGE--" + ID + "--" + playerNumber);
-			model.unstage(ID, playerNumber);
+			sendClientMessage("CLIENTMESSAGE--UNSTAGE--" + ID + "--" + playerNumber+"--"+clientModel.getStage().getCurrentStage() );
+			clientModel.unstage(ID, playerNumber,clientModel.getStage().getCurrentStage());
 		} else if (clickType.equals(View.QUEUE)) {
-			model.queue(ID, playerNumber);
+			clientModel.queue(ID, playerNumber);
 			sendClientMessage("CLIENTMESSAGE--QUEUE--" + ID + "--" + playerNumber);
 		} else if (clickType.equals(View.DEQUEUE)) {
 			sendClientMessage("CLIENTMESSAGE--DEQUEUE--" + ID + "--" + playerNumber);
-			model.dequeue(ID, playerNumber);
+			clientModel.dequeue(ID, playerNumber);
 		} else if (clickType.equals(View.DISCARD)) {
 			sendClientMessage("CLIENTMESSAGE--DISCARD--" + ID + "--" + playerNumber);
-			model.discard(ID, playerNumber);
+			clientModel.discard(ID, playerNumber);
 		} else if (clickType.equals(View.ASSASSINATE)) {
 			sendClientMessage("CLIENTMESSAGE--ASSASSINATE--" + ID + "--" + playerNumber);
-			model.assassinate(ID, playerNumber);
+			clientModel.assassinate(ID, playerNumber);
 		} else if (clickType.equals(View.ENDTURN)) {
-			if(model.getCurrentState().canEndTurn()) {
-				sendClientMessage("CLIENTMESSAGE--ENDTURN--" + ID + "--" + playerNumber);
+			if(clientModel.getCurrentState().canEndTurn()) {
+			
 
 				
 			}
@@ -420,29 +423,33 @@ public class Client {
 	public void startStageCycle() {
 		logger.debug("startStageCycle() called");
 
-		model.resetCurrentStage();
+		clientModel.resetCurrentStage();
 	}
 
 	public void nextStory() {
 		logger.debug("nextStory() called");
 
-		model.nextStory();
+		clientModel.nextStory();
 	}
 
 	public void buttonClick(String clickType) {
 		logger.debug("buttonClick() called");
 
 		if (clickType.equals(View.STAGE1)) {
-			model.setCurrentStage(0);
+			clientModel.setCurrentStage(0);
 		} else if (clickType.equals(View.STAGE2)) {
-			model.setCurrentStage(1);
+			clientModel.setCurrentStage(1);
 		} else if (clickType.equals(View.STAGE3)) {
-			model.setCurrentStage(2);
+			clientModel.setCurrentStage(2);
 		} else if (clickType.equals(View.STAGE4)) {
-			model.setCurrentStage(3);
+			clientModel.setCurrentStage(3);
 		} else if (clickType.equals(View.STAGE5)) {
-			model.setCurrentStage(4);
+			clientModel.setCurrentStage(4);
 		} else if (clickType.equals(View.ENDTURN)) {
+			//if(clientModel.getCurrentState().canEndTurn()) {
+				sendClientMessage("CLIENTMESSAGE--ENDTURN--"+ "--" + playerNumber);
+				
+			//}
 
 		
 		}
@@ -451,7 +458,7 @@ public class Client {
 	public String getSubType(String ID, int currentPlayer) {
 		logger.debug("getSubType() called");
 
-		return model.getSubType(ID, currentPlayer);
+		return clientModel.getSubType(ID, currentPlayer);
 	}
 
 	public void resolveQuest() {
@@ -475,7 +482,7 @@ public class Client {
 	public void nextPlayer() {
 		logger.debug("next player");
 
-		model.getCurrentState().nextPlayer();
+		clientModel.getCurrentState().nextPlayer();
 		// view.nextPlayer();
 	}
 
@@ -491,8 +498,8 @@ public class Client {
 	}
 	public void nextStage() {
 		this.stageOver();
-		logger.debug("Hello this is the model stage in the control " + model.isDoneQuestingMode);
-		if (model.isDoneQuestingMode) {
+		logger.debug("Hello this is the model stage in the control " + clientModel.isDoneQuestingMode());
+		if (clientModel.isDoneQuestingMode()) {
 			view.resolveQuest();
 
 		} else {

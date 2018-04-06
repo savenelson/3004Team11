@@ -48,55 +48,58 @@ public class ServerThread extends Thread {
 	 * 
 	 * @param clientMessage string that's sent from client in the format:
 	 * 			in as "CLIENTMESSAGE--QUEUE--ID--playerNumber"
+	 * 
 	 * 			out as "SERVERMESSAGE--UPDATE--PLAYNUMBER--CALL--CARDID"
+	 * 
+	 * 			"SERVERMESSAGE--UPDATE--PLAYNUMBER--CALL--CARDID"
 	 */
 	private void getClientMessage(String clientMessage) {
 		String[] clientMessageComponents = clientMessage.split("--"); // array containing the components of the server
-																		// message
+		logger.info("MSG grom client "+ clientMessage);
 		switch (clientMessageComponents[1]) {
 		case "HELLO":
 			logger.info("Client has responded!!!");
 			break;
 		case "QUEUE":
-			server.model.queue(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
+			server.serverModel.queue(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
 			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]);
 			break;
 		case "PARTY":
-			server.model.party(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
+			server.serverModel.party(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
 			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]);
 			break;
 		case "DEQUEUE":
-			server.model.dequeue(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
-			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]);
-			break;
-		case "UNSTAGE":
-			server.model.unstage(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
-			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]);
-			break;
-		case "DISCARD":
-			server.model.discard(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
-			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]);
-			break;
-		case "ASSASSINATE":
-			server.model.assassinate(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
+			server.serverModel.dequeue(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
 			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]);
 			break;
 			
 		case "STAGE":
-			server.model.stage(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
+			server.serverModel.stage(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]),Integer.parseInt(clientMessageComponents[4]));
+			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3]+"--"+clientMessageComponents[1] + "--" +   clientMessageComponents[2]+"--"+clientMessageComponents[4]);
+			break;
+			
+		case "UNSTAGE":
+			server.serverModel.unstage(clientMessageComponents[4], Integer.parseInt(clientMessageComponents[2]),Integer.parseInt(clientMessageComponents[4]));
+			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]+"--"+clientMessageComponents[4]);
+			break;
+		case "DISCARD":
+			server.serverModel.discard(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
+			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]);
+			break;
+		case "ASSASSINATE":
+			server.serverModel.assassinate(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
 			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]);
 			break;
 			
 			
-			
 		case "ISSPONSOR":
 			boolean ISSPONSOR = Boolean.parseBoolean(clientMessageComponents[2]);
-			server.model.getActivePlayer().isSponsor= ISSPONSOR;
+			server.serverModel.getActivePlayer().isSponsor= ISSPONSOR;
 			if(ISSPONSOR) {
-				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.model.getActivePlayer()+" has decidied to sponsor. Get ready to quest");
+				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.serverModel.getActivePlayer()+" has decidied to sponsor. Get ready to quest");
 			}else {
-				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.model.getActivePlayer()+" has not decidied to sponsor");
-				server.model.nextPlayer();
+				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.serverModel.getActivePlayer()+" has not decidied to sponsor");
+				server.serverModel.nextPlayer();
 			
 			}
 			
@@ -104,23 +107,23 @@ public class ServerThread extends Thread {
 			
 		case "ISQUESTER":
 			boolean ISQUESTER = Boolean.parseBoolean(clientMessageComponents[2]);
-			server.model.getActivePlayer().isQuesting= ISQUESTER;
+			server.serverModel.getActivePlayer().isQuesting= ISQUESTER;
 			if(ISQUESTER) {
-				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.model.getActivePlayer()+" has decidied to quest");
+				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.serverModel.getActivePlayer()+" has decidied to quest");
 			}else {
-				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.model.getActivePlayer()+" has NOT decidied to quest");
-				server.model.nextPlayer();
+				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.serverModel.getActivePlayer()+" has NOT decidied to quest");
+				server.serverModel.nextPlayer();
 			
 			}
 			break;
 		case "ENDTURN":
 			//Platform.runLater(runnable);
-			server.model.endTurn();
+			server.serverModel.endTurn();
 			
 			break;
 			
 		case "GETSTATE":
-			String stateString = server.model.getState().toString();
+			String stateString = server.serverModel.getState().toString();
 			logger.info(stateString);
 			out.println("SERVERMESSAGE--GETSTATE--" + stateString);
 			break;

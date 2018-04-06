@@ -9,9 +9,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.sun.jmx.remote.internal.ArrayQueue;
 
+import client.ClientModel;
 import core.*;
 import javafx.event.ActionEvent;
-import javafx.event.Ever;
+import javafx.event.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -38,7 +39,7 @@ import javafx.scene.text.Font;
 public class QuestManager implements StoryCardState{
 	private static final Logger logger = LogManager.getLogger(QuestManager.class);
 	private static final String ENDTURN = "End turn";
-	Model  model;
+	ServerModel  serverModel;
 	Player[] players ; 
 	
 	private boolean hasSponsor = false;
@@ -73,13 +74,17 @@ public class QuestManager implements StoryCardState{
 	 * gets its player and copies it 
 	 * make a new Questerquue 
 	 */
-	public QuestManager(Model model) {
-		this.model = model;
-		this.players = model.getPlayers();
+	public QuestManager(ServerModel serverModel) {
+		this.serverModel = serverModel;
+		this.players = serverModel.getPlayers();
 		this.questers = new QuesterQueque();		
 		
 	}
 	
+	public QuestManager(AbstractModel a) {
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * 
 	 * This will handle the Questing events 
@@ -90,16 +95,17 @@ public class QuestManager implements StoryCardState{
 	public void handle() {
 	
 		
-		numOfQuesterPotential = model.numPlayers -1;
+		numOfQuesterPotential = serverModel.getNumPlayers() -1;
 		
 		// if I do not have a sponsor ask the person if they want to sponsor 
 		if(!hasSponsor) {
 			
 		// if I haven't ask to sponsor yet then ask
-		if(!this.model.getActivePlayer().declinedToSponsor) {
+		if(!this.serverModel.getActivePlayer().declinedToSponsor) {
 		boolean wantToSponsor;
-		model.server.getSponsorDecision();
+		serverModel.server.getSponsorDecision();
 		}
+		
 		}
 	/*	
 		if(numberOfrequests == 0 ) { nextPersonToDraw = model.getActivePlayer().getPlayerNumber() +1; 
@@ -199,25 +205,25 @@ public class QuestManager implements StoryCardState{
 
 	public void  nextPlayer() {
 		
-		if(canEndTurn() && model.getActivePlayer().isSponsor) {
+		if( serverModel.getActivePlayer().isSponsor) {
 			//making sure the Stage starts at 1 
 			
-			model.resetCurrentStage();
+			serverModel.resetCurrentStage();
 			
 		}
-		if(canEndTurn() && !questersReady) {
+		if(!questersReady) {
 			// If not ready for sponsor then loop
 			
-			model.nextPlayer();
+			serverModel.nextPlayer();
 			
 			}
-		else if(model.isDoneQuestingMode) {
-			model.setNextPlayer(nextPersonToDraw);
+		else if(serverModel.isDoneQuestingMode()) {
+			serverModel.setNextPlayer(nextPersonToDraw);
 		}
 		else if (questersReady) {
 			logger.info("Number of TUrns is "+(numOfRepsonders++));
 			
-			model.setNextPlayer(questers.nextPlayer());
+			serverModel.setNextPlayer(questers.nextPlayer());
 			
 			//should have looped and rady to do the next Player
 			if(numOfRepsonders  >questers.size()) {
@@ -230,19 +236,20 @@ public class QuestManager implements StoryCardState{
 			
 			
 			// fix later 
-			model.control.view.stageResolved();
+			//serverModel.control.view.stageResolved();
 			
 			
-			this.questers.survivorsLeft(model.getPlayers());
+			this.questers.survivorsLeft(serverModel.getPlayers());
 			
 			
 		}
-		}
+			
+	}
 	}
 	private boolean stageHarder() {
 		logger.debug("stageHarder() called");
 
-		int numStages = ((QuestCard) model.currentStoryCard).getNumStages();
+		int numStages = ((QuestCard) serverModel.currentStoryCard).getNumStages();
 		
 		
 		if (numStages == 1) return true;
@@ -250,7 +257,7 @@ public class QuestManager implements StoryCardState{
 		else {
 			for(int i =0; i<numStages-1; i++) {
 				
-				if(totalNumOfBP(model.stage.getStageAt(i))>=totalNumOfBP(model.stage.getStageAt(i+1))) {
+				if(totalNumOfBP(serverModel.getStage().getStageAt(i))>=totalNumOfBP(serverModel.getStage().getStageAt(i+1))) {
 					logger.info("stages ar not harder");
 					return false;
 				}
@@ -258,7 +265,7 @@ public class QuestManager implements StoryCardState{
 		}
 		return true;
 	}
-	private int totalNumOfBP(CardCollection stage) {
+	private int totalNumOfBP(CardCollection<AdventureCard> stage) {
 		logger.debug("totalNumOfBP() called");
 		
 		int numberOfBP =  0;
@@ -285,15 +292,15 @@ public class QuestManager implements StoryCardState{
 		boolean [] foesPresent = null;
 		
 	
-	  	if(model.getActivePlayer().isSponsor){
-    		int numStages = ((QuestCard)model.currentStoryCard).getNumStages();
+	  	if(serverModel.getActivePlayer().isSponsor){
+    		int numStages = ((QuestCard)serverModel.currentStoryCard).getNumStages();
     		foesPresent  = new boolean [numStages];
     		for (int i = 0; i < numStages; ++i){
     			foesPresent[i] = false;
 			}		    		
     		for (int i = 0; i < numStages; ++i){
-    			for (int j = 0; j < model.stage.getStageAt(i).size(); ++j){
-    				if(((AdventureCard) model.stage.getStageAt(i).get(j)).subType.equals(AdventureCard.FOE)){
+    			for (int j = 0; j < serverModel.getStage().getStageAt(i).size(); ++j){
+    				if(serverModel.getStage().getStageAt(i).get(j).getSubType().equals(AdventureCard.FOE)){
     					foesPresent[i] = true;
     					break;
     				}
@@ -319,15 +326,15 @@ public class QuestManager implements StoryCardState{
 		 *   
 		 */
 		int numOfCardsInStaging = 0;
-		int numStages = ((QuestCard)model.currentStoryCard).getNumStages();
+		int numStages = ((QuestCard)serverModel.currentStoryCard).getNumStages();
 		for (int i = 0; i < numStages; ++i){
-			for (int j = 0; j < model.stage.getStageAt(i).size(); ++j){
-				if(((AdventureCard) model.stage.getStageAt(i).get(j)).subType.equals(AdventureCard.FOE)){
+			for (int j = 0; j < serverModel.getStage().getStageAt(i).size(); ++j){
+				if(((AdventureCard) serverModel.getStage().getStageAt(i).get(j)).subType.equals(AdventureCard.FOE)){
 				numOfCardsInStaging++;
 					
-				}else if(((AdventureCard) model.stage.getStageAt(i).get(j)).subType.equals(AdventureCard.WEAPON)){
+				}else if(((AdventureCard) serverModel.getStage().getStageAt(i).get(j)).subType.equals(AdventureCard.WEAPON)){
 				numOfCardsInStaging++;
-				}else if(((AdventureCard) model.stage.getStageAt(i).get(j)).subType.equals(AdventureCard.TEST)){
+				}else if(((AdventureCard) serverModel.getStage().getStageAt(i).get(j)).subType.equals(AdventureCard.TEST)){
 				numOfCardsInStaging++;	
 				}
 			}
@@ -339,9 +346,9 @@ public class QuestManager implements StoryCardState{
 		logger.debug("checkHandSize() called");
 
 		// if the hand is bigger then 12 then reurn false 
-		if(model.getActivePlayer().getHand().size() > 12) {
-			model.control.alert("Hand Size is too large, please discard");
-			logger.info("Player " + model.getActivePlayer().getPlayerNumber()+ " hand too large");
+		if(serverModel.getActivePlayer().getHand().size() > 12) {
+			serverModel.control.alert("Hand Size is too large, please discard");
+			logger.info("Player " + serverModel.getActivePlayer().getPlayerNumber()+ " hand too large");
 			return false;
 			
 		}
@@ -358,24 +365,24 @@ public class QuestManager implements StoryCardState{
 		boolean isHandSizeOk = checkHandSize();
 
 		// check if its a sponsor and if it is then check if they sponsor correctly 
-		if(model.getActivePlayer().isSponsor && !foeInEachStage){	    			
-			model.control.alert("Foe not present in every stage.");
+		if(serverModel.getActivePlayer().isSponsor && !foeInEachStage){	    			
+			serverModel.control.alert("Foe not present in every stage.");
 			return false;
 		//check if its a sponsor and if the stages are Harder
-		} else if(model.getActivePlayer().isSponsor && !isHarder) {
-			model.control.alert("The stages are not progressively harder");
+		} else if(serverModel.getActivePlayer().isSponsor && !isHarder) {
+			serverModel.control.alert("The stages are not progressively harder");
 			return false;
 			
 		// if their hand size id ok
 		} else if(!isHandSizeOk){	
-			model.control.alert("Your hand size is to big with "+ model.getActivePlayer().getHand().size());
+			serverModel.control.alert("Your hand size is to big with "+ serverModel.getActivePlayer().getHand().size());
 			return false;
 			
 		// let start the quest baby
-		}else if (model.getActivePlayer().isSponsor)  {
+		}else if (serverModel.getActivePlayer().isSponsor)  {
 			
 				numberOfCardsToReturn = numberOfCardsForSponsor();
-				model.control.stagesSet();
+				serverModel.control.stagesSet();
 			return true;
 			
 		// The person was a quester its true 
@@ -405,7 +412,7 @@ public class QuestManager implements StoryCardState{
 		
 		numOfQuesterPotential = 0;
 		
-		isReadyToStage = false;
+		
 		numOfQuester = 0;
 		
 		numOfRepsonders = 0 ;
@@ -433,13 +440,13 @@ public class QuestManager implements StoryCardState{
 		 */
 		logger.info("resolveQuest() called");
 
-		int numStages = model.numStages;
+		int numStages = serverModel.numStages;
 
 		
 		boolean inNextQ = false;
 		if(inNextQ) {
 			
-			for (int i = 0; i <model.numPlayers; i++) {
+			for (int i = 0; i <serverModel.getNumPlayers(); i++) {
 				if(!players[i].isSponsor){
 
 				this.players[i].addShields(2);
@@ -448,17 +455,17 @@ public class QuestManager implements StoryCardState{
 			}
 		}
 
-		int numShields = ((QuestCard) model.currentStoryCard).getNumStages();
+		int numShields = ((QuestCard) serverModel.currentStoryCard).getNumStages();
 		logger.info("Number of Stages: " + numShields);
 
 		//TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
-		for (int i = 0; i < model.numPlayers; ++i){
+		for (int i = 0; i < serverModel.getNumPlayers(); ++i){
 			if(players[i].isSponsor) {
 				logger.info("Sponsor is getting "+ numberOfCardsToReturn);
 				for(int j = 0 ; j< numberOfCardsToReturn; j ++) {
 	
 					//players[i].addToHand(new WeaponCard(WeaponCard.SWORD_NAME, WeaponCard.SWORD_BATTLE_POINTS));
-					players[j].addToHand(model.getAdventureDeck().pop());
+					players[j].addToHand(serverModel.getAdventureDeck().pop());
 				}
 			}
 			if(!players[i].isSponsor){
@@ -468,9 +475,9 @@ public class QuestManager implements StoryCardState{
 				if(players[i].passedQuest) {
 					players[i].addShields(numShields);
 					for(int j=0;j<numStages;j++) {
-						Card c = model.getAdventureDeck().pop();
+						Card c = serverModel.getAdventureDeck().pop();
 						this.players[i].addToHand(c);
-						model.getAdventureDeckDiscard().add(c);
+						serverModel.getAdventureDeckDiscard().add(c);
 					}
 				}
 
@@ -479,7 +486,7 @@ public class QuestManager implements StoryCardState{
 		
 
 		
-		model.control.resolveQuest();
+		serverModel.control.resolveQuest();
 		
 		return 0;
 	}
@@ -495,15 +502,15 @@ public class QuestManager implements StoryCardState{
 		logger.info("resolveStage() called");
 
 		
-		CardCollection currStage = model.stage.getStageAt(model.stage.getCurrentStage());
+		CardCollection currStage = serverModel.getStage().getStageAt(serverModel.getStage().getCurrentStage());
 		
 		int stageBP = 0;
 
 		for (int i = 0; i < currStage.size(); ++i){
 			stageBP += ((AdventureCard)currStage.get(i)).getBattlePoints();
 		}
-		players = model.getPlayers();
-		for(int i = 0; i < model.numPlayers; ++i){
+		players = serverModel.getPlayers();
+		for(int i = 0; i < serverModel.getNumPlayers(); ++i){
 			int playerBP = players[i].getRank().getBattlePoints();
 			if (players[i].getQueue() != null) {
 				for(int j = 0; j < players[i].getQueue().size(); ++j){
@@ -523,14 +530,14 @@ public class QuestManager implements StoryCardState{
 				
 				players[i].passedStage = true;
 				logger.info("Player " + players[i].getPlayerNumber() +"and has passed ");
-				if(model.state.currentStage +1==((QuestCard)model.state.currentStoryCard).getNumStages() ) {
+				if(serverModel.getState().currentStage +1==((QuestCard)serverModel.getState().currentStoryCard).getNumStages() ) {
 					
 					players[i].passedQuest =true;
 
 				
-					Card c = model.getAdventureDeck().pop();
+					Card c = serverModel.getAdventureDeck().pop();
 					this.players[i].addToHand(c);
-					model.getAdventureDeckDiscard().add(c);
+					serverModel.getAdventureDeckDiscard().add(c);
 				}
 			
 		//
@@ -541,7 +548,7 @@ public class QuestManager implements StoryCardState{
 		}
 			
 		}
-		if(model.stage.getCurrentStage()+1== ((QuestCard) model.currentStoryCard).getNumStages()){
+		if(serverModel.getStage().getCurrentStage()+1== ((QuestCard) serverModel.currentStoryCard).getNumStages()){
 			//restart the Questmanger
 			hasSponsor = false;
 			questersReady = false;
@@ -561,7 +568,7 @@ public class QuestManager implements StoryCardState{
 			
 			
 			
-			model.isDoneQuestingMode = true;
+			serverModel.setDoneQuestingMode(true);
 			
 
 			resolveQuest();

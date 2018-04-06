@@ -1023,7 +1023,7 @@ public class View extends Application {
 		    	logger.info("End Turn clicked");
 		    	state = control.getState();
 		    control.buttonClick(ENDTURN);
-				
+			
 		    }
 		});
 

@@ -22,7 +22,7 @@ public class Server {
     private int serverPort;                                             // server port
     private int playersPerTable = 4;                                        // number of players per table
 	ArrayList<ServerThread> clientThreads = new ArrayList<ServerThread>();
-    public Model model;
+    public ServerModel serverModel;
 
     /**
      * Constructor for Server object.
@@ -44,10 +44,10 @@ public class Server {
      * @return 
      */
     
-    public void setModel(Model model) {
+    public void setModel(ServerModel serverModel) {
     	logger.debug("setModel(Model model)  called");
 
-    	this.model = model;
+    	this.serverModel = serverModel;
     }
 
     public void start() {
@@ -57,15 +57,15 @@ public class Server {
         
         System.out.println("Listening on port " + serverPort);
         	
-    	model = new Model(this);
-		model.instantiatePlayers(playersPerTable);
-		model.instantiateStages(); //TODO set properly
+    	serverModel = new ServerModel(this);
+		serverModel.instantiatePlayers(playersPerTable);
+		serverModel.instantiateStages(); //TODO set properly
 		
 //		model.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
 
 //		model.deal(); 			//COMMENT OUT FOR SET SCENEARIOS
 
-		model.setScenario1();	//UNCOMMENT FOR SCEN 1
+		serverModel.setScenario1();	//UNCOMMENT FOR SCEN 1
 
 //		model.setScenario2();	//UNCOMMENT FOR SCEN 2
 
@@ -81,7 +81,7 @@ public class Server {
 	        		
 	        		if(clientThreads.size()==2) {
 	        			System.out.println("Beginning to Quest lets go model");
-	        			model.playGame();
+	        			serverModel.playGame();
 	        		}
 	    		}
 	    	}
@@ -152,7 +152,7 @@ public class Server {
 		logger.info("getSponsorDecision() called");
 
 		
-		sendServerMessageToOne("SERVERMESSAGE--GAMEHANDLE--"+model.getActivePlayer().getPlayerNumber()+"--GETSPONSOR", model.getActivePlayer().getPlayerNumber());
+		sendServerMessageToOne("SERVERMESSAGE--GAMEHANDLE--"+serverModel.getActivePlayer().getPlayerNumber()+"--GETSPONSOR", serverModel.getActivePlayer().getPlayerNumber());
 		
     
     }
@@ -164,7 +164,7 @@ public class Server {
      */
     public void getQuesterDecison() {
     	
-    	sendServerMessageToAllButOne("SERVERMESSAGE--GAMEHANDLE--"+model.getActivePlayer().getPlayerNumber()+"--GETQUESTER", model.getActivePlayer().getPlayerNumber());
+    	sendServerMessageToAllButOne("SERVERMESSAGE--GAMEHANDLE--"+serverModel.getActivePlayer().getPlayerNumber()+"--GETQUESTER", serverModel.getActivePlayer().getPlayerNumber());
     	
     }
     
