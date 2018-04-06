@@ -97,8 +97,22 @@ public class QuestManager implements StoryCardState{
 		
 		numOfQuesterPotential = serverModel.getNumPlayers() -1;
 		
+		
+
+		/
+		
+		if(!this.serverModel.getActivePlayer().declinedQuesting) {
+		boolean isQuesting;
+		
+		//This will send the messafe to the client model to ask client if they would like to quest 
+		serverModel.server.getQuesterDecison();
+		
+		
+		}
+		
+		
 		// if I do not have a sponsor ask the person if they want to sponsor 
-		if(!hasSponsor) {
+		/*if(!hasSponsor) {
 			
 		// if I haven't ask to sponsor yet then ask
 		if(!this.serverModel.getActivePlayer().declinedToSponsor) {
@@ -106,7 +120,7 @@ public class QuestManager implements StoryCardState{
 		serverModel.server.getSponsorDecision();
 		}
 		
-		}
+		}*/
 	/*	
 		if(numberOfrequests == 0 ) { nextPersonToDraw = model.getActivePlayer().getPlayerNumber() +1; 
 		if(nextPersonToDraw> model.getPlayers().length){nextPersonToDraw = 0;}

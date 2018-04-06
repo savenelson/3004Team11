@@ -152,7 +152,7 @@ public class Client {
 			getServerMessage();
 			break;
 			
-			
+		
 		case "UPDATE":
 			if (serverMessageComponents[2].equals(Integer.toString(this.playerNumber))) {
 				logger.info("Message was instigated by this client and not processed");
@@ -202,6 +202,8 @@ public class Client {
 					
 					getServerMessage();
 					break;
+				//TODO : GET AN UPDATE MESSAGE TO CHANGE THE PLAYNUMBER IS QUESTING RESPONSEE	
+				
 				default:
 					logger.info("Couldnt parse message from SERVERMESSAGE--UPDATE-- ?!?!?!");
 					getServerMessage();
@@ -250,11 +252,15 @@ public class Client {
 							
 					
 					break;
+					
+				//TODO SEE if the questing popup
 				case "GETQUESTERS":
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-						    getQuestingDecision();}
+						    getQuestingDecision();
+						    updateViewState();
+						    }
 					});
 					break;
 					
@@ -348,7 +354,8 @@ public class Client {
 
 	public boolean getQuestingDecision() {
 		logger.debug("getQuesting() called");
-
+		//TODO GET THE RESPOND OF THE SPONSOR AND SEND IT BACK TO SEVER 
+		// LOOK ABOVE
 		return view.popup("Player " + (playerNumber + 1) + " - Would you like to quest?");
 	}
 

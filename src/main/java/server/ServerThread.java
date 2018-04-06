@@ -99,20 +99,24 @@ public class ServerThread extends Thread {
 				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.serverModel.getActivePlayer()+" has decidied to sponsor. Get ready to quest");
 			}else {
 				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.serverModel.getActivePlayer()+" has not decidied to sponsor");
-				server.serverModel.nextPlayer();
+				//server.serverModel.nextPlayer();
 			
 			}
 			
 			break;
 			
+			
+		// TODO : GET THIS MESSAGE TO WORK	
+		// NEED TO SEND AN UPDATE MESSAGE TO EVERy CLIENT 
 		case "ISQUESTER":
 			boolean ISQUESTER = Boolean.parseBoolean(clientMessageComponents[2]);
 			server.serverModel.getActivePlayer().isQuesting= ISQUESTER;
+			
 			if(ISQUESTER) {
 				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.serverModel.getActivePlayer()+" has decidied to quest");
 			}else {
 				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.serverModel.getActivePlayer()+" has NOT decidied to quest");
-				server.serverModel.nextPlayer();
+				//server.serverModel.nextPlayer();
 			
 			}
 			break;
