@@ -99,7 +99,7 @@ public class QuestManager implements StoryCardState{
 		
 		
 
-		/
+
 		
 		if(!this.serverModel.getActivePlayer().declinedQuesting) {
 		boolean isQuesting;

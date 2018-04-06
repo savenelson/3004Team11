@@ -202,7 +202,8 @@ public class Client {
 					
 					getServerMessage();
 					break;
-				//TODO : GET AN UPDATE MESSAGE TO CHANGE THE PLAYNUMBER IS QUESTING RESPONSEE	
+				//TODO : GET AN UPDATE MESSAGE TO CHANGE THE PLAYNUMBER IS QUESTING RESPONSEE
+					
 				
 				default:
 					logger.info("Couldnt parse message from SERVERMESSAGE--UPDATE-- ?!?!?!");
