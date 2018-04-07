@@ -200,6 +200,7 @@ public class ServerModel extends AbstractModel {
 		logger.debug("endTurn() called");
 		logger.info("I end turn called changing s ");
 		currentState.nextPlayer();
+		currentState.handle();
 	}
 
 	public void stageOver() {

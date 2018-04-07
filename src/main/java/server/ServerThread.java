@@ -118,7 +118,10 @@ public class ServerThread extends Thread {
 			break;
 		case "ENDTURN":
 			//Platform.runLater(runnable);
+			
 			server.serverModel.endTurn();
+			
+			server.serverModel.nextPlayer();
 			
 			break;
 			

@@ -338,7 +338,8 @@ public class QuestManager implements StoryCardState{
 		boolean isHarder = stageHarder();
 		boolean foeInEachStage = isfoeEachStage();
 		boolean isHandSizeOk = checkHandSize();
-
+		
+		/*
 		// check if its a sponsor and if it is then check if they sponsor correctly 
 		if(clientModel.getActivePlayer().isSponsor && !foeInEachStage){	    			
 			clientModel.control.alert("Foe not present in every stage.");
@@ -365,7 +366,7 @@ public class QuestManager implements StoryCardState{
 			
 			return true;
 		}
-
+		*/
 			
 	}
 	

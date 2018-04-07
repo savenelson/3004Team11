@@ -115,7 +115,7 @@ public class ClientModel extends AbstractModel {
 
 	
 	public StoryCardState getCurrentState() {
-		return super.currentState;
+		return this.currentState;
 	}
 	public void instantiateStages() {
 		
