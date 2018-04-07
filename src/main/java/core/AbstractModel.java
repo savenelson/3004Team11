@@ -4,12 +4,11 @@ import java.util.ArrayList;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import server.QuestingStage;
+import core.QuestingStage;
 
 public abstract class AbstractModel {
 	protected static final Logger logger = LogManager.getLogger(AbstractModel.class);
 
-	
 	protected State state;
 
 	protected Player[] players;
@@ -76,8 +75,8 @@ public abstract class AbstractModel {
 
 	protected QuestingStage stage;
 
-	protected StoryCardState questManger;
-	protected StoryCardState eventManger;
+	protected StoryCardState questManager;
+	protected StoryCardState eventManager;
 	protected core.StoryCardState currentState;
 	private boolean isDoneQuestingMode = false;
 
@@ -503,13 +502,13 @@ public abstract class AbstractModel {
 	protected void playQuest() {
 		logger.info("playQuest() called");
 
-		currentState = questManger;
+		currentState = questManager;
 	}
 
 	protected void playEvent() {
 		logger.debug("playEvent() called");
 
-		currentState = eventManger;
+		currentState = eventManager;
 	}
 
 	public void playGame() {

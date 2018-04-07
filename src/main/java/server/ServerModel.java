@@ -29,7 +29,9 @@ public class ServerModel extends AbstractModel {
 
 		super.state = new State();
 		
+
 		eventManger = new EventManger(this);
+
 
 		questManager = new QuestManager(this);
 		currentStoryCard =questManager;

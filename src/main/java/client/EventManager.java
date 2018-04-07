@@ -10,8 +10,8 @@ import core.Player;
 import core.StoryCardState;
 
 // class to handle event cards
-public class EventManger implements StoryCardState, core.StoryCardState{
-private static final Logger logger = LogManager.getLogger(EventManger.class);
+public class EventManager implements core.StoryCardState{
+private static final Logger logger = LogManager.getLogger(EventManager.class);
 Player [] players;
 int numPlayers;
 AdventureDeck adventureDeck;
@@ -19,7 +19,7 @@ AdventureDeck adventureDeckDiscard;
 boolean nextQ;
 int currentPlayer;
 ClientModel clientModel; 
-public EventManger(ClientModel clientModel) {
+public EventManager(ClientModel clientModel) {
 	this.clientModel = clientModel;
 	this.players= clientModel.getPlayers();
 	this.numPlayers = clientModel.numPlayers;
@@ -291,6 +291,13 @@ public void nextPlayer() {
 public void setPlayer() {
 	// TODO Auto-generated method stub
 	
+}
+
+
+@Override
+public boolean canEndTurn() {
+	// TODO Auto-generated method stub
+	return false;
 }
 
 
