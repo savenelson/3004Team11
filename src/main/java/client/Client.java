@@ -284,7 +284,6 @@ public class Client {
 		logger.debug("updateViewState() called");
 
 		view.updateState();
-
 	}
 
 	public void stageIncrement() {
@@ -414,9 +413,11 @@ public class Client {
 		} else if (clickType.equals(View.STAGE5)) {
 			clientModel.setCurrentStage(4);
 		} else if (clickType.equals(View.ENDTURN)) {
-			if (clientModel.getCurrentState().canEndTurn()) {
-				sendClientMessage("CLIENTMESSAGE--ENDTURN--" + "--" + playerNumber);
-			}
+//			if (clientModel.getCurrentState().canEndTurn()) {
+//				sendClientMessage("CLIENTMESSAGE--ENDTURN--" + "--" + playerNumber);
+//			}
+			sendClientMessage("CLIENTMESSAGE--ENDTURN--" + "--" + playerNumber);
+
 		}
 	}
 

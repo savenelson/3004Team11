@@ -42,6 +42,14 @@ public class QuestManager implements StoryCardState {
 	Player[] players;
 
 	private boolean hasSponsor = false;
+	
+	public boolean getHasSponsor() {
+		return this.hasSponsor;
+	}
+	
+	public void setHasSponsor(boolean hasSponsor) {
+		this.hasSponsor = hasSponsor;
+	}
 
 	private boolean questersReady = false;
 

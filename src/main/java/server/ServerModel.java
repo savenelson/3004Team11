@@ -13,6 +13,8 @@ public class ServerModel extends AbstractModel {
 
 	public Server server;
 	
+	QuestManager questManager;
+
 	
 	ServerModel(Server server) {
 
@@ -22,8 +24,9 @@ public class ServerModel extends AbstractModel {
 
 		super.state = new State();
 		
-		super.questManger = new QuestManager(this);
 		super.eventManger = new EventManger(this);
+
+		questManager = new QuestManager(this);
 
 		super.stage = new QuestingStage();
 
@@ -243,7 +246,20 @@ public class ServerModel extends AbstractModel {
 	}
 
 	public void playGame() {
-	super.playGame();
+		logger.info("playGame() called" + currentStoryCard);
+		
+		if (super.currentStoryCard.getSubType().equals(StoryCard.QUEST)) {
+			playQuest();
+			currentState.handle();
+		} else if (super.currentStoryCard.getSubType().equals(StoryCard.EVENT)) {
+			playEvent();
+			currentState.handle();
+		} else if (super.currentStoryCard.getSubType().equals(StoryCard.TOURNAMENT)) {
+			// playTournament();
+		} else {
+			adventureDeck = (AdventureDeck) adventureDeckDiscard;
+			adventureDeck.shuffle();
+		}
 	}
 
 	public void nextPlayer() {

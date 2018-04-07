@@ -96,6 +96,7 @@ public class ServerThread extends Thread {
 			server.serverModel.getActivePlayer().isSponsor= ISSPONSOR;
 			
 			if(ISSPONSOR) {
+				server.serverModel.questManager.setHasSponsor(true);
 				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.serverModel.getActivePlayer()+" has decidied to sponsor. Get ready to quest");
 			}else {
 				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.serverModel.getActivePlayer()+" has not decidied to sponsor");
