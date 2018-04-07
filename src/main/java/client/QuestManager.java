@@ -501,7 +501,7 @@ public class QuestManager implements StoryCardState{
 				
 				players[i].passedStage = true;
 				logger.info("Player " + players[i].getPlayerNumber() +"and has passed ");
-				if(clientModel.state.currentStage +1==((QuestCard)clientModel.state.currentStoryCard).getNumStages() ) {
+				if(clientModel.getState().currentStage +1==((QuestCard)clientModel.getState().currentStoryCard).getNumStages() ) {
 					
 					players[i].passedQuest =true;
 

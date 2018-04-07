@@ -152,7 +152,7 @@ public class Server {
 		logger.info("getSponsorDecision() called");
 
 		
-		sendServerMessageToOne("SERVERMESSAGE--GAMEHANDLE--"+serverModel.getActivePlayer().getPlayerNumber()+"--GETSPONSOR", serverModel.getActivePlayer().getPlayerNumber());
+		sendServerMessageToOne("SERVERMESSAGE--GAMEHANDLE--"+"--GETSPONSOR",0);
 		
     
     }

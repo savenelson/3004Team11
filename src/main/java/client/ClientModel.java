@@ -220,12 +220,12 @@ public class ClientModel extends AbstractModel {
 			CardCollection<AdventureCard> party = players[playerHoldingAlly].getParty();
 			AdventureCard c = party.getByID(iD);
 			party.remove(c);
-			adventureDeckDiscard.add(c);
+			super.adventureDeckDiscard.add(c);
 
 			// remove Mordred
 			AdventureCard mordred = hand.get(indexMordred);
 			hand.remove(mordred);
-			adventureDeckDiscard.add(mordred);
+			super.adventureDeckDiscard.add(mordred);
 
 			logger.info("Player " + currentPlayer + " assaniated Player " + playerHoldingAlly + "s ally "
 					+ c.getName());

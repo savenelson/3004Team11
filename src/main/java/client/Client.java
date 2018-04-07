@@ -146,7 +146,7 @@ public class Client {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-				    clientModel.control.view.alert(serverMessageComponents[2]);}
+				   view.alert(serverMessageComponents[2]);}
 			});
 			
 			getServerMessage();
@@ -203,7 +203,7 @@ public class Client {
 					getServerMessage();
 					break;
 				//TODO : GET AN UPDATE MESSAGE TO CHANGE THE PLAYNUMBER IS QUESTING RESPONSEE
-					
+				
 				
 				default:
 					logger.info("Couldnt parse message from SERVERMESSAGE--UPDATE-- ?!?!?!");
@@ -339,7 +339,8 @@ public class Client {
 	
 	/**
 	 * Ask this Player if they would like to sponsor the  send the message back to the server 
-	 * 
+	 *  
+	 *  
 	 * 
 	 */
 
@@ -353,11 +354,17 @@ public class Client {
 		
 	}
 
-	public boolean getQuestingDecision() {
+	public void getQuestingDecision() {
 		logger.debug("getQuesting() called");
 		//TODO GET THE RESPOND OF THE SPONSOR AND SEND IT BACK TO SEVER 
 		// LOOK ABOVE
-		return view.popup("Player " + (playerNumber + 1) + " - Would you like to quest?");
+		//return view.popup("Player " + (playerNumber + 1) + " - Would you like to quest?");
+		
+		boolean isQuesting = view.popup("Player " + (playerNumber + 1) + " - Would you like  quest?");
+		clientModel.getActivePlayer().isQuesting= isQuesting;
+		sendClientMessage("CLIENTMESSAGE--ISQUESTING--" +isQuesting+ "--" + playerNumber);
+		
+		
 	}
 
 	public State getState() {

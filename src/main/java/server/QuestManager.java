@@ -343,12 +343,12 @@ public class QuestManager implements StoryCardState{
 		int numStages = ((QuestCard)serverModel.currentStoryCard).getNumStages();
 		for (int i = 0; i < numStages; ++i){
 			for (int j = 0; j < serverModel.getStage().getStageAt(i).size(); ++j){
-				if(((AdventureCard) serverModel.getStage().getStageAt(i).get(j)).subType.equals(AdventureCard.FOE)){
+				if( serverModel.getStage().getStageAt(i).get(j).getSubType().equals(AdventureCard.FOE)){
 				numOfCardsInStaging++;
 					
-				}else if(((AdventureCard) serverModel.getStage().getStageAt(i).get(j)).subType.equals(AdventureCard.WEAPON)){
+				}else if(((AdventureCard) serverModel.getStage().getStageAt(i).get(j)).getSubType().equals(AdventureCard.WEAPON)){
 				numOfCardsInStaging++;
-				}else if(((AdventureCard) serverModel.getStage().getStageAt(i).get(j)).subType.equals(AdventureCard.TEST)){
+				}else if(((AdventureCard) serverModel.getStage().getStageAt(i).get(j)).getSubType().equals(AdventureCard.TEST)){
 				numOfCardsInStaging++;	
 				}
 			}
@@ -361,7 +361,7 @@ public class QuestManager implements StoryCardState{
 
 		// if the hand is bigger then 12 then reurn false 
 		if(serverModel.getActivePlayer().getHand().size() > 12) {
-			serverModel.control.alert("Hand Size is too large, please discard");
+		//	serverModel.control.alert("Hand Size is too large, please discard");
 			logger.info("Player " + serverModel.getActivePlayer().getPlayerNumber()+ " hand too large");
 			return false;
 			
@@ -380,23 +380,23 @@ public class QuestManager implements StoryCardState{
 
 		// check if its a sponsor and if it is then check if they sponsor correctly 
 		if(serverModel.getActivePlayer().isSponsor && !foeInEachStage){	    			
-			serverModel.control.alert("Foe not present in every stage.");
+		//	serverModel.control.alert("Foe not present in every stage.");
 			return false;
 		//check if its a sponsor and if the stages are Harder
 		} else if(serverModel.getActivePlayer().isSponsor && !isHarder) {
-			serverModel.control.alert("The stages are not progressively harder");
+			//serverModel.control.alert("The stages are not progressively harder");
 			return false;
 			
 		// if their hand size id ok
 		} else if(!isHandSizeOk){	
-			serverModel.control.alert("Your hand size is to big with "+ serverModel.getActivePlayer().getHand().size());
+		//	serverModel.control.alert("Your hand size is to big with "+ serverModel.getActivePlayer().getHand().size());
 			return false;
 			
 		// let start the quest baby
 		}else if (serverModel.getActivePlayer().isSponsor)  {
 			
 				numberOfCardsToReturn = numberOfCardsForSponsor();
-				serverModel.control.stagesSet();
+		//		serverModel.control.stagesSet();
 			return true;
 			
 		// The person was a quester its true 
@@ -500,7 +500,7 @@ public class QuestManager implements StoryCardState{
 		
 
 		
-		serverModel.control.resolveQuest();
+	//	serverModel.control.resolveQuest();
 		
 		return 0;
 	}
