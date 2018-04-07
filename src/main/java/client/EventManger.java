@@ -3,6 +3,11 @@ package client;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import core.AdventureCard;
+import core.AdventureDeck;
+import core.CardCollection;
+import core.Player;
+
 // class to handle event cards
 public class EventManger implements StoryCardState{
 private static final Logger logger = LogManager.getLogger(EventManger.class);
@@ -51,53 +56,19 @@ public void handleEvent(String eventName) {
 	}
 private void CourtCalled() {
 	for (int i = 0; i < this.players.length; i++) {
-		CardCollection hand = this.players[i].getHand();
+		CardCollection<AdventureCard> hand = this.players[i].getHand();
 
-		for (int j = 0; j < hand.size(); j++) {
-
-			if (hand.getByID("100") != null) {
-				Card c = hand.getByID("100");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("101") != null) {
-				Card c = hand.getByID("101");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("102") != null) {
-				Card c = hand.getByID("102");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("103") != null) {
-				Card c = hand.getByID("103");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("104") != null) {
-				Card c = hand.getByID("104");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("105") != null) {
-				Card c = hand.getByID("105");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("106") != null) {
-				Card c = hand.getByID("106");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("107") != null) {
-				Card c = hand.getByID("107");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("108") != null) {
-				Card c = hand.getByID("108");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("109") != null) {
-				Card c = hand.getByID("109");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
+			// cards from 100 -109
+			for (int k = 0; k<10; k++) {
+				if(hand.getByID("10"+k)!=null) {
+					adventureDeckDiscard.add(hand.getByID("10"+k));
+					hand.remove(hand.getByID("10"+k));
+					
+				}
 			}
-		}
 	}
+			
+
 }
 
 

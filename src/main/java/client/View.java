@@ -29,6 +29,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import core.AdventureCard;
+import core.CardCollection;
+import core.FoeCard;
+import core.QuestCard;
+import core.State;
+import core.StoryCard;
+import core.WeaponCard;
 
 
 public class View extends Application {
@@ -49,7 +56,7 @@ public class View extends Application {
 	public static final String STAGE5 = "Stage 5";
 	public static final String ENDTURN = "End Turn";
 	
-	public Control control;
+	public Client control;
 	private State state;
 	
     private static final String DEFAULT_SERVER_ADDRESS = "localhost";   // default server address
@@ -70,7 +77,7 @@ public class View extends Application {
 	public static final int rowHandTop6 = 390;
 	public static final int colHandTop6 = 10;
 	
-	//	public static final int colAdventureDeck;que
+	//	public static final int colAdventureDeck;
 	
 	public static final int rowStoryCard = 80;
 	public static final int rowHandBottom6 = 565;
@@ -121,6 +128,7 @@ public class View extends Application {
 	private ImageView imgView;
 	
 	private Stage stage;
+	
 	private Pane canvas;
 	private TilePane tile;
 	
@@ -159,7 +167,7 @@ public class View extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		logger.info("start() running");
 
-		control = new Control(this, serverAddress, serverPort);
+		control = new Client(this, serverAddress, serverPort);
 		stage = primaryStage;
 		initUI(primaryStage);
 	}
@@ -191,7 +199,7 @@ public class View extends Application {
 	}
 	
 	public Pane drawCards(Pane canvas){
-		logger.debug("drawCards() called");
+		
 		
 		this.state = control.getState();
 		addControlsToCanvas(canvas);
@@ -202,6 +210,7 @@ public class View extends Application {
 		addPlayerAPartyToCanvas(canvas);
 		addPlayerBPartyToCanvas(canvas);
 		addShieldsBToCanvas(canvas);
+
 				
 		if(state.numPlayers == 3){
 			addPlayerCRankToCanvas(canvas);
@@ -243,7 +252,7 @@ public class View extends Application {
 	private void addHandToCanvas(Pane canvas) {
 		logger.debug("addHandToCanvas() called");
 
-		CardCollection hand = null;
+		CardCollection<AdventureCard> hand = null;
 		hand = state.players[state.currentPlayer].getHand();
 		tile = new TilePane();
 		tile.setPrefRows(2);
@@ -277,7 +286,7 @@ public class View extends Application {
 		logger.debug("addStageToCanvas() called");
 
 		state = control.getState();
-		CardCollection stage = state.stage;
+		CardCollection<AdventureCard> stage = state.stage;
 		if(state.players[state.currentPlayer].isSponsor){
 			tile = new TilePane();
 			tile.setPrefRows(1);
@@ -309,7 +318,7 @@ public class View extends Application {
 			
 			
 			state = control.getState();		
-			stage = state.stages[state.stageOverCount];
+//			stage = state.stages;
 			Label queueCardsLabel;
 			Label stageLabel;
 			if(stage.size() > 1)
@@ -404,7 +413,7 @@ public class View extends Application {
 	private void addQueueToCanvas(Pane canvas) {
 		logger.debug("addQueueToCanvas() called");
 
-		CardCollection queue = control.getActivePlayer().getQueue();
+		CardCollection<AdventureCard> queue = control.getActivePlayer().getQueue();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -516,7 +525,7 @@ public class View extends Application {
 	private void addPlayerAPartyToCanvas(Pane canvas) {
 		logger.debug("addPlayerAPartyToCanvas() called");
 
-		CardCollection party = state.players[0].getParty();
+		CardCollection<AdventureCard> party = state.players[0].getParty();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -552,7 +561,7 @@ public class View extends Application {
 	private void addPlayerBPartyToCanvas(Pane canvas) {
 		logger.debug("addPlayerBPartyToCanvas() called");
 
-		CardCollection party = state.players[1].getParty();
+		CardCollection<AdventureCard> party = state.players[1].getParty();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -588,7 +597,7 @@ public class View extends Application {
 	private void addPlayerCPartyToCanvas(Pane canvas) {
 		logger.debug("addPlayerCPartyToCanvas() called");
 
-		CardCollection party = state.players[2].getParty();
+		CardCollection<AdventureCard> party = state.players[2].getParty();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -624,7 +633,7 @@ public class View extends Application {
 	private void addPlayerDPartyToCanvas(Pane canvas) {
 		logger.debug("addPlayerDPartyToCanvas() called");
 
-		CardCollection party = state.players[3].getParty();
+		CardCollection<AdventureCard> party = state.players[3].getParty();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -1013,13 +1022,12 @@ public class View extends Application {
 		    public void handle(ActionEvent e) {
 		    	logger.info("End Turn clicked");
 		    	state = control.getState();
-		    control.model.endTurn();
+		    control.buttonClick(ENDTURN);
 				
 		    }
 		});
 
-	if((state.players[state.currentPlayer].isSponsor&& ((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST))){
-			
+	if((state.players[state.currentPlayer].isSponsor && ((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.QUEST))){
 				int numStages = ((QuestCard)state.currentStoryCard).getNumStages();
 				for(int i = 4; i!=numStages-1; i--) {stageButtons[i].setDisable(true);} 
 				canvas.getChildren().addAll(stage1,stage2,stage3,stage4,stage5,endTurn);
@@ -1028,27 +1036,7 @@ public class View extends Application {
 		}
 	}
 	
-	
-	private int totalNumOfBP(CardCollection stage) {
-		logger.debug("totalNumOfBP() called");
-		
-		int numberOfBP =  0;
 
-		for(int i=0; i<stage.size(); i++) {
-		  if (((AdventureCard) stage.get(i)).getSubType().equals("Foe")) {
-		    numberOfBP+=((FoeCard) stage.get(i)).getBattlePoints();
-		  
-		    
-		  }else if (((AdventureCard) stage.get(i)).getSubType().equals("Weapon")) {
-		    
-		    numberOfBP+=((WeaponCard) stage.get(i)).getBattlePoints();
-		  }
-		}
-
-
-		return numberOfBP;
-		
-	}
 	
 	public void stageResolved(){
 		logger.debug("stageResolved() called");

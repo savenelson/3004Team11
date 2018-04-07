@@ -1,6 +1,5 @@
 package aIDecisons;
-
-import core.Player;
+import 
 
 public class Strategy1DiscardAfterWinningTest implements DiscardAfterWinningTest {
 	
