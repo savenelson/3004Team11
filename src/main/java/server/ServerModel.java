@@ -30,7 +30,7 @@ public class ServerModel extends AbstractModel {
 		super.state = new State();
 		
 
-		eventManger = new EventManger(this);
+		eventManger = new EventManager(this);
 
 
 		questManager = new QuestManager(this);
