@@ -3,6 +3,8 @@ package server;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import server.ServerModel;
+import core.AbstractModel;
 import core.AdventureCard;
 import core.AdventureDeck;
 import core.Card;
@@ -13,25 +15,26 @@ import core.StoryCardState;
 // class to handle event cards
 
 
-public class EventManger implements  StoryCardState {
-	private static final Logger logger = LogManager.getLogger(EventManger.class);
+public class EventManager implements  StoryCardState {
+	private static final Logger logger = LogManager.getLogger(EventManager.class);
 	Player[] players;
 	int numPlayers;
 	AdventureDeck adventureDeck;
 	CardCollection<AdventureCard> adventureDeckDiscard;
 	boolean nextQ;
 	int currentPlayer;
-	Model model;
+	ServerModel serverModel;
 
-	public EventManger(Model model) {
-		this.model = model;
-		this.players = model.getPlayers();
-		this.numPlayers = model.numPlayers;
-		this.adventureDeck = model.getAdventureDeck();
-		this.nextQ = model.inNextQ;
-		this.currentPlayer = model.currentPlayer;
+	public EventManager(AbstractModel model) {
+		/*
+		 * his.serverModel = clientModel;
+		this.players = clientModel.getPlayers();
+		this.numPlayers = clientModel.getNumPlayers();
+		this.adventureDeck = clientModel.getAdventureDeck();
+		this.nextQ = clientModel.inNextQ;
+		this.currentPlayer = clientModel.currentPlayer;
 
-
+*/
 	}
 
 	public void handleEvent(String eventName) {
@@ -198,7 +201,7 @@ public class EventManger implements  StoryCardState {
 	public void ProsperityThroughoutTheRealm() {
 		logger.info("Handling ProsperityThroughoutTheRealm event ");
 
-		int nummOfPlayers = model.getPlayers().length;
+		int nummOfPlayers = serverModel.getPlayers().length;
 		for (int i = 0; i < nummOfPlayers; i++) {
 			// need to draw from story card
 			logger.info(players[i].getPlayerNumber());
@@ -291,8 +294,8 @@ public class EventManger implements  StoryCardState {
 	public void handle() {
 		// TODO Auto-generated method stub
 
-		String eventName = model.currentStoryCard.getName();
-		System.out.println(model.currentStoryCard.getName());
+		String eventName = serverModel.currentStoryCard.getName();
+		System.out.println(serverModel.currentStoryCard.getName());
 
 		if (eventName.equals("KingsRecognition")) {
 			KingsRecognition();
@@ -327,6 +330,11 @@ public class EventManger implements  StoryCardState {
 	public void setPlayer() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean canEndTurn() {
+		return false;
 	}
 
 

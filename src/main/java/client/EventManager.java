@@ -7,24 +7,25 @@ import core.AdventureCard;
 import core.AdventureDeck;
 import core.CardCollection;
 import core.Player;
+import core.StoryCardState;
 
 // class to handle event cards
-public class EventManger implements StoryCardState{
-private static final Logger logger = LogManager.getLogger(EventManger.class);
+public class EventManager implements core.StoryCardState{
+private static final Logger logger = LogManager.getLogger(EventManager.class);
 Player [] players;
 int numPlayers;
 AdventureDeck adventureDeck;
 AdventureDeck adventureDeckDiscard;
 boolean nextQ;
 int currentPlayer;
-Model model; 
-public EventManger(Model model) {
-	this.model = model;
-	this.players= model.getPlayers();
-	this.numPlayers = model.numPlayers;
-	this.adventureDeck = model.getAdventureDeck();
-	this.nextQ = model.inNextQ;
-	this.currentPlayer = model.currentPlayer;
+ClientModel clientModel; 
+public EventManager(ClientModel clientModel) {
+	this.clientModel = clientModel;
+	this.players= clientModel.getPlayers();
+	this.numPlayers = clientModel.numPlayers;
+	this.adventureDeck = clientModel.getAdventureDeck();
+	this.nextQ = clientModel.inNextQ;
+	this.currentPlayer = clientModel.currentPlayer;
 	
 }
 
@@ -150,7 +151,7 @@ public void KingCallToArms() {
 public void ProsperityThroughoutTheRealm() {
 	logger.info("Handling ProsperityThroughoutTheRealm event ");
 	
-	int nummOfPlayers = model.getPlayers().length;
+	int nummOfPlayers = clientModel.getPlayers().length;
 	for (int i = 0; i < nummOfPlayers; i++) {
 		// need to draw from  story card 
 		logger.info(players[i].getPlayerNumber());
@@ -241,8 +242,8 @@ public void Plague() {
 public void handle() {
 	// TODO Auto-generated method stub
 	
-	String eventName = model.currentStoryCard.getName();
-	System.out.println(model.currentStoryCard.getName());
+	String eventName = clientModel.currentStoryCard.getName();
+	System.out.println(clientModel.currentStoryCard.getName());
 
 
 	if(eventName.equals("KingsRecognition")) {
@@ -280,8 +281,8 @@ public Player nextPlayer1() {
 public void nextPlayer() {
 	// TODO Auto-generated method stub		
 			
-	model.nextPlayer();
-	model.nextStory();
+	clientModel.nextPlayer();
+	clientModel.nextStory();
 	
 }
 
@@ -290,6 +291,13 @@ public void nextPlayer() {
 public void setPlayer() {
 	// TODO Auto-generated method stub
 	
+}
+
+
+@Override
+public boolean canEndTurn() {
+	// TODO Auto-generated method stub
+	return false;
 }
 
 

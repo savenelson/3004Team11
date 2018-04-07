@@ -11,7 +11,7 @@ public class Player {
 
 	public boolean isSponsor = false;
 	public boolean declinedToSponsor = false;
-	public boolean declinedQuesting =false;
+	public boolean declinedToQuest =false;
 	public boolean hasQueuedAgainstStage = false;
 	public boolean isQuesting = false;
 	public boolean passedStage = false;
@@ -70,7 +70,7 @@ public class Player {
 		return "Player " + this.playerNumber;
 	}
 	
-	public void addToHand(Card c){
+	public void addToHand(AdventureCard c){
 		logger.info(this.playerNumber + "s hand changed - added " + c.getName());
 		hand.add(c);
 	}

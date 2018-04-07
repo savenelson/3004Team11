@@ -1,55 +1,53 @@
-package client;
+package core;
 
 import java.util.ArrayList;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import core.QuestingStage;
 
-import core.*;
+public abstract class AbstractModel {
+	protected static final Logger logger = LogManager.getLogger(AbstractModel.class);
 
-public class Model {
+	protected State state;
 
-	private static final Logger logger = LogManager.getLogger(Model.class);
-
-	public Client control;
-	State state;
-
-	private Player[] players;
+	protected Player[] players;
 
 	public Player[] getPlayers() {
+		
 		return players;
 	}
 
-	private AdventureDeck adventureDeck;
+	protected AdventureDeck adventureDeck;
 
 	public AdventureDeck getAdventureDeck() {
 		return this.adventureDeck;
 	}
 
-	private CardCollection<AdventureCard> adventureDeckDiscard;
+	protected CardCollection<AdventureCard> adventureDeckDiscard;
 
 	public CardCollection<AdventureCard> getAdventureDeckDiscard() {
 		return this.adventureDeck;
 	}
 
-	private StoryDeck storyDeck;
+	protected StoryDeck storyDeck;
 
 	public StoryDeck getStoryDeck() {
 		return storyDeck;
 	}
 
-	private CardCollection<StoryCard> storyDeckDiscard;
+	protected CardCollection<StoryCard> storyDeckDiscard;
 
 	public CardCollection<StoryCard> getStoryDeckDiscard() {
 		return storyDeckDiscard;
 	}
 
-	boolean inNextQ = false;
+	protected boolean inNextQ = false;
 
-	int currentViewer;
-	int currentPlayer = 0;
-	int currentStage;
-	int currentSponsor;
+	protected int currentViewer;
+	protected int currentPlayer = 0;
+	protected int currentStage;
+	private int currentSponsor;
 	int endTurnCounter = 0;
 	boolean gameWon = false;
 
@@ -64,48 +62,25 @@ public class Model {
 	boolean AllyInPlayQueenIseult =  false;
 	boolean AllyInPlayMerlin =  false;
 
-	StoryCard currentStoryCard;
+	protected StoryCard currentStoryCard;
 
-	int numPlayers;
-	int numStages;
+	protected int numPlayers;
+	protected int numStages;
 
-	ArrayList<CardCollection<AdventureCard>> stages;
+	protected ArrayList<CardCollection<AdventureCard>> stages;
 
 	ArrayList<CardCollection<AdventureCard>> getStages() {
 		return stages;
 	}
 
-	QuestingStage stage;
+	protected QuestingStage stage;
 
-	private StoryCardState questManger;
-	private StoryCardState eventManger;
-	private StoryCardState currentState;
-	boolean isDoneQuestingMode = false;
+	protected StoryCardState questManager;
+	protected StoryCardState eventManager;
+	protected core.StoryCardState currentState;
+	private boolean isDoneQuestingMode = false;
 
-	Model(Client control) {
 
-		logger.info("Model created");
-
-		this.control = control;
-		this.state = new State();
-		
-		this.questManger = new QuestManager(this);
-		this.eventManger = new EventManger(this);
-
-		this.stage = new QuestingStage();
-
-		this.adventureDeck = new AdventureDeck();
-		this.storyDeck = new StoryDeck();
-
-		this.adventureDeckDiscard = new CardCollection<AdventureCard>();
-		this.storyDeckDiscard = new CardCollection<StoryCard>();
-
-		// currentPlayer = 0;
-		// currentSponsor = 0; //nelson commented while solving view problems
-
-		this.currentStage = stage.getCurrentStage();
-	}
-	
 	public Player getActivePlayer() {
 
 		return players[this.currentPlayer];
@@ -129,7 +104,7 @@ public class Model {
 	public void instantiateStages() {
 		logger.debug("instantiateStages() called - hard coded to 5");
 
-		stage = new QuestingStage();
+		setStage(new QuestingStage());
 	}
 
 	public void initialShuffle() {
@@ -164,7 +139,7 @@ public class Model {
 	public void resetCurrentStage() {
 		logger.debug("resetCurrentStage() called");
 
-		stage.resetCurrentStage();
+		getStage().resetCurrentStage();
 	}
 
 	public State getState() {
@@ -177,7 +152,7 @@ public class Model {
 
 		state.isQuesting = this.players[currentPlayer].isQuesting;
 
-		state.currentSponsor = this.currentSponsor;
+		state.currentSponsor = this.getCurrentSponsor();
 
 		state.inNextQ = this.inNextQ;
 
@@ -185,13 +160,13 @@ public class Model {
 
 		state.currentViewer = this.currentViewer;
 
-		if (stage.getStageAt(stage.getCurrentStage()) != null) {
-			state.stage = this.stage.getStageAt(stage.getCurrentStage());
+		if (getStage().getStageAt(getStage().getCurrentStage()) != null) {
+			state.stage = this.getStage().getStageAt(getStage().getCurrentStage());
 		}
 
-		state.currentStage = this.stage.getCurrentStage();
+		state.currentStage = this.getStage().getCurrentStage();
 
-		state.stages = this.stage.getStage();
+		state.stages = this.getStage().getStage();
 
 		state.numPlayers = this.numPlayers;
 
@@ -208,52 +183,38 @@ public class Model {
 		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(iD);
 
-		if ( c.getSubType().equals(AdventureCard.AMOUR)
-				&& containsAmour(players[currentPlayer].getParty())) {
-			control.alert("Cannot have more than one amour in party.");
-			return;
-		}
-
 		hand.remove(c);
 		players[currentPlayer].addToParty(c);
 		logger.info("Player " + currentPlayer + " moved " + c.getName() + " from hand to party");
+
+		
+
 	}
 
-	public boolean stage(String iD, int currentPlayer) {
+	public boolean stage(String iD, int currentPlayer, int stageNumber) {
 		logger.debug("stage() called");
 
 		CardCollection<AdventureCard> hand = this.players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(iD);
-		if ((c.getSubType().equals(AdventureCard.FOE))
-				&& containsFoe(this.stage.getStageAt(currentStage))) {
-			logger.info("The Sponsor tried to stage more than one Foe . NOT ALLOWED");
-			
-			control.alert("Cannot stage more than one foe per quest stage.");
-			return false;
-		}
-		if (containsWeapon(this.stage.getStageAt(currentStage), c.getName())) {
-			logger.info("The Sponsor tried to stage duplicate weapons. NOT ALLOWED");
-			control.alert("Cannot stage duplicate weapons.");
-			return false;
-		}
+		
 		hand.remove(c);
 
 		// Change To add to my new Stages
-		this.stage.getStageAt(currentStage).add(c);
+		this.getStage().getStageAt(stageNumber).add(c);
 		
-		logger.info("Player " + currentPlayer + " moves " + c.getName() + " from hand to Stage " + currentStage);
+		logger.info("Player " + currentPlayer + " moves " + c.getName() + " from hand to Stage " + stageNumber);
 		return true;
 	}
 
-	public void unstage(String iD, int currentPlayer) {
+	public void unstage(String iD, int currentPlayer, int stageNumber) {
 		logger.debug("unstage() called");
 
-		Card c = this.stage.getStageAt(currentStage).getByID(iD);
+		Card c = this.getStage().getStageAt(stageNumber).getByID(iD);
 
-		this.stage.getStageAt(currentStage).remove(iD);
-		;
+		this.getStage().getStageAt(stageNumber).remove(iD);
+		
 
-		this.players[this.currentPlayer].getHand().add(c);
+		this.players[currentPlayer].getHand().add(c);
 
 		logger.info("Player " + currentPlayer + " moves " + c.getName() + " from Stage back to Hand");
 	}
@@ -308,9 +269,9 @@ public class Model {
 			logger.info("Player " + currentPlayer + " assaniated Player " + playerHoldingAlly + "s ally "
 					+ c.getName());
 			
-		} else {
-			control.alert("You do not have Mordred in your hand!");
 		}
+			
+		
 	}
 
 
@@ -322,15 +283,9 @@ public class Model {
 		hand = players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(id);
 
-		if (containsSameWeapon(players[currentPlayer].getQueue(), ((WeaponCard) c).getName())) {
-			control.alert("Cannot have duplicate weapons in queue.");
-			return;
-		}
-
 		hand.remove(c);
 		players[currentPlayer].addToQueue(c);
 		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from hand to queue");
-
 	}
 
 	public void dequeue(String iD, int currentPlayer) {
@@ -358,8 +313,8 @@ public class Model {
 	public void setCurrentStage(int num) {
 		logger.debug("setCurrentStage(" + num + ") called");
 		this.currentStage = num;
-		this.stage.setCurrentStage(num);
-		control.updateViewState();
+		this.getStage().setCurrentStage(num);
+		
 	}
 
 	public void endTurn() {
@@ -382,8 +337,8 @@ public class Model {
 				players[i].passedStage = false;
 			}
 		}
-		state.stage = this.stage.getStageAt(currentStage);
-		control.updateViewState();
+		state.stage = this.getStage().getStageAt(currentStage);
+		
 	}
 	
 	/**
@@ -538,22 +493,22 @@ public class Model {
 		logger.debug("getSubType() called");
 		String result = "";
 
-		if (((AdventureCard) players[currentPlayer].getHand().getByID(ID)) != null) {
-			result = ((AdventureCard) players[currentPlayer].getHand().getByID(ID)).getSubType();
+		if ( players[currentPlayer].getHand().getByID(ID) != null) {
+			result = players[currentPlayer].getHand().getByID(ID).getSubType();
 		}
 		return result;
 	}
 
-	private void playQuest() {
+	protected void playQuest() {
 		logger.info("playQuest() called");
 
-		currentState = questManger;
+		currentState = questManager;
 	}
 
-	private void playEvent() {
+	protected void playEvent() {
 		logger.debug("playEvent() called");
 
-		currentState = eventManger;
+		currentState = eventManager;
 	}
 
 	public void playGame() {
@@ -580,18 +535,18 @@ public class Model {
 			this.currentPlayer = 0;
 		} else {
 			this.currentPlayer++;
-			this.currentSponsor = this.currentPlayer;
+			this.setCurrentSponsor(this.currentPlayer);
 		}
 		logger.info("Player changed to " + this.currentPlayer);
 
-		control.view.update();
+		
 	}
 
 	public void setNextPlayer(int nextplayer) {
 
 		currentPlayer = nextplayer;
 
-		control.view.update();
+	
 
 	}
 
@@ -599,8 +554,8 @@ public class Model {
 		logger.info("nextStory() called");
 		// get ready for the next person
 
-		this.isDoneQuestingMode = false;
-		;
+		this.setDoneQuestingMode(false);
+		
 		for (int i = 0; i < numPlayers; ++i) {
 
 			players[i].isSponsor = false;
@@ -628,9 +583,10 @@ public class Model {
 		logger.info("Story card up next " + currentStoryCard.getName());
 
 		this.currentStage = 0;
-		stage.resetCurrentStage();
+		getStage().resetCurrentStage();
 
-		control.updateViewState();
+		
+		
 		playGame();
 		currentState.handle();
 	}
@@ -1175,4 +1131,37 @@ public class Model {
 		this.players[3].addToHand(this.adventureDeck.getByID("44"));
 
 	}
+
+
+	public boolean isDoneQuestingMode() {
+		return isDoneQuestingMode;
+	}
+
+
+	public void setDoneQuestingMode(boolean isDoneQuestingMode) {
+		this.isDoneQuestingMode = isDoneQuestingMode;
+	}
+
+
+	public QuestingStage getStage() {
+		return stage;
+	}
+
+
+	public void setStage(QuestingStage stage) {
+		this.stage = stage;
+	}
+
+
+	public int getCurrentSponsor() {
+		return currentSponsor;
+	}
+
+
+	public void setCurrentSponsor(int currentSponsor) {
+		this.currentSponsor = currentSponsor;
+	}
+
+	
+
 }
