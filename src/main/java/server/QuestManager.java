@@ -99,18 +99,21 @@ public class QuestManager implements StoryCardState {
 		// if I do not have a sponsor ask the person if they want to sponsor
 		if (!hasSponsor) {
 
+
+			
+			// if I haven't ask to sponsor yet then ask ORIGINAL
+			if (!this.serverModel.getActivePlayer().declinedToSponsor) {
+				boolean wantToSponsor;
+				serverModel.server.getSponsorDecision();
+			}
+
+		}else{
+		
 			// if I haven't ask to quester yet then ask
 			if (!this.serverModel.getActivePlayer().declinedToQuest) {
 				boolean wantToSponsor;
 				serverModel.server.getQuesterDecison();
 			}
-			
-//			// if I haven't ask to sponsor yet then ask ORIGINAL
-//			if (!this.serverModel.getActivePlayer().declinedToSponsor) {
-//				boolean wantToSponsor;
-//				serverModel.server.getSponsorDecision();
-//			}
-
 		}
 		/*
 		 * if(numberOfrequests == 0 ) { nextPersonToDraw =
