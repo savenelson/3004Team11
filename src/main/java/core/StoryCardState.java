@@ -5,4 +5,5 @@ public interface StoryCardState {
 	void nextPlayer();
 	void setPlayer();
 	boolean canEndTurn();
+	void setHasSponsor(boolean b);
 }
