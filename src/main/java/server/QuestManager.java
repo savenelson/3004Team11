@@ -100,16 +100,7 @@ public class QuestManager implements StoryCardState{
 		
 
 
-		
-		if(!this.serverModel.getActivePlayer().declinedQuesting) {
-		boolean isQuesting;
-		
-		//This will send the messafe to the client model to ask client if they would like to quest 
-		serverModel.server.getQuesterDecison();
-		
-		
-		}
-		
+	
 		// if I do not have a sponsor ask the person if they want to sponsor 
 		if(!hasSponsor) {
 			

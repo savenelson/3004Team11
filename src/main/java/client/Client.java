@@ -184,22 +184,22 @@ public class Client {
 				case "STAGE": 
 					clientModel.stage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]),Integer.parseInt(serverMessageComponents[5]));
 		
-					
+					updateViewState();
 					getServerMessage();
 					break;
 				case "UNSTAGE":
 					clientModel.unstage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]),Integer.parseInt(serverMessageComponents[5]));
-					
+					updateViewState();
 					getServerMessage();
 					break;
 				case "DISCARD":
 					clientModel.discard(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
-			
+					updateViewState();
 					getServerMessage();
 					break;
 				case "ASSASSINATE":
 					clientModel.assassinate(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
-					
+					updateViewState();
 					getServerMessage();
 					break;
 
@@ -227,6 +227,7 @@ public class Client {
 			playerNumber = Integer.parseInt(serverMessageComponents[2]);
 			logger.info(
 					"Player: " + clientModel.currentPlayer + " on ip: " + socket.getInetAddress() + " on port: " + socket.getPort());
+			updateViewState();
 			getServerMessage();
 			break;
 		case "GAMEHANDLE":
@@ -398,6 +399,7 @@ public class Client {
 	public void handClick(String clickType, String ID) {
 		logger.debug("handClick() called");
 
+		System.out.println(playerNumber);
 		if (clickType.equals(View.PARTY)) {
 			sendClientMessage("CLIENTMESSAGE--PARTY--" + ID + "--" + playerNumber);
 			clientModel.party(ID, playerNumber);
@@ -416,11 +418,13 @@ public class Client {
 			clientModel.queue(ID, playerNumber);
 			sendClientMessage("CLIENTMESSAGE--QUEUE--" + ID + "--" + playerNumber);
 		} else if (clickType.equals(View.DEQUEUE)) {
-			sendClientMessage("CLIENTMESSAGE--DEQUEUE--" + ID + "--" + playerNumber);
 			clientModel.dequeue(ID, playerNumber);
+			sendClientMessage("CLIENTMESSAGE--DEQUEUE--" + ID + "--" + playerNumber);
+			
 		} else if (clickType.equals(View.DISCARD)) {
-			sendClientMessage("CLIENTMESSAGE--DISCARD--" + ID + "--" + playerNumber);
 			clientModel.discard(ID, playerNumber);
+			sendClientMessage("CLIENTMESSAGE--DISCARD--" + ID + "--" + playerNumber);
+			
 		} else if (clickType.equals(View.ASSASSINATE)) {
 			sendClientMessage("CLIENTMESSAGE--ASSASSINATE--" + ID + "--" + playerNumber);
 			clientModel.assassinate(ID, playerNumber);

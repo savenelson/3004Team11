@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -844,10 +845,18 @@ public class View extends Application {
 	}
 	
 	public void updateState(){
-		logger.debug("updateState() called");
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				logger.debug("updateState() called");
 
-		state = control.getState();
-		update(stage);
+				state = control.getState();
+				update(stage);
+				
+			}
+		});
+		
 	}
 	
 	private void setQueueCardControl(final ImageView anAdventure) {

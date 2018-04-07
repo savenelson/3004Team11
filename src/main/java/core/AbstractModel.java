@@ -43,12 +43,12 @@ public abstract class AbstractModel {
 		return storyDeckDiscard;
 	}
 
-	boolean inNextQ = false;
+	protected boolean inNextQ = false;
 
-	int currentViewer;
+	protected int currentViewer;
 	protected int currentPlayer = 0;
 	protected int currentStage;
-	int currentSponsor;
+	private int currentSponsor;
 	int endTurnCounter = 0;
 	boolean gameWon = false;
 
@@ -63,10 +63,10 @@ public abstract class AbstractModel {
 	boolean AllyInPlayQueenIseult =  false;
 	boolean AllyInPlayMerlin =  false;
 
-	StoryCard currentStoryCard;
+	protected StoryCard currentStoryCard;
 
-	int numPlayers;
-	int numStages;
+	protected int numPlayers;
+	protected int numStages;
 
 	protected ArrayList<CardCollection<AdventureCard>> stages;
 
@@ -153,7 +153,7 @@ public abstract class AbstractModel {
 
 		state.isQuesting = this.players[currentPlayer].isQuesting;
 
-		state.currentSponsor = this.currentSponsor;
+		state.currentSponsor = this.getCurrentSponsor();
 
 		state.inNextQ = this.inNextQ;
 
@@ -536,7 +536,7 @@ public abstract class AbstractModel {
 			this.currentPlayer = 0;
 		} else {
 			this.currentPlayer++;
-			this.currentSponsor = this.currentPlayer;
+			this.setCurrentSponsor(this.currentPlayer);
 		}
 		logger.info("Player changed to " + this.currentPlayer);
 
@@ -1151,6 +1151,16 @@ public abstract class AbstractModel {
 
 	public void setStage(QuestingStage stage) {
 		this.stage = stage;
+	}
+
+
+	public int getCurrentSponsor() {
+		return currentSponsor;
+	}
+
+
+	public void setCurrentSponsor(int currentSponsor) {
+		this.currentSponsor = currentSponsor;
 	}
 
 	

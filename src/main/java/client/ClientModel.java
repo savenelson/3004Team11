@@ -71,7 +71,7 @@ public class ClientModel extends AbstractModel {
 	int numPlayers;
 	int numStages;
 
-	private ArrayList<CardCollection<AdventureCard>> stages;
+
 
 	protected ArrayList<CardCollection<AdventureCard>> getStages() {
 		return super.stages;
@@ -98,7 +98,7 @@ public class ClientModel extends AbstractModel {
 
 		super.adventureDeckDiscard = new CardCollection<AdventureCard>();
 		super.storyDeckDiscard = new CardCollection<StoryCard>();
-
+	
 	
 		super.currentStage = stage.getCurrentStage();
 	}
@@ -140,7 +140,38 @@ public class ClientModel extends AbstractModel {
 	}
 
 	public State getState() {
-		return super.getState();
+		logger.debug("getState() called");
+
+		this.state.players = super.players;
+
+		state.currentPlayer = this.currentPlayer;
+		logger.debug("state.currentPlayer: " + state.currentPlayer);
+
+		state.isQuesting = super.players[currentPlayer].isQuesting;
+
+		state.currentSponsor = super.getCurrentSponsor();
+
+		state.inNextQ = super.inNextQ;
+
+		state.currentStoryCard = super.currentStoryCard;
+
+		state.currentViewer = super.currentViewer;
+
+		if (getStage().getStageAt(getStage().getCurrentStage()) != null) {
+			state.stage = super.getStage().getStageAt(getStage().getCurrentStage());
+		}
+
+		state.currentStage = super.getStage().getCurrentStage();
+
+		state.stages = super.getStage().getStage();
+
+		state.numPlayers = super.numPlayers;
+
+		state.numStages = super.numStages;
+
+		
+
+		return state;
 	}
 
 	public void party(String iD, int currentPlayer) {
