@@ -42,11 +42,11 @@ public class QuestManager implements StoryCardState {
 	Player[] players;
 
 	private boolean hasSponsor = false;
-	
+
 	public boolean getHasSponsor() {
 		return this.hasSponsor;
 	}
-	
+
 	public void setHasSponsor(boolean hasSponsor) {
 		this.hasSponsor = hasSponsor;
 	}
@@ -97,21 +97,22 @@ public class QuestManager implements StoryCardState {
 		numOfQuesterPotential = serverModel.getNumPlayers() - 1;
 
 		// if I do not have a sponsor ask the person if they want to sponsor
-		if (!hasSponsor) {
-
-			// if I haven't ask to quester yet then ask
-			if (!this.serverModel.getActivePlayer().declinedToQuest) {
+		if (!hasSponsor) {			
+			// // if I haven't ask to sponsor yet then ask ORIGINAL
+			if (!this.serverModel.getActivePlayer().declinedToSponsor) {
 				boolean wantToSponsor;
-				serverModel.server.getQuesterDecison();
+				serverModel.server.getSponsorDecision();
 			}
-			
-//			// if I haven't ask to sponsor yet then ask ORIGINAL
-//			if (!this.serverModel.getActivePlayer().declinedToSponsor) {
-//				boolean wantToSponsor;
-//				serverModel.server.getSponsorDecision();
-//			}
+
 
 		}
+
+		// if I haven't ask to quester yet then ask
+		if (!this.serverModel.getActivePlayer().declinedToQuest) {
+			boolean wantToSponsor;
+			serverModel.server.getQuesterDecison();
+		}
+
 		/*
 		 * if(numberOfrequests == 0 ) { nextPersonToDraw =
 		 * model.getActivePlayer().getPlayerNumber() +1; if(nextPersonToDraw>
@@ -119,8 +120,9 @@ public class QuestManager implements StoryCardState {
 		 * 
 		 * numberOfrequests++;
 		 * 
-		 * // if they do want to sponsor then make them the sponsors if(wantToSponsor) {
-		 * logger.info("Found a sponsor "); hasSponsor = true;
+		 * // if they do want to sponsor then make them the sponsors
+		 * if(wantToSponsor) { logger.info("Found a sponsor "); hasSponsor =
+		 * true;
 		 * 
 		 * model.getActivePlayer().isSponsor = true; numberOfrequests = 0;
 		 * 
@@ -128,18 +130,19 @@ public class QuestManager implements StoryCardState {
 		 * 
 		 * model.control.updateViewState();
 		 * 
-		 * } // changed that they have asked model.getActivePlayer().declinedToSponsor =
-		 * true;
+		 * } // changed that they have asked
+		 * model.getActivePlayer().declinedToSponsor = true;
 		 * 
-		 * }else {// I have went around all the players and no want to sponsor //go to
-		 * next story Cards}
-		 * logger.info(" No one wanted to Sponsor lets go to the NEXT STORY GUY"); } }
+		 * }else {// I have went around all the players and no want to sponsor
+		 * //go to next story Cards}
+		 * logger.info(" No one wanted to Sponsor lets go to the NEXT STORY GUY"
+		 * ); } }
 		 * 
 		 * 
-		 * // Questers asking // if I have a sponsor and the quester are not ready then
-		 * ask the current player if(hasSponsor && !questersReady) { // if I have a
-		 * sponsor and the quester are not ready then ask the current plater
-		 * if(!this.model.getActivePlayer().declinedQuesting &&
+		 * // Questers asking // if I have a sponsor and the quester are not
+		 * ready then ask the current player if(hasSponsor && !questersReady) {
+		 * // if I have a sponsor and the quester are not ready then ask the
+		 * current plater if(!this.model.getActivePlayer().declinedQuesting &&
 		 * !this.model.getActivePlayer().isSponsor) { boolean isQuesting =
 		 * model.control.getQuestingDecision();
 		 * 
@@ -148,21 +151,23 @@ public class QuestManager implements StoryCardState {
 		 * model.getActivePlayer().isQuesting = true;
 		 * questers.add(model.getActivePlayer().getPlayerNumber());
 		 * 
-		 * } //they have answered this.model.getActivePlayer().declinedQuesting = true;
+		 * } //they have answered this.model.getActivePlayer().declinedQuesting
+		 * = true;
 		 * 
 		 * numberOfrequests++;
 		 * 
 		 * }
 		 * 
 		 * 
-		 * }if(numOfQuesterPotential == numberOfrequests ) { // I return to the sponor
-		 * if(questers.isEmpty()) { numberOfrequests = 0;
+		 * }if(numOfQuesterPotential == numberOfrequests ) { // I return to the
+		 * sponor if(questers.isEmpty()) { numberOfrequests = 0;
 		 * 
-		 * logger.info("I have no  any questers "); // should go to the next story hard
-		 * }else { // The questers are ready adn we are ready to begin questing
+		 * logger.info("I have no  any questers "); // should go to the next
+		 * story hard }else { // The questers are ready adn we are ready to
+		 * begin questing
 		 * 
-		 * //logger.info("I do have some questers. Let us begin our adventures ");
-		 * questersReady = true;
+		 * //logger.info("I do have some questers. Let us begin our adventures "
+		 * ); questersReady = true;
 		 * logger.info("I do have some questers. Let us begin our adventures ");
 		 * 
 		 * numberOfrequests = 0 ;
@@ -173,9 +178,9 @@ public class QuestManager implements StoryCardState {
 		 * } if(questersReady ) { //begins the stage logger.info("Done  hh"+
 		 * numOfRepsonders);
 		 * 
-		 * numOfQuester = questers.size(); if(numOfQuester==numOfRepsonders) { //all the
-		 * questers made their choice time to resolve stage; logger.info("Done  hh"+
-		 * numOfRepsonders);
+		 * numOfQuester = questers.size(); if(numOfQuester==numOfRepsonders) {
+		 * //all the questers made their choice time to resolve stage;
+		 * logger.info("Done  hh"+ numOfRepsonders);
 		 * 
 		 * 
 		 * 
@@ -211,7 +216,8 @@ public class QuestManager implements StoryCardState {
 
 			// should have looped and rady to do the next Player
 			if (numOfRepsonders > questers.size()) {
-				// all the players of made there turns lets move on to the next stage
+				// all the players of made there turns lets move on to the next
+				// stage
 				numOfRepsonders = 0;
 
 				// reolve stage
@@ -300,9 +306,9 @@ public class QuestManager implements StoryCardState {
 	public int numberOfCardsForSponsor() {
 
 		/**
-		 * Functions used to count the number of cards to give to the sponsor : - check
-		 * each stage if they is a foe card - check each stage if they is a test card -
-		 * check each stage if they us a weapon card
+		 * Functions used to count the number of cards to give to the sponsor :
+		 * - check each stage if they is a foe card - check each stage if they
+		 * is a test card - check each stage if they us a weapon card
 		 * 
 		 */
 		int numOfCardsInStaging = 0;
@@ -329,7 +335,8 @@ public class QuestManager implements StoryCardState {
 
 		// if the hand is bigger then 12 then reurn false
 		if (serverModel.getActivePlayer().getHand().size() > 12) {
-			// serverModel.control.alert("Hand Size is too large, please discard");
+			// serverModel.control.alert("Hand Size is too large, please
+			// discard");
 			logger.info("Player " + serverModel.getActivePlayer().getPlayerNumber() + " hand too large");
 			return false;
 
@@ -345,13 +352,15 @@ public class QuestManager implements StoryCardState {
 		boolean foeInEachStage = isfoeEachStage();
 		boolean isHandSizeOk = checkHandSize();
 
-		// check if its a sponsor and if it is then check if they sponsor correctly
+		// check if its a sponsor and if it is then check if they sponsor
+		// correctly
 		if (serverModel.getActivePlayer().isSponsor && !foeInEachStage) {
 			// serverModel.control.alert("Foe not present in every stage.");
 			return false;
 			// check if its a sponsor and if the stages are Harder
 		} else if (serverModel.getActivePlayer().isSponsor && !isHarder) {
-			// serverModel.control.alert("The stages are not progressively harder");
+			// serverModel.control.alert("The stages are not progressively
+			// harder");
 			return false;
 
 			// if their hand size id ok
@@ -404,8 +413,9 @@ public class QuestManager implements StoryCardState {
 		// Left it here because of one of the event cards
 
 		/**
-		 * To resolve a Quest, we need to count the following data structures: - players
-		 * Queue - players Party - players Rank - get a card if they pass
+		 * To resolve a Quest, we need to count the following data structures: -
+		 * players Queue - players Party - players Rank - get a card if they
+		 * pass
 		 */
 		logger.info("resolveQuest() called");
 
@@ -432,7 +442,8 @@ public class QuestManager implements StoryCardState {
 				logger.info("Sponsor is getting " + numberOfCardsToReturn);
 				for (int j = 0; j < numberOfCardsToReturn; j++) {
 
-					// players[i].addToHand(new WeaponCard(WeaponCard.SWORD_NAME,
+					// players[i].addToHand(new
+					// WeaponCard(WeaponCard.SWORD_NAME,
 					// WeaponCard.SWORD_BATTLE_POINTS));
 					players[j].addToHand(serverModel.getAdventureDeck().pop());
 				}
@@ -458,8 +469,9 @@ public class QuestManager implements StoryCardState {
 
 	public void resolveStage() {
 		/**
-		 * To resolve a stage, we need to count the following data structures: - players
-		 * Queue - players Party - players Rank - get a card if they pass
+		 * To resolve a stage, we need to count the following data structures: -
+		 * players Queue - players Party - players Rank - get a card if they
+		 * pass
 		 */
 		logger.info("resolveStage() called");
 
