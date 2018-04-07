@@ -13,20 +13,28 @@ public class ServerModel extends AbstractModel {
 
 	public Server server;
 	
-	QuestManager questManager;
+	StoryCardState questManager;
+	
+
+	protected StoryCardState eventManger;
+	protected core.StoryCardState currentState;
 
 	
 	ServerModel(Server server) {
-
+		
+		
 		logger.info("Model created");
 
 		this.server = server;
 
 		super.state = new State();
 		
-		super.eventManager = new EventManager(this);
+
+		eventManger = new EventManger(this);
+
 
 		questManager = new QuestManager(this);
+		currentStoryCard =questManager;
 
 		super.stage = new QuestingStage();
 
@@ -93,7 +101,7 @@ public class ServerModel extends AbstractModel {
 	boolean AllyInPlayQueenIseult =  false;
 	boolean AllyInPlayMerlin =  false;
 
-	StoryCard currentStoryCard;
+	StoryCardState currentStoryCard;
 
 	private int numPlayers;
 	int numStages;
@@ -238,15 +246,15 @@ public class ServerModel extends AbstractModel {
 	}
 
 	protected void playQuest() {
-		super.playQuest();
+		currentState = questManager;
 	}
 
 	protected void playEvent() {
-		super.playEvent();
+		currentState = questManger;
 	}
 
 	public void playGame() {
-		logger.info("playGame() called" + currentStoryCard);
+		logger.info(" Sever playGame() called" + currentStoryCard);
 		
 		if (super.currentStoryCard.getSubType().equals(StoryCard.QUEST)) {
 			playQuest();

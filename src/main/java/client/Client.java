@@ -214,6 +214,7 @@ public class Client {
 			break;
 		case "WELCOME":
 			logger.info("server has established connection with this client");
+			//clientModel.playGame();
 			getServerMessage();
 			break;
 		case "TEST":
@@ -284,6 +285,7 @@ public class Client {
 		logger.debug("updateViewState() called");
 
 		view.updateState();
+
 	}
 
 	public void stageIncrement() {
@@ -381,9 +383,9 @@ public class Client {
 			sendClientMessage("CLIENTMESSAGE--ASSASSINATE--" + ID + "--" + playerNumber);
 			clientModel.assassinate(ID, playerNumber);
 		} else if (clickType.equals(View.ENDTURN)) {
-			if (clientModel.getCurrentState().canEndTurn()) {
+		//	if (clientModel.getCurrentState().canEndTurn()) {
 
-			}
+			//}
 		}
 	}
 
@@ -413,11 +415,9 @@ public class Client {
 		} else if (clickType.equals(View.STAGE5)) {
 			clientModel.setCurrentStage(4);
 		} else if (clickType.equals(View.ENDTURN)) {
-//			if (clientModel.getCurrentState().canEndTurn()) {
-//				sendClientMessage("CLIENTMESSAGE--ENDTURN--" + "--" + playerNumber);
-//			}
-			sendClientMessage("CLIENTMESSAGE--ENDTURN--" + "--" + playerNumber);
-
+			//if (clientModel.getCurrentState().canEndTurn()) {
+				sendClientMessage("CLIENTMESSAGE--ENDTURN--" + "--" + playerNumber);
+			//}
 		}
 	}
 
