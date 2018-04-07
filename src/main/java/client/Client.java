@@ -152,7 +152,7 @@ public class Client {
 			getServerMessage();
 			break;
 			
-		
+			
 		case "UPDATE":
 			if (serverMessageComponents[2].equals(Integer.toString(this.playerNumber))) {
 				logger.info("Message was instigated by this client and not processed");
@@ -202,9 +202,12 @@ public class Client {
 					
 					getServerMessage();
 					break;
+<<<<<<< HEAD
 				//TODO : GET AN UPDATE MESSAGE TO CHANGE THE PLAYNUMBER IS QUESTING RESPONSEE
 				
 				
+=======
+>>>>>>> parent of 3bd983a... staging goes to the corresponding correct stage in each other clients
 				default:
 					logger.info("Couldnt parse message from SERVERMESSAGE--UPDATE-- ?!?!?!");
 					getServerMessage();
@@ -253,15 +256,11 @@ public class Client {
 							
 					
 					break;
-					
-				//TODO SEE if the questing popup
 				case "GETQUESTERS":
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-						    getQuestingDecision();
-						    updateViewState();
-						    }
+						    getQuestingDecision();}
 					});
 					break;
 					
@@ -356,6 +355,7 @@ public class Client {
 
 	public void getQuestingDecision() {
 		logger.debug("getQuesting() called");
+<<<<<<< HEAD
 		//TODO GET THE RESPOND OF THE SPONSOR AND SEND IT BACK TO SEVER 
 		// LOOK ABOVE
 		//return view.popup("Player " + (playerNumber + 1) + " - Would you like to quest?");
@@ -365,6 +365,10 @@ public class Client {
 		sendClientMessage("CLIENTMESSAGE--ISQUESTING--" +isQuesting+ "--" + playerNumber);
 		
 		
+=======
+
+		return view.popup("Player " + (playerNumber + 1) + " - Would you like to quest?");
+>>>>>>> parent of 3bd983a... staging goes to the corresponding correct stage in each other clients
 	}
 
 	public State getState() {
