@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import core.*;
-import server.EventManger;
+import server.EventManager;
 import server.QuestManager;
 import server.Server;
 
@@ -88,8 +88,8 @@ public class ClientModel extends AbstractModel {
 		this.control = control;
 		super.state = new State();
 		
-		super.questManger = new QuestManager(this);
-		super.eventManger = new EventManger(this);
+		super.questManager = new QuestManager(this);
+		super.eventManager = new EventManager(this);
 
 		super.stage = new QuestingStage();
 

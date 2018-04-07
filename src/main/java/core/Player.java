@@ -70,7 +70,7 @@ public class Player {
 		return "Player " + this.playerNumber;
 	}
 	
-	public void addToHand(Card c){
+	public void addToHand(AdventureCard c){
 		logger.info(this.playerNumber + "s hand changed - added " + c.getName());
 		hand.add(c);
 	}

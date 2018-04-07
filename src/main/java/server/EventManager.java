@@ -3,7 +3,7 @@ package server;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import client.ClientModel;
+import server.ServerModel;
 import core.AbstractModel;
 import core.AdventureCard;
 import core.AdventureDeck;
@@ -15,8 +15,8 @@ import core.StoryCardState;
 // class to handle event cards
 
 
-public class EventManger implements  StoryCardState {
-	private static final Logger logger = LogManager.getLogger(EventManger.class);
+public class EventManager implements  StoryCardState {
+	private static final Logger logger = LogManager.getLogger(EventManager.class);
 	Player[] players;
 	int numPlayers;
 	AdventureDeck adventureDeck;
@@ -25,7 +25,7 @@ public class EventManger implements  StoryCardState {
 	int currentPlayer;
 	ServerModel serverModel;
 
-	public EventManger(AbstractModel model) {
+	public EventManager(AbstractModel model) {
 		/*
 		 * his.serverModel = clientModel;
 		this.players = clientModel.getPlayers();
@@ -330,6 +330,11 @@ public class EventManger implements  StoryCardState {
 	public void setPlayer() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean canEndTurn() {
+		return false;
 	}
 
 

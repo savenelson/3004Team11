@@ -24,7 +24,7 @@ public class ServerModel extends AbstractModel {
 
 		super.state = new State();
 		
-		super.eventManger = new EventManger(this);
+		super.eventManager = new EventManager(this);
 
 		questManager = new QuestManager(this);
 

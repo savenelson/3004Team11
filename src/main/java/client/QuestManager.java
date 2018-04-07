@@ -365,6 +365,9 @@ public class QuestManager implements StoryCardState{
 			return true;
 		}
 		*/
+		boolean result = false;
+		//if nothing makes this true, return false
+		return result;
 	}
 	
 	public void reset() {

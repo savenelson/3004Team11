@@ -8,7 +8,7 @@ public class CardCollection<T extends Card> {
 
 	public static final int DISTICT_ADV_CARDS = 32;
 
-	private T t;
+//	private T t;
 
 	protected ArrayList<T> cards;
 
@@ -37,8 +37,8 @@ public class CardCollection<T extends Card> {
 	// }
 
 	// returns cards array size after adding
-	public int add(Card c) {
-		cards.add((T) c);
+	public int add(T c) {
+		cards.add(c);
 		return cards.size();
 	}
 
