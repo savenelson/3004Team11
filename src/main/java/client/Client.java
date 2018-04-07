@@ -202,12 +202,11 @@ public class Client {
 					
 					getServerMessage();
 					break;
-<<<<<<< HEAD
+
 				//TODO : GET AN UPDATE MESSAGE TO CHANGE THE PLAYNUMBER IS QUESTING RESPONSEE
 				
 				
-=======
->>>>>>> parent of 3bd983a... staging goes to the corresponding correct stage in each other clients
+
 				default:
 					logger.info("Couldnt parse message from SERVERMESSAGE--UPDATE-- ?!?!?!");
 					getServerMessage();
@@ -355,7 +354,7 @@ public class Client {
 
 	public void getQuestingDecision() {
 		logger.debug("getQuesting() called");
-<<<<<<< HEAD
+
 		//TODO GET THE RESPOND OF THE SPONSOR AND SEND IT BACK TO SEVER 
 		// LOOK ABOVE
 		//return view.popup("Player " + (playerNumber + 1) + " - Would you like to quest?");
@@ -365,10 +364,7 @@ public class Client {
 		sendClientMessage("CLIENTMESSAGE--ISQUESTING--" +isQuesting+ "--" + playerNumber);
 		
 		
-=======
 
-		return view.popup("Player " + (playerNumber + 1) + " - Would you like to quest?");
->>>>>>> parent of 3bd983a... staging goes to the corresponding correct stage in each other clients
 	}
 
 	public State getState() {

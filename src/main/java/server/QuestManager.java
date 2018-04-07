@@ -96,8 +96,7 @@ public class QuestManager implements StoryCardState{
 	
 		
 		numOfQuesterPotential = serverModel.getNumPlayers() -1;
-		
-<<<<<<< HEAD
+
 		
 
 
@@ -111,9 +110,6 @@ public class QuestManager implements StoryCardState{
 		
 		}
 		
-		
-=======
->>>>>>> parent of 3bd983a... staging goes to the corresponding correct stage in each other clients
 		// if I do not have a sponsor ask the person if they want to sponsor 
 		if(!hasSponsor) {
 			
