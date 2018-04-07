@@ -38,8 +38,6 @@ public class Client {
 	public Client(View view, String serverAddress, int serverPort) {
 		logger.info("Control created");
 
-		
-
 		this.clientModel = new ClientModel(this);
 
 		clientModel.instantiateStages();
@@ -139,33 +137,34 @@ public class Client {
 
 		logger.info("MSG fm server: " + serverMessage);
 
-		final String[] serverMessageComponents = serverMessage.split("--"); // array containing the components of the server
-																		// message
+		final String[] serverMessageComponents = serverMessage.split("--"); // array containing the components of the
+																			// server
+		// message
 		switch (serverMessageComponents[1]) {
 		case "MESSAGE":
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-				   view.alert(serverMessageComponents[2]);}
+					view.info(serverMessageComponents[2]);
+				}
 			});
-			
+
 			getServerMessage();
 			break;
-			
-			
+
 		case "UPDATE":
 			if (serverMessageComponents[2].equals(Integer.toString(this.playerNumber))) {
 				logger.info("Message was instigated by this client and not processed");
 				getServerMessage();
 			} else {
 				/**
-				 * convention of UPDATE case: "SERVERMESSAGE--UPDATE--CURRENTPLAYER--METOHDCALL--CARDID"
+				 * convention of UPDATE case:
+				 * "SERVERMESSAGE--UPDATE--CURRENTPLAYER--METOHDCALL--CARDID"
 				 */
 				logger.info("Message was instigated by another client, and will update this model");
 				logger.info(serverMessageComponents[3]);
 				switch (serverMessageComponents[3]) {
-				
-				
+
 				case "QUEUE":
 					clientModel.queue(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
 					updateViewState();
@@ -181,14 +180,15 @@ public class Client {
 					updateViewState();
 					getServerMessage();
 					break;
-				case "STAGE": 
-					clientModel.stage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]),Integer.parseInt(serverMessageComponents[5]));
-		
+				case "STAGE":
+					clientModel.stage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]),
+							Integer.parseInt(serverMessageComponents[5]));
 					updateViewState();
 					getServerMessage();
 					break;
 				case "UNSTAGE":
-					clientModel.unstage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]),Integer.parseInt(serverMessageComponents[5]));
+					clientModel.unstage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]),
+							Integer.parseInt(serverMessageComponents[5]));
 					updateViewState();
 					getServerMessage();
 					break;
@@ -203,9 +203,7 @@ public class Client {
 					getServerMessage();
 					break;
 
-				//TODO : GET AN UPDATE MESSAGE TO CHANGE THE PLAYNUMBER IS QUESTING RESPONSEE
-				
-				
+				// TODO : GET AN UPDATE MESSAGE TO CHANGE THE PLAYNUMBER IS QUESTING RESPONSEE
 
 				default:
 					logger.info("Couldnt parse message from SERVERMESSAGE--UPDATE-- ?!?!?!");
@@ -225,63 +223,31 @@ public class Client {
 		case "SETTHREADPLAYER":
 			clientModel.currentPlayer = Integer.parseInt(serverMessageComponents[2]);
 			playerNumber = Integer.parseInt(serverMessageComponents[2]);
-			logger.info(
-					"Player: " + clientModel.currentPlayer + " on ip: " + socket.getInetAddress() + " on port: " + socket.getPort());
+			logger.info("Player: " + clientModel.currentPlayer + " on ip: " + socket.getInetAddress() + " on port: "
+					+ socket.getPort());
 			updateViewState();
 			getServerMessage();
 			break;
-		case "GAMEHANDLE":
-			
-				/**
-				 * convention of GAME LOGIC case: "SERVERMESSAGE--GAMEHANDLE--PlAYERID--GETSPONSOR"
-				 * Ask a player if they would like to sponsor 
-				 * 
-				 * 
-				 * convention of GAME LOGIC case: "SERVERMESSAGE--GAMEHANDLE--PlAYERID--GETQUESTERS"
-				 * Ask a player would like to sponsor 
-				 * 
-				 *  convention of GAME LOGIC case: "SERVERMESSAGE--GAMEHANDLE--PlAYERID--RESOLVESTAGE"
-				 * 
-				 */
-				logger.info("Message was instigated by this client, and will update this model");
-				switch (serverMessageComponents[3]) {
-				case "GETSPONSOR":
-					Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-							getSponsorDecision();
-						    updateViewState();
-						    }
-					});
-							
-					
-					break;
-				case "GETQUESTERS":
-					Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-						    getQuestingDecision();}
-					});
-					break;
-					
-					
-				case "RESOLVESTAGE":
-					
-					Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-							
-						   resolveStage();}
-					});
-					break;
-					
-					
-				
-				default:
-					logger.info("Couldnt parse message from SERVERMESSAGE--UPDATE-- ?!?!?!");
-					break;
+		case "GETSPONSOR":
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					getSponsorDecision();
+					updateViewState();
 				}
+			});
+			getServerMessage();
+			break;
+		case "GETQUESTER":
 
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					getQuestingDecision();
+				}
+			});
+			getServerMessage();
+			break;
 		case "GETSTATE":
 
 			// model.state = Integer.parseInt(serverMessageComponents[2]);
@@ -294,7 +260,6 @@ public class Client {
 			break;
 		}
 	}
-
 
 	/**
 	 * Calls the model quitGame method.
@@ -327,7 +292,6 @@ public class Client {
 
 		clientModel.getStage().nextStage();
 		updateViewState();
-		
 	}
 
 	public void stageOver() {
@@ -335,36 +299,26 @@ public class Client {
 
 		clientModel.stageOver();
 	}
-	
-	/**
-	 * Ask this Player if they would like to sponsor the  send the message back to the server 
-	 *  
-	 *  
-	 * 
-	 */
 
-	public void  getSponsorDecision() {
+	public void getSponsorDecision() {
 		logger.debug("getSponsorDecision() called");
 
-		boolean isSponsor= view.popup("Player " + (playerNumber + 1) + " - Would you like to sponsor this quest?");
-		clientModel.getActivePlayer().isSponsor= isSponsor;
-		sendClientMessage("CLIENTMESSAGE--ISSPONSOR--" +isSponsor+ "--" + playerNumber);
-		
-		
+		boolean isSponsor = view.popup("Player " + (playerNumber + 1) + " - Would you like to sponsor this quest?");
+		clientModel.getActivePlayer().isSponsor = isSponsor;
+		sendClientMessage("CLIENTMESSAGE--ISSPONSOR--" + isSponsor + "--" + playerNumber);
 	}
 
 	public void getQuestingDecision() {
 		logger.debug("getQuesting() called");
 
-		//TODO GET THE RESPOND OF THE SPONSOR AND SEND IT BACK TO SEVER 
+		// TODO GET THE RESPOND OF THE SPONSOR AND SEND IT BACK TO SEVER
 		// LOOK ABOVE
-		//return view.popup("Player " + (playerNumber + 1) + " - Would you like to quest?");
-		
+		// return view.popup("Player " + (playerNumber + 1) + " - Would you like to
+		// quest?");
+
 		boolean isQuesting = view.popup("Player " + (playerNumber + 1) + " - Would you like  quest?");
-		clientModel.getActivePlayer().isQuesting= isQuesting;
-		sendClientMessage("CLIENTMESSAGE--ISQUESTING--" +isQuesting+ "--" + playerNumber);
-		
-		
+		clientModel.getActivePlayer().isQuesting = isQuesting;
+		sendClientMessage("CLIENTMESSAGE--ISQUESTING--" + isQuesting + "--" + playerNumber);
 
 	}
 
@@ -404,38 +358,33 @@ public class Client {
 			sendClientMessage("CLIENTMESSAGE--PARTY--" + ID + "--" + playerNumber);
 			clientModel.party(ID, playerNumber);
 		} else if (clickType.equals(View.STAGE)) {
-			if(clientModel.stage(ID, playerNumber,playerNumber+clientModel.getStage().getCurrentStage())){
-				sendClientMessage("CLIENTMESSAGE--STAGE--" + ID + "--" + playerNumber+"--"+clientModel.getStage().getCurrentStage());
-				
+			if (clientModel.stage(ID, playerNumber, playerNumber + clientModel.getStage().getCurrentStage())) {
+				sendClientMessage("CLIENTMESSAGE--STAGE--" + ID + "--" + playerNumber + "--"
+						+ clientModel.getStage().getCurrentStage());
 			}
-		
-			
-			
+
 		} else if (clickType.equals(View.UNSTAGE)) {
-			sendClientMessage("CLIENTMESSAGE--UNSTAGE--" + ID + "--" + playerNumber+"--"+clientModel.getStage().getCurrentStage() );
-			clientModel.unstage(ID, playerNumber,clientModel.getStage().getCurrentStage());
+			sendClientMessage("CLIENTMESSAGE--UNSTAGE--" + ID + "--" + playerNumber + "--"
+					+ clientModel.getStage().getCurrentStage());
+			clientModel.unstage(ID, playerNumber, clientModel.getStage().getCurrentStage());
 		} else if (clickType.equals(View.QUEUE)) {
 			clientModel.queue(ID, playerNumber);
 			sendClientMessage("CLIENTMESSAGE--QUEUE--" + ID + "--" + playerNumber);
 		} else if (clickType.equals(View.DEQUEUE)) {
 			clientModel.dequeue(ID, playerNumber);
 			sendClientMessage("CLIENTMESSAGE--DEQUEUE--" + ID + "--" + playerNumber);
-			
+
 		} else if (clickType.equals(View.DISCARD)) {
 			clientModel.discard(ID, playerNumber);
 			sendClientMessage("CLIENTMESSAGE--DISCARD--" + ID + "--" + playerNumber);
-			
+
 		} else if (clickType.equals(View.ASSASSINATE)) {
 			sendClientMessage("CLIENTMESSAGE--ASSASSINATE--" + ID + "--" + playerNumber);
 			clientModel.assassinate(ID, playerNumber);
 		} else if (clickType.equals(View.ENDTURN)) {
-			if(clientModel.getCurrentState().canEndTurn()) {
-			
+			if (clientModel.getCurrentState().canEndTurn()) {
 
-				
 			}
-			
-			
 		}
 	}
 
@@ -465,12 +414,9 @@ public class Client {
 		} else if (clickType.equals(View.STAGE5)) {
 			clientModel.setCurrentStage(4);
 		} else if (clickType.equals(View.ENDTURN)) {
-			if(clientModel.getCurrentState().canEndTurn()) {
-				sendClientMessage("CLIENTMESSAGE--ENDTURN--"+ "--" + playerNumber);
-				
+			if (clientModel.getCurrentState().canEndTurn()) {
+				sendClientMessage("CLIENTMESSAGE--ENDTURN--" + "--" + playerNumber);
 			}
-
-		
 		}
 	}
 
@@ -510,11 +456,13 @@ public class Client {
 
 		return view;
 	}
+
 	public void resolveStage() {
-		
+
 		view.stageResolved();
-		
+
 	}
+
 	public void nextStage() {
 		this.stageOver();
 		logger.debug("Hello this is the model stage in the control " + clientModel.isDoneQuestingMode());
@@ -527,5 +475,5 @@ public class Client {
 			nextPlayer();
 		}
 	}
-	
+
 }

@@ -11,7 +11,7 @@ public class Player {
 
 	public boolean isSponsor = false;
 	public boolean declinedToSponsor = false;
-	public boolean declinedQuesting =false;
+	public boolean declinedToQuest =false;
 	public boolean hasQueuedAgainstStage = false;
 	public boolean isQuesting = false;
 	public boolean passedStage = false;

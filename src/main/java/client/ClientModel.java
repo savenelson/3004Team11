@@ -113,10 +113,10 @@ public class ClientModel extends AbstractModel {
 		super.instantiatePlayers(numPlayers);
 	}
 
-	
 	public StoryCardState getCurrentState() {
 		return this.currentState;
 	}
+
 	public void instantiateStages() {
 		
 

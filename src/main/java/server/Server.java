@@ -115,9 +115,7 @@ public class Server {
     			
     			if(thread1.getPlayerNumber()== playerNum) {
     				thread1.out.println(serverMessage);
-    				
     			}
-        		
     		}
     	}
     
@@ -151,23 +149,20 @@ public class Server {
     public void getSponsorDecision(){
 		logger.info("getSponsorDecision() called");
 
-		
-		sendServerMessageToOne("SERVERMESSAGE--GAMEHANDLE--"+"--GETSPONSOR",0);
-		
+		sendServerMessageToOne("SERVERMESSAGE--GETSPONSOR",serverModel.getActivePlayer().getPlayerNumber());
     
     }
     
     /**
-     * ASk for the all the playerss except the current player if they would like to sponsnor 
+     * ASk for the all the players except the current player if they would like to sponsnor 
      * 
      * 
      */
     public void getQuesterDecison() {
     	
-    	sendServerMessageToAllButOne("SERVERMESSAGE--GAMEHANDLE--"+serverModel.getActivePlayer().getPlayerNumber()+"--GETQUESTER", serverModel.getActivePlayer().getPlayerNumber());
-    	
+    	sendServerMessageToOne("SERVERMESSAGE--GETQUESTER", serverModel.getActivePlayer().getPlayerNumber());
+  
     }
-    
     
     public static void main(String[] args) {
         int serverPort = DEFAULT_PORT;

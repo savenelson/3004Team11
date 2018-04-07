@@ -91,21 +91,19 @@ public class ServerThread extends Thread {
 			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]);
 			break;
 			
-			
 		case "ISSPONSOR":
 			boolean ISSPONSOR = Boolean.parseBoolean(clientMessageComponents[2]);
 			server.serverModel.getActivePlayer().isSponsor= ISSPONSOR;
+			
 			if(ISSPONSOR) {
 				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.serverModel.getActivePlayer()+" has decidied to sponsor. Get ready to quest");
 			}else {
 				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.serverModel.getActivePlayer()+" has not decidied to sponsor");
 				server.serverModel.nextPlayer();
-			
 			}
-			
 			break;
 			
-		case "ISQUESTER":
+		case "ISQUESTING":
 			boolean ISQUESTER = Boolean.parseBoolean(clientMessageComponents[2]);
 			server.serverModel.getActivePlayer().isQuesting= ISQUESTER;
 			if(ISQUESTER) {
@@ -116,6 +114,9 @@ public class ServerThread extends Thread {
 			
 			}
 			break;
+			
+		case "SETSTORYCARD":
+
 		case "ENDTURN":
 			//Platform.runLater(runnable);
 			

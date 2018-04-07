@@ -34,9 +34,7 @@ public class QuestManager implements StoryCardState{
 	
 	private int numberOfCardsToReturn= 0;
 	
-	
 	private int numberOfrequests = 0;
-	
 	
 	private QuesterQueque questers ; 
 	
@@ -367,7 +365,6 @@ public class QuestManager implements StoryCardState{
 			return true;
 		}
 		*/
-			
 	}
 	
 	public void reset() {
