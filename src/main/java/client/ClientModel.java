@@ -170,6 +170,11 @@ public class ClientModel extends AbstractModel {
 
 		return state;
 	}
+	
+	public void draw(String iD, int currentPlayer) {
+		logger.info("draw() called");
+		super.draw(iD, currentPlayer);
+	}
 
 	public void party(String iD, int currentPlayer) {
 		logger.debug("party() called");

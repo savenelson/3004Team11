@@ -75,11 +75,11 @@ public class Server {
     		
         try (ServerSocket serverSocket = new ServerSocket(serverPort)){
 	    	while(listening) {
-	    		for(int g = 0; g<2; g++) {
+	    		for(int g = 0; g<3; g++) {
 	        		clientThreads.add(new ServerThread(serverSocket.accept(), this, g));
 	        		clientThreads.get(g).start();
 	        		
-	        		if(clientThreads.size()==2) {
+	        		if(clientThreads.size()==3) {
 	        			System.out.println("Beginning to Quest lets go model");
 	        			serverModel.playGame();
 	        		}
@@ -108,7 +108,7 @@ public class Server {
      * 
      */
     public void sendServerMessageToOne(String serverMessage, int playerNum) {
-    	logger.info(serverMessage);
+    	logger.info(serverMessage + " to " + playerNum);
 
 
     		for(ServerThread thread1 : clientThreads) {
@@ -122,14 +122,9 @@ public class Server {
     
     /**
      * Used to send a message to a all but one Client 
-     * 
-     * Like ask the players that is not a sponsor if they would like to quest
-     * 
-     * 
-     * 
      */
     public void sendServerMessageToAllButOne(String serverMessage, int playerNum) {
-    	logger.info(serverMessage);
+    	logger.info(serverMessage + " to " + playerNum);
 
 
     		for(ServerThread thread1 : clientThreads) {
