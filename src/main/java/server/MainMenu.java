@@ -1,4 +1,4 @@
-package core;
+package server;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import javafx.event.ActionEvent;
@@ -16,9 +16,11 @@ import javafx.scene.text.TextAlignment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import client.View;
+
 
 public class MainMenu extends Pane{
-	private static final Logger logger = LogManager.getLogger(Player.class);
+	private static final Logger logger = LogManager.getLogger(MainMenu.class);
 
 	public static final String IMG_DIR = "src/main/resources/core/cards/";
 	public static final String GIF = ".gif";

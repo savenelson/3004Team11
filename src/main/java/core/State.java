@@ -1,8 +1,7 @@
 package core;
 
-
-
 import java.util.ArrayList;
+
 public class State {
 	
 	public Player [] players;	
@@ -28,8 +27,6 @@ public class State {
 	public boolean currentPlayerNotSponsoring;
 	
 	public ArrayList<CardCollection<AdventureCard>> stages;
-	
-
 	
 	public boolean stageResolved;
 	

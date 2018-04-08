@@ -38,6 +38,7 @@ public class Player {
 		logger.info(this.playerNumber + " gains " + num + " shields");
 		this.shieldCount += num;
 		promote();
+		promote(); //leave this in! 
 		
 	}
 	public void removeShields(int num) {
@@ -46,6 +47,9 @@ public class Player {
 		this.shieldCount = this.shieldCount - num;
 	}
 	
+	public int AllyBattlePoints = 0;
+	
+	public int AllyBidBonus = 0;
 	public Player(int playerNumber){
 		
 		
