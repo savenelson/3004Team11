@@ -176,6 +176,16 @@ public abstract class AbstractModel {
 
 		return state;
 	}
+	
+	public void draw(String iD, int currentPlayer) {
+		logger.info("draw() called");
+		AdventureCard c;
+		c = this.adventureDeck.getByID(iD);
+		this.players[currentPlayer].addToHand(c);
+		this.adventureDeck.remove(c);
+		logger.info("Player " + currentPlayer + " drew " + c.getName() + " from AdventureDeck to hand");
+
+	}
 
 	public void party(String iD, int currentPlayer) {
 		logger.debug("party() called");
@@ -186,8 +196,6 @@ public abstract class AbstractModel {
 		hand.remove(c);
 		players[currentPlayer].addToParty(c);
 		logger.info("Player " + currentPlayer + " moved " + c.getName() + " from hand to party");
-
-		
 
 	}
 
@@ -623,268 +631,220 @@ public abstract class AbstractModel {
 		AdventureCard c;
 		c = this.adventureDeck.getByID("58");
 		this.players[0].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 1, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
 		c = this.adventureDeck.getByID("1");
 		this.players[0].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 93, type: Adventure, subtype: Foe, name: Mordred, battle points: 30,
 		// alternative battle points: 30, special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("93");
 		this.players[0].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 100, type: Adventure, subtype: Ally, name: SirGalahad, battle points: 15,
 		// special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("100");
 		this.players[0].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 110, type: Adventure, subtype: Test, name: TestOfValor
 		c = this.adventureDeck.getByID("110");
 		this.players[0].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 119, type: Adventure, subtype: Amour, battle points: 10, special: <Bid
 		// Special: adds 1 extra bid(s)>
 		c = this.adventureDeck.getByID("119");
 		this.players[0].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 51, type: Adventure, subtype: Foe, name: Thieves, battle points: 5,
 		// alternative battle points: 5, special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("51");
 		this.players[0].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 
 		// ID: 65, type: Adventure, subtype: Foe, name: Saxons, battle points: 10,
 		// alternative battle points: 20, special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("65");
 		this.players[0].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 67, type: Adventure, subtype: Foe, name: RobberKnight, battle points: 15,
 		// alternative battle points: 15, special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("67");
 		this.players[0].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 41, type: Adventure, subtype: Weapon, name: BattleAx, battle points: 15
 		c = this.adventureDeck.getByID("41");
 		this.players[0].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 10, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
 		c = this.adventureDeck.getByID("10");
 		this.players[0].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 17, type: Adventure, subtype: Weapon, name: Dagger, battle points: 5
 		c = this.adventureDeck.getByID("17");
 		this.players[0].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 2, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
 		c = this.adventureDeck.getByID("2");
 		this.players[1].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 62, type: Adventure, subtype: Foe, name: Saxons, battle points: 10,
 		// alternative battle points: 20, special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("62");
 		this.players[1].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 50, type: Adventure, subtype: Foe, name: Thieves, battle points: 5,
 		// alternative battle points: 5, special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("50");
 		this.players[1].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 94, type: Adventure, subtype: Foe, name: Mordred, battle points: 30,
 		// alternative battle points: 30, special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("94");
 		this.players[1].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 52, type: Adventure, subtype: Foe, name: Thieves, battle points: 5,
 		// alternative battle points: 5, special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("52");
 		this.players[1].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 101, type: Adventure, subtype: Ally, name: SirLancelot, battle points:
 		// 15, special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("101");
 		this.players[1].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 120, type: Adventure, subtype: Amour, battle points: 10, special: <Bid
 		// Special: adds 1 extra bid(s)>
 		c = this.adventureDeck.getByID("120");
 		this.players[1].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 111, type: Adventure, subtype: Test, name: TestOfValor
 		c = this.adventureDeck.getByID("111");
 		this.players[1].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 47, type: Adventure, subtype: Weapon, name: Lance, battle points: 20
 		c = this.adventureDeck.getByID("47");
 		this.players[1].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 24, type: Adventure, subtype: Weapon, name: Horse, battle points: 10
 		c = this.adventureDeck.getByID("24");
 		this.players[1].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 33, type: Adventure, subtype: Weapon, name: Horse, battle points: 10
 		c = this.adventureDeck.getByID("33");
 		this.players[1].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 9, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
 		c = this.adventureDeck.getByID("9");
 		this.players[1].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 23, type: Adventure, subtype: Weapon, name: Horse, battle points: 10
 		c = this.adventureDeck.getByID("23");
 		this.players[2].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 48, type: Adventure, subtype: Weapon, name: Excalibur, battle points: 30
 		c = this.adventureDeck.getByID("48");
 		this.players[2].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 118, type: Adventure, subtype: Amour, battle points: 10, special: <Bid
 		// Special: adds 1 extra bid(s)>
 		c = this.adventureDeck.getByID("118");
 		this.players[2].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 95, type: Adventure, subtype: Foe, name: Mordred, battle points: 30,
 		// alternative battle points: 30, special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("95");
 		this.players[2].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 102, type: Adventure, subtype: Ally, name: KingArthur, battle points: 10,
 		// special: <Bid Special: adds 4 extra bid(s)>
 		c = this.adventureDeck.getByID("102");
 		this.players[2].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 103, type: Adventure, subtype: Ally, name: SirTristan, battle points: 10,
 		// special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("103");
 		this.players[2].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 112, type: Adventure, subtype: Test, name: TestOfTemptation
 		c = this.adventureDeck.getByID("112");
 		this.players[2].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 68, type: Adventure, subtype: Foe, name: RobberKnight, battle points: 15,
 		// alternative battle points: 15, special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("68");
 		this.players[2].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 40, type: Adventure, subtype: Weapon, name: BattleAx, battle points: 15
 		c = this.adventureDeck.getByID("40");
 		this.players[2].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 28, type: Adventure, subtype: Weapon, name: Horse, battle points: 10
 		c = this.adventureDeck.getByID("28");
 		this.players[2].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 43, type: Adventure, subtype: Weapon, name: Lance, battle points: 20
 		c = this.adventureDeck.getByID("43");
 		this.players[2].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 53, type: Adventure, subtype: Foe, name: Thieves, battle points: 5,
 		// alternative battle points: 5, special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("53");
 		this.players[2].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 34, type: Adventure, subtype: Weapon, name: BattleAx, battle points: 15
 		c = this.adventureDeck.getByID("34");
 		this.players[3].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 42, type: Adventure, subtype: Weapon, name: Lance, battle points: 20
 		c = this.adventureDeck.getByID("42");
 		this.players[3].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 59, type: Adventure, subtype: Foe, name: Boar, battle points: 5,
 		// alternative battle points: 15, special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("59");
 		this.players[3].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 96, type: Adventure, subtype: Foe, name: Mordred, battle points: 30,
 		// alternative battle points: 30, special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("96");
 		this.players[3].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 61, type: Adventure, subtype: Foe, name: Boar, battle points: 5,
 		// alternative battle points: 15, special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("61");
 		this.players[3].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 78, type: Adventure, subtype: Foe, name: SaxonKnight, battle points: 15,
 		// alternative battle points: 25, special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("78");
 		this.players[3].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 49, type: Adventure, subtype: Weapon, name: Excalibur, battle points: 30
 		c = this.adventureDeck.getByID("49");
 		this.players[3].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 108, type: Adventure, subtype: Ally, name: QueenIseult, battle points: 0,
 		// special: <Bid Special: adds 2 extra bid(s)>
 		c = this.adventureDeck.getByID("108");
 		this.players[3].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 106, type: Adventure, subtype: Ally, name: SirPercival, battle points: 5,
 		// special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("106");
 		this.players[3].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 113, type: Adventure, subtype: Test, name: TestOfTemptation
 		c = this.adventureDeck.getByID("113");
 		this.players[3].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 99, type: Adventure, subtype: Foe, name: Dragon, battle points: 50,
 		// alternative battle points: 70, special: <NO SPECIAL>
 		c = this.adventureDeck.getByID("99");
 		this.players[3].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 		// ID: 16, type: Adventure, subtype: Weapon, name: Sword, battle points: 10
 		c = this.adventureDeck.getByID("16");
 		this.players[3].addToHand(c);
-		adventureDeckDiscard.add(c);
 		this.adventureDeck.remove(c);
 
 	} // end set scenario 1

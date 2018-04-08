@@ -158,10 +158,12 @@ public class ServerModel extends AbstractModel {
 		return super.getState();
 	}
 
+	public void draw(String iD, int currentPlayer) {
+		logger.info("draw() called");
+		super.draw(iD, currentPlayer);
+	}
 	public void party(String iD, int currentPlayer) {
-		
-		
-
+		logger.info("party() called");
 		super.party(iD, currentPlayer);
 		
 

@@ -152,6 +152,11 @@ public class Client {
 			getServerMessage();
 			break;
 
+		case "DRAW":
+			clientModel.draw(serverMessageComponents[3], Integer.parseInt(serverMessageComponents[2]));
+			updateViewState();
+			getServerMessage();
+			break;
 		case "UPDATE":
 			if (serverMessageComponents[2].equals(Integer.toString(this.playerNumber))) {
 				logger.info("Message was instigated by this client and not processed");
@@ -164,7 +169,6 @@ public class Client {
 				logger.info("Message was instigated by another client, and will update this model");
 				logger.info(serverMessageComponents[3]);
 				switch (serverMessageComponents[3]) {
-
 				case "QUEUE":
 					clientModel.queue(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]));
 					updateViewState();
@@ -182,13 +186,13 @@ public class Client {
 					break;
 				case "STAGE":
 					clientModel.stage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]),
-							Integer.parseInt(serverMessageComponents[5]));
+					Integer.parseInt(serverMessageComponents[5]));
 					updateViewState();
 					getServerMessage();
 					break;
 				case "UNSTAGE":
 					clientModel.unstage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]),
-							Integer.parseInt(serverMessageComponents[5]));
+					Integer.parseInt(serverMessageComponents[5]));
 					updateViewState();
 					getServerMessage();
 					break;
@@ -202,9 +206,6 @@ public class Client {
 					updateViewState();
 					getServerMessage();
 					break;
-
-				// TODO : GET AN UPDATE MESSAGE TO CHANGE THE PLAYNUMBER IS QUESTING RESPONSEE
-
 				default:
 					logger.info("Couldnt parse message from SERVERMESSAGE--UPDATE-- ?!?!?!");
 					getServerMessage();
@@ -214,7 +215,7 @@ public class Client {
 			break;
 		case "WELCOME":
 			logger.info("server has established connection with this client");
-			//clientModel.playGame();
+			// clientModel.playGame();
 			getServerMessage();
 			break;
 		case "TEST":
@@ -317,7 +318,7 @@ public class Client {
 		// return view.popup("Player " + (playerNumber + 1) + " - Would you like to
 		// quest?");
 
-		boolean isQuesting = view.popup("Player " + (playerNumber) + " - Would you like  quest?");
+		boolean isQuesting = view.popup("Player " + (playerNumber) + " - Would you like to quest?");
 		clientModel.getActivePlayer().isQuesting = isQuesting;
 		updateViewState();
 		sendClientMessage("CLIENTMESSAGE--ISQUESTING--" + isQuesting + "--" + playerNumber);
@@ -356,13 +357,12 @@ public class Client {
 		logger.debug("handClick() called");
 
 		System.out.println(playerNumber);
-		
-		
+
 		if (clickType.equals(View.PARTY)) {
 			sendClientMessage("CLIENTMESSAGE--PARTY--" + ID + "--" + playerNumber);
 			clientModel.party(ID, playerNumber);
-		} 
-		
+		}
+
 		else if (clickType.equals(View.STAGE)) {
 			if (clientModel.stage(ID, playerNumber, playerNumber + clientModel.getStage().getCurrentStage())) {
 				sendClientMessage("CLIENTMESSAGE--STAGE--" + ID + "--" + playerNumber + "--"
@@ -373,15 +373,14 @@ public class Client {
 			sendClientMessage("CLIENTMESSAGE--UNSTAGE--" + ID + "--" + playerNumber + "--"
 					+ clientModel.getStage().getCurrentStage());
 			clientModel.unstage(ID, playerNumber, clientModel.getStage().getCurrentStage());
-		} 
-		
+		}
+
 		else if (clickType.equals(View.QUEUE)) {
 			sendClientMessage("CLIENTMESSAGE--QUEUE--" + ID + "--" + playerNumber);
 			clientModel.queue(ID, playerNumber);
 		}
-		
-		
-		//FIXME MAYBE TODO MAYEB
+
+		// FIXME MAYBE TODO MAYEB
 		else if (clickType.equals(View.DEQUEUE)) {
 			clientModel.dequeue(ID, playerNumber);
 			sendClientMessage("CLIENTMESSAGE--DEQUEUE--" + ID + "--" + playerNumber);
@@ -394,9 +393,9 @@ public class Client {
 			sendClientMessage("CLIENTMESSAGE--ASSASSINATE--" + ID + "--" + playerNumber);
 			clientModel.assassinate(ID, playerNumber);
 		} else if (clickType.equals(View.ENDTURN)) {
-		//	if (clientModel.getCurrentState().canEndTurn()) {
+			// if (clientModel.getCurrentState().canEndTurn()) {
 
-			//}
+			// }
 		}
 	}
 
@@ -426,9 +425,9 @@ public class Client {
 		} else if (clickType.equals(View.STAGE5)) {
 			clientModel.setCurrentStage(4);
 		} else if (clickType.equals(View.ENDTURN)) {
-			//if (clientModel.getCurrentState().canEndTurn()) {
-				sendClientMessage("CLIENTMESSAGE--ENDTURN--" + "--" + playerNumber);
-			//}
+			// if (clientModel.getCurrentState().canEndTurn()) {
+			sendClientMessage("CLIENTMESSAGE--ENDTURN--" + "--" + playerNumber);
+			// }
 		}
 	}
 
