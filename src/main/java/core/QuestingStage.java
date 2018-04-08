@@ -1,72 +1,106 @@
 package core;
 
+import java.util.ArrayList;
 
 import org.apache.logging.log4j.LogManager;
-import java.util.*;
 import org.apache.logging.log4j.Logger;
+
+import core.AdventureCard;
+import core.CardCollection;
 
 public class QuestingStage {
 	private static final Logger logger = LogManager.getLogger(QuestingStage.class);
-	
-	
-	ArrayList<CardCollection<AdventureCard>>  stages;
-	boolean stageResolved = false;
-	boolean toggleForStages = false;
-	int stagePlaceHolder = 0;
-	static int stageOverCount = 0;
-	int currentStage = 0;
-	
-	
-	
+
+	private ArrayList<CardCollection<AdventureCard>> stages; // Used to store all the Card Collection in staging process
+
+	private int currentStage = 0;
+
+	/****
+	 * Class Purpose to Hold the cards for staging
+	 * 
+	 */
 	public QuestingStage() {
-		
-	stages = new ArrayList<CardCollection<AdventureCard>> ();
-	
-	for (int i = 0; i < 5; i++) {
-		stages.add(new CardCollection<AdventureCard>());
-		
-	} 
-		
-		
-		currentStage = 0;
+
+		stages = new ArrayList<CardCollection<AdventureCard>>();
+
+		for (int i = 0; i < 5; i++) {
+			stages.add(new CardCollection<AdventureCard>());
+		}
+
 	}
-	
-	
-	public void resetCurrentStage(){
+
+	/****
+	 * 
+	 * To start from Stage One Used after a Sponsor has submit their staging cards
+	 * 
+	 */
+	public void resetCurrentStage() {
 		logger.info("resetCurrentStage() called");
-		
+
 		this.currentStage = 0;
 
 	}
-	
+
+	/****
+	 * 
+	 * Used to switch between the stage
+	 * 
+	 */
+
 	public void setCurrentStage(int num) {
 		logger.debug("setCurrentStage(" + num + ") called");
 
 		this.currentStage = num;
-		
+
 	}
-	
+
+	/****
+	 * 
+	 * return the The Cards at a particular stage
+	 * 
+	 */
 	public CardCollection<AdventureCard> getStageAt(int stageNum) {
-		
-		
+
 		return stages.get(stageNum);
-		
-		
-		
+
 	}
-	
-	public ArrayList<CardCollection<AdventureCard>>  getStage() {
+
+	/****
+	 * 
+	 * Return all the stages
+	 * 
+	 */
+	public ArrayList<CardCollection<AdventureCard>> getStage() {
 		return stages;
 	}
+
+	
+	public void add(AdventureCard Card) {
+		getStageAt(currentStage).add(Card);
+		
+		
+	
+	}
+
+	/****
+	 * 
+	 * Move to the next Stage Typically used after a stage has completed
+	 * 
+	 */
 	
 	public void nextStage() {
+		logger.info("Moving onwards to the NextStage ");
 		currentStage++;
 	}
-	
+
+	/****
+	 * 
+	 * Return what the current Stage Numbers
+	 * 
+	 * 
+	 */
 	public int getCurrentStage() {
-		
 		return currentStage;
 	}
-	
 
 }

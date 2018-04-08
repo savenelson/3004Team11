@@ -55,11 +55,11 @@ public class QuestCard extends StoryCard{
 	private int numberStages;
 	public int getNumStages(){return this.numberStages;}
 	
-	public String getName(){return this.name;}
+	public String getName(){return this.getName();}
 	
 	private String foe;
 	
-	public String getFoe(){return this.name;}
+	public String getFoe(){return this.getName();}
 	
 	QuestCard(String name, int numberStages, String foe) {
 		super(QUEST);

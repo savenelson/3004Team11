@@ -1,25 +1,31 @@
-package core;
+package client;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import core.AdventureCard;
+import core.AdventureDeck;
+import core.CardCollection;
+import core.Player;
+import core.StoryCardState;
+
 // class to handle event cards
-public class EventManger implements StoryCardState{
-private static final Logger logger = LogManager.getLogger(EventManger.class);
+public class EventManager implements core.StoryCardState{
+private static final Logger logger = LogManager.getLogger(EventManager.class);
 Player [] players;
 int numPlayers;
 AdventureDeck adventureDeck;
 AdventureDeck adventureDeckDiscard;
 boolean nextQ;
 int currentPlayer;
-Model model; 
-public EventManger(Model model) {
-	this.model = model;
-	this.players= model.getPlayers();
-	this.numPlayers = model.numPlayers;
-	this.adventureDeck = model.getAdventureDeck();
-	this.nextQ = model.inNextQ;
-	this.currentPlayer = model.currentPlayer;
+ClientModel clientModel; 
+public EventManager(ClientModel clientModel) {
+	this.clientModel = clientModel;
+	this.players= clientModel.getPlayers();
+	this.numPlayers = clientModel.numPlayers;
+	this.adventureDeck = clientModel.getAdventureDeck();
+	this.nextQ = clientModel.inNextQ;
+	this.currentPlayer = clientModel.currentPlayer;
 	
 }
 
@@ -51,53 +57,19 @@ public void handleEvent(String eventName) {
 	}
 private void CourtCalled() {
 	for (int i = 0; i < this.players.length; i++) {
-		CardCollection hand = this.players[i].getHand();
+		CardCollection<AdventureCard> hand = this.players[i].getHand();
 
-		for (int j = 0; j < hand.size(); j++) {
-
-			if (hand.getByID("100") != null) {
-				Card c = hand.getByID("100");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("101") != null) {
-				Card c = hand.getByID("101");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("102") != null) {
-				Card c = hand.getByID("102");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("103") != null) {
-				Card c = hand.getByID("103");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("104") != null) {
-				Card c = hand.getByID("104");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("105") != null) {
-				Card c = hand.getByID("105");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("106") != null) {
-				Card c = hand.getByID("106");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("107") != null) {
-				Card c = hand.getByID("107");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("108") != null) {
-				Card c = hand.getByID("108");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
-			} else if (hand.getByID("109") != null) {
-				Card c = hand.getByID("109");
-				hand.remove(c);
-				adventureDeckDiscard.add(c);
+			// cards from 100 -109
+			for (int k = 0; k<10; k++) {
+				if(hand.getByID("10"+k)!=null) {
+					adventureDeckDiscard.add(hand.getByID("10"+k));
+					hand.remove(hand.getByID("10"+k));
+					
+				}
 			}
-		}
 	}
+			
+
 }
 
 
@@ -179,7 +151,7 @@ public void KingCallToArms() {
 public void ProsperityThroughoutTheRealm() {
 	logger.info("Handling ProsperityThroughoutTheRealm event ");
 	
-	int nummOfPlayers = model.getPlayers().length;
+	int nummOfPlayers = clientModel.getPlayers().length;
 	for (int i = 0; i < nummOfPlayers; i++) {
 		// need to draw from  story card 
 		logger.info(players[i].getPlayerNumber());
@@ -270,8 +242,8 @@ public void Plague() {
 public void handle() {
 	// TODO Auto-generated method stub
 	
-	String eventName = model.currentStoryCard.getName();
-	System.out.println(model.currentStoryCard.getName());
+	String eventName = clientModel.currentStoryCard.getName();
+	System.out.println(clientModel.currentStoryCard.getName());
 
 
 	if(eventName.equals("KingsRecognition")) {
@@ -305,19 +277,32 @@ public Player nextPlayer1() {
 	return null;
 }
 
-
 @Override
 public void nextPlayer() {
 	// TODO Auto-generated method stub		
 			
-	model.nextPlayer();
-	model.nextStory();
+	clientModel.nextPlayer();
+	clientModel.nextStory();
 	
 }
 
 
 @Override
 public void setPlayer() {
+	// TODO Auto-generated method stub
+	
+}
+
+
+@Override
+public boolean canEndTurn() {
+	// TODO Auto-generated method stub
+	return false;
+}
+
+
+@Override
+public void setHasSponsor(boolean b) {
 	// TODO Auto-generated method stub
 	
 }

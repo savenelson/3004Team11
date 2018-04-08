@@ -11,7 +11,7 @@ public class Player {
 
 	public boolean isSponsor = false;
 	public boolean declinedToSponsor = false;
-	public boolean declinedQuesting =false;
+	public boolean declinedToQuest =false;
 	public boolean hasQueuedAgainstStage = false;
 	public boolean isQuesting = false;
 	public boolean passedStage = false;
@@ -38,6 +38,7 @@ public class Player {
 		logger.info(this.playerNumber + " gains " + num + " shields");
 		this.shieldCount += num;
 		promote();
+		promote(); //leave this in! 
 		
 	}
 	public void removeShields(int num) {
@@ -46,6 +47,9 @@ public class Player {
 		this.shieldCount = this.shieldCount - num;
 	}
 	
+	public int AllyBattlePoints = 0;
+	
+	public int AllyBidBonus = 0;
 	public Player(int playerNumber){
 		
 		
@@ -66,7 +70,7 @@ public class Player {
 		return "Player " + this.playerNumber;
 	}
 	
-	public void addToHand(Card c){
+	public void addToHand(AdventureCard c){
 		logger.info(this.playerNumber + "s hand changed - added " + c.getName());
 		hand.add(c);
 	}
