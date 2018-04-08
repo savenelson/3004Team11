@@ -34,13 +34,10 @@ public class ClientModel extends AbstractModel {
 		return super.adventureDeck;
 	}
 
-
-
 	public StoryDeck getStoryDeck() {
 		return super.storyDeck;
 	}
 
-	
 
 	public CardCollection<StoryCard> getStoryDeckDiscard() {
 		return super.storyDeckDiscard;
