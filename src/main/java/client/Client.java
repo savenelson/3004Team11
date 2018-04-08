@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javafx.application.Platform;
+import core.AdventureDeck;
 import core.Player;
 import core.State;
 
@@ -320,6 +321,10 @@ public class Client {
 		boolean isQuesting = view.popup("Player " + (playerNumber) + " - Would you like  quest?");
 		clientModel.getActivePlayer().isQuesting = isQuesting;
 		updateViewState();
+		if(isQuesting){
+			getActivePlayer().getHand().add(clientModel.getAdventureDeck().pop());
+		}
+		
 		sendClientMessage("CLIENTMESSAGE--ISQUESTING--" + isQuesting + "--" + playerNumber);
 
 	}
