@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import core.*;
 
-
 public class ClientModel extends AbstractModel {
 
 	private static final Logger logger = LogManager.getLogger(ClientModel.class);

@@ -21,6 +21,11 @@ public class CardCollection<T extends Card> {
 		cards.remove(0);
 		return c;
 	}
+	
+	public T peek() {
+		T c = cards.get(0);
+		return c;
+	}
 
 	// get a card from the deck by name
 	// public Card popByID(String ID){

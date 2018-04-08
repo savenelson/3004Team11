@@ -33,8 +33,7 @@ public class EventManager implements  StoryCardState {
 		this.adventureDeck = clientModel.getAdventureDeck();
 		this.nextQ = clientModel.inNextQ;
 		this.currentPlayer = clientModel.currentPlayer;
-
-*/
+		 */
 	}
 
 	public void handleEvent(String eventName) {

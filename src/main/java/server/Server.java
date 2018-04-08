@@ -20,7 +20,7 @@ public class Server {
     private static final int DEFAULT_PLAYERS_PER_TABLE = 4;             // default number of players per table
     private static final int maxPlayers = 4;							// max players for table
     private int serverPort;                                             // server port
-    private int playersPerTable = 4;                                        // number of players per table
+    private int playersPerGame = 4;                                        // number of players per table
 	ArrayList<ServerThread> clientThreads = new ArrayList<ServerThread>();
     public ServerModel serverModel;
 
@@ -28,13 +28,13 @@ public class Server {
      * Constructor for Server object.
      *
      * @param serverPort Server port
-     * @param playersPerTable Number of players per table
+     * @param playersPerGame Number of players per table
      */
 
-    public Server(int serverPort, int playersPerTable) {
-    	logger.debug("Server(int serverPort, int playersPerTable) called");
+    public Server(int serverPort, int playersPerGame) {
+    	logger.debug("Server(int serverPort, int playersPerGame) called");
     	this.serverPort = serverPort;
-    	this.playersPerTable = playersPerTable;
+    	this.playersPerGame = playersPerGame;
     }
 
     /**
@@ -53,12 +53,13 @@ public class Server {
     public void start() {
     	logger.debug("start()  called");
 
-        System.out.println("Starting Quests server\nServer port: " + serverPort + "\nPlayers per table: " + playersPerTable);
+        System.out.println("Starting Quests server\nServer port: " + serverPort + "\nPlayers per table: " + playersPerGame);
         
         System.out.println("Listening on port " + serverPort);
-        	
+
     		serverModel = new ServerModel(this);
-		serverModel.instantiatePlayers(playersPerTable);
+		serverModel.instantiatePlayers(playersPerGame);
+
 		serverModel.instantiateStages(); //TODO set properly
 		
 //		model.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
@@ -75,11 +76,11 @@ public class Server {
     		
         try (ServerSocket serverSocket = new ServerSocket(serverPort)){
 	    	while(listening) {
-	    		for(int g = 0; g<3; g++) {
+	    		for(int g = 0; g<2; g++) {
 	        		clientThreads.add(new ServerThread(serverSocket.accept(), this, g));
 	        		clientThreads.get(g).start();
 	        		
-	        		if(clientThreads.size()==3) {
+	        		if(clientThreads.size()==2) {
 	        			System.out.println("Beginning to Quest lets go model");
 	        			serverModel.playGame();
 	        		}
@@ -163,9 +164,9 @@ public class Server {
     
     public static void main(String[] args) {
         int serverPort = DEFAULT_PORT;
-        int playersPerTable = DEFAULT_PLAYERS_PER_TABLE;
+        int playersPerGame = DEFAULT_PLAYERS_PER_TABLE;
 
-         Server questsServer = new Server(serverPort, playersPerTable);
+         Server questsServer = new Server(serverPort, playersPerGame);
         questsServer.start();
     }
     

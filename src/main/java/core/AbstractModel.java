@@ -181,7 +181,10 @@ public abstract class AbstractModel {
 		logger.info("draw() called");
 		AdventureCard c;
 		c = this.adventureDeck.getByID(iD);
-		this.players[currentPlayer].addToHand(c);
+		Player p = this.players[currentPlayer];
+		logger.info(this.adventureDeck);
+		logger.info("Player " + p + " card " + c);
+		p.addToHand(c);
 		this.adventureDeck.remove(c);
 		logger.info("Player " + currentPlayer + " drew " + c.getName() + " from AdventureDeck to hand");
 
