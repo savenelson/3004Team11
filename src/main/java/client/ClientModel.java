@@ -6,9 +6,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import core.*;
-import server.EventManager;
-import server.QuestManager;
-import server.Server;
+import client.EventManager;
+import client.QuestManager;
+import client.Client;
 
 public class ClientModel extends AbstractModel {
 

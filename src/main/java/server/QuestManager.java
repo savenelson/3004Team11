@@ -6,7 +6,6 @@ import javax.print.attribute.standard.NumberOfDocuments;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import com.sun.jmx.remote.internal.ArrayQueue;
 
 import core.*;

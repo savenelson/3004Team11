@@ -111,10 +111,10 @@ public class ServerThread extends Thread {
 			server.serverModel.getActivePlayer().isQuesting= ISQUESTER;
 			if(ISQUESTER) {
 				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+playerNum+" has decidied to quest");
-				AdventureCard c = server.serverModel.getAdventureDeck().pop();
+				AdventureCard c = server.serverModel.getAdventureDeck().peek();
 				String ID = c.getID();
 				server.serverModel.draw(ID,playerNum);
-				server.sendServerMessage("SERVERMESSAGE--UPDATE--" + playerNum + "--DRAW--" + ID);
+				server.sendServerMessage("SERVERMESSAGE--DRAW--" + playerNum + "--" + ID);
 
 			}else {
 				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+playerNum+" has NOT decidied to quest");
