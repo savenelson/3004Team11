@@ -250,7 +250,7 @@ public class ServerModel extends AbstractModel {
 	}
 
 	protected void playEvent() {
-		currentState = questManger;
+		currentState = questManager;
 	}
 
 	public void playGame() {

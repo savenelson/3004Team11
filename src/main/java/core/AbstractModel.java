@@ -209,7 +209,7 @@ public abstract class AbstractModel {
 	public void unstage(String iD, int currentPlayer, int stageNumber) {
 		logger.debug("unstage() called");
 
-		Card c = this.getStage().getStageAt(stageNumber).getByID(iD);
+		AdventureCard c = this.getStage().getStageAt(stageNumber).getByID(iD);
 
 		this.getStage().getStageAt(stageNumber).remove(iD);
 		

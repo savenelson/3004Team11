@@ -69,43 +69,43 @@ public class EventManager implements  StoryCardState {
 			for (int j = 0; j < hand.size(); j++) {
 
 				if (hand.getByID("100") != null) {
-					Card c = hand.getByID("100");
+					AdventureCard c = hand.getByID("100");
 					hand.remove("100");
-					adventureDeckDiscard.add(c);
+					adventureDeckDiscard.add((AdventureCard) c);
 				} else if (hand.getByID("101") != null) {
-					Card c = hand.getByID("101");
+					AdventureCard c = hand.getByID("101");
 					hand.remove("101");
-					adventureDeckDiscard.add(c);
+					adventureDeckDiscard.add((AdventureCard) c);
 				} else if (hand.getByID("102") != null) {
-					Card c = hand.getByID("102");
+					AdventureCard c = hand.getByID("102");
 					hand.remove("102");
 					adventureDeckDiscard.add(c);
 				} else if (hand.getByID("103") != null) {
-					Card c = hand.getByID("103");
+					AdventureCard c = hand.getByID("103");
 					hand.remove("103");
 					adventureDeckDiscard.add(c);
 				} else if (hand.getByID("104") != null) {
-					Card c = hand.getByID("104");
+					AdventureCard c = hand.getByID("104");
 					hand.remove("104");
 					adventureDeckDiscard.add(c);
 				} else if (hand.getByID("105") != null) {
-					Card c = hand.getByID("105");
+					AdventureCard c = hand.getByID("105");
 					hand.remove("105");
 					adventureDeckDiscard.add(c);
 				} else if (hand.getByID("106") != null) {
-					Card c = hand.getByID("106");
+					AdventureCard c = hand.getByID("106");
 					hand.remove("106");
 					adventureDeckDiscard.add(c);
 				} else if (hand.getByID("107") != null) {
-					Card c = hand.getByID("107");
+					AdventureCard c = hand.getByID("107");
 					hand.remove("107");
 					adventureDeckDiscard.add(c);
 				} else if (hand.getByID("108") != null) {
-					Card c = hand.getByID("108");
+					AdventureCard c = hand.getByID("108");
 					hand.remove("108");
 					adventureDeckDiscard.add(c);
 				} else if (hand.getByID("109") != null) {
-					Card c = hand.getByID("109");
+					AdventureCard c = hand.getByID("109");
 					hand.remove("109");
 					adventureDeckDiscard.add(c);
 				}
@@ -292,8 +292,6 @@ public class EventManager implements  StoryCardState {
 
 
 	public void handle() {
-		// TODO Auto-generated method stub
-
 		String eventName = serverModel.currentStoryCard.getName();
 		System.out.println(serverModel.currentStoryCard.getName());
 
@@ -335,6 +333,12 @@ public class EventManager implements  StoryCardState {
 	@Override
 	public boolean canEndTurn() {
 		return false;
+	}
+
+	@Override
+	public void setHasSponsor(boolean b) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

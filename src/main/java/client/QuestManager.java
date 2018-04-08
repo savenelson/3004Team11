@@ -507,7 +507,7 @@ public class QuestManager implements StoryCardState{
 					players[i].passedQuest =true;
 
 				
-					Card c = clientModel.getAdventureDeck().pop();
+					AdventureCard c = clientModel.getAdventureDeck().pop();
 					this.players[i].addToHand(c);
 					clientModel.getAdventureDeckDiscard().add(c);
 				}
@@ -551,6 +551,14 @@ public class QuestManager implements StoryCardState{
 
 	@Override
 	public void handle() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void setHasSponsor(boolean b) {
 		// TODO Auto-generated method stub
 		
 	}

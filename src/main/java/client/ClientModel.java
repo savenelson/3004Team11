@@ -105,7 +105,7 @@ public class ClientModel extends AbstractModel {
 	
 	public Player getActivePlayer() {
 
-		return super.players[super.currentPlayer];
+		return super.players[this.currentPlayer];
 	}
 
 	
@@ -175,7 +175,6 @@ public class ClientModel extends AbstractModel {
 	}
 
 	public void party(String iD, int currentPlayer) {
-		
 		logger.debug("party() called");
 		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(iD);
@@ -187,11 +186,22 @@ public class ClientModel extends AbstractModel {
 		}
 
 		super.party(iD, currentPlayer);
-		
 
-		
 	}
 
+	public void queue(String id, int currentPlayer) {
+		logger.debug("queue() called");
+		CardCollection<AdventureCard> hand = players[currentPlayer].getHand();
+		AdventureCard c = hand.getByID(id);
+
+		if (containsSameWeapon(players[currentPlayer].getQueue(), ((WeaponCard) c).getName())) {
+			control.alert("Cannot have duplicate weapons in queue.");
+			return;
+		}
+
+		super.queue(id, currentPlayer);
+	}
+	
 	public boolean stage(String iD, int currentPlayer, int stageNumber) {
 		logger.debug("stage() called");
 
@@ -267,21 +277,7 @@ public class ClientModel extends AbstractModel {
 	}
 
 
-	public void queue(String id, int currentPlayer) {
-		logger.debug("queue() called");
-		System.out.println("Current player, in queue called" + currentPlayer);
 
-		CardCollection<AdventureCard> hand = new CardCollection<AdventureCard>();
-		hand = players[currentPlayer].getHand();
-		AdventureCard c = hand.getByID(id);
-
-		if (containsSameWeapon(players[currentPlayer].getQueue(), ((WeaponCard) c).getName())) {
-			control.alert("Cannot have duplicate weapons in queue.");
-			return;
-		}
-
-		super.queue(id, currentPlayer);
-	}
 
 	public void dequeue(String iD, int currentPlayer) {
 		super.dequeue(iD, currentPlayer);
@@ -335,7 +331,7 @@ public class ClientModel extends AbstractModel {
 	}
 
 	protected void playQuest() {
-		currentState = questManger;
+		currentState = questManager;
 	}
 
 	protected void playEvent() {

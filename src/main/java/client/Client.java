@@ -317,8 +317,9 @@ public class Client {
 		// return view.popup("Player " + (playerNumber + 1) + " - Would you like to
 		// quest?");
 
-		boolean isQuesting = view.popup("Player " + (playerNumber + 1) + " - Would you like  quest?");
+		boolean isQuesting = view.popup("Player " + (playerNumber) + " - Would you like  quest?");
 		clientModel.getActivePlayer().isQuesting = isQuesting;
+		updateViewState();
 		sendClientMessage("CLIENTMESSAGE--ISQUESTING--" + isQuesting + "--" + playerNumber);
 
 	}
@@ -355,10 +356,14 @@ public class Client {
 		logger.debug("handClick() called");
 
 		System.out.println(playerNumber);
+		
+		
 		if (clickType.equals(View.PARTY)) {
 			sendClientMessage("CLIENTMESSAGE--PARTY--" + ID + "--" + playerNumber);
 			clientModel.party(ID, playerNumber);
-		} else if (clickType.equals(View.STAGE)) {
+		} 
+		
+		else if (clickType.equals(View.STAGE)) {
 			if (clientModel.stage(ID, playerNumber, playerNumber + clientModel.getStage().getCurrentStage())) {
 				sendClientMessage("CLIENTMESSAGE--STAGE--" + ID + "--" + playerNumber + "--"
 						+ clientModel.getStage().getCurrentStage());
@@ -368,10 +373,16 @@ public class Client {
 			sendClientMessage("CLIENTMESSAGE--UNSTAGE--" + ID + "--" + playerNumber + "--"
 					+ clientModel.getStage().getCurrentStage());
 			clientModel.unstage(ID, playerNumber, clientModel.getStage().getCurrentStage());
-		} else if (clickType.equals(View.QUEUE)) {
-			clientModel.queue(ID, playerNumber);
+		} 
+		
+		else if (clickType.equals(View.QUEUE)) {
 			sendClientMessage("CLIENTMESSAGE--QUEUE--" + ID + "--" + playerNumber);
-		} else if (clickType.equals(View.DEQUEUE)) {
+			clientModel.queue(ID, playerNumber);
+		}
+		
+		
+		//FIXME MAYBE TODO MAYEB
+		else if (clickType.equals(View.DEQUEUE)) {
 			clientModel.dequeue(ID, playerNumber);
 			sendClientMessage("CLIENTMESSAGE--DEQUEUE--" + ID + "--" + playerNumber);
 
