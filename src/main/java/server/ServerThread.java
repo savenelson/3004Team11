@@ -114,7 +114,7 @@ public class ServerThread extends Thread {
 				AdventureCard c = server.serverModel.getAdventureDeck().pop();
 				String ID = c.getID();
 				server.serverModel.draw(ID,playerNum);
-				server.sendServerMessage("SERVERMESSAGE--UPDATE--" + playerNum + "--DRAW--" + ID);
+				server.sendServerMessage("SERVERMESSAGE--DRAW--" + playerNum + "--" + ID);
 
 			}else {
 				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+playerNum+" has NOT decidied to quest");
