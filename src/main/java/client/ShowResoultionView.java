@@ -172,39 +172,6 @@ public class ShowResoultionView extends Pane{
 		return canvas;
 	}
 	
-	/*private void addStageToCanvas(Pane canvas) {
-		CardCollection<AdventureCard> stage = state.stages.get(state.currentStage3);
-		
-		tile = new TilePane();
-		tile.setPrefRows(1);
-		tile.setPrefColumns(5);
-		tile.setVgap(10);
-		tile.setHgap(10);
-		
-		if (stage != null) {
-			for (int i = 0; i < stage.size(); ++i){
-				try {
-					Image img = new Image(new FileInputStream(IMG_DIR + stage.get(i).getImgName() + GIF));
-					imgView = new ImageView();
-					imgView.setId(stage.get(i).getID());
-					imgView.setImage(img);
-					imgView.relocate(colStage, rowStage);
-					imgView.setFitWidth(cardSmallWidth);
-					imgView.setFitHeight(cardSmallHeight);
-					imgView.setPreserveRatio(true);
-					tile.getChildren().add(imgView);
-
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}
-			}
-	
-			tile.relocate(colStage, rowStage);
-			
-			canvas.getChildren().add(tile);
-		}
-	}*/
-
 	private void addPlayerARankToCanvas(Pane canvas) {
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.players[0].getRank().getImgName() + GIF));
@@ -275,7 +242,7 @@ public class ShowResoultionView extends Pane{
 	
 	private void addPlayerAPartyToCanvas(Pane canvas) {
 		
-		CardCollection party = state.players[0].getParty();
+		CardCollection<AdventureCard> party = state.players[0].getParty();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -309,7 +276,7 @@ public class ShowResoultionView extends Pane{
 
 	private void addPlayerBPartyToCanvas(Pane canvas) {
 		
-		CardCollection party = state.players[1].getParty();
+		CardCollection<AdventureCard> party = state.players[1].getParty();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -343,7 +310,7 @@ public class ShowResoultionView extends Pane{
 
 	private void addPlayerCPartyToCanvas(Pane canvas) {
 		
-		CardCollection party = state.players[2].getParty();
+		CardCollection<AdventureCard> party = state.players[2].getParty();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -377,7 +344,7 @@ public class ShowResoultionView extends Pane{
 	
 	private void addPlayerDPartyToCanvas(Pane canvas) {
 		
-		CardCollection party = state.players[3].getParty();
+		CardCollection<AdventureCard> party = state.players[3].getParty();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -411,7 +378,7 @@ public class ShowResoultionView extends Pane{
 	
 	private void addPlayerAQueueToCanvas(Pane canvas) {
 		
-		CardCollection queue = state.players[0].getQueue();
+		CardCollection<AdventureCard> queue = state.players[0].getQueue();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -445,7 +412,7 @@ public class ShowResoultionView extends Pane{
 	
 	private void addPlayerBQueueToCanvas(Pane canvas) {
 		
-		CardCollection queue = state.players[1].getQueue();
+		CardCollection<AdventureCard> queue = state.players[1].getQueue();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -479,7 +446,7 @@ public class ShowResoultionView extends Pane{
 	
 	private void addPlayerCQueueToCanvas(Pane canvas) {
 		
-		CardCollection queue = state.players[2].getQueue();
+		CardCollection<AdventureCard> queue = state.players[2].getQueue();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -513,7 +480,7 @@ public class ShowResoultionView extends Pane{
 	
 	private void addPlayerDQueueToCanvas(Pane canvas) {
 		
-		CardCollection queue = state.players[3].getQueue();
+		CardCollection<AdventureCard> queue = state.players[3].getQueue();
 		
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -548,15 +515,6 @@ public class ShowResoultionView extends Pane{
 	public int numberSelected() {
 		return numberPlayers;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

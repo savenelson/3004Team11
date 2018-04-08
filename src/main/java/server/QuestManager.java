@@ -526,6 +526,7 @@ public class QuestManager implements StoryCardState {
 			}
 
 		}
+		/*
 		if (serverModel.getStage().getCurrentStage() + 1 == ((QuestCard) serverModel.currentStoryCard).getNumStages()) {
 			// restart the Questmanger
 			hasSponsor = false;
@@ -546,7 +547,7 @@ public class QuestManager implements StoryCardState {
 
 			resolveQuest();
 
-		}
+		}*/
 
 	}
 

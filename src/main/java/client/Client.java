@@ -152,8 +152,16 @@ public class Client {
 			getServerMessage();
 			break;
 		case "RESOLVESTAGE":
-			clientModel.getQuesterManger().resolveStage();
-			updateViewState();
+			//clientModel.getQuesterManger().resolveStage();
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					view.stageResolved();
+					
+				}
+			});
+		
+			//updateViewState();
 			getServerMessage();
 			break;
 			

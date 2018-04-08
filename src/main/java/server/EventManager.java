@@ -340,5 +340,17 @@ public class EventManager implements  StoryCardState {
 		
 	}
 
+	@Override
+	public void resolveStage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void increaseResponse() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }
