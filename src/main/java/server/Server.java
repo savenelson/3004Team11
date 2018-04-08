@@ -108,7 +108,8 @@ public class Server {
      * 
      */
     public void sendServerMessageToOne(String serverMessage, int playerNum) {
-    
+    	logger.info(serverMessage);
+
 
     		for(ServerThread thread1 : clientThreads) {
     			logger.info("Current threads playernumber: " + thread1.currentPlayer);
@@ -128,7 +129,8 @@ public class Server {
      * 
      */
     public void sendServerMessageToAllButOne(String serverMessage, int playerNum) {
-    
+    	logger.info(serverMessage);
+
 
     		for(ServerThread thread1 : clientThreads) {
     			logger.info("Current threads playernumber: " + thread1.currentPlayer);
