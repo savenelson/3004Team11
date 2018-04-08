@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.sun.jmx.remote.internal.ArrayQueue;
 
-import client.ClientModel;
 import core.*;
 import javafx.event.ActionEvent;
 import javafx.event.*;
