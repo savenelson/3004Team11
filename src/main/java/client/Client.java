@@ -304,7 +304,7 @@ public class Client {
 	public void getSponsorDecision() {
 		logger.debug("getSponsorDecision() called");
 
-		boolean isSponsor = view.popup("Player " + (playerNumber + 1) + " - Would you like to sponsor this quest?");
+		boolean isSponsor = view.popup("Player " + playerNumber + " - Would you like to sponsor this quest?");
 		clientModel.getActivePlayer().isSponsor = isSponsor;
 		sendClientMessage("CLIENTMESSAGE--ISSPONSOR--" + isSponsor + "--" + playerNumber);
 	}
