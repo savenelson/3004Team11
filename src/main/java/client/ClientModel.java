@@ -6,9 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import core.*;
-import server.EventManager;
-import server.QuestManager;
-import server.Server;
+
 
 public class ClientModel extends AbstractModel {
 
@@ -100,6 +98,8 @@ public class ClientModel extends AbstractModel {
 		super.currentStage = stage.getCurrentStage();
 	}
 	
+	
+	public StoryCardState getQuesterManger() {return questManager;}
 	public Player getActivePlayer() {
 
 		return super.players[this.currentPlayer];

@@ -564,6 +564,14 @@ public class QuestManager implements StoryCardState{
 	}
 
 
+
+	@Override
+	public void increaseResponse() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	
 
 

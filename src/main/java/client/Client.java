@@ -151,6 +151,12 @@ public class Client {
 
 			getServerMessage();
 			break;
+		case "RESOLVESTAGE":
+			clientModel.getQuesterManger().resolveStage();
+			updateViewState();
+			getServerMessage();
+			break;
+			
 
 		case "DRAW":
 			clientModel.draw(serverMessageComponents[3], Integer.parseInt(serverMessageComponents[2]));

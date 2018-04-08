@@ -57,7 +57,7 @@ public class Server {
         
         System.out.println("Listening on port " + serverPort);
         	
-    	serverModel = new ServerModel(this);
+    		serverModel = new ServerModel(this);
 		serverModel.instantiatePlayers(playersPerTable);
 		serverModel.instantiateStages(); //TODO set properly
 		
@@ -185,9 +185,16 @@ public class Server {
 	
 	public void resolveQuest(){
 		logger.debug("resolveQuest() called");
+		sendServerMessage("SERVERMESSAGE--RESOLVEQUEST");
 
-//		BROKEN: the below call FIXME to talk to client
-//		view.resolveQuest();
+//		
+	}
+	
+	public void resolveStage(){
+		logger.debug("resolveQuest() called");
+		sendServerMessage("SERVERMESSAGE--RESOLVESTAGE");
+
+//		
 	}
 
 	public void update() {

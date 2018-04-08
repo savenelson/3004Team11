@@ -114,15 +114,18 @@ public class QuestManager implements StoryCardState {
 				serverModel.server.getQuesterDecison();
 				numOfRepsonders++;
 			}
-			
-			if(numOfRepsonders==numOfQuesterPotential) {
+			//numOfQuesterPotential
+			if(numOfRepsonders==2) {
 				
 				 questersReady = true;
 				
 			}
 			
 			if(questersReady) {
+				
 				resolveStage();
+				
+				serverModel.server.resolveStage();
 			}
 		}
 		
