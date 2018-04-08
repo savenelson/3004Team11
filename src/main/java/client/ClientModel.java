@@ -335,7 +335,7 @@ public class ClientModel extends AbstractModel {
 	}
 
 	protected void playQuest() {
-		currentState = questManger;
+		currentState = questManager;
 	}
 
 	protected void playEvent() {

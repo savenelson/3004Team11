@@ -301,6 +301,13 @@ public boolean canEndTurn() {
 }
 
 
+@Override
+public void setHasSponsor(boolean b) {
+	// TODO Auto-generated method stub
+	
+}
+
+
 }
 
 	

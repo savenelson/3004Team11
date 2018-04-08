@@ -445,7 +445,7 @@ public class QuestManager implements StoryCardState {
 				if (players[i].passedQuest) {
 					players[i].addShields(numShields);
 					for (int j = 0; j < numStages; j++) {
-						Card c = serverModel.getAdventureDeck().pop();
+						AdventureCard c = serverModel.getAdventureDeck().pop();
 						this.players[i].addToHand(c);
 						serverModel.getAdventureDeckDiscard().add(c);
 					}
@@ -498,7 +498,7 @@ public class QuestManager implements StoryCardState {
 
 					players[i].passedQuest = true;
 
-					Card c = serverModel.getAdventureDeck().pop();
+					AdventureCard c = serverModel.getAdventureDeck().pop();
 					this.players[i].addToHand(c);
 					serverModel.getAdventureDeckDiscard().add(c);
 				}
