@@ -18,7 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
-import server.ServerModel;
+import client.ClientModel;
 
 public class QuestManager implements StoryCardState{
 	private static final Logger logger = LogManager.getLogger(QuestManager.class);
@@ -60,113 +60,113 @@ public class QuestManager implements StoryCardState{
 	
 	
 	
-	public void handle(ServerModel serverModel) {
-		
-		
-		numOfQuesterPotential = serverModel.getNumPlayers() -1;
-		
-		// if I do not have a sponsor ask the person if they want to sponsor 
-		if(!hasSponsor) {
-			
-		// if I haven't ask to sponsor yet then ask
-		if(!serverModel.getActivePlayer().declinedToSponsor) {
-		boolean wantToSponsor;
-		serverModel.server.getSponsorDecision();
-		}
-		}
-	/*	
-		if(numberOfrequests == 0 ) { nextPersonToDraw = model.getActivePlayer().getPlayerNumber() +1; 
-		if(nextPersonToDraw> model.getPlayers().length){nextPersonToDraw = 0;}
-		}
-		
-		numberOfrequests++;
-		
-		// if they do want to sponsor then make them the sponsors
-		if(wantToSponsor) {
-			logger.info("Found a sponsor ");
-			hasSponsor = true;
-			
-			model.getActivePlayer().isSponsor = true;
-			numberOfrequests = 0;
-			
-			wantToSponsor = false;
-			
-			model.control.updateViewState();
-			
-		}
-		// changed that they have asked 
-		model.getActivePlayer().declinedToSponsor = true;
-		
-		}else {// I have went around all the players and no want to sponsor 
-			//go to next story Cards}
-			logger.info(" No one wanted to Sponsor lets go to the NEXT STORY GUY");
-		}
-	}
-		
-		
-		// Questers asking
-		// if I have a sponsor and the quester are not ready then ask the current player
-		if(hasSponsor && !questersReady) {
-			// if I have a sponsor and the quester are not ready then ask the current plater
-			if(!this.model.getActivePlayer().declinedQuesting && !this.model.getActivePlayer().isSponsor) {
-				boolean isQuesting = model.control.getQuestingDecision();
-				
-				
-				if(isQuesting) {
-					logger.info("THe Player has decidied to quest ");
-					model.getActivePlayer().isQuesting = true;
-					questers.add(model.getActivePlayer().getPlayerNumber());
-					
-				}
-				//they have answered
-				this.model.getActivePlayer().declinedQuesting = true;
-				
-				numberOfrequests++;
-				
-			}
-			
-			
-		}if(numOfQuesterPotential == numberOfrequests ) {
-			// I return to the sponor 
-			if(questers.isEmpty()) {
-				numberOfrequests = 0;
-				
-				logger.info("I have no  any questers ");
-				// should go to the next story hard 
-			}else {
-				// The questers are ready adn we are ready to begin questing
-				
-				//logger.info("I do have some questers. Let us begin our adventures ");
-				questersReady = true;
-				logger.info("I do have some questers. Let us begin our adventures ");
-				
-				numberOfrequests = 0 ;
-				
-				
-			}
-			
-		}
-		if(questersReady ) {
-			//begins the stage
-			logger.info("Done  hh"+ numOfRepsonders);
-			
-			numOfQuester = questers.size();
-			if(numOfQuester==numOfRepsonders) {
-				//all the questers made their choice time to resolve stage;
-				logger.info("Done  hh"+ numOfRepsonders);
-				
-				
-				
-				
-			}else {
-				logger.info("Current "+ numOfRepsonders);
-				
-			}
-			
-			
-		}*/
-	
-	}
+//	public void handle(ClientModel clientModel) {
+//		
+//		
+//		numOfQuesterPotential = clientModel.getNumPlayers() -1;
+//		
+//		// if I do not have a sponsor ask the person if they want to sponsor 
+//		if(!hasSponsor) {
+//			
+//		// if I haven't ask to sponsor yet then ask
+//		if(!clientModel.getActivePlayer().declinedToSponsor) {
+//		boolean wantToSponsor;
+//		clientModel.server.getSponsorDecision();
+//		}
+//		}
+//	/*	
+//		if(numberOfrequests == 0 ) { nextPersonToDraw = model.getActivePlayer().getPlayerNumber() +1; 
+//		if(nextPersonToDraw> model.getPlayers().length){nextPersonToDraw = 0;}
+//		}
+//		
+//		numberOfrequests++;
+//		
+//		// if they do want to sponsor then make them the sponsors
+//		if(wantToSponsor) {
+//			logger.info("Found a sponsor ");
+//			hasSponsor = true;
+//			
+//			model.getActivePlayer().isSponsor = true;
+//			numberOfrequests = 0;
+//			
+//			wantToSponsor = false;
+//			
+//			model.control.updateViewState();
+//			
+//		}
+//		// changed that they have asked 
+//		model.getActivePlayer().declinedToSponsor = true;
+//		
+//		}else {// I have went around all the players and no want to sponsor 
+//			//go to next story Cards}
+//			logger.info(" No one wanted to Sponsor lets go to the NEXT STORY GUY");
+//		}
+//	}
+//		
+//		
+//		// Questers asking
+//		// if I have a sponsor and the quester are not ready then ask the current player
+//		if(hasSponsor && !questersReady) {
+//			// if I have a sponsor and the quester are not ready then ask the current plater
+//			if(!this.model.getActivePlayer().declinedQuesting && !this.model.getActivePlayer().isSponsor) {
+//				boolean isQuesting = model.control.getQuestingDecision();
+//				
+//				
+//				if(isQuesting) {
+//					logger.info("THe Player has decidied to quest ");
+//					model.getActivePlayer().isQuesting = true;
+//					questers.add(model.getActivePlayer().getPlayerNumber());
+//					
+//				}
+//				//they have answered
+//				this.model.getActivePlayer().declinedQuesting = true;
+//				
+//				numberOfrequests++;
+//				
+//			}
+//			
+//			
+//		}if(numOfQuesterPotential == numberOfrequests ) {
+//			// I return to the sponor 
+//			if(questers.isEmpty()) {
+//				numberOfrequests = 0;
+//				
+//				logger.info("I have no  any questers ");
+//				// should go to the next story hard 
+//			}else {
+//				// The questers are ready adn we are ready to begin questing
+//				
+//				//logger.info("I do have some questers. Let us begin our adventures ");
+//				questersReady = true;
+//				logger.info("I do have some questers. Let us begin our adventures ");
+//				
+//				numberOfrequests = 0 ;
+//				
+//				
+//			}
+//			
+//		}
+//		if(questersReady ) {
+//			//begins the stage
+//			logger.info("Done  hh"+ numOfRepsonders);
+//			
+//			numOfQuester = questers.size();
+//			if(numOfQuester==numOfRepsonders) {
+//				//all the questers made their choice time to resolve stage;
+//				logger.info("Done  hh"+ numOfRepsonders);
+//				
+//				
+//				
+//				
+//			}else {
+//				logger.info("Current "+ numOfRepsonders);
+//				
+//			}
+//			
+//			
+//		}*/
+//	
+//	}
 	
 		
 	/*The Next Player will depend where we are current
