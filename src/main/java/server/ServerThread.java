@@ -123,7 +123,7 @@ public class ServerThread extends Thread {
 			
 			server.serverModel.endTurn();
 			
-			server.serverModel.nextPlayer();
+			//server.serverModel.nextPlayer();
 			
 			break;
 			

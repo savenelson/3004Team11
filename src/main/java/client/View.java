@@ -195,7 +195,7 @@ public class View extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.setResizable(false);
 
-		primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer + 1));
+		primaryStage.setTitle("Quests of the Round Table - Player " + (state.currentPlayer ));
 		logger.info("Current View: Player " + state.currentPlayer);
 
 		primaryStage.show();
@@ -342,14 +342,14 @@ public class View extends Application {
 			Label queueCardsLabel;
 			Label stageLabel;
 			if (stage.size() > 1)
-				stageLabel = new Label("Stage " + (state.stageOverCount + 1) + ": " + stage.size() + " cards");
+				stageLabel = new Label("Stage " + (state.stageOverCount ) + ": " + stage.size() + " cards");
 			else
-				stageLabel = new Label("Stage " + (state.stageOverCount + 1) + ": " + stage.size() + " card");
+				stageLabel = new Label("Stage " + (state.stageOverCount ) + ": " + stage.size() + " card");
 
 			stageLabel.setFont(Font.font("Serif", FontWeight.BOLD, 60));
 			stageLabel.relocate(colStage + 100, rowStage + 20);
 
-			queueCardsLabel = new Label("Queue your cards for Stage " + (state.stageOverCount + 1));
+			queueCardsLabel = new Label("Queue your cards for Stage " + (state.stageOverCount ));
 			queueCardsLabel.setFont(Font.font("Serif", FontWeight.BOLD, 32));
 			queueCardsLabel.relocate(colStage + 95, rowStage + 100);
 			canvas.getChildren().add(stageLabel);
@@ -359,7 +359,7 @@ public class View extends Application {
 
 	public void nextPlayer() {
 
-		Label playerLabel = new Label("Player " + (control.getActivePlayer().getPlayerNumber() + 1) + " ready?");
+		Label playerLabel = new Label("Player " + (control.getActivePlayer().getPlayerNumber() ) + " ready?");
 		playerLabel.setFont(new Font("Ariel", 30));
 
 		Button readyButton = new Button("Ready");
@@ -395,7 +395,7 @@ public class View extends Application {
 
 		for (int i = 0; i < state.numPlayers; ++i) {
 			if (!state.players[i].isSponsor) {
-				Label passed = new Label("Player " + (i + 1));
+				Label passed = new Label("Player " + i);
 
 				if (state.players[i].passedQuest) {
 
@@ -431,7 +431,7 @@ public class View extends Application {
 	private void addQueueToCanvas(Pane canvas) {
 		logger.debug("addQueueToCanvas() called");
 
-		CardCollection<AdventureCard> queue = control.getActivePlayer().getQueue();
+		CardCollection<AdventureCard> queue = state.players[state.currentPlayer].getQueue();
 
 		tile = new TilePane();
 		tile.setPrefRows(1);
@@ -1039,12 +1039,12 @@ public class View extends Application {
 		for (int i = 0; i < state.numPlayers; ++i) {
 
 			if (!state.players[i].isSponsor) {
-				Label passed = new Label("Player " + (i + 1));
+				Label passed = new Label("Player " + i);
 				if (state.players[i].passedStage) {
-					passed.setText(passed.getText() + " passed stage " + (state.currentStage + 1));
+					passed.setText(passed.getText() + " passed stage " + state.currentStage);
 
 				} else {
-					passed.setText(passed.getText() + " failed stage " + (state.currentStage + 1));
+					passed.setText(passed.getText() + " failed stage " + state.currentStage);
 
 				}
 				passed.setFont(new Font("Ariel", 30));
@@ -1053,9 +1053,9 @@ public class View extends Application {
 				layout.setPrefWidth(1280);
 				passed.setTranslateY(-180 + (60 * i));
 				if (state.players[i].passedStage) {
-					logger.info("Player " + i + " passed stage  " + (state.currentStage + 1));
+					logger.info("Player " + i + " passed stage  " + state.currentStage);
 				} else {
-					logger.info("Player " + i + " failed stage " + (state.currentStage + 1));
+					logger.info("Player " + i + " failed stage " + state.currentStage );
 				}
 			}
 		}
