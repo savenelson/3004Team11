@@ -293,7 +293,7 @@ public class EventManager implements  StoryCardState {
 
 	public void handle() {
 		String eventName = serverModel.currentStoryCard.getName();
-		System.out.println(serverModel.currentStoryCard.getName());
+		System.out.println(eventName);
 
 		if (eventName.equals("KingsRecognition")) {
 			KingsRecognition();

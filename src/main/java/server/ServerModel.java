@@ -108,8 +108,6 @@ public class ServerModel extends AbstractModel {
 
 	private ArrayList<CardCollection<AdventureCard>> stages;
 
-	
-
 	protected ArrayList<CardCollection<AdventureCard>> getStages() {
 		return super.stages;
 	}
