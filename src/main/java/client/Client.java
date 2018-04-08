@@ -27,9 +27,10 @@ public class Client {
 	private Socket socket; // socket on server address and port
 	private BufferedReader in; // in to server
 	private PrintWriter out; // out from server
-	private int playerNumber; // everyclienthas a unique playernum
+	private int playerNumber; // every client  has a unique player num
 	private int numPlayers = 4;
 	String serverMessage = null;
+	
 	ClientModel clientModel;
 	View view;
 
