@@ -6,6 +6,10 @@ import org.apache.logging.log4j.Logger;
 public class Player {
 	private static final Logger logger = LogManager.getLogger(Player.class);
 
+	public int AllyBattlePoints = 0;
+	public int AllyBidBonus = 0;
+	
+	
 	private int playerNumber;
 	public int getPlayerNumber(){return playerNumber;}
 
@@ -47,9 +51,6 @@ public class Player {
 		this.shieldCount = this.shieldCount - num;
 	}
 	
-	public int AllyBattlePoints = 0;
-	
-	public int AllyBidBonus = 0;
 	public Player(int playerNumber){
 		
 		
