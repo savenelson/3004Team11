@@ -77,9 +77,7 @@ public class QuestManager implements StoryCardState {
 	public QuestManager(ServerModel serverModel) {
 		this.serverModel = serverModel;
 		this.players = serverModel.getPlayers();
-
 		this.questers = new QuesterQueque();
-		logger.info("THIS PLAYERS" + this.players);
 
 	}
 

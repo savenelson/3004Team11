@@ -917,7 +917,8 @@ public abstract class AbstractModel {
 		// stages[1].add(this.adventureDeck.getByID("86"));
 
 //		this.setCurrentStoryCard(this.storyDeck.getByID("151")); // ChivalrousDeed
-		this.setCurrentStoryCard(this.storyDeck.getByID("152")); // ProsparityTHroughTheLand
+//		this.setCurrentStoryCard(this.storyDeck.getByID("152")); // ProsparityTHroughTheLand
+		this.setCurrentStoryCard(this.storyDeck.getByID("145")); // QueensFavor
 		this.players[0].addToParty(this.adventureDeck.getByID("100"));
 		this.players[0].addToParty(this.adventureDeck.getByID("101"));
 		this.players[0].addToParty(this.adventureDeck.getByID("122"));
