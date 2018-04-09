@@ -19,8 +19,6 @@ public class ClientModel extends AbstractModel {
 		return super.getPlayers(); 
 	}
 
-
-
 	public AdventureDeck getAdventureDeck() {
 		return super.adventureDeck;
 	}
@@ -70,10 +68,6 @@ public class ClientModel extends AbstractModel {
 	protected ArrayList<CardCollection<AdventureCard>> getStages() {
 		return super.stages;
 	}
-
-
-
-	
 
 	ClientModel(Client control) {
 

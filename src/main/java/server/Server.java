@@ -191,7 +191,7 @@ public class Server {
 	}
 	
 	public void resolveStage(){
-		logger.info("resolveQuest() called");
+		logger.info("resolveStage() called");
 		sendServerMessage("SERVERMESSAGE--RESOLVESTAGE");
 
 //		

@@ -1037,6 +1037,10 @@ public class View extends Application {
 		state = control.getState();
 
 		for (int i = 0; i < state.numPlayers; ++i) {
+			logger.info("players booleans: " + state.players[i].passedStage);
+		}
+			
+		for (int i = 0; i < state.numPlayers; ++i) {
 
 			if (!state.players[i].isSponsor) {
 				Label passed = new Label("Player " + i);
