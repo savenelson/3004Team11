@@ -14,8 +14,6 @@ public class StoryDeck extends CardCollection<StoryCard>{
 		logger.info("New Story Deck Created");
 		// Quest
 		cards.add(new QuestCard(QuestCard.BOAR_HUNT,QuestCard.BOAR_HUNT_STAGES,QuestCard.BOAR_HUNT_FOE));
-		cards.add(new EventCard(EventCard.PROSPERITY_NAME));
-		cards.add(new EventCard(EventCard.CHIVALROUS_DEED_NAME));
 		cards.add(new QuestCard(QuestCard.HOLY_GRAIL,QuestCard.HOLY_GRAIL_STAGES,QuestCard.HOLY_GRAIL_FOE));
 		cards.add(new QuestCard(QuestCard.BOAR_HUNT,QuestCard.BOAR_HUNT_STAGES,QuestCard.BOAR_HUNT_FOE));
 		cards.add(new QuestCard(QuestCard.GREEN_KNIGHT,QuestCard.GREEN_KNIGHT_STAGES,QuestCard.GREEN_KNIGHT_FOE));
@@ -44,8 +42,8 @@ public class StoryDeck extends CardCollection<StoryCard>{
 		cards.add(new EventCard(EventCard.COURT_CAMELOT_NAME));
 		cards.add(new EventCard(EventCard.POX_NAME));
 		cards.add(new EventCard(EventCard.PLAGUE_NAME));
-//		cards.add(new EventCard(EventCard.CHIVALROUS_DEED_NAME));
-//		cards.add(new EventCard(EventCard.PROSPERITY_NAME));
+		cards.add(new EventCard(EventCard.CHIVALROUS_DEED_NAME));
+		cards.add(new EventCard(EventCard.PROSPERITY_NAME));
 		cards.add(new EventCard(EventCard.CALL_ARMS_NAME));
 
 	}

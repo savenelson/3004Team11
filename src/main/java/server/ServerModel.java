@@ -14,12 +14,9 @@ public class ServerModel extends AbstractModel {
 	public Server server;
 	
 	StoryCardState questManager;
-	
+	StoryCardState eventManager;
+	StoryCardState currentState;
 
-	protected StoryCardState eventManger;
-	protected core.StoryCardState currentState;
-
-	
 	ServerModel(Server server) {
 		
 		
@@ -28,13 +25,11 @@ public class ServerModel extends AbstractModel {
 		this.server = server;
 
 		super.state = new State();
-		
 
-		eventManger = new EventManager(this);
-
+		eventManager = new EventManager(this);
+		logger.info("eventManager just after i's created" + eventManager);
 
 		questManager = new QuestManager(this);
-		currentStoryCard =questManager;
 
 		super.stage = new QuestingStage();
 
@@ -56,8 +51,6 @@ public class ServerModel extends AbstractModel {
 	public Player[] getPlayers() {
 		return super.getPlayers(); 
 	}
-
-
 
 	public AdventureDeck getAdventureDeck() {
 		return super.adventureDeck;
@@ -100,8 +93,6 @@ public class ServerModel extends AbstractModel {
 	boolean AllyInPlayQueenGuinevere =  false;
 	boolean AllyInPlayQueenIseult =  false;
 	boolean AllyInPlayMerlin =  false;
-
-	StoryCardState currentStoryCard;
 
 	private int numPlayers;
 	int numStages;
@@ -252,19 +243,19 @@ public class ServerModel extends AbstractModel {
 	}
 
 	protected void playEvent() {
-		currentState = questManager;
+		currentState = eventManager;
 	}
 
 	public void playGame() {
-		logger.info(" Sever playGame() called" + currentStoryCard);
+		logger.info(" Sever playGame() called");
 		
-		if (super.currentStoryCard.getSubType().equals(StoryCard.QUEST)) {
+		if (super.getCurrentStoryCard().getSubType().equals(StoryCard.QUEST)) {
 			playQuest();
 			currentState.handle();
-		} else if (super.currentStoryCard.getSubType().equals(StoryCard.EVENT)) {
+		} else if (super.getCurrentStoryCard().getSubType().equals(StoryCard.EVENT)) {
 			playEvent();
 			currentState.handle();
-		} else if (super.currentStoryCard.getSubType().equals(StoryCard.TOURNAMENT)) {
+		} else if (super.getCurrentStoryCard().getSubType().equals(StoryCard.TOURNAMENT)) {
 			// playTournament();
 		} else {
 			adventureDeck = (AdventureDeck) adventureDeckDiscard;

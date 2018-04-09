@@ -35,6 +35,19 @@ public class EventManager implements  StoryCardState {
 		this.currentPlayer = clientModel.currentPlayer;
 		 */
 	}
+	
+	public EventManager(ServerModel serverModel) {
+		this.serverModel = serverModel;
+		logger.info("THIS serverMODEL" + this.serverModel);
+
+		this.players = serverModel.getPlayers();
+		logger.info("THIS PLAYERS" + this.players);
+	}
+	
+	private void setPlayers() {
+		this.players = serverModel.getPlayers();
+	}
+	
 
 	public void handleEvent(String eventName) {
 		if (eventName.equals("KingsRecognition")) {
@@ -212,9 +225,16 @@ public class EventManager implements  StoryCardState {
 
 	}
 
+	//Players with both lowest rank and least amount of shields, get 3 shields.
 	public void ChilvarousDeed() {
 	logger.info("ChilvarousDeed event in play");
 
+	
+	//get lowest rank
+	
+	
+	
+	
 		int squireCount = 0;
 		int championCount = 0;
 		int championKnightCount = 0;
@@ -222,59 +242,75 @@ public class EventManager implements  StoryCardState {
 		int lowestShieldSquire = 0;
 		int lowestShieldKnight = 0;
 		int lowestShieldChamp = 0;
+		
+		setPlayers();
 
-		for (int i = 0; i < this.players.length; i++) {
+		for (int i = 0; i < players.length; i++) {
 
-			if ((this.players[i].getRank()).getSubType().equals("Squire")) {
+			if ((players[i].getRank()).getSubType().equals("Squire")) {
 				squireCount++;
-				lowestShieldSquire = this.players[i].getShieldCount();
-				if (lowestShieldSquire > this.players[i].getShieldCount()) {
-					lowestShieldSquire = this.players[i].getShieldCount();
+				lowestShieldSquire = players[i].getShieldCount();
+				if (lowestShieldSquire > players[i].getShieldCount()) {
+					lowestShieldSquire = players[i].getShieldCount();
 				}
 			}
-			if ((this.players[i].getRank()).getSubType().equals("Knight")) {
+			if ((players[i].getRank()).getSubType().equals("Knight")) {
 				championCount++;
-				lowestShieldKnight = this.players[i].getShieldCount();
-				if (lowestShieldKnight > this.players[i].getShieldCount()) {
-					lowestShieldKnight = this.players[i].getShieldCount();
+				lowestShieldKnight = players[i].getShieldCount();
+				if (lowestShieldKnight > players[i].getShieldCount()) {
+					lowestShieldKnight = players[i].getShieldCount();
 				}
 			}
-			if ((this.players[i].getRank()).getSubType().equals("ChampionKnight")) {
+			if ((players[i].getRank()).getSubType().equals("ChampionKnight")) {
 				championKnightCount++;
-				lowestShieldChamp = this.players[i].getShieldCount();
-				if (lowestShieldChamp > this.players[i].getShieldCount()) {
-					lowestShieldChamp = this.players[i].getShieldCount();
+				lowestShieldChamp = players[i].getShieldCount();
+				if (lowestShieldChamp > players[i].getShieldCount()) {
+					lowestShieldChamp = players[i].getShieldCount();
 				}
 			}
-
 		}
+		logger.info("P0 ranks is " + (players[0].getRank()).getSubType());
+		logger.info("P1 ranks is " + (players[1].getRank()).getSubType());
+		logger.info("P2 ranks is " + (players[2].getRank()).getSubType());
+		logger.info("P3 ranks is " + (players[3].getRank()).getSubType());
+
+		logger.info("squireCount " + squireCount);
+		logger.info("championCount " + championCount);
+
+		logger.info("championKnightCount " + championKnightCount);
+
+		logger.info("lowestShieldSquire " + lowestShieldSquire);
+
+		logger.info("lowestShieldKnight " + lowestShieldKnight);
+
+		logger.info("lowestShieldChamp" + lowestShieldChamp);
 
 		if (squireCount != 0) { // squire is the lowest, so as long as it there are more than 0 squires, we know
 			// the lowest rank is that of the squire
-			for (int i = 0; i < this.players[i].getQueue().size(); i++) {
-				if ((this.players[i].getRank()).getSubType().equals("Squire")) {
+			for (int i = 0; i < players.length; i++) {
+				if ((players[i].getRank()).getSubType().equals("Squire")) {
 
-					if (this.players[i].getShieldCount() == lowestShieldSquire) {
-						this.players[i].addShields(6);
+					if (players[i].getShieldCount() == lowestShieldSquire) {
+						players[i].addShields(3);
 					}
 				}
 			}
 		}
 
 		if (championCount <= championKnightCount && (squireCount == 0) && (championCount != 0)) {
-			for (int i = 0; i < this.players[i].getQueue().size(); i++) {
-				if ((this.players[i].getRank()).getSubType().equals("Champion")) {
-					if (this.players[i].getShieldCount() == lowestShieldKnight) {
-						this.players[i].addShields(3);
+			for (int i = 0; i < players.length; i++) {
+				if ((players[i].getRank()).getSubType().equals("Champion")) {
+					if (players[i].getShieldCount() == lowestShieldKnight) {
+						players[i].addShields(3);
 					}
 				}
 			}
 		}
 		if (championKnightCount == numPlayers) {
-			for (int i = 0; i < this.players[i].getQueue().size(); i++) {
-				if ((this.players[i].getRank()).getSubType().equals("ChampionKnight")) {
-					if (this.players[i].getShieldCount() == lowestShieldChamp) {
-						this.players[i].addShields(3);
+			for (int i = 0; i < players.length; i++) {
+				if ((players[i].getRank()).getSubType().equals("ChampionKnight")) {
+					if (players[i].getShieldCount() == lowestShieldChamp) {
+						players[i].addShields(3);
 					}
 				}
 			}
@@ -291,7 +327,7 @@ public class EventManager implements  StoryCardState {
 
 
 	public void handle() {
-		String eventName = serverModel.currentStoryCard.getName();
+		String eventName = serverModel.getCurrentStoryCard().getName();
 		System.out.println(eventName);
 
 		if (eventName.equals("KingsRecognition")) {

@@ -149,7 +149,7 @@ public class ClientModel extends AbstractModel {
 
 		state.inNextQ = super.inNextQ;
 
-		state.currentStoryCard = super.currentStoryCard;
+		state.currentStoryCard = super.getCurrentStoryCard();
 
 		state.currentViewer = super.currentViewer;
 
