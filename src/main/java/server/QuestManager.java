@@ -69,12 +69,14 @@ public class QuestManager implements StoryCardState {
 	/**
 	 * 
 	 * Constructor Takes a model gets its player and copies it make a new
-	 * Questerquue
+	 * Questerqueue
 	 */
 	public QuestManager(ServerModel serverModel) {
 		this.serverModel = serverModel;
 		this.players = serverModel.getPlayers();
+		
 		this.questers = new QuesterQueque();
+		logger.info("THIS PLAYERS" + this.players);
 
 	}
 
@@ -231,7 +233,7 @@ public class QuestManager implements StoryCardState {
 	private boolean stageHarder() {
 		logger.debug("stageHarder() called");
 
-		int numStages = ((QuestCard) serverModel.currentStoryCard).getNumStages();
+		int numStages = ((QuestCard) serverModel.getCurrentStoryCard()).getNumStages();
 
 		if (numStages == 1)
 			return true;
@@ -275,7 +277,7 @@ public class QuestManager implements StoryCardState {
 		boolean[] foesPresent = null;
 
 		if (serverModel.getActivePlayer().isSponsor) {
-			int numStages = ((QuestCard) serverModel.currentStoryCard).getNumStages();
+			int numStages = ((QuestCard) serverModel.getCurrentStoryCard()).getNumStages();
 			foesPresent = new boolean[numStages];
 			for (int i = 0; i < numStages; ++i) {
 				foesPresent[i] = false;
@@ -306,7 +308,7 @@ public class QuestManager implements StoryCardState {
 		 * 
 		 */
 		int numOfCardsInStaging = 0;
-		int numStages = ((QuestCard) serverModel.currentStoryCard).getNumStages();
+		int numStages = ((QuestCard) serverModel.getCurrentStoryCard()).getNumStages();
 		for (int i = 0; i < numStages; ++i) {
 			for (int j = 0; j < serverModel.getStage().getStageAt(i).size(); ++j) {
 				if (serverModel.getStage().getStageAt(i).get(j).getSubType().equals(AdventureCard.FOE)) {
@@ -423,7 +425,7 @@ public class QuestManager implements StoryCardState {
 			}
 		}
 
-		int numShields = ((QuestCard) serverModel.currentStoryCard).getNumStages();
+		int numShields = ((QuestCard) serverModel.getCurrentStoryCard()).getNumStages();
 		logger.info("Number of Stages: " + numShields);
 
 		// TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
@@ -508,7 +510,7 @@ public class QuestManager implements StoryCardState {
 			}
 
 		}
-		if (serverModel.getStage().getCurrentStage() + 1 == ((QuestCard) serverModel.currentStoryCard).getNumStages()) {
+		if (serverModel.getStage().getCurrentStage() + 1 == ((QuestCard) serverModel.getCurrentStoryCard()).getNumStages()) {
 			// restart the Questmanger
 			hasSponsor = false;
 			questersReady = false;

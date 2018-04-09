@@ -44,17 +44,17 @@ public class Client {
 
 		clientModel.instantiatePlayers(numPlayers);
 
-		// model.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
+		// clientModel.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
 
-		// model.deal(); //COMMENT OUT FOR SET SCENEARIOS
+		// clientModel.deal(); //COMMENT OUT FOR SET SCENEARIOS
 
-		clientModel.setScenario1(); // UNCOMMENT FOR SCEN 1
+//		clientModel.setScenario1(); // UNCOMMENT FOR SCEN 1
 
-		// model.setScenario2(); //UNCOMMENT FOR SCEN 2
+		// clientModel.setScenario2(); //UNCOMMENT FOR SCEN 2
 
-		// model.setScenarioTest();
+		 clientModel.setScenarioTest();
 
-		// model.eventTesting();
+		// clientModel.eventTesting();
 		this.serverAddress = serverAddress;
 		this.serverPort = serverPort;
 		this.view = view;

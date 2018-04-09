@@ -12,7 +12,6 @@ import java.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
 public class Server {
 	private static final Logger logger = LogManager.getLogger(Server.class);
 	
@@ -61,15 +60,15 @@ public class Server {
 		serverModel.instantiatePlayers(playersPerGame);
 		serverModel.instantiateStages(); //TODO set properly
 		
-//		model.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
+//		serverModel.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
 
-//		model.deal(); 			//COMMENT OUT FOR SET SCENEARIOS
+//		serverModel.deal(); 			//COMMENT OUT FOR SET SCENEARIOS
 
-		serverModel.setScenario1();	//UNCOMMENT FOR SCEN 1
+//		serverModel.setScenario1();	//UNCOMMENT FOR SCEN 1
 
-//		model.setScenario2();	//UNCOMMENT FOR SCEN 2
+//		serverModel.setScenario2();	//UNCOMMENT FOR SCEN 2
 
-//		model.setScenarioTest(); //UNCOMMENT FOR end game testing
+		serverModel.setScenarioTest(); //UNCOMMENT FOR end game testing
 		
 		boolean listening = true;
     		

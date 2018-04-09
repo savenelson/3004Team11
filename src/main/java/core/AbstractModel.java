@@ -62,7 +62,7 @@ public abstract class AbstractModel {
 	boolean AllyInPlayQueenIseult =  false;
 	boolean AllyInPlayMerlin =  false;
 
-	protected StoryCard currentStoryCard;
+	private StoryCard currentStoryCard;
 
 	protected int numPlayers;
 	protected int numStages;
@@ -121,8 +121,8 @@ public abstract class AbstractModel {
 
 				players[j].addToHand(this.adventureDeck.pop());
 			}
-			this.currentStoryCard = storyDeck.pop();
-			logger.info("setting current story card to" + this.currentStoryCard);
+			this.setCurrentStoryCard(storyDeck.pop());
+			logger.info("setting current story card to" + this.getCurrentStoryCard());
 		}
 	}
 
@@ -156,7 +156,7 @@ public abstract class AbstractModel {
 
 		state.inNextQ = this.inNextQ;
 
-		state.currentStoryCard = this.currentStoryCard;
+		state.currentStoryCard = this.getCurrentStoryCard();
 
 		state.currentViewer = this.currentViewer;
 
@@ -371,7 +371,7 @@ public abstract class AbstractModel {
 				}
 				if (party.get(j).getID().equals("SirLancelot") && AllyInPlaySirLancelot == false) {
 					AllyInPlaySirLancelot = true;
-					if (currentStoryCard.getName().equals("DefendTheQueensHonor")) {
+					if (getCurrentStoryCard().getName().equals("DefendTheQueensHonor")) {
 						logger.info(
 								"SirLancelot is in play and on quest Queens honor so, gives +25 Battle points to player "
 										+ i);
@@ -403,7 +403,7 @@ public abstract class AbstractModel {
 				if (party.get(j).getID().equals("KingPellinore") && AllyInPlayKingPellinore == false) {
 					AllyInPlayKingPellinore = true;
 
-					if (currentStoryCard.getName().equals("SearchForTheQuestingBeast")) {
+					if (getCurrentStoryCard().getName().equals("SearchForTheQuestingBeast")) {
 						logger.info(
 								"KingPellinore is in play on Questing Beast and gives +10 Battle Points, +4 Bids to player "
 										+ i);
@@ -417,7 +417,7 @@ public abstract class AbstractModel {
 				if (party.get(j).getID().equals("SirGawain") && AllyInPlaySirGawain == false) {
 					AllyInPlaySirGawain = true;
 
-					if (currentStoryCard.getName().equals("TestOfTheGreenKnight")) {
+					if (getCurrentStoryCard().getName().equals("TestOfTheGreenKnight")) {
 						logger.info(
 								"SirGawain is in play and on TestOfTheGreenKnight and gives +20 Battle Points to player "
 										+ i);
@@ -430,7 +430,7 @@ public abstract class AbstractModel {
 				if (party.get(j).getID().equals("SirPercival") && AllyInPlaySirPercival == false) {
 					AllyInPlaySirPercival = true;
 
-					if (currentStoryCard.getName().equals("TestOfTheGreenKnight")) {
+					if (getCurrentStoryCard().getName().equals("TestOfTheGreenKnight")) {
 						logger.info(
 								"SirGawain is in play and on SearchForTheHolyGrail and gives +20 Battle Points to player "
 										+ i);
@@ -523,20 +523,20 @@ public abstract class AbstractModel {
 	}
 
 	public void playGame() {
-		logger.info("playGame() called");
-
-		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)) {
-			playQuest();
-			currentState.handle();
-		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.EVENT)) {
-			playEvent();
-			currentState.handle();
-		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)) {
-			// playTournament();
-		} else {
-			adventureDeck = (AdventureDeck) adventureDeckDiscard;
-			adventureDeck.shuffle();
-		}
+//		logger.info("playGame() called");
+//
+//		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)) {
+//			playQuest();
+//			currentState.handle();
+//		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.EVENT)) {
+//			playEvent();
+//			currentState.handle();
+//		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)) {
+//			// playTournament();
+//		} else {
+//			adventureDeck = (AdventureDeck) adventureDeckDiscard;
+//			adventureDeck.shuffle();
+//		}
 	}
 
 	public void nextPlayer() {
@@ -550,7 +550,6 @@ public abstract class AbstractModel {
 		}
 		logger.info("Player changed to " + this.currentPlayer);
 
-		
 	}
 
 	public void setNextPlayer(int nextplayer) {
@@ -588,10 +587,10 @@ public abstract class AbstractModel {
 			}
 		}
 
-		storyDeckDiscard.add(this.currentStoryCard);
+		storyDeckDiscard.add(this.getCurrentStoryCard());
 
-		this.currentStoryCard = storyDeck.pop();
-		logger.info("Story card up next " + currentStoryCard.getName());
+		this.setCurrentStoryCard(storyDeck.pop());
+		logger.info("Story card up next " + getCurrentStoryCard().getName());
 
 		this.currentStage = 0;
 		getStage().resetCurrentStage();
@@ -626,7 +625,7 @@ public abstract class AbstractModel {
 		// ID: 74, type: Adventure, subtype: Foe, name: SaxonKnight, battle points: 15,
 		// alternative battle points: 25, special: <NO SPECIAL>
 		this.currentPlayer = 0;
-		this.currentStoryCard = this.storyDeck.getByID("126"); // BOAR hUNT
+		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
 		StoryCard sC = this.getStoryDeck().pop();
 		storyDeckDiscard.add(sC);
 		// ID: 58, type: Adventure, subtype: Foe, name: Boar, battle points: 5,
@@ -856,7 +855,7 @@ public abstract class AbstractModel {
 		logger.debug("setScenario2() called - Setting up SCENARIO TWO");
 
 		this.currentPlayer = 0;
-		this.currentStoryCard = this.storyDeck.getByID("138");
+		this.setCurrentStoryCard(this.storyDeck.getByID("138"));
 		this.players[0].addToHand(this.adventureDeck.getByID("50")); // thief
 		this.players[0].addToHand(this.adventureDeck.getByID("91")); // green knight
 		this.players[0].addToHand(this.adventureDeck.getByID("88"));
@@ -913,15 +912,15 @@ public abstract class AbstractModel {
 		logger.info("setScenarioTest() called - Setting up TEST SCENARIO");
 
 		this.currentPlayer = 0;
-
-		this.players[0].addShields(10);
-		this.players[1].addShields(6);
-		this.players[2].addShields(14);
+//
+		this.players[0].addShields(1);
+//		this.players[1].addShields(6);
+//		this.players[2].addShields(14);
 
 		// stages[0].add(this.adventureDeck.getByID("57"));
 		// stages[1].add(this.adventureDeck.getByID("86"));
 
-		this.currentStoryCard = this.storyDeck.getByID("126"); // BOAR hUNT
+		this.setCurrentStoryCard(this.storyDeck.getByID("151")); // ChivalrousDeed
 		this.players[0].addToParty(this.adventureDeck.getByID("100"));
 		this.players[0].addToParty(this.adventureDeck.getByID("101"));
 		this.players[0].addToParty(this.adventureDeck.getByID("122"));
@@ -1014,7 +1013,7 @@ public abstract class AbstractModel {
 		// stages[0].add(this.adventureDeck.getByID("57"));
 		// stages[1].add(this.adventureDeck.getByID("86"));
 
-		this.currentStoryCard = this.storyDeck.getByID("151");
+		this.setCurrentStoryCard(this.storyDeck.getByID("151"));
 		this.players[0].addToParty(this.adventureDeck.getByID("100"));
 		this.players[0].addToParty(this.adventureDeck.getByID("101"));
 		this.players[0].addToParty(this.adventureDeck.getByID("122"));
@@ -1123,6 +1122,16 @@ public abstract class AbstractModel {
 
 	public void setCurrentSponsor(int currentSponsor) {
 		this.currentSponsor = currentSponsor;
+	}
+
+
+	public StoryCard getCurrentStoryCard() {
+		return currentStoryCard;
+	}
+
+
+	public void setCurrentStoryCard(StoryCard currentStoryCard) {
+		this.currentStoryCard = currentStoryCard;
 	}
 
 	
