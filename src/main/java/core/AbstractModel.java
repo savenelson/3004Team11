@@ -185,6 +185,19 @@ public abstract class AbstractModel {
 		this.adventureDeck.remove(c);
 		logger.debug("Player " + currentPlayer + " drew " + c.getName() + " from AdventureDeck to hand");
 	}
+	
+	public void removeFromParty(String iD, int currentPlayer) {
+		logger.info("removeFromParty() called");
+		AdventureCard c;
+		c = this.players[currentPlayer].getParty().getByID(iD);
+		getAdventureDeckDiscard().add(c);
+		players[currentPlayer].discardFromParty(c);
+		logger.debug("Player " + currentPlayer + " drew " + c.getName() + " from AdventureDeck to hand");
+	}
+	
+	public void removeShields(int numShields, int currentPlayer) {
+		players[currentPlayer].removeShields(numShields);
+	}
 
 	public void party(String iD, int currentPlayer) {
 		logger.debug("party() called");
@@ -908,17 +921,21 @@ public abstract class AbstractModel {
 		logger.info("setScenarioTest() called - Setting up TEST SCENARIO");
 
 		this.currentPlayer = 0;
-//
-		this.players[0].addShields(1);
-//		this.players[1].addShields(6);
-//		this.players[2].addShields(14);
+
+		this.players[0].addShields(3);
+		this.players[1].addShields(4);
+		this.players[2].addShields(4);
 
 		// stages[0].add(this.adventureDeck.getByID("57"));
 		// stages[1].add(this.adventureDeck.getByID("86"));
 
 //		this.setCurrentStoryCard(this.storyDeck.getByID("151")); // ChivalrousDeed
 //		this.setCurrentStoryCard(this.storyDeck.getByID("152")); // ProsparityTHroughTheLand
-		this.setCurrentStoryCard(this.storyDeck.getByID("145")); // QueensFavor
+//		this.setCurrentStoryCard(this.storyDeck.getByID("145")); // QueensFavor
+//		this.setCurrentStoryCard(this.storyDeck.getByID("147")); // CourtCalled
+//		this.setCurrentStoryCard(this.storyDeck.getByID("149")); // Pox
+		this.setCurrentStoryCard(this.storyDeck.getByID("150")); // Plague
+
 		this.players[0].addToParty(this.adventureDeck.getByID("100"));
 		this.players[0].addToParty(this.adventureDeck.getByID("101"));
 		this.players[0].addToParty(this.adventureDeck.getByID("122"));

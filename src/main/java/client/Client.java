@@ -75,7 +75,7 @@ public class Client {
 			e.printStackTrace();
 		}
 
-		sendClientMessage("CLIENTMESSAGE--HELLO");
+		sendClientMessage("CLIENTMESSAGE--HELLO--" + socket.getLocalAddress());
 
 		getServerMessage();
 	}
@@ -171,6 +171,14 @@ public class Client {
 			updateViewState();
 			getServerMessage();
 			break;
+		case "REMOVEFROMPARTY":
+			clientModel.removeFromParty(serverMessageComponents[3], Integer.parseInt(serverMessageComponents[2]));
+			updateViewState();
+			getServerMessage();
+		case "REMOVESHIELDS":
+			clientModel.removeShields(Integer.parseInt(serverMessageComponents[3]), Integer.parseInt(serverMessageComponents[2]));
+			updateViewState();
+			getServerMessage();
 		case "UPDATE":
 			if (serverMessageComponents[2].equals(Integer.toString(this.playerNumber))) {
 				logger.info("Message was instigated by this client and not processed");

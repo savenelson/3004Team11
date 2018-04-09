@@ -56,10 +56,10 @@ public class ServerThread extends Thread {
 	 */
 	private void getClientMessage(String clientMessage) {
 		String[] clientMessageComponents = clientMessage.split("--"); // array containing the components of the server
-		logger.info("MSG from client: "+ clientMessage);
+		logger.info(clientMessage);
 		switch (clientMessageComponents[1]) {
 		case "HELLO":
-			logger.info("Client has responded!!!");
+			logger.info("Client at " + clientMessageComponents[2] + " has connected");
 			break;
 		case "QUEUE":
 			server.serverModel.queue(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));

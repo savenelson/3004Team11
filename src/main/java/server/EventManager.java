@@ -70,53 +70,25 @@ public class EventManager implements  StoryCardState {
 		}
 
 	}
-
+	
+	//all allys are discarded
 	private void CourtCalled() {
-		for (int i = 0; i < this.players.length; i++) {
-			CardCollection<AdventureCard> hand = this.players[i].getHand();
+		
+		setPlayers();
 
-			for (int j = 0; j < hand.size(); j++) {
+		for (int i = 0; i < serverModel.getPlayers().length; i++) {
 
-				if (hand.getByID("100") != null) {
-					AdventureCard c = hand.getByID("100");
-					hand.remove("100");
-					adventureDeckDiscard.add((AdventureCard) c);
-				} else if (hand.getByID("101") != null) {
-					AdventureCard c = hand.getByID("101");
-					hand.remove("101");
-					adventureDeckDiscard.add((AdventureCard) c);
-				} else if (hand.getByID("102") != null) {
-					AdventureCard c = hand.getByID("102");
-					hand.remove("102");
-					adventureDeckDiscard.add(c);
-				} else if (hand.getByID("103") != null) {
-					AdventureCard c = hand.getByID("103");
-					hand.remove("103");
-					adventureDeckDiscard.add(c);
-				} else if (hand.getByID("104") != null) {
-					AdventureCard c = hand.getByID("104");
-					hand.remove("104");
-					adventureDeckDiscard.add(c);
-				} else if (hand.getByID("105") != null) {
-					AdventureCard c = hand.getByID("105");
-					hand.remove("105");
-					adventureDeckDiscard.add(c);
-				} else if (hand.getByID("106") != null) {
-					AdventureCard c = hand.getByID("106");
-					hand.remove("106");
-					adventureDeckDiscard.add(c);
-				} else if (hand.getByID("107") != null) {
-					AdventureCard c = hand.getByID("107");
-					hand.remove("107");
-					adventureDeckDiscard.add(c);
-				} else if (hand.getByID("108") != null) {
-					AdventureCard c = hand.getByID("108");
-					hand.remove("108");
-					adventureDeckDiscard.add(c);
-				} else if (hand.getByID("109") != null) {
-					AdventureCard c = hand.getByID("109");
-					hand.remove("109");
-					adventureDeckDiscard.add(c);
+			int partySize = serverModel.getPlayers()[i].getParty().size();
+			
+			for(int j = 0 ; j < partySize;j++) {
+				if((players[i].getParty().get(j)).getSubType().equals("Ally")) {
+
+					logger.info("Event Card: Court Called - Player " + i + " discards " + (players[i].getParty().get(j).getName()));
+					String id = players[i].getParty().get(j).getID();
+					serverModel.removeFromParty(id, i);
+					serverModel.server.sendServerMessage("SERVERMESSAGE--REMOVEFROMPARTY--" + i + "--" + id);
+					partySize--;
+					j--;
 				}
 			}
 		}
@@ -201,7 +173,8 @@ public class EventManager implements  StoryCardState {
 		}
 
 	}
-
+	
+	//Pox
 	public void Pox() {
 	logger.info("Pox in play and all players except  the next players to complete a quest 2 shields");
 
@@ -212,7 +185,6 @@ public class EventManager implements  StoryCardState {
 				this.players[i].removeShields(1);
 			System.out.println("After Players " + players[i] + "with this many " + players[i].getShieldCount());
 		}
-
 	}
 	
 	
@@ -334,13 +306,16 @@ public class EventManager implements  StoryCardState {
 			}
 		}
 	}
-
+	//Drawer loses 2 shields
+	
+	//This is going to be Tricky - do we have any way to tell who's the ACTIVE card drawer?
 	public void Plague() {
-		if (this.players[currentPlayer].getShieldCount() >= 2) {
-			this.players[currentPlayer].removeShields(2);
-		logger.info("Plague event in play and player " + currentPlayer + " looses two shields");
-
-		}
+//		setPlayers();
+//		if (players[currentPlayer].getShieldCount() >= 2) {
+//			players[currentPlayer].removeShields(2);
+//		logger.info("Plague event in play and player " + currentPlayer + " looses two shields");
+//		serverModel.server.sendServerMessage("SERVERMESSAGE--REMOVEFROMPARTY--" + currentPlayer + "--" + id);
+//		}
 	}
 
 

@@ -86,6 +86,12 @@ public class Player {
 		party.add(c);
 	}
 	
+
+	public void discardFromParty(AdventureCard c){
+		logger.info(this.playerNumber + "s party changed - discarded " + c.getName());
+		party.remove(c);
+	}
+
 	public int getBattlePoint() {
 		
 		int playerBP =this.getRank().getBattlePoints();
@@ -96,8 +102,6 @@ public class Player {
 		}
 		
 		return playerBP;
-		
-		
 	}
 	
 	public int getPartyBattlesPoint() {
@@ -109,8 +113,6 @@ public class Player {
 		}
 		
 		return allypoints;
-		
-		
 	}
 
 	public void clearBooleans() {
