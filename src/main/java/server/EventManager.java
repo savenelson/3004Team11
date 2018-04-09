@@ -75,11 +75,7 @@ public class EventManager implements  StoryCardState {
 	private void CourtCalled() {
 		
 		setPlayers();
-		
-		//get a players party
-		//look at each card in the party
-		//if the card is an ally, remove it.
-		
+
 		for (int i = 0; i < serverModel.getPlayers().length; i++) {
 
 			int partySize = serverModel.getPlayers()[i].getParty().size();
@@ -93,7 +89,6 @@ public class EventManager implements  StoryCardState {
 					serverModel.server.sendServerMessage("SERVERMESSAGE--REMOVEFROMPARTY--" + i + "--" + id);
 					partySize--;
 					j--;
-					
 				}
 			}
 		}
@@ -178,7 +173,8 @@ public class EventManager implements  StoryCardState {
 		}
 
 	}
-
+	
+	//Pox
 	public void Pox() {
 	logger.info("Pox in play and all players except  the next players to complete a quest 2 shields");
 
@@ -189,7 +185,6 @@ public class EventManager implements  StoryCardState {
 				this.players[i].removeShields(1);
 			System.out.println("After Players " + players[i] + "with this many " + players[i].getShieldCount());
 		}
-
 	}
 	
 	
@@ -311,13 +306,16 @@ public class EventManager implements  StoryCardState {
 			}
 		}
 	}
-
+	//Drawer loses 2 shields
+	
+	//This is going to be Tricky - do we have any way to tell who's the ACTIVE card drawer?
 	public void Plague() {
-		if (this.players[currentPlayer].getShieldCount() >= 2) {
-			this.players[currentPlayer].removeShields(2);
-		logger.info("Plague event in play and player " + currentPlayer + " looses two shields");
-
-		}
+//		setPlayers();
+//		if (players[currentPlayer].getShieldCount() >= 2) {
+//			players[currentPlayer].removeShields(2);
+//		logger.info("Plague event in play and player " + currentPlayer + " looses two shields");
+//		serverModel.server.sendServerMessage("SERVERMESSAGE--REMOVEFROMPARTY--" + currentPlayer + "--" + id);
+//		}
 	}
 
 
