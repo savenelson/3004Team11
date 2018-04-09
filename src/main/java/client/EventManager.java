@@ -10,7 +10,7 @@ import core.Player;
 import core.StoryCardState;
 
 // class to handle event cards
-public class EventManager implements core.StoryCardState{
+public class EventManager implements StoryCardState{
 private static final Logger logger = LogManager.getLogger(EventManager.class);
 Player [] players;
 int numPlayers;
@@ -310,6 +310,13 @@ public void setHasSponsor(boolean b) {
 
 @Override
 public void resolveStage() {
+	// TODO Auto-generated method stub
+	
+}
+
+
+@Override
+public void increaseResponse() {
 	// TODO Auto-generated method stub
 	
 }
