@@ -38,10 +38,7 @@ public class EventManager implements  StoryCardState {
 	
 	public EventManager(ServerModel serverModel) {
 		this.serverModel = serverModel;
-		logger.info("THIS serverMODEL" + this.serverModel);
-
 		this.players = serverModel.getPlayers();
-		logger.info("THIS PLAYERS" + this.players);
 	}
 	
 	private void setPlayers() {
@@ -138,43 +135,68 @@ public class EventManager implements  StoryCardState {
 		int championCount = 0;
 		int championKnightCount = 0;
 
-		for (int i = 0; i < this.players.length; i++) {
+		
+		setPlayers();
 
-			if ((this.players[i].getRank()).getSubType().equals("Squire")) {
+		for (int i = 0; i < players.length; i++) {
+
+			if ((players[i].getRank()).getSubType().equals("Squire")) {
 				squireCount++;
 			}
-			if ((this.players[i].getRank()).getSubType().equals("Knight")) {
+			if ((players[i].getRank()).getSubType().equals("Knight")) {
 				championCount++;
 			}
-			if ((this.players[i].getRank()).getSubType().equals("ChampionKnight")) {
+			if ((players[i].getRank()).getSubType().equals("ChampionKnight")) {
 				championKnightCount++;
 			}
 
 		}
 
 		if (squireCount != 0) {
-			for (int i = 0; i < this.players[i].getQueue().size(); i++) {
+			logger.info("in (squireCount != 0)");
+			for (int i = 0; i < players.length; i++) {
 				if ((this.players[i].getRank()).getSubType().equals("Squire")) {
-					this.players[i].addToHand(this.adventureDeck.pop());
-					this.players[i].addToHand(this.adventureDeck.pop());
+					AdventureCard c = serverModel.getAdventureDeck().peek();
+					String ID = c.getID();
+					serverModel.draw(ID,i);
+					serverModel.server.sendServerMessage("SERVERMESSAGE--DRAW--" + i + "--" + ID);
+					c = serverModel.getAdventureDeck().peek();
+					ID = c.getID();
+					serverModel.draw(ID,i);
+					serverModel.server.sendServerMessage("SERVERMESSAGE--DRAW--" + i + "--" + ID);
 				}
 			}
 
 		} // we then know there is one squire. give him 2 adventure cards
 
 		if (championCount < championKnightCount && (squireCount == 0)) {
-			for (int i = 0; i < this.players[i].getQueue().size(); i++) {
+			logger.info("in (championCount < championKnightCount && (squireCount == 0))");
+			for (int i = 0; i < players.length; i++) {
 				if ((this.players[i].getRank()).getSubType().equals("Champion")) {
-					this.players[i].addToHand(this.adventureDeck.getByID("6"));
-					this.players[i].addToHand(this.adventureDeck.getByID("7"));
+					AdventureCard c = serverModel.getAdventureDeck().peek();
+					String ID = c.getID();
+					serverModel.draw(ID,i);
+					serverModel.server.sendServerMessage("SERVERMESSAGE--DRAW--" + i + "--" + ID);
+					c = serverModel.getAdventureDeck().peek();
+					ID = c.getID();
+					serverModel.draw(ID,i);
+					serverModel.server.sendServerMessage("SERVERMESSAGE--DRAW--" + i + "--" + ID);
 				}
 			}
 			// there are less champions than championKnights
 		}
-		if (championKnightCount == numPlayers || squireCount == numPlayers || championCount == numPlayers) {
-			for (int i = 0; i < this.players[i].getQueue().size(); i++) {
-				this.players[i].addToHand(this.adventureDeck.pop());
-				this.players[i].addToHand(this.adventureDeck.pop());
+		if ((championKnightCount == players.length) || (championCount == players.length)) {
+			logger.info("in (championKnightCount == players.length) || (championCount == players.length)");
+
+			for (int i = 0; i < players.length; i++) {
+				AdventureCard c = serverModel.getAdventureDeck().peek();
+				String ID = c.getID();
+				serverModel.draw(ID,i);
+				serverModel.server.sendServerMessage("SERVERMESSAGE--DRAW--" + i + "--" + ID);
+				c = serverModel.getAdventureDeck().peek();
+				ID = c.getID();
+				serverModel.draw(ID,i);
+				serverModel.server.sendServerMessage("SERVERMESSAGE--DRAW--" + i + "--" + ID);
 			}
 		}
 
@@ -192,11 +214,11 @@ public class EventManager implements  StoryCardState {
 		}
 
 	}
-
+	
+	
 	public void KingCallToArms() {
 	logger.info("KingCallToArms in play and player 1 placed one weapon in the discard pile");
 
-		// TODO : implement into the model boolean ?
 		Player currentplay = players[this.currentPlayer];
 		int numOfweapons = currentplay.getHand().getnumberOfWeapons();
 		// number of foes i put a number really high to get all of them
@@ -210,31 +232,27 @@ public class EventManager implements  StoryCardState {
 
 	}
 
+	//all players draw 2
 	public void ProsperityThroughoutTheRealm() {
-		logger.info("Handling ProsperityThroughoutTheRealm event ");
-
-		int nummOfPlayers = serverModel.getPlayers().length;
-		for (int i = 0; i < nummOfPlayers; i++) {
-			// need to draw from story card
-			logger.info(players[i].getPlayerNumber());
-
-			// need to add cards to adventure deck will give erroe
-			this.players[i].addToHand(this.adventureDeck.pop());
-			this.players[i].addToHand(this.adventureDeck.pop());
+		logger.info("ProsperityThroughoutTheRealm() called ");
+		
+		setPlayers();
+		for (int i = 0; i <players.length; i++) {
+			AdventureCard c = serverModel.getAdventureDeck().peek();
+			String ID = c.getID();
+			serverModel.draw(ID,i);
+			serverModel.server.sendServerMessage("SERVERMESSAGE--DRAW--" + i + "--" + ID);
+			c = serverModel.getAdventureDeck().peek();
+			ID = c.getID();
+			serverModel.draw(ID,i);
+			serverModel.server.sendServerMessage("SERVERMESSAGE--DRAW--" + i + "--" + ID);
 		}
-
 	}
 
 	//Players with both lowest rank and least amount of shields, get 3 shields.
 	public void ChilvarousDeed() {
 	logger.info("ChilvarousDeed event in play");
 
-	
-	//get lowest rank
-	
-	
-	
-	
 		int squireCount = 0;
 		int championCount = 0;
 		int championKnightCount = 0;
