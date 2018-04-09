@@ -69,7 +69,7 @@ public abstract class AbstractModel {
 
 	protected ArrayList<CardCollection<AdventureCard>> stages;
 
-	ArrayList<CardCollection<AdventureCard>> getStages() {
+	public ArrayList<CardCollection<AdventureCard>> getStages() {
 		return stages;
 	}
 
