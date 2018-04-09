@@ -75,6 +75,12 @@ public class ShowResoultionView extends Pane{
 		label.setFont(new Font("Ariel", 40));
 		label.relocate(550, 10);
 		
+		Label  battePoints = new Label("BattlePoints ");
+		battePoints.setPrefHeight(10);
+		battePoints.setTextAlignment(TextAlignment.CENTER);
+		battePoints.setFont(new Font("Ariel", 30));
+		battePoints.relocate(800, 100);
+		
 		Label  rank = new Label("Rank");
 		rank.setPrefHeight(10);
 		rank.setTextAlignment(TextAlignment.CENTER);
@@ -93,25 +99,25 @@ public class ShowResoultionView extends Pane{
 		queue.setFont(new Font("Ariel", 30));
 		queue.relocate(805, 170);
 		
-		Label  p1 = new Label("Player 1");
+		Label  p1 = new Label("Player 0");
 		p1.setPrefHeight(10);
 		p1.setTextAlignment(TextAlignment.CENTER);
 		p1.setFont(new Font("Ariel", 30));
 		p1.relocate(90, 250);
 		
-		Label  p2 = new Label("Player 2");
+		Label  p2 = new Label("Player 1");
 		p2.setPrefHeight(10);
 		p2.setTextAlignment(TextAlignment.CENTER);
 		p2.setFont(new Font("Ariel", 30));
 		p2.relocate(90, 360);
 		
-		Label  p3 = new Label("Player 3");
+		Label  p3 = new Label("Player 2");
 		p3.setPrefHeight(10);
 		p3.setTextAlignment(TextAlignment.CENTER);
 		p3.setFont(new Font("Ariel", 30));
 		p3.relocate(90, 470);
 		
-		Label  p4 = new Label("Player 4");
+		Label  p4 = new Label("Player 3");
 		p4.setPrefHeight(10);
 		p4.setTextAlignment(TextAlignment.CENTER);
 		p4.setFont(new Font("Ariel", 30));

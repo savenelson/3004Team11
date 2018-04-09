@@ -202,4 +202,9 @@ public class Server {
 		// TODO Auto-generated method stub
 		//BROKEN FIXME . This is being called from ServerModel and needs to maybe talk to Clients?
 	}
+
+	public void getTournamentDecision() {
+    	sendServerMessageToOne("SERVERMESSAGE--GETKNIGHT", serverModel.getActivePlayer().getPlayerNumber());
+		
+	}
 }

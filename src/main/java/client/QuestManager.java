@@ -476,33 +476,41 @@ public class QuestManager implements StoryCardState{
 		
 		CardCollection<AdventureCard> currStage = clientModel.getStage().getStageAt(clientModel.getStage().getCurrentStage());
 		
+		
+		logger.info("RESOLVING STAGE");
+		
 		int stageBP = 0;
-
+		
 		for (int i = 0; i < currStage.size(); ++i){
-			stageBP += ((AdventureCard)currStage.get(i)).getBattlePoints();
+			logger.info(currStage.size());
+			stageBP += currStage.get(i).getBattlePoints();
 		}
+		 clientModel.allysInPlay();
+		logger.info("STAGES POINTS "+stageBP);
 		players = clientModel.getPlayers();
-		for(int i = 0; i < clientModel.numPlayers; ++i){
-			int playerBP = players[i].getRank().getBattlePoints();
-			if (players[i].getQueue() != null) {
-				for(int j = 0; j < players[i].getQueue().size(); ++j){
-					playerBP += (players[i].getQueue().get(j)).getBattlePoints();
-				}
-			}
-			if (players[i].getParty() != null) {
-				for(int j = 0; j < players[i].getParty().size(); ++j){
-					playerBP +=  (players[i].getParty().get(j)).getBattlePoints();
-				}
-			}
+		for(int i = 0; i < clientModel.getPlayers().length; ++i){
+			logger.info("This player battle points " + clientModel.getPlayers()[i].getBattlePoint()+"This is the battle points "+clientModel.getPlayers()[i].getBattlePoint());
 			
-			//Check if player passed quest
-			
-
-			if(playerBP >= stageBP && (players[i].isQuesting) && stageBP > 0){
+		
+				int playerBP = clientModel.getPlayers()[i].getBattlePoint();
+				playerBP += clientModel.getPlayers()[i].getPartyBattlesPoint();
 				
-				players[i].passedStage = true;
-				logger.info("Player " + players[i].getPlayerNumber() +"and has passed ");
-				if(clientModel.getState().currentStage +1==((QuestCard)clientModel.getState().currentStoryCard).getNumStages() ) {
+				logger.info( "Player ally battle points "+clientModel.getPlayers()[i].getPartyBattlesPoint());
+				if (playerBP>=stageBP) {
+					players[i].passedStage = true;
+					
+					
+					logger.info("Player " + players[i].getPlayerNumber() +"and has passed " + playerBP);
+					
+				}
+		
+			
+		
+				}
+				
+				
+				/*
+				if(clientModel.getState().currentStage ==((QuestCard)clientModel.getState().currentStoryCard).getNumStages() ) {
 					
 					players[i].passedQuest =true;
 
@@ -511,7 +519,7 @@ public class QuestManager implements StoryCardState{
 					this.players[i].addToHand(c);
 					clientModel.getAdventureDeckDiscard().add(c);
 				}
-			
+			8/
 		//
 				
 		}else {players[i].isQuesting = false;}

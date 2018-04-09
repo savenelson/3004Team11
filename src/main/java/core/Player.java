@@ -86,9 +86,33 @@ public class Player {
 		party.add(c);
 	}
 	
+
 	public void discardFromParty(AdventureCard c){
-		logger.info(this.playerNumber + "s party changed - removed " + c.getName());
+		logger.info(this.playerNumber + "s party changed - discarded " + c.getName());
 		party.remove(c);
+	}
+
+	public int getBattlePoint() {
+		
+		int playerBP =this.getRank().getBattlePoints();
+		if (this.getQueue() != null) {
+			for(int j = 0; j < this.getQueue().size(); ++j){
+				playerBP += (this.getQueue().get(j)).getBattlePoints();
+			}
+		}
+		
+		return playerBP;
+	}
+	
+	public int getPartyBattlesPoint() {
+		int allypoints = 0;
+		if (this.getParty() != null) {
+			for(int j = 0; j < this.getParty().size(); ++j){
+				allypoints += (this.getParty().get(j)).getBattlePoints();
+			}
+		}
+		
+		return allypoints;
 	}
 
 	public void clearBooleans() {

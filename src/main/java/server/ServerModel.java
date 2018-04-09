@@ -97,10 +97,10 @@ public class ServerModel extends AbstractModel {
 	private int numPlayers;
 	int numStages;
 
-	private ArrayList<CardCollection<AdventureCard>> stages;
 
-	protected ArrayList<CardCollection<AdventureCard>> getStages() {
-		return super.stages;
+
+	public ArrayList<CardCollection<AdventureCard>> getStages() {
+		return super.getStages();
 	}
 
 
