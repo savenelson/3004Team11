@@ -48,11 +48,11 @@ public class Client {
 
 		// clientModel.deal(); //COMMENT OUT FOR SET SCENEARIOS
 
-//		clientModel.setScenario1(); // UNCOMMENT FOR SCEN 1
+		clientModel.setScenario1(); // UNCOMMENT FOR SCEN 1
 
 		// clientModel.setScenario2(); //UNCOMMENT FOR SCEN 2
 
-		 clientModel.setScenarioTest();
+//		 clientModel.setScenarioTest();
 
 		// clientModel.eventTesting();
 		this.serverAddress = serverAddress;
@@ -152,7 +152,7 @@ public class Client {
 			getServerMessage();
 			break;
 		case "RESOLVESTAGE":
-			//clientModel.getQuesterManger().resolveStage();
+			clientModel.getQuesterManger().resolveStage();
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {

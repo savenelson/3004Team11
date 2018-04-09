@@ -1,7 +1,5 @@
 package client;
 
-
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -18,7 +16,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-
 
 public class ShowResoultionView extends Pane{
 	public int numberPlayers;
@@ -147,7 +144,7 @@ public class ShowResoultionView extends Pane{
 	}
 	
 	public Pane drawCards(Pane canvas, State state){
-		//addStageToCanvas(canvas);
+		addStageToCanvas(canvas);
 		addPlayerARankToCanvas(canvas);
 		addPlayerBRankToCanvas(canvas);
 		addPlayerAPartyToCanvas(canvas);
@@ -172,6 +169,39 @@ public class ShowResoultionView extends Pane{
 		return canvas;
 	}
 	
+	private void addStageToCanvas(Pane canvas) {
+		CardCollection<AdventureCard> stage = state.stage;
+		
+		tile = new TilePane();
+		tile.setPrefRows(1);
+		tile.setPrefColumns(5);
+		tile.setVgap(10);
+		tile.setHgap(10);
+		
+		if (stage != null) {
+			for (int i = 0; i < stage.size(); ++i){
+				try {
+					Image img = new Image(new FileInputStream(IMG_DIR + stage.get(i).getImgName() + GIF));
+					imgView = new ImageView();
+					imgView.setId(stage.get(i).getID());
+					imgView.setImage(img);
+					imgView.relocate(colStage, rowStage);
+					imgView.setFitWidth(cardSmallWidth);
+					imgView.setFitHeight(cardSmallHeight);
+					imgView.setPreserveRatio(true);
+					tile.getChildren().add(imgView);
+
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+			}
+	
+			tile.relocate(colStage, rowStage);
+			
+			canvas.getChildren().add(tile);
+		}
+	}
+
 	private void addPlayerARankToCanvas(Pane canvas) {
 		try {
 			Image i = new Image(new FileInputStream(IMG_DIR + state.players[0].getRank().getImgName() + GIF));

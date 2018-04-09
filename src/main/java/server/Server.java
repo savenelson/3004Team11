@@ -65,11 +65,11 @@ public class Server {
 
 //		serverModel.deal(); 			//COMMENT OUT FOR SET SCENEARIOS
 
-//		serverModel.setScenario1();	//UNCOMMENT FOR SCEN 1
+		serverModel.setScenario1();	//UNCOMMENT FOR SCEN 1
 
 //		serverModel.setScenario2();	//UNCOMMENT FOR SCEN 2
 
-		serverModel.setScenarioTest(); //UNCOMMENT FOR end game testing
+//		serverModel.setScenarioTest(); //UNCOMMENT FOR end game testing
 		
 		boolean listening = true;
     		
