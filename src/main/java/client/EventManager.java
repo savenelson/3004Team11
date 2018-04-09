@@ -308,6 +308,13 @@ public void setHasSponsor(boolean b) {
 }
 
 
+@Override
+public void resolveStage() {
+	// TODO Auto-generated method stub
+	
+}
+
+
 }
 
 	

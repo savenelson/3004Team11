@@ -115,15 +115,18 @@ public class QuestManager implements StoryCardState {
 				serverModel.server.getQuesterDecison();
 				numOfRepsonders++;
 			}
-			
-			if(numOfRepsonders==numOfQuesterPotential) {
+			//numOfQuesterPotential
+			if(numOfRepsonders==2) {
 				
 				 questersReady = true;
 				
 			}
 			
 			if(questersReady) {
+				
 				resolveStage();
+				
+				serverModel.server.resolveStage();
 			}
 		}
 		
@@ -525,7 +528,10 @@ public class QuestManager implements StoryCardState {
 			}
 
 		}
-		if (serverModel.getStage().getCurrentStage() + 1 == ((QuestCard) serverModel.getCurrentStoryCard()).getNumStages()) {
+
+		/*
+		if (serverModel.getStage().getCurrentStage() + 1 == ((QuestCard) serverModel.currentStoryCard).getNumStages()) {
+
 			// restart the Questmanger
 			hasSponsor = false;
 			questersReady = false;
@@ -545,7 +551,7 @@ public class QuestManager implements StoryCardState {
 
 			resolveQuest();
 
-		}
+		}*/
 
 	}
 

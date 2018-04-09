@@ -6,4 +6,7 @@ public interface StoryCardState {
 	void setPlayer();
 	boolean canEndTurn();
 	void setHasSponsor(boolean b);
+	void resolveStage();
+	//void resolveQuest();
+	void increaseResponse();
 }

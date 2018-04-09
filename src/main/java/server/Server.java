@@ -55,9 +55,10 @@ public class Server {
         System.out.println("Starting Quests server\nServer port: " + serverPort + "\nPlayers per table: " + playersPerGame);
         
         System.out.println("Listening on port " + serverPort);
-        	
-    	serverModel = new ServerModel(this);
+
+    		serverModel = new ServerModel(this);
 		serverModel.instantiatePlayers(playersPerGame);
+
 		serverModel.instantiateStages(); //TODO set properly
 		
 //		serverModel.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
@@ -184,9 +185,16 @@ public class Server {
 	
 	public void resolveQuest(){
 		logger.debug("resolveQuest() called");
+		sendServerMessage("SERVERMESSAGE--RESOLVEQUEST");
 
-//		BROKEN: the below call FIXME to talk to client
-//		view.resolveQuest();
+//		
+	}
+	
+	public void resolveStage(){
+		logger.info("resolveQuest() called");
+		sendServerMessage("SERVERMESSAGE--RESOLVESTAGE");
+
+//		
 	}
 
 	public void update() {

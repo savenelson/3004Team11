@@ -486,12 +486,12 @@ public class QuestManager implements StoryCardState{
 			int playerBP = players[i].getRank().getBattlePoints();
 			if (players[i].getQueue() != null) {
 				for(int j = 0; j < players[i].getQueue().size(); ++j){
-					playerBP += ((AdventureCard) players[i].getQueue().get(j)).getBattlePoints();
+					playerBP += (players[i].getQueue().get(j)).getBattlePoints();
 				}
 			}
 			if (players[i].getParty() != null) {
 				for(int j = 0; j < players[i].getParty().size(); ++j){
-					playerBP += ((AdventureCard) players[i].getParty().get(j)).getBattlePoints();
+					playerBP +=  (players[i].getParty().get(j)).getBattlePoints();
 				}
 			}
 			
@@ -516,7 +516,7 @@ public class QuestManager implements StoryCardState{
 				
 		}else {players[i].isQuesting = false;}
 			
-		}
+		}/*
 		if(clientModel.getStage().getCurrentStage()+1== ((QuestCard) clientModel.currentStoryCard).getNumStages()){
 			//restart the Questmanger
 			hasSponsor = false;
@@ -541,7 +541,7 @@ public class QuestManager implements StoryCardState{
 
 			resolveQuest();
 
-		}
+		}*/
 	
 
 
@@ -559,6 +559,14 @@ public class QuestManager implements StoryCardState{
 
 	@Override
 	public void setHasSponsor(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void increaseResponse() {
 		// TODO Auto-generated method stub
 		
 	}
