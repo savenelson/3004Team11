@@ -264,6 +264,17 @@ public class Client {
 			});
 			getServerMessage();
 			break;
+			
+		case "GETKNIGHT":
+
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					getQuestingDecision();
+				}
+			});
+			getServerMessage();
+			break;
 		case "GETSTATE":
 
 			// model.state = Integer.parseInt(serverMessageComponents[2]);
@@ -304,9 +315,10 @@ public class Client {
 	}
 
 	public void stageIncrement() {
-		logger.debug("stageIncrement() called");
+		logger.info("stageIncrement() called");
 
 		clientModel.getStage().nextStage();
+		//clientModel.setCurrentStage(1);
 		updateViewState();
 	}
 
@@ -337,6 +349,13 @@ public class Client {
 		updateViewState();
 		sendClientMessage("CLIENTMESSAGE--ISQUESTING--" + isQuesting + "--" + playerNumber);
 
+	}
+	public void getTournamentDecision() {
+		boolean isQuesting = view.popup("Player " + (playerNumber) + " - Would you like to participate in a Tournament ?");
+		clientModel.getActivePlayer().isQuesting = isQuesting;
+		updateViewState();
+		sendClientMessage("CLIENTMESSAGE--ISQUESTING--" + isQuesting + "--" + playerNumber);
+		
 	}
 
 	public State getState() {
@@ -497,7 +516,7 @@ public class Client {
 		} else {
 			// move to the next stage
 			this.stageIncrement();
-			nextPlayer();
+			
 		}
 	}
 

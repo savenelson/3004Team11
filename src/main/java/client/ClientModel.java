@@ -65,8 +65,9 @@ public class ClientModel extends AbstractModel {
 
 
 
-	protected ArrayList<CardCollection<AdventureCard>> getStages() {
-		return super.stages;
+	public  ArrayList<CardCollection<AdventureCard>> getStages() {
+		return super.getStages();
+		
 	}
 
 	ClientModel(Client control) {

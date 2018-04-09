@@ -83,9 +83,6 @@ public class QuestManager implements StoryCardState {
 
 	}
 
-	public QuestManager(AbstractModel a) {
-		// TODO Auto-generated constructor stub
-	}
 
 	/**
 	 * 
