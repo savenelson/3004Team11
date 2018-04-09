@@ -210,31 +210,30 @@ public class EventManager implements  StoryCardState {
 
 	}
 
+	//all players draw 2
 	public void ProsperityThroughoutTheRealm() {
-		logger.info("Handling ProsperityThroughoutTheRealm event ");
-
-		int nummOfPlayers = serverModel.getPlayers().length;
-		for (int i = 0; i < nummOfPlayers; i++) {
+		logger.info("ProsperityThroughoutTheRealm() called ");
+		
+		setPlayers();
+		System.out.println("PLAYERS.LENGTH = " + players.length);
+		for (int i = 0; i <players.length; i++) {
 			// need to draw from story card
-			logger.info(players[i].getPlayerNumber());
 
-			// need to add cards to adventure deck will give erroe
-			this.players[i].addToHand(this.adventureDeck.pop());
-			this.players[i].addToHand(this.adventureDeck.pop());
+			AdventureCard c = serverModel.getAdventureDeck().peek();
+			String ID = c.getID();
+			serverModel.draw(ID,i);
+			serverModel.server.sendServerMessage("SERVERMESSAGE--DRAW--" + i + "--" + ID);
+			c = serverModel.getAdventureDeck().peek();
+			ID = c.getID();
+			serverModel.draw(ID,i);
+			serverModel.server.sendServerMessage("SERVERMESSAGE--DRAW--" + i + "--" + ID);
 		}
-
 	}
 
 	//Players with both lowest rank and least amount of shields, get 3 shields.
 	public void ChilvarousDeed() {
 	logger.info("ChilvarousDeed event in play");
 
-	
-	//get lowest rank
-	
-	
-	
-	
 		int squireCount = 0;
 		int championCount = 0;
 		int championKnightCount = 0;

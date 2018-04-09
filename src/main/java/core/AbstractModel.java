@@ -148,7 +148,6 @@ public abstract class AbstractModel {
 		this.state.players = this.players;
 
 		state.currentPlayer = this.currentPlayer;
-		logger.debug("state.currentPlayer: " + state.currentPlayer);
 
 		state.isQuesting = this.players[currentPlayer].isQuesting;
 
@@ -182,12 +181,9 @@ public abstract class AbstractModel {
 		AdventureCard c;
 		c = this.adventureDeck.getByID(iD);
 		Player p = this.players[currentPlayer];
-		logger.info(this.adventureDeck);
-		logger.info("Player " + p + " card " + c);
 		p.addToHand(c);
 		this.adventureDeck.remove(c);
-		logger.info("Player " + currentPlayer + " drew " + c.getName() + " from AdventureDeck to hand");
-
+		logger.debug("Player " + currentPlayer + " drew " + c.getName() + " from AdventureDeck to hand");
 	}
 
 	public void party(String iD, int currentPlayer) {
@@ -198,7 +194,7 @@ public abstract class AbstractModel {
 
 		hand.remove(c);
 		players[currentPlayer].addToParty(c);
-		logger.info("Player " + currentPlayer + " moved " + c.getName() + " from hand to party");
+		logger.debug("Player " + currentPlayer + " moved " + c.getName() + " from hand to party");
 
 	}
 
@@ -213,7 +209,7 @@ public abstract class AbstractModel {
 		// Change To add to my new Stages
 		this.getStage().getStageAt(stageNumber).add(c);
 		
-		logger.info("Player " + currentPlayer + " moves " + c.getName() + " from hand to Stage " + stageNumber);
+		logger.debug("Player " + currentPlayer + " moves " + c.getName() + " from hand to Stage " + stageNumber);
 		return true;
 	}
 
@@ -227,7 +223,7 @@ public abstract class AbstractModel {
 
 		this.players[currentPlayer].getHand().add(c);
 
-		logger.info("Player " + currentPlayer + " moves " + c.getName() + " from Stage back to Hand");
+		logger.debug("Player " + currentPlayer + " moves " + c.getName() + " from Stage back to Hand");
 	}
 
 	public void discard(String iD, int currentPlayer) {
@@ -236,7 +232,7 @@ public abstract class AbstractModel {
 		AdventureCard c = hand.getByID(iD);
 		hand.remove(c);
 		adventureDeckDiscard.add(c);
-		logger.info("Player " + currentPlayer + " discarded " + c.getName());
+		logger.debug("Player " + currentPlayer + " discarded " + c.getName());
 	}
 
 	public void assassinate(String iD, int currentPlayer) {
@@ -920,7 +916,8 @@ public abstract class AbstractModel {
 		// stages[0].add(this.adventureDeck.getByID("57"));
 		// stages[1].add(this.adventureDeck.getByID("86"));
 
-		this.setCurrentStoryCard(this.storyDeck.getByID("151")); // ChivalrousDeed
+//		this.setCurrentStoryCard(this.storyDeck.getByID("151")); // ChivalrousDeed
+		this.setCurrentStoryCard(this.storyDeck.getByID("152")); // ProsparityTHroughTheLand
 		this.players[0].addToParty(this.adventureDeck.getByID("100"));
 		this.players[0].addToParty(this.adventureDeck.getByID("101"));
 		this.players[0].addToParty(this.adventureDeck.getByID("122"));
@@ -1001,7 +998,7 @@ public abstract class AbstractModel {
 	}
 
 	public void eventTesting() {
-		logger.info("seve");
+		logger.info("eventTesting()");
 
 		this.currentPlayer = 0;
 
