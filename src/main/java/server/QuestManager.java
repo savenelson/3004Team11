@@ -7,6 +7,7 @@ import javax.print.attribute.standard.NumberOfDocuments;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import com.sun.jmx.remote.internal.ArrayQueue;
+
 import core.*;
 import javafx.event.ActionEvent;
 import javafx.event.*;
@@ -112,8 +113,21 @@ public class QuestManager implements StoryCardState {
 			if (!this.serverModel.getActivePlayer().declinedToQuest) {
 				boolean wantToSponsor;
 				serverModel.server.getQuesterDecison();
+				numOfRepsonders++;
+			}
+			
+			if(numOfRepsonders==numOfQuesterPotential) {
+				
+				 questersReady = true;
+				
+			}
+			
+			if(questersReady) {
+				resolveStage();
 			}
 		}
+		
+		
 		/*
 		 * if(numberOfrequests == 0 ) { nextPersonToDraw =
 		 * model.getActivePlayer().getPlayerNumber() +1; if(nextPersonToDraw>
@@ -203,7 +217,8 @@ public class QuestManager implements StoryCardState {
 			// If not ready for sponsor then loop
 
 			serverModel.nextPlayer();
-
+		}
+		/*
 		} else if (serverModel.isDoneQuestingMode()) {
 			serverModel.setNextPlayer(nextPersonToDraw);
 		} else if (questersReady) {
@@ -227,7 +242,7 @@ public class QuestManager implements StoryCardState {
 
 			}
 
-		}
+		}*/
 	}
 
 	private boolean stageHarder() {
@@ -465,7 +480,7 @@ public class QuestManager implements StoryCardState {
 		 */
 		logger.info("resolveStage() called");
 
-		CardCollection currStage = serverModel.getStage().getStageAt(serverModel.getStage().getCurrentStage());
+		CardCollection<AdventureCard> currStage = serverModel.getStage().getStageAt(serverModel.getStage().getCurrentStage());
 
 		int stageBP = 0;
 
@@ -532,6 +547,12 @@ public class QuestManager implements StoryCardState {
 
 		}
 
+	}
+
+	@Override
+	public void increaseResponse() {
+		numberOfrequests++;
+		
 	}
 
 }
