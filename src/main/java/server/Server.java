@@ -56,7 +56,8 @@ public class Server {
         
         System.out.println("Listening on port " + serverPort);
 
-    		serverModel = new ServerModel(this);
+		serverModel = new ServerModel(this);
+		
 		serverModel.instantiatePlayers(playersPerGame);
 
 		serverModel.instantiateStages(); //TODO set properly
@@ -94,7 +95,7 @@ public class Server {
     public void sendServerMessage(String serverMessage) {
     	logger.info(serverMessage);
     	for(ServerThread thread : clientThreads) {
-    		logger.info("sending message to player " + thread.currentPlayer);
+    		logger.debug("sending message to player " + thread.currentPlayer);
     		thread.out.println(serverMessage);
     	}
     }

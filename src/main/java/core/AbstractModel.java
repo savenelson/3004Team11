@@ -185,6 +185,16 @@ public abstract class AbstractModel {
 		this.adventureDeck.remove(c);
 		logger.debug("Player " + currentPlayer + " drew " + c.getName() + " from AdventureDeck to hand");
 	}
+	
+	public void removeFromParty(String iD, int currentPlayer) {
+		logger.info("draw() called");
+		AdventureCard c;
+		c = this.players[currentPlayer].getParty().getByID(iD);
+		getAdventureDeckDiscard().add(c);
+		players[currentPlayer].discardFromParty(c);
+
+		logger.debug("Player " + currentPlayer + " drew " + c.getName() + " from AdventureDeck to hand");
+	}
 
 	public void party(String iD, int currentPlayer) {
 		logger.debug("party() called");
@@ -909,7 +919,7 @@ public abstract class AbstractModel {
 
 		this.currentPlayer = 0;
 //
-		this.players[0].addShields(1);
+//		this.players[0].addShields(1);
 //		this.players[1].addShields(6);
 //		this.players[2].addShields(14);
 
@@ -918,7 +928,8 @@ public abstract class AbstractModel {
 
 //		this.setCurrentStoryCard(this.storyDeck.getByID("151")); // ChivalrousDeed
 //		this.setCurrentStoryCard(this.storyDeck.getByID("152")); // ProsparityTHroughTheLand
-		this.setCurrentStoryCard(this.storyDeck.getByID("145")); // QueensFavor
+//		this.setCurrentStoryCard(this.storyDeck.getByID("145")); // QueensFavor
+		this.setCurrentStoryCard(this.storyDeck.getByID("147")); // CourtCalled
 		this.players[0].addToParty(this.adventureDeck.getByID("100"));
 		this.players[0].addToParty(this.adventureDeck.getByID("101"));
 		this.players[0].addToParty(this.adventureDeck.getByID("122"));

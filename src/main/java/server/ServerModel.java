@@ -153,6 +153,10 @@ public class ServerModel extends AbstractModel {
 		logger.info("draw() called");
 		super.draw(iD, currentPlayer);
 	}
+	public void removeFromParty(String iD, int currentPlayer) {
+		logger.info("removeFromParty() called");
+		super.removeFromParty(iD, currentPlayer);
+	}
 	public void party(String iD, int currentPlayer) {
 		logger.info("party() called");
 		super.party(iD, currentPlayer);

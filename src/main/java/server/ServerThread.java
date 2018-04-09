@@ -59,7 +59,7 @@ public class ServerThread extends Thread {
 		logger.info("MSG from client: "+ clientMessage);
 		switch (clientMessageComponents[1]) {
 		case "HELLO":
-			logger.info("Client has responded!!!");
+			logger.info("Client at " + clientMessageComponents[2] + " has connected");
 			break;
 		case "QUEUE":
 			server.serverModel.queue(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));

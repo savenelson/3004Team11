@@ -70,53 +70,30 @@ public class EventManager implements  StoryCardState {
 		}
 
 	}
-
+	
+	//all allys are discarded
 	private void CourtCalled() {
-		for (int i = 0; i < this.players.length; i++) {
-			CardCollection<AdventureCard> hand = this.players[i].getHand();
+		
+		setPlayers();
+		
+		//get a players party
+		//look at each card in the party
+		//if the card is an ally, remove it.
+		
+		for (int i = 0; i < serverModel.getPlayers().length; i++) {
 
-			for (int j = 0; j < hand.size(); j++) {
+			int partySize = serverModel.getPlayers()[i].getParty().size();
+			
+			for(int j = 0 ; j < partySize;j++) {
+				if((players[i].getParty().get(j)).getSubType().equals("Ally")) {
 
-				if (hand.getByID("100") != null) {
-					AdventureCard c = hand.getByID("100");
-					hand.remove("100");
-					adventureDeckDiscard.add((AdventureCard) c);
-				} else if (hand.getByID("101") != null) {
-					AdventureCard c = hand.getByID("101");
-					hand.remove("101");
-					adventureDeckDiscard.add((AdventureCard) c);
-				} else if (hand.getByID("102") != null) {
-					AdventureCard c = hand.getByID("102");
-					hand.remove("102");
-					adventureDeckDiscard.add(c);
-				} else if (hand.getByID("103") != null) {
-					AdventureCard c = hand.getByID("103");
-					hand.remove("103");
-					adventureDeckDiscard.add(c);
-				} else if (hand.getByID("104") != null) {
-					AdventureCard c = hand.getByID("104");
-					hand.remove("104");
-					adventureDeckDiscard.add(c);
-				} else if (hand.getByID("105") != null) {
-					AdventureCard c = hand.getByID("105");
-					hand.remove("105");
-					adventureDeckDiscard.add(c);
-				} else if (hand.getByID("106") != null) {
-					AdventureCard c = hand.getByID("106");
-					hand.remove("106");
-					adventureDeckDiscard.add(c);
-				} else if (hand.getByID("107") != null) {
-					AdventureCard c = hand.getByID("107");
-					hand.remove("107");
-					adventureDeckDiscard.add(c);
-				} else if (hand.getByID("108") != null) {
-					AdventureCard c = hand.getByID("108");
-					hand.remove("108");
-					adventureDeckDiscard.add(c);
-				} else if (hand.getByID("109") != null) {
-					AdventureCard c = hand.getByID("109");
-					hand.remove("109");
-					adventureDeckDiscard.add(c);
+					logger.info("Event Card: Court Called - Player " + i + " discards " + (players[i].getParty().get(j).getName()));
+					String id = players[i].getParty().get(j).getID();
+					serverModel.removeFromParty(id, i);
+					serverModel.server.sendServerMessage("SERVERMESSAGE--REMOVEFROMPARTY--" + i + "--" + id);
+					partySize--;
+					j--;
+					
 				}
 			}
 		}

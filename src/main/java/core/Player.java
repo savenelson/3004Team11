@@ -85,6 +85,11 @@ public class Player {
 		logger.info(this.playerNumber + "s party changed - added " + c.getName());
 		party.add(c);
 	}
+	
+	public void discardFromParty(AdventureCard c){
+		logger.info(this.playerNumber + "s party changed - removed " + c.getName());
+		party.remove(c);
+	}
 
 	public void clearBooleans() {
 		this.passedStage = false;
