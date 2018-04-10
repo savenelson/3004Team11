@@ -511,7 +511,7 @@ public class Client {
 
 	public void resolveStage() {
 
-		view.resolveQuest();
+		view.stageResolved();
 
 	}
 
