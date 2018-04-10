@@ -611,7 +611,7 @@ public abstract class AbstractModel {
 	}
 
 	public void setScenario1() {
-		logger.debug("setScenario1() called - Setting up SCENARIO ONE");
+		logger.info("setScenario1() called - Setting up SCENARIO ONE");
 
 		/**
 		 * Scenario 1 Story Card: Board Hunt Number of Players: 2 Current Player: Player
@@ -861,7 +861,7 @@ public abstract class AbstractModel {
 	} // end set scenario 1
 
 	public void setScenario2() {
-		logger.debug("setScenario2() called - Setting up SCENARIO TWO");
+		logger.info("setScenario2() called - Setting up SCENARIO TWO");
 
 		this.currentPlayer = 0;
 		this.setCurrentStoryCard(this.storyDeck.getByID("138"));
@@ -1147,6 +1147,7 @@ public abstract class AbstractModel {
 
 	public void setCurrentStoryCard(StoryCard currentStoryCard) {
 		this.currentStoryCard = currentStoryCard;
+		logger.info("Current Story Card is now: " + currentStoryCard);
 	}
 
 	

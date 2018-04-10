@@ -16,10 +16,8 @@ public class Server {
 	private static final Logger logger = LogManager.getLogger(Server.class);
 	
     private static final int DEFAULT_PORT = 44444;                      // default server port
-    private static final int DEFAULT_PLAYERS_PER_TABLE = 4;             // default number of players per table
-    private static final int maxPlayers = 4;							// max players for table
     private int serverPort;                                             // server port
-    private int playersPerGame = 4;                                     // number of players per table
+    private static int playersPerGame = 3;                              // number of players per table
 	ArrayList<ServerThread> clientThreads = new ArrayList<ServerThread>();
     public ServerModel serverModel;
 
@@ -52,7 +50,8 @@ public class Server {
     public void start() {
     	logger.debug("start()  called");
 
-        logger.info("Starting Quests server\nServer port: " + serverPort);
+        logger.info("Starting Quests server");
+        logger.info("Server port: " + serverPort);
         logger.info("Players per game: " + playersPerGame);
         logger.info("Listening on port " + serverPort);
 
@@ -113,14 +112,13 @@ public class Server {
      * 
      */
     public void sendServerMessageToOne(String serverMessage, int playerNum) {
-    	logger.info(serverMessage + " to " + playerNum);
-
 
     		for(ServerThread thread1 : clientThreads) {
-    			logger.info("Current threads playernumber: " + thread1.currentPlayer);
+    			logger.debug("Current threads playernumber: " + thread1.currentPlayer);
     			
     			if(thread1.getPlayerNumber()== playerNum) {
     				thread1.out.println(serverMessage);
+    		    	logger.info("MSG to " + playerNum + " " + serverMessage);
     			}
     		}
     	}
@@ -129,7 +127,7 @@ public class Server {
      * Used to send a message to a all but one Client 
      */
     public void sendServerMessageToAllButOne(String serverMessage, int playerNum) {
-    	logger.info(serverMessage + " to " + playerNum);
+    	logger.info("MSG to ALL: " + serverMessage);
 
 
     		for(ServerThread thread1 : clientThreads) {
@@ -168,7 +166,6 @@ public class Server {
     
     public static void main(String[] args) {
         int serverPort = DEFAULT_PORT;
-        int playersPerGame = DEFAULT_PLAYERS_PER_TABLE;
 
          Server questsServer = new Server(serverPort, playersPerGame);
         questsServer.start();
