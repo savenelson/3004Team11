@@ -478,7 +478,7 @@ public class Client {
 			clientModel.setCurrentStage(4);
 		} else if (clickType.equals(View.ENDTURN)) {
 			 if (clientModel.getCurrentState().canEndTurn()) {
-			sendClientMessage("CLIENTMESSAGE--ENDTURN--" + "--" + playerNumber);
+			sendClientMessage("CLIENTMESSAGE--ENDTURN--" + playerNumber);
 			 }
 		}
 	}

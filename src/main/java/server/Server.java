@@ -17,7 +17,7 @@ public class Server {
 	
     private static final int DEFAULT_PORT = 44444;                      // default server port
     private int serverPort;                                             // server port
-    private static int playersPerGame = 3;                              // number of players per table
+    private static int playersPerGame = 4;                              // number of players per table
 	ArrayList<ServerThread> clientThreads = new ArrayList<ServerThread>();
     public ServerModel serverModel;
 
