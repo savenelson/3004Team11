@@ -532,20 +532,21 @@ public abstract class AbstractModel {
 	}
 
 	public void playGame() {
-//		logger.info("playGame() called");
-//
-//		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)) {
-//			playQuest();
-//			currentState.handle();
-//		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.EVENT)) {
-//			playEvent();
-//			currentState.handle();
-//		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)) {
-//			// playTournament();
-//		} else {
-//			adventureDeck = (AdventureDeck) adventureDeckDiscard;
-//			adventureDeck.shuffle();
-//		}
+		
+		logger.info("playGame() called");
+
+		if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.QUEST)) {
+			playQuest();
+			currentState.handle();
+		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.EVENT)) {
+			playEvent();
+			currentState.handle();
+		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)) {
+			// playTournament();
+		} else {
+			adventureDeck = (AdventureDeck) adventureDeckDiscard;
+			adventureDeck.shuffle();
+		}
 	}
 
 	public void nextPlayer() {

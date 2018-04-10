@@ -212,7 +212,7 @@ public class QuestManager implements StoryCardState{
 	private boolean stageHarder() {
 		logger.debug("stageHarder() called");
 
-		int numStages = ((QuestCard) clientModel.currentStoryCard).getNumStages(); 
+		int numStages = ((QuestCard) clientModel.getCurrentStoryCard()).getNumStages(); 
 		if (numStages == 1) { return true;
 		}else {
 			for(int i =0; i<numStages-1; i++) {
@@ -261,7 +261,7 @@ public class QuestManager implements StoryCardState{
 		
 	
 	  	if(clientModel.getActivePlayer().isSponsor){
-	    		int numStages = ((QuestCard)clientModel.currentStoryCard).getNumStages();
+	    		int numStages = ((QuestCard)clientModel.getCurrentStoryCard()).getNumStages();
 	    		foesPresent  = new boolean [numStages];
 	    		for (int i = 0; i < numStages; ++i){
 	    				foesPresent[i] = false;
@@ -297,7 +297,7 @@ public class QuestManager implements StoryCardState{
 		
 		
 		int numOfCardsInStaging = 0;
-		int numStages = ((QuestCard)clientModel.currentStoryCard).getNumStages();
+		int numStages = ((QuestCard)clientModel.getCurrentStoryCard()).getNumStages();
 		for (int i = 0; i < numStages; ++i){
 			for (int j = 0; j < clientModel.getStage().getStageAt(i).size(); ++j){
 				if((clientModel.getStage().getStageAt(i).get(j)).getSubType().equals(AdventureCard.FOE)){
@@ -337,7 +337,7 @@ public class QuestManager implements StoryCardState{
 		boolean foeInEachStage = isfoeEachStage();
 		boolean isHandSizeOk = checkHandSize();
 		
-		/*
+		
 		// check if its a sponsor and if it is then check if they sponsor correctly 
 		if(clientModel.getActivePlayer().isSponsor && !foeInEachStage){	    			
 			clientModel.control.alert("Foe not present in every stage.");
@@ -364,10 +364,10 @@ public class QuestManager implements StoryCardState{
 			
 			return true;
 		}
-		*/
-		boolean result = false;
+		
+	
 		//if nothing makes this true, return false
-		return result;
+	
 	}
 	
 	public void reset() {
