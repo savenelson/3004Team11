@@ -518,14 +518,21 @@ public class Client {
 	public void nextStage() {
 		this.stageOver();
 		logger.info("Hello this is the model stage in the control " + clientModel.isDoneQuestingMode());
-		//if (clientModel.isDoneQuestingMode()) {
-			view.resolveQuest();
-			logger.info("Hello this is the model stage in the control " + clientModel.isDoneQuestingMode());
-		//} else {
-			// move to the next stage
-		//	this.stageIncrement();
+		if (clientModel.isDoneQuestingMode()) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					view.resolveQuest();
+				
+				}
+			});
 			
-		//}
+	
+		} else {
+			// move to the next stage
+			this.stageIncrement();
+			
+		}
 	}
 
 }

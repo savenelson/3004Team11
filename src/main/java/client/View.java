@@ -387,7 +387,7 @@ public class View extends Application {
 	}
 
 	public void resolveQuest() {
-		logger.debug("resolveQuest() called");
+		logger.info("resolveQuest() called");
 
 		StackPane layout = new StackPane();
 		state = control.getState();
@@ -419,7 +419,7 @@ public class View extends Application {
 			public void handle(ActionEvent event) {
 				logger.info("nextStageButton clicked");
 				control.nextStory();
-				update(stage);
+				//update(stage);
 			}
 		});
 		Scene scene = new Scene(layout);
