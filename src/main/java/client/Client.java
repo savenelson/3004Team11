@@ -171,14 +171,19 @@ public class Client {
 			updateViewState();
 			getServerMessage();
 			break;
+			
 		case "REMOVEFROMPARTY":
 			clientModel.removeFromParty(serverMessageComponents[3], Integer.parseInt(serverMessageComponents[2]));
 			updateViewState();
 			getServerMessage();
+			break;
+			
 		case "REMOVESHIELDS":
 			clientModel.removeShields(Integer.parseInt(serverMessageComponents[3]), Integer.parseInt(serverMessageComponents[2]));
 			updateViewState();
 			getServerMessage();
+			break;
+			
 		case "UPDATE":
 			if (serverMessageComponents[2].equals(Integer.toString(this.playerNumber))) {
 				logger.info("Message was instigated by this client and not processed");
@@ -235,15 +240,18 @@ public class Client {
 				}
 			}
 			break;
+			
 		case "WELCOME":
 			logger.info("server has established connection with this client");
 			clientModel.playGame();
 			getServerMessage();
 			break;
+			
 		case "TEST":
 			logger.info("TEST GOOD!!");
 			getServerMessage();
 			break;
+			
 		case "SETTHREADPLAYER":
 			clientModel.currentPlayer = Integer.parseInt(serverMessageComponents[2]);
 			playerNumber = Integer.parseInt(serverMessageComponents[2]);
@@ -252,6 +260,7 @@ public class Client {
 			updateViewState();
 			getServerMessage();
 			break;
+			
 		case "GETSPONSOR":
 			Platform.runLater(new Runnable() {
 				@Override
@@ -262,6 +271,7 @@ public class Client {
 			});
 			getServerMessage();
 			break;
+			
 		case "GETQUESTER":
 
 			Platform.runLater(new Runnable() {
@@ -283,6 +293,7 @@ public class Client {
 			});
 			getServerMessage();
 			break;
+			
 		case "GETSTATE":
 
 			// model.state = Integer.parseInt(serverMessageComponents[2]);

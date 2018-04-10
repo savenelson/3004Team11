@@ -174,7 +174,7 @@ public class EventManager implements  StoryCardState {
 
 	}
 	
-	//Pox
+	//Pox in play and all players except  the next players to complete a quest 2 shields
 	public void Pox() {
 	logger.info("Pox in play and all players except  the next players to complete a quest 2 shields");
 
@@ -262,7 +262,7 @@ public class EventManager implements  StoryCardState {
 		logger.info("P0 ranks is " + (players[0].getRank()).getSubType());
 		logger.info("P1 ranks is " + (players[1].getRank()).getSubType());
 		logger.info("P2 ranks is " + (players[2].getRank()).getSubType());
-		logger.info("P3 ranks is " + (players[3].getRank()).getSubType());
+//		logger.info("P3 ranks is " + (players[3].getRank()).getSubType());
 
 		logger.info("squireCount " + squireCount);
 		logger.info("championCount " + championCount);
@@ -307,15 +307,15 @@ public class EventManager implements  StoryCardState {
 		}
 	}
 	//Drawer loses 2 shields
-	
-	//This is going to be Tricky - do we have any way to tell who's the ACTIVE card drawer?
+
 	public void Plague() {
-//		setPlayers();
-//		if (players[currentPlayer].getShieldCount() >= 2) {
-//			players[currentPlayer].removeShields(2);
-//		logger.info("Plague event in play and player " + currentPlayer + " looses two shields");
-//		serverModel.server.sendServerMessage("SERVERMESSAGE--REMOVEFROMPARTY--" + currentPlayer + "--" + id);
-//		}
+		setPlayers();
+		int curPlay = serverModel.getActivePlayer().getPlayerNumber();
+		if (players[curPlay].getShieldCount() >= 2) {
+			players[curPlay].removeShields(2);
+		logger.info("Plague event in play and player " + curPlay + " looses two shields");
+		serverModel.server.sendServerMessage("SERVERMESSAGE--REMOVESHIELDS--" + curPlay + "--" + 2);
+		}
 	}
 
 

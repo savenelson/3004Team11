@@ -13,8 +13,6 @@ public class ClientModel extends AbstractModel {
 
 	public Client control;
 
-
-
 	public Player[] getPlayers() {
 		return super.getPlayers(); 
 	}

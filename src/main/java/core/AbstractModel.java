@@ -222,7 +222,7 @@ public abstract class AbstractModel {
 		// Change To add to my new Stages
 		this.getStage().getStageAt(stageNumber).add(c);
 		
-		logger.debug("Player " + currentPlayer + " moves " + c.getName() + " from hand to Stage " + stageNumber);
+		logger.info("Player " + currentPlayer + " moves " + c.getName() + " from hand to Stage " + stageNumber);
 		return true;
 	}
 
@@ -236,7 +236,7 @@ public abstract class AbstractModel {
 
 		this.players[currentPlayer].getHand().add(c);
 
-		logger.debug("Player " + currentPlayer + " moves " + c.getName() + " from Stage back to Hand");
+		logger.info("Player " + currentPlayer + " moves " + c.getName() + " from Stage back to Hand");
 	}
 
 	public void discard(String iD, int currentPlayer) {
@@ -245,7 +245,7 @@ public abstract class AbstractModel {
 		AdventureCard c = hand.getByID(iD);
 		hand.remove(c);
 		adventureDeckDiscard.add(c);
-		logger.debug("Player " + currentPlayer + " discarded " + c.getName());
+		logger.info("Player " + currentPlayer + " discarded " + c.getName());
 	}
 
 	public void assassinate(String iD, int currentPlayer) {
@@ -612,7 +612,7 @@ public abstract class AbstractModel {
 	}
 
 	public void setScenario1() {
-		logger.debug("setScenario1() called - Setting up SCENARIO ONE");
+		logger.info("setScenario1() called - Setting up SCENARIO ONE");
 
 		/**
 		 * Scenario 1 Story Card: Board Hunt Number of Players: 2 Current Player: Player
@@ -862,7 +862,7 @@ public abstract class AbstractModel {
 	} // end set scenario 1
 
 	public void setScenario2() {
-		logger.debug("setScenario2() called - Setting up SCENARIO TWO");
+		logger.info("setScenario2() called - Setting up SCENARIO TWO");
 
 		this.currentPlayer = 0;
 		this.setCurrentStoryCard(this.storyDeck.getByID("138"));
@@ -1148,6 +1148,7 @@ public abstract class AbstractModel {
 
 	public void setCurrentStoryCard(StoryCard currentStoryCard) {
 		this.currentStoryCard = currentStoryCard;
+		logger.info("Current Story Card is now: " + currentStoryCard);
 	}
 
 	

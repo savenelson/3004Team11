@@ -56,7 +56,7 @@ public class ServerThread extends Thread {
 	 */
 	private void getClientMessage(String clientMessage) {
 		String[] clientMessageComponents = clientMessage.split("--"); // array containing the components of the server
-		logger.info(clientMessage);
+		logger.info("msg from client: " + clientMessage);
 		switch (clientMessageComponents[1]) {
 		case "HELLO":
 			logger.info("Client at " + clientMessageComponents[2] + " has connected");
