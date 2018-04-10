@@ -19,7 +19,7 @@ public class Server {
     private static final int DEFAULT_PLAYERS_PER_TABLE = 4;             // default number of players per table
     private static final int maxPlayers = 4;							// max players for table
     private int serverPort;                                             // server port
-    private int playersPerGame = 4;                                        // number of players per table
+    private int playersPerGame = 4;                                     // number of players per table
 	ArrayList<ServerThread> clientThreads = new ArrayList<ServerThread>();
     public ServerModel serverModel;
 
@@ -52,48 +52,52 @@ public class Server {
     public void start() {
     	logger.debug("start()  called");
 
-        System.out.println("Starting Quests server\nServer port: " + serverPort + "\nPlayers per table: " + playersPerGame);
-        
-        System.out.println("Listening on port " + serverPort);
+        logger.info("Starting Quests server\nServer port: " + serverPort);
+        logger.info("Players per game: " + playersPerGame);
+        logger.info("Listening on port " + serverPort);
 
 		serverModel = new ServerModel(this);
 		
 		serverModel.instantiatePlayers(playersPerGame);
 
-		serverModel.instantiateStages(); //TODO set properly
+		serverModel.instantiateStages(); 	
 		
-//		serverModel.initialShuffle(); //COMMENT OUT FOR SET SCENEARIOS
+//		serverModel.initialShuffle(); 		//COMMENT OUT FOR SET SCENEARIOS
 
-//		serverModel.deal(); 			//COMMENT OUT FOR SET SCENEARIOS
+//		serverModel.deal(); 				//COMMENT OUT FOR SET SCENEARIOS
 
-		serverModel.setScenario1();	//UNCOMMENT FOR SCEN 1
+		serverModel.setScenario1();			//UNCOMMENT FOR SCEN 1
 
-//		serverModel.setScenario2();	//UNCOMMENT FOR SCEN 2
+//		serverModel.setScenario2();			//UNCOMMENT FOR SCEN 2
 
-//		serverModel.setScenarioTest(); //UNCOMMENT FOR end game testing
+//		serverModel.setScenarioTest(); 		//UNCOMMENT FOR end game testing
 		
 		boolean listening = true;
     		
         try (ServerSocket serverSocket = new ServerSocket(serverPort)){
 	    	while(listening) {
-	    		for(int g = 0; g<2; g++) {
+	    		for(int g = 0; g<playersPerGame; g++) {
+        			logger.info("waiting for more players to connect");
 	        		clientThreads.add(new ServerThread(serverSocket.accept(), this, g));
 	        		clientThreads.get(g).start();
 	        		
-	        		if(clientThreads.size()==2) {
-	        			System.out.println("Beginning to Quest lets go model");
+	        		if(clientThreads.size()==playersPerGame) {
+	        			listening = false;
+	        			logger.info("Game full. Let's play!");
 	        			serverModel.playGame();
 	        		}
 	    		}
 	    	}
         } catch (IOException e) {
-            System.err.println("Could not listen on port " + 44444);
+            logger.info("Could not listen on port " + 44444);
             System.exit(-1);
         }
     }
     
+    int msgNum = 0;
     public void sendServerMessage(String serverMessage) {
-    	logger.info(serverMessage);
+    	msgNum++;
+    	logger.info("m#" + msgNum + ": " + serverMessage);
     	for(ServerThread thread : clientThreads) {
     		logger.debug("sending message to player " + thread.currentPlayer);
     		thread.out.println(serverMessage);
