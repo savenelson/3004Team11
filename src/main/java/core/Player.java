@@ -20,6 +20,7 @@ public class Player {
 	public boolean isQuesting = false;
 	public boolean passedStage = false;
 	public boolean passedQuest = false;
+	public boolean isTournamentWinner = false;
 	//add any new booleans to the clearBooleans function below
 	
 	private RankCard rankCard;

@@ -61,7 +61,7 @@ public class ClientModel extends AbstractModel {
 	StoryCard currentStoryCard;
 
 	int numPlayers;
-	int numStages;
+	
 
 
 
@@ -253,7 +253,7 @@ public class ClientModel extends AbstractModel {
 		if (hasMordred) {
 			int playerHoldingAlly = -1;
 			// find who is holding the Ally
-			for (int i = 0; i < numPlayers; ++i) {
+			for (int i = 0; i < getPlayers().length; ++i) {
 				CardCollection<AdventureCard> party = players[i].getParty();
 				for (int j = 0; j < party.size(); j++) {
 					if (party.get(j).getID().equals(iD)) {

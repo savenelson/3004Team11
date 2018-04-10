@@ -48,11 +48,11 @@ public class Client {
 
 		// clientModel.deal(); //COMMENT OUT FOR SET SCENEARIOS
 
-//		clientModel.setScenario1(); // UNCOMMENT FOR SCEN 1
+		clientModel.setScenario1(); // UNCOMMENT FOR SCEN 1
 
 		// clientModel.setScenario2(); //UNCOMMENT FOR SCEN 2
 
-		 clientModel.setScenarioTest();
+//		 clientModel.setScenarioTest();
 
 		// clientModel.eventTesting();
 		this.serverAddress = serverAddress;
@@ -517,15 +517,15 @@ public class Client {
 
 	public void nextStage() {
 		this.stageOver();
-		logger.debug("Hello this is the model stage in the control " + clientModel.isDoneQuestingMode());
-		if (clientModel.isDoneQuestingMode()) {
+		logger.info("Hello this is the model stage in the control " + clientModel.isDoneQuestingMode());
+		//if (clientModel.isDoneQuestingMode()) {
 			view.resolveQuest();
-
-		} else {
+			logger.info("Hello this is the model stage in the control " + clientModel.isDoneQuestingMode());
+		//} else {
 			// move to the next stage
-			this.stageIncrement();
+		//	this.stageIncrement();
 			
-		}
+		//}
 	}
 
 }
