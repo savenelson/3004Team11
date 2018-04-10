@@ -347,7 +347,7 @@ public abstract class AbstractModel {
 		logger.info("stageOver() called");
 
 		for (int i = 0; i < this.numPlayers; ++i) {
-			if (!this.players[i].isSponsor) {
+			if (!this.players[i].isSponsor && this.players[i].isQuesting) {
 
 				int size = this.players[i].getQueue().size();
 
@@ -608,7 +608,7 @@ public abstract class AbstractModel {
 		
 		
 		playGame();
-		currentState.handle();
+		//currentState.handle();
 	}
 
 	public void setScenario1() {

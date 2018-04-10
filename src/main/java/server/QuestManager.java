@@ -443,7 +443,7 @@ public class QuestManager implements StoryCardState {
 					players[j].addToHand(serverModel.getAdventureDeck().pop());
 				}
 			}
-			if (!players[i].isSponsor) {
+			if (!players[i].isSponsor && players[i].passedStage) {
 
 				if (players[i].passedQuest) {
 					players[i].addShields(numShields);
@@ -467,54 +467,52 @@ public class QuestManager implements StoryCardState {
 		 * To resolve a stage, we need to count the following data structures: - players
 		 * Queue - players Party - players Rank - get a card if they pass
 		 */
-		logger.info("MODEL resolveStage() called");
-
-		CardCollection<AdventureCard> currStage = serverModel.getStage()
-				.getStageAt(serverModel.getStage().getCurrentStage());
-
+		CardCollection<AdventureCard> currStage = serverModel.getStage().getStageAt(serverModel.getStage().getCurrentStage());
+		
+		
+		logger.info("RESOLVING STAGE");
+		
 		int stageBP = 0;
-
-		for (int i = 0; i < currStage.size(); ++i) {
-			stageBP += ((AdventureCard) currStage.get(i)).getBattlePoints();
+		
+		for (int i = 0; i < currStage.size(); ++i){
+			logger.info(currStage.size());
+			stageBP += currStage.get(i).getBattlePoints();
 		}
+		// serverModel.allysInPlay();
+		logger.info("STAGES POINTS "+stageBP);
 		players = serverModel.getPlayers();
-		for (int i = 0; i < serverModel.getNumPlayers(); ++i) {
-			int playerBP = players[i].getRank().getBattlePoints();
-			if (players[i].getQueue() != null) {
-				for (int j = 0; j < players[i].getQueue().size(); ++j) {
-					playerBP += ((AdventureCard) players[i].getQueue().get(j)).getBattlePoints();
-				}
-			}
-			if (players[i].getParty() != null) {
-				for (int j = 0; j < players[i].getParty().size(); ++j) {
-					playerBP += ((AdventureCard) players[i].getParty().get(j)).getBattlePoints();
-				}
-			}
-
-			// Check if player passed quest
-			if (playerBP >= stageBP && (players[i].isQuesting) && stageBP > 0) {
-
-				players[i].passedStage = true;
+		for(int i = 0; i < serverModel.getPlayers().length; ++i){
+			logger.info("This player battle points " + serverModel.getPlayers()[i].getBattlePoint()+"This is the battle points "+serverModel.getPlayers()[i].getBattlePoint());
+			
+		
+				int playerBP = serverModel.getPlayers()[i].getBattlePoint();
+				playerBP += serverModel.getPlayers()[i].getPartyBattlesPoint();
 				
-				logger.info("Player " + players[i].getPlayerNumber() + "and has passed ");
+				logger.info( "Player ally battle points "+serverModel.getPlayers()[i].getPartyBattlesPoint());
+				if (playerBP>=stageBP && serverModel.getPlayers()[i].isQuesting) {
+					players[i].passedStage = true;
+					if(serverModel.getState().currentStage+1 ==((QuestCard)serverModel.getState().currentStoryCard).getNumStages()) {
+						players[i].isQuesting = true;
+					}
+					
+					
 				
-				if (serverModel.getState().currentStage + 1 == ((QuestCard) serverModel.getState().currentStoryCard)
-						.getNumStages()) {
-
-					players[i].passedQuest = true;
-
-					AdventureCard c = serverModel.getAdventureDeck().pop();
-					this.players[i].addToHand(c);
-					serverModel.getAdventureDeckDiscard().add(c);
+					}else {
+						
+						players[i].passedStage = false;
+						players[i].isQuesting = false;
+						
+					}
+				
+					
 				}
-
-				//
-
-			} else {
-				players[i].isQuesting = false;
-
-			}
-
+	
+		if(serverModel.getState().currentStage+1 ==((QuestCard)serverModel.getState().currentStoryCard).getNumStages() ) {
+			
+			resolveQuest();
+		
+			
+		
 		}
 
 
