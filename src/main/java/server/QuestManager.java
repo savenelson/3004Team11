@@ -18,7 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 
 /*
- * The model will delegate the job to the Questmanger 
+ * The model will delegate the job to the Questmanager 
  * 
  *Has important Data structures:
  * -  QuesterQueque to hold all the questers who embark on the adventure 
@@ -57,7 +57,7 @@ public class QuestManager implements StoryCardState {
 
 	private int numberOfCardsToReturn = 0;
 
-	private int numberOfrequests = 0;
+	private int numberOfEndTurnsCalled = 0;		//the number of end turns
 
 	private QuesterQueque questers;
 
@@ -81,17 +81,14 @@ public class QuestManager implements StoryCardState {
 
 	}
 
-
 	/**
 	 * 
 	 * This will handle the Questing events
-	 * 
-	 * 
 	 */
 
 	public void handle() {
 
-		numOfQuesterPotential = serverModel.getNumPlayers() - 1;
+		numOfQuesterPotential = serverModel.getPlayers().length;
 
 		// if I do not have a sponsor ask the person if they want to sponsor
 		if (!hasSponsor) {
@@ -102,14 +99,14 @@ public class QuestManager implements StoryCardState {
 				serverModel.server.getSponsorDecision();
 			}
 		} else {
+			
 			// if I haven't ask to quester yet then ask
 			if (!this.serverModel.getActivePlayer().declinedToQuest) {
 				boolean wantToSponsor;
 				serverModel.server.getQuesterDecison();
-				numOfRepsonders++;
 			}
 			// numOfQuesterPotential
-			if (numOfRepsonders == 2) {
+			if (numberOfEndTurnsCalled == numOfQuesterPotential) {
 				questersReady = true;
 			}
 
@@ -117,7 +114,7 @@ public class QuestManager implements StoryCardState {
 
 				resolveStage();
 				for (int i = 0; i < serverModel.getNumPlayers(); ++i) {
-					logger.info("players booleans: " + players[i].passedStage);
+					logger.info("player" + i + " passed stage?: " + players[i].passedStage);
 				}
 
 				serverModel.server.resolveStage();
@@ -125,16 +122,16 @@ public class QuestManager implements StoryCardState {
 		}
 
 		/*
-		 * if(numberOfrequests == 0 ) { nextPersonToDraw =
+		 * if(numberOfEndTurnsCalled == 0 ) { nextPersonToDraw =
 		 * model.getActivePlayer().getPlayerNumber() +1; if(nextPersonToDraw>
 		 * model.getPlayers().length){nextPersonToDraw = 0;} }
 		 * 
-		 * numberOfrequests++;
+		 * numberOfEndTurnsCalled++;
 		 * 
 		 * // if they do want to sponsor then make them the sponsors if(wantToSponsor) {
 		 * logger.info("Found a sponsor "); hasSponsor = true;
 		 * 
-		 * model.getActivePlayer().isSponsor = true; numberOfrequests = 0;
+		 * model.getActivePlayer().isSponsor = true; numberOfEndTurnsCalled = 0;
 		 * 
 		 * wantToSponsor = false;
 		 * 
@@ -162,13 +159,13 @@ public class QuestManager implements StoryCardState {
 		 * 
 		 * } //they have answered this.model.getActivePlayer().declinedQuesting = true;
 		 * 
-		 * numberOfrequests++;
+		 * numberOfEndTurnsCalled++;
 		 * 
 		 * }
 		 * 
 		 * 
-		 * }if(numOfQuesterPotential == numberOfrequests ) { // I return to the sponor
-		 * if(questers.isEmpty()) { numberOfrequests = 0;
+		 * }if(numOfQuesterPotential == numberOfEndTurnsCalled ) { // I return to the sponor
+		 * if(questers.isEmpty()) { numberOfEndTurnsCalled = 0;
 		 * 
 		 * logger.info("I have no  any questers "); // should go to the next story hard
 		 * }else { // The questers are ready adn we are ready to begin questing
@@ -177,7 +174,7 @@ public class QuestManager implements StoryCardState {
 		 * questersReady = true;
 		 * logger.info("I do have some questers. Let us begin our adventures ");
 		 * 
-		 * numberOfrequests = 0 ;
+		 * numberOfEndTurnsCalled = 0 ;
 		 * 
 		 * 
 		 * }
@@ -391,7 +388,7 @@ public class QuestManager implements StoryCardState {
 
 		numOfansewers = 0;
 
-		numberOfrequests = 0;
+		numberOfEndTurnsCalled = 0;
 
 		// questers ;
 
@@ -529,7 +526,7 @@ public class QuestManager implements StoryCardState {
 		 * 
 		 * numOfansewers = 0;
 		 * 
-		 * numberOfrequests = 0;
+		 * numberOfEndTurnsCalled = 0;
 		 * 
 		 * questers.clear(); numOfQuesterPotential = 0;
 		 * 
@@ -546,8 +543,9 @@ public class QuestManager implements StoryCardState {
 
 	@Override
 	public void increaseResponse() {
-		numberOfrequests++;
-
+		
+		if(hasSponsor) {
+			numberOfEndTurnsCalled++;
+		}
 	}
-
 }
