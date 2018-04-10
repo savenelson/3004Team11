@@ -87,7 +87,6 @@ public class Player {
 		party.add(c);
 	}
 	
-
 	public void discardFromParty(AdventureCard c){
 		logger.info(this.playerNumber + "s party changed - discarded " + c.getName());
 		party.remove(c);
