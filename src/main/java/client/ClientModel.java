@@ -61,7 +61,7 @@ public class ClientModel extends AbstractModel {
 	StoryCard currentStoryCard;
 
 	int numPlayers;
-	int numStages;
+	
 
 
 

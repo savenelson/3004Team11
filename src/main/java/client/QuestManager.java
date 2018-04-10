@@ -412,7 +412,7 @@ public class QuestManager implements StoryCardState{
 		 */
 		logger.info("resolveQuest() called");
 
-		int numStages = clientModel.numStages;
+		int numStages = ((QuestCard) clientModel.currentStoryCard).getNumStages();
 
 		
 		boolean inNextQ = false;
