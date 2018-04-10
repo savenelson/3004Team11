@@ -218,7 +218,7 @@ public class ClientModel extends AbstractModel {
 			control.alert("Cannot stage more than one foe per quest stage.");
 			return false;
 		}
-		if (containsWeapon(super.stage.getStageAt( stageNumber), c.getName())) {
+		if (super.containsWeapon(super.stage.getStageAt( stageNumber), c.getName())) {
 			logger.info("The Sponsor tried to stage duplicate weapons. NOT ALLOWED");
 			control.alert("Cannot stage duplicate weapons.");
 			return false;
