@@ -411,14 +411,14 @@ public class QuestManager implements StoryCardState{
 		 *    - get a card if they pass
 		 */
 		logger.info("resolveQuest() called");
-
-		int numStages = ((QuestCard) clientModel.currentStoryCard).getNumStages();
+/*
+		int numStages, numShields = ((QuestCard) clientModel.currentStoryCard).getNumStages();
 
 		
 		boolean inNextQ = false;
 		if(inNextQ) {
 			
-			for (int i = 0; i <clientModel.numPlayers; i++) {
+			for (int i = 0; i <clientModel.getPlayers().length; i++) {
 				if(!players[i].isSponsor){
 
 				this.players[i].addShields(2);
@@ -427,10 +427,11 @@ public class QuestManager implements StoryCardState{
 			}
 		}
 
-		int numShields = ((QuestCard) clientModel.currentStoryCard).getNumStages();
-		logger.info("Number of Stages: " + numShields);
+
+		logger.info("Number of Stages: " + numShields);*/
 
 		//TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
+		/*
 		for (int i = 0; i < clientModel.numPlayers; ++i){
 			if(players[i].isSponsor) {
 				logger.info("Sponsor is getting "+ numberOfCardsToReturn);
@@ -440,6 +441,8 @@ public class QuestManager implements StoryCardState{
 					players[j].addToHand(clientModel.getAdventureDeck().pop());
 				}
 			}
+			
+		for (int i = 0; i < players.length; i++) {
 			if(!players[i].isSponsor){
 
 				
@@ -447,21 +450,27 @@ public class QuestManager implements StoryCardState{
 				if(players[i].passedQuest) {
 					players[i].addShields(numShields);
 					for(int j=0;j<numStages;j++) {
-						AdventureCard c = clientModel.getAdventureDeck().pop();
-						this.players[i].addToHand(c);
-						clientModel.getAdventureDeckDiscard().add(c);
+						//AdventureCard c = clientModel.getAdventureDeck().pop();
+						//this.players[i].addToHand(c);
+						//clientModel.getAdventureDeckDiscard().add(c);
 					}
 				}
 
 			}
+			
+		}
+		*/
+		clientModel.setDoneQuestingMode(true);
+		return 0;
+			
 		}
 		
 
 		
-		clientModel.control.resolveQuest();
+	
 		
-		return 0;
-	}
+
+	
 	
 	public void resolveStage(){
 		/**
@@ -485,7 +494,7 @@ public class QuestManager implements StoryCardState{
 			logger.info(currStage.size());
 			stageBP += currStage.get(i).getBattlePoints();
 		}
-		 clientModel.allysInPlay();
+		// clientModel.allysInPlay();
 		logger.info("STAGES POINTS "+stageBP);
 		players = clientModel.getPlayers();
 		for(int i = 0; i < clientModel.getPlayers().length; ++i){
@@ -500,31 +509,28 @@ public class QuestManager implements StoryCardState{
 					players[i].passedStage = true;
 					
 					
-					logger.info("Player " + players[i].getPlayerNumber() +"and has passed " + playerBP);
+					
+					}
+				
 					
 				}
+	
+		if(clientModel.getState().currentStage+1 ==((QuestCard)clientModel.getState().currentStoryCard).getNumStages() ) {
+			
+			resolveQuest();
 		
 			
 		
 				}
 				
 				
-				/*
-				if(clientModel.getState().currentStage ==((QuestCard)clientModel.getState().currentStoryCard).getNumStages() ) {
-					
-					players[i].passedQuest =true;
-
 				
-					AdventureCard c = clientModel.getAdventureDeck().pop();
-					this.players[i].addToHand(c);
-					clientModel.getAdventureDeckDiscard().add(c);
-				}
-			8/
+				
 		//
 				
-		}else {players[i].isQuesting = false;}
+
 			
-		}/*
+		/*
 		if(clientModel.getStage().getCurrentStage()+1== ((QuestCard) clientModel.currentStoryCard).getNumStages()){
 			//restart the Questmanger
 			hasSponsor = false;

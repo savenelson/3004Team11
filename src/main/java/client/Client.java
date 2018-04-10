@@ -511,21 +511,21 @@ public class Client {
 
 	public void resolveStage() {
 
-		view.stageResolved();
+		view.resolveQuest();
 
 	}
 
 	public void nextStage() {
 		this.stageOver();
-		logger.debug("Hello this is the model stage in the control " + clientModel.isDoneQuestingMode());
-		if (clientModel.isDoneQuestingMode()) {
+		logger.info("Hello this is the model stage in the control " + clientModel.isDoneQuestingMode());
+		//if (clientModel.isDoneQuestingMode()) {
 			view.resolveQuest();
-
-		} else {
+			logger.info("Hello this is the model stage in the control " + clientModel.isDoneQuestingMode());
+		//} else {
 			// move to the next stage
-			this.stageIncrement();
+		//	this.stageIncrement();
 			
-		}
+		//}
 	}
 
 }

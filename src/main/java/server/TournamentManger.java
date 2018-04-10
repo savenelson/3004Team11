@@ -1,5 +1,6 @@
 package server;
 
+import core.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -62,23 +63,20 @@ public class TournamentManger implements StoryCardState {
 
 	public void handle() {
 
-		int numOfPotential = serverModel.getNumPlayers() - 1;
+		int numOfPotential = serverModel.getNumPlayers() ;
 
-		// if I do not have a sponsor ask the person if they want to sponsor
-	
-
-			// if I haven't ask to sponsor yet then ask ORIGINAL
+		
 			
 			
 		
 			// if I haven't ask to quester yet then ask
 			if (!this.serverModel.getActivePlayer().declinedToQuest) {
 			
-				serverModel.server.getQuesterDecison();
+				serverModel.server.getTournamentDecision();
 				numOfRepsonders++;
 			
 			// numOfQuesterPotential
-			if (numOfRepsonders == 2) {
+			if (numOfRepsonders == numOfPotential) {
 				questersReady = true;
 			}
 
@@ -121,7 +119,41 @@ public class TournamentManger implements StoryCardState {
 
 	@Override
 	public void resolveStage() {
-		// TODO Auto-generated method stub
+		/**
+		 * To resolve a stage, we need to count the following data structures:
+		 *    - players Queue
+		 *    - players Party
+		 *    - players Rank
+		 *    - get a card if they pass
+		 */
+		
+		//TODO : need to get tournament gue
+		Player winner =  serverModel.getPlayers()[0];
+		
+		int playerBP = serverModel.getPlayers()[0].getBattlePoint();
+		playerBP += serverModel.getPlayers()[0].getPartyBattlesPoint();
+		for(int i = 1; i < serverModel.getPlayers().length- 1; ++i){
+			logger.info("This player battle points " + serverModel.getPlayers()[i].getBattlePoint()+"This is the battle points "+serverModel.getPlayers()[i].getBattlePoint());
+			
+			int playerBP2 = serverModel.getPlayers()[i].getBattlePoint();
+			playerBP2 += serverModel.getPlayers()[i].getPartyBattlesPoint();
+				
+		
+				
+				
+				if (playerBP<=playerBP2) {
+					winner = serverModel.getPlayers()[i];
+					
+					
+		
+					}
+				
+					
+				}
+		
+		logger.info("The winner Of the Tournament is" +winner+ "and is getting this many shields :" + ((TournamentCard) serverModel.getCurrentStoryCard()).getNumShields());
+		winner.addShields(((TournamentCard) serverModel.getCurrentStoryCard()).getNumShields());
+
 		
 	}
 
