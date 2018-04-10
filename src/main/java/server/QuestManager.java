@@ -98,7 +98,7 @@ public class QuestManager implements StoryCardState {
 				boolean wantToSponsor;
 				serverModel.server.getSponsorDecision();
 			}
-		} else {
+		} else if(!questersReady) {
 			
 			// if I haven't ask to quester yet then ask
 			if (!this.serverModel.getActivePlayer().declinedToQuest) {
@@ -118,6 +118,7 @@ public class QuestManager implements StoryCardState {
 				}
 
 				serverModel.server.resolveStage();
+				numberOfEndTurnsCalled = 0;
 			}
 		}
 
