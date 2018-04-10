@@ -243,7 +243,7 @@ public class Client {
 			
 		case "WELCOME":
 			logger.info("server has established connection with this client");
-			// clientModel.playGame();
+			clientModel.playGame();
 			getServerMessage();
 			break;
 			
@@ -477,9 +477,9 @@ public class Client {
 		} else if (clickType.equals(View.STAGE5)) {
 			clientModel.setCurrentStage(4);
 		} else if (clickType.equals(View.ENDTURN)) {
-			// if (clientModel.getCurrentState().canEndTurn()) {
+			 if (clientModel.getCurrentState().canEndTurn()) {
 			sendClientMessage("CLIENTMESSAGE--ENDTURN--" + "--" + playerNumber);
-			// }
+			 }
 		}
 	}
 
