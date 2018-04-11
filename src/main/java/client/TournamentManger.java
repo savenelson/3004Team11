@@ -97,12 +97,13 @@ public class TournamentManger implements StoryCardState {
 		int playerBP = clientModel.getPlayers()[0].getBattlePoint();
 		playerBP += clientModel.getPlayers()[0].getPartyBattlesPoint();
 		for(int i = 1; i < clientModel.getPlayers().length; ++i){
-			logger.info("Player " + i + "'s BP = " + clientModel.getPlayers()[i].getBattlePoint());
+			logger.info("Player " + i + "'s BP = " + playerBP);
 			
 			int playerBP2 = clientModel.getPlayers()[i].getBattlePoint();
 			playerBP2 += clientModel.getPlayers()[i].getPartyBattlesPoint();
 
 			if (playerBP<=playerBP2) {
+				playerBP = playerBP2;
 				if(i>0) {
 					clientModel.getPlayers()[i-1].isTournamentWinner = false;
 				}
@@ -111,7 +112,7 @@ public class TournamentManger implements StoryCardState {
 			}
 		}
 		
-		logger.info("The winner Of the Tournament is" +winner+ "and is getting this many shields :" + ((TournamentCard) clientModel.getCurrentStoryCard()).getNumShields());
+		logger.info("The winner Of the Tournament is" + winner + "and is getting this many shields :" + ((TournamentCard) clientModel.getCurrentStoryCard()).getNumShields());
 		winner.addShields(((TournamentCard) clientModel.getCurrentStoryCard()).getNumShields());
 	}
 	
