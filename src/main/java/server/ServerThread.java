@@ -118,9 +118,11 @@ public class ServerThread extends Thread {
 
 			}else {
 				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+playerNum+" has NOT decidied to quest");
-				server.serverModel.nextPlayer();
+				//server.serverModel.nextPlayer();
 			
 			}
+			server.serverModel.endTurn();
+		
 			break;
 			
 		case "SETSTORYCARD":

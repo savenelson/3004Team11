@@ -95,14 +95,15 @@ public class QuestManager implements StoryCardState {
 
 			// if I haven't ask to sponsor yet then ask ORIGINAL
 			if (!this.serverModel.getActivePlayer().declinedToSponsor) {
-				boolean wantToSponsor;
+				this.serverModel.getActivePlayer().declinedToSponsor = true;
+
 				serverModel.server.getSponsorDecision();
 			}
-		} else if(!questersReady) {
+		} else if(!questersReady && hasSponsor ) {
 			
 			// if I haven't ask to quester yet then ask
 			if (!this.serverModel.getActivePlayer().declinedToQuest) {
-				boolean wantToSponsor;
+				this.serverModel.getActivePlayer().declinedToQuest = true;
 				serverModel.server.getQuesterDecison();
 			}
 			// numOfQuesterPotential
@@ -110,7 +111,7 @@ public class QuestManager implements StoryCardState {
 				questersReady = true;
 			}
 
-			if (questersReady) {
+			if (questersReady && numberOfEndTurnsCalled == numOfQuesterPotential) {
 				resolveStage();
 				for (int i = 0; i < serverModel.getNumPlayers(); ++i) {
 					logger.info("player" + i + " passed stage?: " + players[i].passedStage);

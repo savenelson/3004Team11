@@ -641,7 +641,8 @@ public abstract class AbstractModel {
 		// ID: 74, type: Adventure, subtype: Foe, name: SaxonKnight, battle points: 15,
 		// alternative battle points: 25, special: <NO SPECIAL>
 		this.currentPlayer = 0;
-		this.setCurrentStoryCard(new TournamentCard(TournamentCard.CAMELOT_NAME, TournamentCard.CAMELOT_SHIELDS)); // BOAR hUNT
+		this.setCurrentStoryCard(this.storyDeck.getByID("126"));
+		//this.setCurrentStoryCard(new TournamentCard(TournamentCard.CAMELOT_NAME, TournamentCard.CAMELOT_SHIELDS)); // BOAR hUNT
 		StoryCard sC = this.getStoryDeck().pop();
 		storyDeckDiscard.add(sC);
 		// ID: 58, type: Adventure, subtype: Foe, name: Boar, battle points: 5,

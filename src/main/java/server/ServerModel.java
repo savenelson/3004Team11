@@ -208,7 +208,7 @@ public class ServerModel extends AbstractModel {
 	public void endTurn() {
 		logger.debug("endTurn() called");
 		logger.info("I end turn called changing s ");
-		currentState.increaseResponse();
+	
 		currentState.nextPlayer();
 		
 		currentState.handle();
