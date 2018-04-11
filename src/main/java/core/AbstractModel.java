@@ -642,6 +642,7 @@ public abstract class AbstractModel {
 		 * player 4 discards a foe //third story card is Chivalrous deed //all players
 		 * BUT p3 get 3 shields
 		 */
+		
 		// ID: 74, type: Adventure, subtype: Foe, name: SaxonKnight, battle points: 15,
 		// alternative battle points: 25, special: <NO SPECIAL>
 		System.out.println(this.storyDeck);
