@@ -44,8 +44,6 @@ public class ServerModel extends AbstractModel {
 		currentPlayer = 0;
 		currentSponsor = 0;
 
-	
-
 	}
 	public Player[] getPlayers() {
 		return super.getPlayers(); 
