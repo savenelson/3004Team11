@@ -15,14 +15,8 @@ public class TournamentManger implements StoryCardState {
 	private static final String ENDTURN = "End turn";
 	ServerModel serverModel;
 	Player[] players;
-
-
 	
-	private boolean questersReady = false;
-
-
-	
-
+	private boolean tournamentersReady = false;
 
 	private int numOfansewers;
 
@@ -30,7 +24,7 @@ public class TournamentManger implements StoryCardState {
 
 	private int numberOfrequests = 0;
 
-	private QuesterQueque questers;
+	private QuesterQueque tournamenters;
 
 	private int numOfQuesterPotential;
 
@@ -49,7 +43,7 @@ public class TournamentManger implements StoryCardState {
 		this.serverModel = serverModel;
 		this.players = serverModel.getPlayers();
 
-		this.questers = new QuesterQueque();
+		this.tournamenters = new QuesterQueque();
 
 	}
 
@@ -65,25 +59,12 @@ public class TournamentManger implements StoryCardState {
 
 		int numOfPotential = serverModel.getPlayers().length ;
 		
-			
-			
-		
-			// if I haven't ask to quester yet then ask
-		
-			
-			
-				
-			// numOfQuesterPotential
 			if (numOfRepsonders == numOfPotential) {
-				
-			
-			
-				serverModel.server.resolveStage();
+					
+				serverModel.server.resolveTournament();
 			}else {
 				serverModel.server.getTournamentDecision();
 			}
-		
-
 	}
 
 	@Override

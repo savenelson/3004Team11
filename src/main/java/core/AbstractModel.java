@@ -202,6 +202,10 @@ public abstract class AbstractModel {
 	public void removeShields(int numShields, int currentPlayer) {
 		players[currentPlayer].removeShields(numShields);
 	}
+	
+	public void addShields(int numShields, int currentPlayer) {
+		players[currentPlayer].addShields(numShields);
+	}
 
 	public void party(String iD, int currentPlayer) {
 		logger.debug("party() called");
@@ -292,12 +296,8 @@ public abstract class AbstractModel {
 
 			logger.info("Player " + currentPlayer + " assaniated Player " + playerHoldingAlly + "s ally "
 					+ c.getName());
-			
 		}
-			
-		
 	}
-
 
 	public void queue(String id, int currentPlayer) {
 		logger.debug("queue() called");
@@ -306,7 +306,6 @@ public abstract class AbstractModel {
 		CardCollection<AdventureCard> hand = new CardCollection<AdventureCard>();
 		hand = players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(id);
-
 		hand.remove(c);
 		players[currentPlayer].addToQueue(c);
 		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from hand to queue");
@@ -329,16 +328,13 @@ public abstract class AbstractModel {
 				return true;
 			}
 		}
-
 		return false;
 	}
-
 
 	public void setCurrentStage(int num) {
 		logger.debug("setCurrentStage(" + num + ") called");
 		this.currentStage = num;
 		this.getStage().setCurrentStage(num);
-		
 	}
 
 	public void endTurn() {
