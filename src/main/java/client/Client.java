@@ -298,7 +298,7 @@ public class Client {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					getQuestingDecision();
+					getTournamentDecision();
 				}
 			});
 			getServerMessage();

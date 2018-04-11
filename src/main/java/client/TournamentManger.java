@@ -1,4 +1,4 @@
-package server;
+package client;
 
 import core.*;
 import org.apache.logging.log4j.LogManager;
@@ -13,7 +13,7 @@ public class TournamentManger implements StoryCardState {
 	
 	private static final Logger logger = LogManager.getLogger(TournamentManger.class);
 	private static final String ENDTURN = "End turn";
-	ServerModel serverModel;
+	ClientModel clientModel;
 	Player[] players;
 
 
@@ -45,9 +45,9 @@ public class TournamentManger implements StoryCardState {
 	 * Constructor Takes a model gets its player and copies it make a new
 	 * Questerqueue
 	 */
-	public TournamentManger(ServerModel serverModel) {
-		this.serverModel = serverModel;
-		this.players = serverModel.getPlayers();
+	public TournamentManger(ClientModel clientModel) {
+		this.clientModel = clientModel;
+		this.players = clientModel.getPlayers();
 
 		this.questers = new QuesterQueque();
 
@@ -63,25 +63,6 @@ public class TournamentManger implements StoryCardState {
 
 	public void handle() {
 
-		int numOfPotential = serverModel.getPlayers().length ;
-		
-			
-			
-		
-			// if I haven't ask to quester yet then ask
-		
-			
-			
-				
-			// numOfQuesterPotential
-			if (numOfRepsonders == numOfPotential) {
-				
-			
-			
-				serverModel.server.resolveStage();
-			}else {
-				serverModel.server.getTournamentDecision();
-			}
 		
 
 	}
@@ -89,7 +70,7 @@ public class TournamentManger implements StoryCardState {
 	@Override
 	public void nextPlayer() {
 		// TODO Auto-generated method stub
-		serverModel.nextPlayer();
+		clientModel.nextPlayer();
 		
 	}
 
@@ -105,9 +86,9 @@ public class TournamentManger implements StoryCardState {
 		logger.debug("checkHandSize() called");
 
 		// if the hand is bigger then 12 then reurn false
-		if (serverModel.getActivePlayer().getHand().size() > 12) {
-			// serverModel.control.alert("Hand Size is too large, please discard");
-			logger.info("Player " + serverModel.getActivePlayer().getPlayerNumber() + " hand too large");
+		if (clientModel.getActivePlayer().getHand().size() > 12) {
+			// clientModel.control.alert("Hand Size is too large, please discard");
+			logger.info("Player " + clientModel.getActivePlayer().getPlayerNumber() + " hand too large");
 			return false;
 
 		}
@@ -132,21 +113,21 @@ public class TournamentManger implements StoryCardState {
 		 */
 		
 		//TODO : need to get tournament gue
-		Player winner =  serverModel.getPlayers()[0];
+		Player winner =  clientModel.getPlayers()[0];
 		
-		int playerBP = serverModel.getPlayers()[0].getBattlePoint();
-		playerBP += serverModel.getPlayers()[0].getPartyBattlesPoint();
-		for(int i = 1; i < serverModel.getPlayers().length- 1; ++i){
-			logger.info("This player battle points " + serverModel.getPlayers()[i].getBattlePoint()+"This is the battle points "+serverModel.getPlayers()[i].getBattlePoint());
+		int playerBP = clientModel.getPlayers()[0].getBattlePoint();
+		playerBP += clientModel.getPlayers()[0].getPartyBattlesPoint();
+		for(int i = 1; i < clientModel.getPlayers().length- 1; ++i){
+			logger.info("This player battle points " + clientModel.getPlayers()[i].getBattlePoint()+"This is the battle points "+clientModel.getPlayers()[i].getBattlePoint());
 			
-			int playerBP2 = serverModel.getPlayers()[i].getBattlePoint();
-			playerBP2 += serverModel.getPlayers()[i].getPartyBattlesPoint();
+			int playerBP2 = clientModel.getPlayers()[i].getBattlePoint();
+			playerBP2 += clientModel.getPlayers()[i].getPartyBattlesPoint();
 				
 		
 				
 				
 				if (playerBP<=playerBP2) {
-					winner = serverModel.getPlayers()[i];
+					winner = clientModel.getPlayers()[i];
 					
 					
 		
@@ -155,8 +136,8 @@ public class TournamentManger implements StoryCardState {
 					
 				}
 		
-		logger.info("The winner Of the Tournament is" +winner+ "and is getting this many shields :" + ((TournamentCard) serverModel.getCurrentStoryCard()).getNumShields());
-		winner.addShields(((TournamentCard) serverModel.getCurrentStoryCard()).getNumShields());
+		logger.info("The winner Of the Tournament is" +winner+ "and is getting this many shields :" + ((TournamentCard) clientModel.getCurrentStoryCard()).getNumShields());
+		winner.addShields(((TournamentCard) clientModel.getCurrentStoryCard()).getNumShields());
 
 		
 	}

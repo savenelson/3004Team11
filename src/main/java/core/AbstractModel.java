@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import client.TournamentManger;
 import core.QuestingStage;
 
 public abstract class AbstractModel {
@@ -79,6 +81,8 @@ public abstract class AbstractModel {
 	protected StoryCardState eventManager;
 	protected core.StoryCardState currentState;
 	private boolean isDoneQuestingMode = false;
+
+	protected StoryCardState duelManager;
 
 
 	public Player getActivePlayer() {
@@ -538,12 +542,18 @@ public abstract class AbstractModel {
 			playEvent();
 			currentState.handle();
 		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)) {
-			// playTournament();
+			 playTournament();
 		} else {
 			adventureDeck = (AdventureDeck) adventureDeckDiscard;
 			adventureDeck.shuffle();
 		}
 	}
+
+	private void playTournament() {
+		currentState = duelManager;
+		
+	}
+
 
 	public void nextPlayer() {
 		logger.info("nextPlayer() called");
@@ -631,7 +641,7 @@ public abstract class AbstractModel {
 		// ID: 74, type: Adventure, subtype: Foe, name: SaxonKnight, battle points: 15,
 		// alternative battle points: 25, special: <NO SPECIAL>
 		this.currentPlayer = 0;
-		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
+		this.setCurrentStoryCard(new TournamentCard(TournamentCard.CAMELOT_NAME, TournamentCard.CAMELOT_SHIELDS)); // BOAR hUNT
 		StoryCard sC = this.getStoryDeck().pop();
 		storyDeckDiscard.add(sC);
 		// ID: 58, type: Adventure, subtype: Foe, name: Boar, battle points: 5,

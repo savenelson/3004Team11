@@ -77,6 +77,7 @@ public class ClientModel extends AbstractModel {
 		
 		super.questManager = new QuestManager(this);
 		super.eventManager = new EventManager(this);
+		super.duelManager = new TournamentManger(this);
 
 		super.stage = new QuestingStage();
 

@@ -13,6 +13,8 @@ public class ServerModel extends AbstractModel {
 
 	public Server server;
 	
+	
+	StoryCardState duelManager;
 	StoryCardState questManager;
 	StoryCardState eventManager;
 	StoryCardState currentState;
@@ -26,8 +28,8 @@ public class ServerModel extends AbstractModel {
 		super.state = new State();
 
 		eventManager = new EventManager(this);
-		logger.info("eventManager just after i's created" + eventManager);
-
+	
+		duelManager= new TournamentManger(this);
 		questManager = new QuestManager(this);
 
 		super.stage = new QuestingStage();
@@ -251,9 +253,12 @@ public class ServerModel extends AbstractModel {
 	protected void playEvent() {
 		currentState = eventManager;
 	}
-
+	private void playTournament() {
+		currentState = duelManager;
+		
+	}
 	public void playGame() {
-		logger.info(" Sever playGame() called");
+		logger.info("  playGame() called");
 		
 		if (super.getCurrentStoryCard().getSubType().equals(StoryCard.QUEST)) {
 			playQuest();
@@ -262,13 +267,15 @@ public class ServerModel extends AbstractModel {
 			playEvent();
 			currentState.handle();
 		} else if (super.getCurrentStoryCard().getSubType().equals(StoryCard.TOURNAMENT)) {
-			// playTournament();
+			 playTournament();
+			 currentState.handle();
 		} else {
 			adventureDeck = (AdventureDeck) adventureDeckDiscard;
 			adventureDeck.shuffle();
 		}
 	}
 
+	
 	public void nextPlayer() {
 		super.nextPlayer();
 	}

@@ -95,20 +95,18 @@ public class QuestManager implements StoryCardState {
 
 			// if I haven't ask to sponsor yet then ask ORIGINAL
 			if (!this.serverModel.getActivePlayer().declinedToSponsor) {
-			
+				boolean wantToSponsor;
 				serverModel.server.getSponsorDecision();
 			}
-		} else if(!questersReady && hasSponsor) {
+		} else if(!questersReady) {
 			
 			// if I haven't ask to quester yet then ask
 			if (!this.serverModel.getActivePlayer().declinedToQuest) {
-		
+				boolean wantToSponsor;
 				serverModel.server.getQuesterDecison();
-				serverModel.getActivePlayer().declinedToQuest = true;
 			}
 			// numOfQuesterPotential
 			if (numberOfEndTurnsCalled == numOfQuesterPotential) {
-				numberOfEndTurnsCalled = 0 ;
 				questersReady = true;
 			}
 
@@ -484,7 +482,6 @@ public class QuestManager implements StoryCardState {
 		logger.info("STAGES POINTS "+stageBP);
 		players = serverModel.getPlayers();
 		for(int i = 0; i < serverModel.getPlayers().length; ++i){
-			logger.info(serverModel.getPlayers()[i]);
 			logger.info("Player " + i + "'s QUEUE BPs = " + serverModel.getPlayers()[i].getBattlePoint());
 			logger.info("Player " + i + "'s PARTY BPs = " + serverModel.getPlayers()[i].getPartyBattlesPoint());
 			logger.info("Player " + i + "'s BONUS BPs = " + serverModel.getPlayers()[i].allyBonusBattlePoints);
