@@ -171,23 +171,26 @@ public class EventManager implements  StoryCardState {
 				serverModel.server.sendServerMessage("SERVERMESSAGE--DRAW--" + i + "--" + ID);
 			}
 		}
-
 	}
 	
 	//Pox in play and all players except  the next players to complete a quest 2 shields
 	public void Pox() {
-	logger.info("Pox in play and all players except  the next players to complete a quest 2 shields");
+		
+		logger.info("Pox - all other players lose 1 shield");
 
-		Player currentPlayer = players[this.currentPlayer];
+		setPlayers();
+
+		int currentPlayer = serverModel.getActivePlayer().getPlayerNumber();
+		
 		for (int i = 0; i < this.players.length; i++) {
-			System.out.println("Players " + players[i] + "with this many " + players[i].getShieldCount());
-			if (currentPlayer.getPlayerNumber() != players[i].getPlayerNumber())
-				this.players[i].removeShields(1);
-			System.out.println("After Players " + players[i] + "with this many " + players[i].getShieldCount());
+			if (currentPlayer != players[i].getPlayerNumber()) {
+				logger.info("Player " + players[i] + " loses one shield");
+				players[i].removeShields(1);
+			}
+			logger.info("Player " + players[i] + " now has " + players[i].getShieldCount() + " shields.");
 		}
 	}
-	
-	
+
 	public void KingCallToArms() {
 	logger.info("KingCallToArms in play and player 1 placed one weapon in the discard pile");
 

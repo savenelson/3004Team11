@@ -293,7 +293,7 @@ public abstract class AbstractModel {
 			hand.remove(mordred);
 			adventureDeckDiscard.add(mordred);
 
-			logger.info("Player " + currentPlayer + " assaniated Player " + playerHoldingAlly + "s ally "
+			logger.info("Player " + currentPlayer + " assassinated Player " + playerHoldingAlly + "s ally "
 					+ c.getName());
 		}
 	}
@@ -945,8 +945,8 @@ public abstract class AbstractModel {
 		// stages[0].add(this.adventureDeck.getByID("57"));
 		// stages[1].add(this.adventureDeck.getByID("86"));
 		
-		this.setCurrentStoryCard(this.storyDeck.getByID("136")); // SlayTheDragon
-//		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
+//		this.setCurrentStoryCard(this.storyDeck.getByID("136")); // SlayTheDragon
+		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
 //		this.setCurrentStoryCard(this.storyDeck.getByID("151")); // ChivalrousDeed
 //		this.setCurrentStoryCard(this.storyDeck.getByID("152")); // ProsparityTHroughTheLand
 //		this.setCurrentStoryCard(this.storyDeck.getByID("145")); // QueensFavor
