@@ -52,6 +52,8 @@ public class Client {
 
 		// clientModel.setScenario2(); //UNCOMMENT FOR SCEN 2
 
+//		 clientModel.setScenarioTest();
+		 
 		// clientModel.setScenarioTest();
 
 		// clientModel.eventTesting();

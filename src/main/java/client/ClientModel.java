@@ -201,7 +201,6 @@ public class ClientModel extends AbstractModel {
 		}
 
 		super.party(iD, currentPlayer);
-
 	}
 
 	public void queue(String id, int currentPlayer) {

@@ -2,6 +2,8 @@ package core;
 
 import java.util.ArrayList;
 
+
+
 public class State {
 	
 	public Player [] players;	
@@ -37,5 +39,30 @@ public class State {
 	public int stageOverCount;
 	
 	public boolean isQuesting;
+	
+	@Override
+	public String toString() {
+		String result;
+		String playerStrings = "";
+		String tokenSplit = "--";
+		
+		for(Player player : players) {
+			playerStrings += player.toString();
+			playerStrings += tokenSplit;
+			playerStrings += player.getRank();
+			playerStrings += tokenSplit;
+			playerStrings += player.getShieldCount();
+			playerStrings += tokenSplit;
+			playerStrings += player.getParty();
+			playerStrings += tokenSplit;
+			playerStrings += player.getQueue();
+			playerStrings += tokenSplit;
+			playerStrings += player.getHand();
+			playerStrings += tokenSplit;
+		}
+
+		result = ("" + playerStrings + currentStoryCard + "--" + currentPlayer + "--" + currentStage + "--" + currentSponsor + "--" + numPlayers + "--" + numStages + "--" + stageResolved + "--" + isQuesting);
+		return result;
+	}
 	
 }
