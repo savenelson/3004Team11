@@ -640,12 +640,9 @@ public abstract class AbstractModel {
 		// alternative battle points: 25, special: <NO SPECIAL>
 		System.out.println(this.storyDeck);
 		this.currentPlayer = 0;
-<<<<<<< HEAD
-		this.setCurrentStoryCard(this.storyDeck.getByID("139")); // BOAR hUNT
-=======
-		this.setCurrentStoryCard(this.storyDeck.getByID("126"));
+		this.setCurrentStoryCard(this.storyDeck.getByID("139")); // Camelot
+//		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
 		//this.setCurrentStoryCard(new TournamentCard(TournamentCard.CAMELOT_NAME, TournamentCard.CAMELOT_SHIELDS)); // BOAR hUNT
->>>>>>> ab925e2c4ab2cbc7b3e594c24ef9b2330362578d
 		StoryCard sC = this.getStoryDeck().pop();
 		storyDeckDiscard.add(sC);
 		// ID: 58, type: Adventure, subtype: Foe, name: Boar, battle points: 5,

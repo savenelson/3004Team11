@@ -116,15 +116,11 @@ public class ServerThread extends Thread {
 				server.serverModel.draw(ID,playerNum);
 				server.sendServerMessage("SERVERMESSAGE--DRAW--" + playerNum + "--" + ID);
 
-			}else {
+			} else {
 				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+playerNum+" has NOT decidied to quest");
-<<<<<<< HEAD
 				server.serverModel.nextPlayer();
 			}
 			break;
-=======
-				//server.serverModel.nextPlayer();
->>>>>>> ab925e2c4ab2cbc7b3e594c24ef9b2330362578d
 			
 		case "ISTOURNAMENTING":
 			int playerNum1 = server.serverModel.getActivePlayer().getPlayerNumber();

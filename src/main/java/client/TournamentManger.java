@@ -118,7 +118,7 @@ public class TournamentManger implements StoryCardState {
 	}
 	
 	public void increaseResponse() {
-
+		numberOfEndTurnsCalled++;
 	}
 
 
