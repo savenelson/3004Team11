@@ -233,6 +233,18 @@ public class Client {
 					updateViewState();
 					getServerMessage();
 					break;
+				
+				case "ISQUESTING" : 
+					int playerNum = Integer.parseInt(serverMessageComponents[4]);
+					 boolean isQuesting = Boolean.parseBoolean(serverMessageComponents[2]);
+					
+					
+					
+					clientModel.getPlayers()[playerNum].isQuesting = isQuesting;
+					break;
+					
+					
+			
 				default:
 					logger.info("Couldnt parse message from SERVERMESSAGE--UPDATE-- ?!?!?!");
 					getServerMessage();
@@ -293,7 +305,7 @@ public class Client {
 			});
 			getServerMessage();
 			break;
-			
+		
 		case "GETSTATE":
 
 			// model.state = Integer.parseInt(serverMessageComponents[2]);
