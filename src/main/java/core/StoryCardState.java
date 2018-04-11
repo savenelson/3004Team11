@@ -7,6 +7,7 @@ public interface StoryCardState {
 	boolean canEndTurn();
 	void setHasSponsor(boolean b);
 	void resolveStage();
+	void resolveTournament();
 	//void resolveQuest();
 	void increaseResponse();
 }

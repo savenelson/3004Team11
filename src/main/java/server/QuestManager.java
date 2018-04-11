@@ -28,11 +28,8 @@ import javafx.scene.text.Font;
  * The class Purpose is to handle all Questing events 
  * Using the State Design Pattern 
  * Implements the StoryCardState to share similar roles 
- * 
- * 
- * 
- * 
  */
+
 public class QuestManager implements StoryCardState {
 	private static final Logger logger = LogManager.getLogger(QuestManager.class);
 	private static final String ENDTURN = "End turn";
@@ -44,7 +41,7 @@ public class QuestManager implements StoryCardState {
 	public boolean getHasSponsor() {
 		return this.hasSponsor;
 	}
-	
+
 	private boolean questersReady = false;
 
 
@@ -70,10 +67,10 @@ public class QuestManager implements StoryCardState {
 	private int nextPersonToDraw = 0;
 
 	/**
-	 * 
 	 * Constructor Takes a model gets its player and copies it make a new
 	 * Questerqueue
 	 */
+
 	public QuestManager(ServerModel serverModel) {
 		this.serverModel = serverModel;
 		this.players = serverModel.getPlayers();
@@ -95,14 +92,15 @@ public class QuestManager implements StoryCardState {
 
 			// if I haven't ask to sponsor yet then ask ORIGINAL
 			if (!this.serverModel.getActivePlayer().declinedToSponsor) {
-			
+				this.serverModel.getActivePlayer().declinedToSponsor = true;
+
 				serverModel.server.getSponsorDecision();
 			}
-		} else if(!questersReady) {
+		} else if(!questersReady && hasSponsor ) {
 			
 			// if I haven't ask to quester yet then ask
 			if (!this.serverModel.getActivePlayer().declinedToQuest) {
-				boolean wantToSponsor;
+				this.serverModel.getActivePlayer().declinedToQuest = true;
 				serverModel.server.getQuesterDecison();
 			}
 			// numOfQuesterPotential
@@ -110,7 +108,7 @@ public class QuestManager implements StoryCardState {
 				questersReady = true;
 			}
 
-			if (questersReady) {
+			if (questersReady && numberOfEndTurnsCalled == numOfQuesterPotential) {
 				resolveStage();
 				for (int i = 0; i < serverModel.getNumPlayers(); ++i) {
 					logger.info("player" + i + " passed stage?: " + players[i].passedStage);
@@ -482,7 +480,6 @@ public class QuestManager implements StoryCardState {
 		logger.info("STAGES POINTS "+stageBP);
 		players = serverModel.getPlayers();
 		for(int i = 0; i < serverModel.getPlayers().length; ++i){
-			logger.info(serverModel.getPlayers()[i]);
 			logger.info("Player " + i + "'s QUEUE BPs = " + serverModel.getPlayers()[i].getBattlePoint());
 			logger.info("Player " + i + "'s PARTY BPs = " + serverModel.getPlayers()[i].getPartyBattlesPoint());
 			logger.info("Player " + i + "'s BONUS BPs = " + serverModel.getPlayers()[i].getAllyBonusBattlePoints());
@@ -548,5 +545,11 @@ public class QuestManager implements StoryCardState {
 		if(hasSponsor) {
 			numberOfEndTurnsCalled++;
 		}
+	}
+
+	@Override
+	public void resolveTournament() {
+		// TODO Auto-generated method stub
+		
 	}
 }

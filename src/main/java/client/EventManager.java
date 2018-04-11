@@ -322,6 +322,13 @@ public void increaseResponse() {
 }
 
 
+@Override
+public void resolveTournament() {
+	// TODO Auto-generated method stub
+	
+}
+
+
 }
 
 	

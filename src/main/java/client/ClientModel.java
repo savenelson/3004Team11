@@ -77,6 +77,7 @@ public class ClientModel extends AbstractModel {
 		
 		super.questManager = new QuestManager(this);
 		super.eventManager = new EventManager(this);
+		super.tournamentManager = new TournamentManger(this);
 
 		super.stage = new QuestingStage();
 
@@ -92,10 +93,15 @@ public class ClientModel extends AbstractModel {
 	
 	
 	public StoryCardState getQuesterManger() {return questManager;}
+	
 	public Player getActivePlayer() {
-
 		return super.players[this.currentPlayer];
 	}
+
+	public StoryCardState getEventManger() {return eventManager;}
+
+		
+	public StoryCardState getTournamentManger() {return tournamentManager;}
 
 	
 	public void instantiatePlayers(int numPlayers) {
@@ -177,6 +183,11 @@ public class ClientModel extends AbstractModel {
 		logger.info("removeShields() called");
 		super.removeShields(numShields, currentPlayer);
 	}
+	
+	public void addShields(int numShields, int currentPlayer) {
+		logger.info("removeShields() called");
+		super.addShields(numShields, currentPlayer);
+	}
 
 	public void party(String iD, int currentPlayer) {
 		logger.debug("party() called");
@@ -201,7 +212,6 @@ public class ClientModel extends AbstractModel {
 			control.alert("Cannot have duplicate weapons in queue.");
 			return;
 		}
-
 		super.queue(id, currentPlayer);
 	}
 	
@@ -217,7 +227,7 @@ public class ClientModel extends AbstractModel {
 			control.alert("Cannot stage more than one foe per quest stage.");
 			return false;
 		}
-		if (containsWeapon(super.stage.getStageAt( stageNumber), c.getName())) {
+		if (super.containsWeapon(super.stage.getStageAt( stageNumber), c.getName())) {
 			logger.info("The Sponsor tried to stage duplicate weapons. NOT ALLOWED");
 			control.alert("Cannot stage duplicate weapons.");
 			return false;

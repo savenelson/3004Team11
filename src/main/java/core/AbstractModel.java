@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import client.TournamentManger;
 import core.QuestingStage;
 
 public abstract class AbstractModel {
@@ -77,8 +79,11 @@ public abstract class AbstractModel {
 
 	protected StoryCardState questManager;
 	protected StoryCardState eventManager;
+	protected StoryCardState tournamentManager;
 	protected core.StoryCardState currentState;
 	private boolean isDoneQuestingMode = false;
+
+
 
 
 	public Player getActivePlayer() {
@@ -196,6 +201,10 @@ public abstract class AbstractModel {
 	public void removeShields(int numShields, int currentPlayer) {
 		players[currentPlayer].removeShields(numShields);
 	}
+	
+	public void addShields(int numShields, int currentPlayer) {
+		players[currentPlayer].addShields(numShields);
+	}
 
 	public void party(String iD, int currentPlayer) {
 		logger.debug("party() called");
@@ -286,12 +295,8 @@ public abstract class AbstractModel {
 
 			logger.info("Player " + currentPlayer + " assaniated Player " + playerHoldingAlly + "s ally "
 					+ c.getName());
-			
 		}
-			
-		
 	}
-
 
 	public void queue(String id, int currentPlayer) {
 		logger.debug("queue() called");
@@ -300,7 +305,6 @@ public abstract class AbstractModel {
 		CardCollection<AdventureCard> hand = new CardCollection<AdventureCard>();
 		hand = players[currentPlayer].getHand();
 		AdventureCard c = hand.getByID(id);
-
 		hand.remove(c);
 		players[currentPlayer].addToQueue(c);
 		logger.info("Player " + this.currentPlayer + " moved " + c.getName() + " from hand to queue");
@@ -323,16 +327,13 @@ public abstract class AbstractModel {
 				return true;
 			}
 		}
-
 		return false;
 	}
-
 
 	public void setCurrentStage(int num) {
 		logger.debug("setCurrentStage(" + num + ") called");
 		this.currentStage = num;
 		this.getStage().setCurrentStage(num);
-		
 	}
 
 	public void endTurn() {
@@ -529,7 +530,6 @@ public abstract class AbstractModel {
 
 	protected void playEvent() {
 		logger.debug("playEvent() called");
-
 		currentState = eventManager;
 	}
 
@@ -544,12 +544,20 @@ public abstract class AbstractModel {
 			playEvent();
 			currentState.handle();
 		} else if (((StoryCard) currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)) {
-			// playTournament();
+			 playTournament();
+			 currentState.handle();
 		} else {
 			adventureDeck = (AdventureDeck) adventureDeckDiscard;
 			adventureDeck.shuffle();
 		}
 	}
+
+	private void playTournament() {
+		logger.info("playTournament() called");
+		currentState = tournamentManager;
+		
+	}
+
 
 	public void nextPlayer() {
 		logger.info("nextPlayer() called");
@@ -636,8 +644,11 @@ public abstract class AbstractModel {
 		 */
 		// ID: 74, type: Adventure, subtype: Foe, name: SaxonKnight, battle points: 15,
 		// alternative battle points: 25, special: <NO SPECIAL>
+		System.out.println(this.storyDeck);
 		this.currentPlayer = 0;
-		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
+		this.setCurrentStoryCard(this.storyDeck.getByID("139")); // Camelot
+//		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
+		//this.setCurrentStoryCard(new TournamentCard(TournamentCard.CAMELOT_NAME, TournamentCard.CAMELOT_SHIELDS)); // BOAR hUNT
 		StoryCard sC = this.getStoryDeck().pop();
 		storyDeckDiscard.add(sC);
 		// ID: 58, type: Adventure, subtype: Foe, name: Boar, battle points: 5,

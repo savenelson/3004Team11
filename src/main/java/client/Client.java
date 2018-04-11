@@ -53,6 +53,8 @@ public class Client {
 		// clientModel.setScenario2(); //UNCOMMENT FOR SCEN 2
 
 		 clientModel.setScenarioTest();
+		 
+		// clientModel.setScenarioTest();
 
 		// clientModel.eventTesting();
 		this.serverAddress = serverAddress;
@@ -157,33 +159,44 @@ public class Client {
 				@Override
 				public void run() {
 					view.stageResolved();
-					
 				}
 			});
-		
-			//updateViewState();
+
+			// updateViewState();
 			getServerMessage();
 			break;
-			
+		case "RESOLVETOURNAMENT":
+			clientModel.getTournamentManger().resolveTournament();
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					view.tournamentResolved();
+				}
+			});
+
+			// updateViewState();
+			getServerMessage();
+			break;
 
 		case "DRAW":
 			clientModel.draw(serverMessageComponents[3], Integer.parseInt(serverMessageComponents[2]));
 			updateViewState();
 			getServerMessage();
 			break;
-			
+
 		case "REMOVEFROMPARTY":
 			clientModel.removeFromParty(serverMessageComponents[3], Integer.parseInt(serverMessageComponents[2]));
 			updateViewState();
 			getServerMessage();
 			break;
-			
+
 		case "REMOVESHIELDS":
-			clientModel.removeShields(Integer.parseInt(serverMessageComponents[3]), Integer.parseInt(serverMessageComponents[2]));
+			clientModel.removeShields(Integer.parseInt(serverMessageComponents[3]),
+					Integer.parseInt(serverMessageComponents[2]));
 			updateViewState();
 			getServerMessage();
 			break;
-			
+
 		case "UPDATE":
 			if (serverMessageComponents[2].equals(Integer.toString(this.playerNumber))) {
 				logger.info("Message was instigated by this client and not processed");
@@ -213,13 +226,13 @@ public class Client {
 					break;
 				case "STAGE":
 					clientModel.stage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]),
-					Integer.parseInt(serverMessageComponents[5]));
+							Integer.parseInt(serverMessageComponents[5]));
 					updateViewState();
 					getServerMessage();
 					break;
 				case "UNSTAGE":
 					clientModel.unstage(serverMessageComponents[4], Integer.parseInt(serverMessageComponents[2]),
-					Integer.parseInt(serverMessageComponents[5]));
+							Integer.parseInt(serverMessageComponents[5]));
 					updateViewState();
 					getServerMessage();
 					break;
@@ -233,18 +246,14 @@ public class Client {
 					updateViewState();
 					getServerMessage();
 					break;
-				
-				case "ISQUESTING" : 
+
+				case "ISQUESTING":
 					int playerNum = Integer.parseInt(serverMessageComponents[4]);
-					 boolean isQuesting = Boolean.parseBoolean(serverMessageComponents[2]);
-					
-					
-					
+					boolean isQuesting = Boolean.parseBoolean(serverMessageComponents[2]);
+
 					clientModel.getPlayers()[playerNum].isQuesting = isQuesting;
 					break;
-					
-					
-			
+
 				default:
 					logger.info("Couldnt parse message from SERVERMESSAGE--UPDATE-- ?!?!?!");
 					getServerMessage();
@@ -252,18 +261,18 @@ public class Client {
 				}
 			}
 			break;
-			
+
 		case "WELCOME":
 			logger.info("server has established connection with this client");
 			clientModel.playGame();
 			getServerMessage();
 			break;
-			
+
 		case "TEST":
 			logger.info("TEST GOOD!!");
 			getServerMessage();
 			break;
-			
+
 		case "SETTHREADPLAYER":
 			clientModel.currentPlayer = Integer.parseInt(serverMessageComponents[2]);
 			playerNumber = Integer.parseInt(serverMessageComponents[2]);
@@ -272,7 +281,7 @@ public class Client {
 			updateViewState();
 			getServerMessage();
 			break;
-			
+
 		case "GETSPONSOR":
 			Platform.runLater(new Runnable() {
 				@Override
@@ -283,7 +292,7 @@ public class Client {
 			});
 			getServerMessage();
 			break;
-			
+
 		case "GETQUESTER":
 
 			Platform.runLater(new Runnable() {
@@ -294,18 +303,17 @@ public class Client {
 			});
 			getServerMessage();
 			break;
-			
-		case "GETKNIGHT":
 
+		case "GETKNIGHT":
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					getQuestingDecision();
+					getTournamentDecision();
 				}
 			});
 			getServerMessage();
 			break;
-		
+
 		case "GETSTATE":
 
 			// model.state = Integer.parseInt(serverMessageComponents[2]);
@@ -349,7 +357,7 @@ public class Client {
 		logger.info("stageIncrement() called");
 
 		clientModel.getStage().nextStage();
-		//clientModel.setCurrentStage(1);
+		// clientModel.setCurrentStage(1);
 		updateViewState();
 	}
 
@@ -381,12 +389,15 @@ public class Client {
 		sendClientMessage("CLIENTMESSAGE--ISQUESTING--" + isQuesting + "--" + playerNumber);
 
 	}
+
 	public void getTournamentDecision() {
-		boolean isQuesting = view.popup("Player " + (playerNumber) + " - Would you like to participate in a Tournament ?");
-		clientModel.getActivePlayer().isQuesting = isQuesting;
+		logger.info("getTournamentDecision() called" );
+		boolean isTournamenting = view
+				.popup("Player " + (playerNumber) + " - Would you like to participate in a Tournament ?");
+		clientModel.getActivePlayer().isTournamenting = isTournamenting;
 		updateViewState();
-		sendClientMessage("CLIENTMESSAGE--ISQUESTING--" + isQuesting + "--" + playerNumber);
-		
+		sendClientMessage("CLIENTMESSAGE--ISTOURNAMENTING--" + isTournamenting + "--" + playerNumber);
+
 	}
 
 	public State getState() {
@@ -437,18 +448,13 @@ public class Client {
 			sendClientMessage("CLIENTMESSAGE--UNSTAGE--" + ID + "--" + playerNumber + "--"
 					+ clientModel.getStage().getCurrentStage());
 			clientModel.unstage(ID, playerNumber, clientModel.getStage().getCurrentStage());
-		}
 
-		else if (clickType.equals(View.QUEUE)) {
+		} else if (clickType.equals(View.QUEUE)) {
 			sendClientMessage("CLIENTMESSAGE--QUEUE--" + ID + "--" + playerNumber);
 			clientModel.queue(ID, playerNumber);
-		}
-
-		// FIXME MAYBE TODO MAYEB
-		else if (clickType.equals(View.DEQUEUE)) {
+		} else if (clickType.equals(View.DEQUEUE)) {
 			clientModel.dequeue(ID, playerNumber);
 			sendClientMessage("CLIENTMESSAGE--DEQUEUE--" + ID + "--" + playerNumber);
-
 		} else if (clickType.equals(View.DISCARD)) {
 			clientModel.discard(ID, playerNumber);
 			sendClientMessage("CLIENTMESSAGE--DISCARD--" + ID + "--" + playerNumber);
@@ -489,9 +495,9 @@ public class Client {
 		} else if (clickType.equals(View.STAGE5)) {
 			clientModel.setCurrentStage(4);
 		} else if (clickType.equals(View.ENDTURN)) {
-			 if (clientModel.getCurrentState().canEndTurn()) {
-			sendClientMessage("CLIENTMESSAGE--ENDTURN--" + playerNumber);
-			 }
+			if (clientModel.getCurrentState().canEndTurn()) {
+				sendClientMessage("CLIENTMESSAGE--ENDTURN--" + playerNumber);
+			}
 		}
 	}
 
@@ -546,15 +552,32 @@ public class Client {
 				@Override
 				public void run() {
 					view.resolveQuest();
-				
+
 				}
 			});
-			
-	
+
 		} else {
 			// move to the next stage
 			this.stageIncrement();
-			
+
+		}
+	}
+	
+	public void nextStoryCard() {
+		this.stageOver();
+		if (clientModel.isDoneQuestingMode()) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					view.resolveQuest();
+
+				}
+			});
+
+		} else {
+			// move to the next stage
+			this.stageIncrement();
+
 		}
 	}
 
