@@ -114,6 +114,7 @@ public class TournamentManger implements StoryCardState {
 			playerBP2 += serverModel.getPlayers()[i].getPartyBattlesPoint();
 
 				if (playerBP<=playerBP2) {
+					playerBP = playerBP2;
 					if(i>0) {
 						serverModel.getPlayers()[i-1].isTournamentWinner = false;
 					}

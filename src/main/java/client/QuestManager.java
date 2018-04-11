@@ -500,11 +500,11 @@ public class QuestManager implements StoryCardState{
 		for(int i = 0; i < clientModel.getPlayers().length; ++i){
 			logger.info("Player " + i + "'s QUEUE BPs = " + clientModel.getPlayers()[i].getBattlePoint());
 			logger.info("Player " + i + "'s PARTY BPs = " + clientModel.getPlayers()[i].getPartyBattlesPoint());
-			logger.info("Player " + i + "'s BONUS BPs = " + clientModel.getPlayers()[i].allyBonusBattlePoints);
+			logger.info("Player " + i + "'s BONUS BPs = " + clientModel.getPlayers()[i].getAllyBonusBattlePoints());
 		
 				int playerBP = clientModel.getPlayers()[i].getBattlePoint();
 				playerBP += clientModel.getPlayers()[i].getPartyBattlesPoint();
-				playerBP += clientModel.getPlayers()[i].allyBonusBattlePoints;
+				playerBP += clientModel.getPlayers()[i].getAllyBonusBattlePoints();
 				
 				logger.info( "Player ally battle points "+clientModel.getPlayers()[i].getPartyBattlesPoint());
 				if (playerBP>=stageBP && clientModel.getPlayers()[i].isQuesting) {
