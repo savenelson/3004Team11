@@ -483,14 +483,9 @@ public class QuestManager implements StoryCardState{
 		 *    - players Rank
 		 *    - get a card if they pass
 		 */
+	CardCollection<AdventureCard> currStage = clientModel.getStage().getStageAt(clientModel.getStage().getCurrentStage());
 		
-		
-		logger.info("resolveStage() called");
-
-		
-		CardCollection<AdventureCard> currStage = clientModel.getStage().getStageAt(clientModel.getStage().getCurrentStage());
-		
-		
+		clientModel.allysInPlay();
 		logger.info("RESOLVING STAGE");
 		
 		int stageBP = 0;
@@ -503,18 +498,28 @@ public class QuestManager implements StoryCardState{
 		logger.info("STAGES POINTS "+stageBP);
 		players = clientModel.getPlayers();
 		for(int i = 0; i < clientModel.getPlayers().length; ++i){
-			logger.info("This player battle points " + clientModel.getPlayers()[i].getBattlePoint()+"This is the battle points "+clientModel.getPlayers()[i].getBattlePoint());
-			
+			logger.info("Player " + i + "'s QUEUE BPs = " + clientModel.getPlayers()[i].getBattlePoint());
+			logger.info("Player " + i + "'s PARTY BPs = " + clientModel.getPlayers()[i].getPartyBattlesPoint());
+			logger.info("Player " + i + "'s BONUS BPs = " + clientModel.getPlayers()[i].allyBonusBattlePoints);
 		
 				int playerBP = clientModel.getPlayers()[i].getBattlePoint();
 				playerBP += clientModel.getPlayers()[i].getPartyBattlesPoint();
+				playerBP += clientModel.getPlayers()[i].allyBonusBattlePoints;
 				
 				logger.info( "Player ally battle points "+clientModel.getPlayers()[i].getPartyBattlesPoint());
-				if (playerBP>=stageBP) {
+				if (playerBP>=stageBP && clientModel.getPlayers()[i].isQuesting) {
 					players[i].passedStage = true;
+					if(clientModel.getState().currentStage+1 ==((QuestCard)clientModel.getState().currentStoryCard).getNumStages()) {
+						players[i].isQuesting = true;
+					}
 					
 					
-					
+				
+					}else {
+						
+						players[i].passedStage = false;
+						players[i].isQuesting = false;
+						
 					}
 				
 					
@@ -526,7 +531,7 @@ public class QuestManager implements StoryCardState{
 		
 			
 		
-				}
+		}
 
 		//
 				

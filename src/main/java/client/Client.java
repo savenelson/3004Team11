@@ -48,11 +48,11 @@ public class Client {
 
 		// clientModel.deal(); //COMMENT OUT FOR SET SCENEARIOS
 
-//		clientModel.setScenario1(); // UNCOMMENT FOR SCEN 1
+		clientModel.setScenario1(); // UNCOMMENT FOR SCEN 1
 
 		// clientModel.setScenario2(); //UNCOMMENT FOR SCEN 2
 
-		 clientModel.setScenarioTest();
+//		 clientModel.setScenarioTest();
 
 		// clientModel.eventTesting();
 		this.serverAddress = serverAddress;
@@ -233,6 +233,18 @@ public class Client {
 					updateViewState();
 					getServerMessage();
 					break;
+				
+				case "ISQUESTING" : 
+					int playerNum = Integer.parseInt(serverMessageComponents[4]);
+					 boolean isQuesting = Boolean.parseBoolean(serverMessageComponents[2]);
+					
+					
+					
+					clientModel.getPlayers()[playerNum].isQuesting = isQuesting;
+					break;
+					
+					
+			
 				default:
 					logger.info("Couldnt parse message from SERVERMESSAGE--UPDATE-- ?!?!?!");
 					getServerMessage();
@@ -293,7 +305,7 @@ public class Client {
 			});
 			getServerMessage();
 			break;
-			
+		
 		case "GETSTATE":
 
 			// model.state = Integer.parseInt(serverMessageComponents[2]);
