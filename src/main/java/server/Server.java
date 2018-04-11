@@ -202,11 +202,13 @@ public class Server {
 	
 	public void resolveStage(){
 		logger.info("resolveStage() called");
+
 		sendServerMessage("SERVERMESSAGE--RESOLVESTAGE");
 	}
 	
 	public void resolveTournament(){
 		logger.info("resolveTournament() called");
+		
 		sendServerMessage("SERVERMESSAGE--RESOLVETOURNAMENT");
 	}
 

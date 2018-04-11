@@ -61,6 +61,8 @@ public class TournamentManger implements StoryCardState {
 			if (numberOfEndTurnsCalled == numOfPotential*2) {
 					
 				serverModel.server.resolveTournament();
+				resolveTournament();
+				
 			}
 	}
 
