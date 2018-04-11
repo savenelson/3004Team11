@@ -171,8 +171,6 @@ public abstract class AbstractModel {
 
 		state.numStages = this.numStages;
 
-		
-
 		return state;
 	}
 	
@@ -383,75 +381,82 @@ public abstract class AbstractModel {
 						logger.info(
 								"SirLancelot is in play and on quest Queens honor so, gives +25 Battle points to player "
 										+ i);
-						players[i].allyBonusBattlePoints += 25;
+						players[i].setAllyBonusBattlePoints(players[i].getAllyBonusBattlePoints() + 25);
 					} else {
 						logger.info("SirLancelot is in play and gives +25 Battle points to player " + i);
 //						players[i].AllyBattlePoints += 15;
 					}
-				} else if (party.get(j).getID().equals("100") && AllyInPlaySirGalahad == false) {
+				}
+				if (party.get(j).getID().equals("100") && AllyInPlaySirGalahad == false) {
 					AllyInPlaySirGalahad = true;
 					logger.info("SirGalahad is in play and gives +15 Battle points to player " + i);
 //					players[i].AllyBattlePoints += 15;
-				} else if (party.get(j).getID().equals("102") && AllyInPlayKingArthur == false) {
+				}
+				if (party.get(j).getID().equals("102") && AllyInPlayKingArthur == false) {
 					AllyInPlayKingArthur = true;
 
 					logger.info("KingArthur is in play and gives +10 Battle Points, and +2 bids to player " + i);
 //					players[i].AllyBattlePoints += 10;
 					players[i].AllyBidBonus += 2;
-				} else if (party.get(j).getID().equals("103") && AllyInPlaySirTristan == false) {
+				}
+				if (party.get(j).getID().equals("103") && AllyInPlaySirTristan == false) {
 					AllyInPlaySirTristan = true;
 
 					if (AllyInPlayQueenIseult) {
 						logger.info(
 								"SirTristan and Queen Iseult are in play and gives +20 Battle Points to player " + i);
-						players[i].allyBonusBattlePoints += 20;
+						players[i].setAllyBonusBattlePoints(players[i].getAllyBonusBattlePoints() + 20);
 					} else {
 						logger.info("SirTristan is in play and gives +10 Battle Points to player " + i);
 //						players[i].AllyBattlePoints += 10;
 					}
-		
-				} else if (party.get(j).getID().equals("104") && AllyInPlayKingPellinore == false) {
+				}
+				if (party.get(j).getID().equals("104") && AllyInPlayKingPellinore == false) {
 					AllyInPlayKingPellinore = true;
 
 					if (getCurrentStoryCard().getID().equals("130")) {
 						logger.info(
 								"KingPellinore is in play on Questing Beast and gives +10 Battle Points, +4 Bids to player "
 										+ i);
-						players[i].allyBonusBattlePoints += 10;
+						players[i].setAllyBonusBattlePoints(players[i].getAllyBonusBattlePoints() + 10);
 						players[i].AllyBidBonus += 4;
 					} else {
 						logger.info("KingPellinore is in play and gives +10 Battle Points to player " + i);
 //						players[i].AllyBattlePoints += 10;
 					}
-				} else if (party.get(j).getID().equals("105") && AllyInPlaySirGawain == false) {
+				}
+				if (party.get(j).getID().equals("105") && AllyInPlaySirGawain == false) {
 					AllyInPlaySirGawain = true;
 
 					if (getCurrentStoryCard().getID().equals("129")) {
 						logger.info(
 								"SirGawain is in play and on TestOfTheGreenKnight and gives +20 Battle Points to player "
 										+ i);
-						players[i].allyBonusBattlePoints += 20;
+						players[i].setAllyBonusBattlePoints(players[i].getAllyBonusBattlePoints() + 20);
 					} else {
 						logger.info("SirGawain is in play and gives +10 Battle Points to player " + i);
 //						players[i].AllyBattlePoints += 10;
 					}
-				} else if (party.get(j).getID().equals("106") && AllyInPlaySirPercival == false) {
+				}
+				if (party.get(j).getID().equals("106") && AllyInPlaySirPercival == false) {
 					AllyInPlaySirPercival = true;
 
 					if (getCurrentStoryCard().getID().equals("128")) {
 						logger.info(
-								"SirGawain is in play and on SearchForTheHolyGrail and gives +20 Battle Points to player "
+								"SirPercival is in play and on SearchForTheHolyGrail and gives +20 Battle Points to player "
 										+ i);
-						players[i].allyBonusBattlePoints += 20;
+						players[i].setAllyBonusBattlePoints(players[i].getAllyBonusBattlePoints() + 20);
 					} else {
-						logger.info("SirGawain is in play and gives +5 Battle Points to player " + i);
+						logger.info("SirPercival is in play and gives +5 Battle Points to player " + i);
 //						players[i].AllyBattlePoints += 5;
 					}
-				} else if (party.get(j).getID().equals("107") && AllyInPlayQueenGuinevere == false) {
+				}
+				if (party.get(j).getID().equals("107") && AllyInPlayQueenGuinevere == false) {
 					AllyInPlayQueenGuinevere = true;
 					logger.info("QueenGuinevere is in play and gives +3 Bids to player " + i);
 					players[i].AllyBidBonus += 3;
-				} else if (party.get(j).getID().equals("108") && AllyInPlayQueenIseult == false) {
+				}
+				if (party.get(j).getID().equals("108") && AllyInPlayQueenIseult == false) {
 					AllyInPlayQueenIseult = true;
 					if (AllyInPlaySirTristan) {
 						logger.info(
@@ -462,7 +467,8 @@ public abstract class AbstractModel {
 						logger.info("QueenIseult is in play and gives 2 Bids to player " + i);
 						players[i].AllyBidBonus += 2;
 					}
-				} else if (party.get(j).getID().equals("109") && AllyInPlayMerlin == false) {
+				}
+				if (party.get(j).getID().equals("109") && AllyInPlayMerlin == false) {
 					AllyInPlayMerlin = true;
 					logger.info("Merlin is in play and gives magical powers to player " + i);
 				}
@@ -919,14 +925,16 @@ public abstract class AbstractModel {
 
 		this.currentPlayer = 0;
 
-		this.players[0].addShields(3);
+		this.players[0].addShields(1);
 		this.players[1].addShields(4);
-		this.players[2].addShields(4);
+		this.players[2].addShields(7);
+		this.players[2].addShields(6);
 
 		// stages[0].add(this.adventureDeck.getByID("57"));
 		// stages[1].add(this.adventureDeck.getByID("86"));
 		
-		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
+		this.setCurrentStoryCard(this.storyDeck.getByID("136")); // SlayTheDragon
+//		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
 //		this.setCurrentStoryCard(this.storyDeck.getByID("151")); // ChivalrousDeed
 //		this.setCurrentStoryCard(this.storyDeck.getByID("152")); // ProsparityTHroughTheLand
 //		this.setCurrentStoryCard(this.storyDeck.getByID("145")); // QueensFavor

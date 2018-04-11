@@ -62,6 +62,7 @@ public class ServerThread extends Thread {
 			logger.info("Client at " + clientMessageComponents[2] + " has connected");
 			break;
 		case "QUEUE":
+			server.serverModel.queue(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]));
 			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]);
 			break;
 		case "PARTY":

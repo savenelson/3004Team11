@@ -2,10 +2,13 @@ package server;
 
 import org.json.JSONObject;
 
+import core.State;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
@@ -65,11 +68,11 @@ public class Server {
 
 //		serverModel.deal(); 				//COMMENT OUT FOR SET SCENEARIOS
 
-		serverModel.setScenario1();			//UNCOMMENT FOR SCEN 1
+//		serverModel.setScenario1();			//UNCOMMENT FOR SCEN 1
 
 //		serverModel.setScenario2();			//UNCOMMENT FOR SCEN 2
 
-//		serverModel.setScenarioTest(); 		//UNCOMMENT FOR end game testing
+		serverModel.setScenarioTest(); 		//UNCOMMENT FOR end game testing
 
 		boolean listening = true;
     		
@@ -84,6 +87,7 @@ public class Server {
 	        			listening = false;
 	        			logger.info("Game full. Let's play!");
 	        			serverModel.playGame();
+	        			sendJSONStateToCLients();
 	        		}
 	    		}
 	    	}
@@ -135,11 +139,17 @@ public class Server {
     			
     			if(thread1.getPlayerNumber() != playerNum) {
     				thread1.out.println(serverMessage);
-    				
     			}
-        		
     		}
     	}
+    
+    public void sendJSONStateToCLients() {
+    	State JSONstate = serverModel.getState();
+    	JSONObject obj = new JSONObject();
+    	obj.put("state", JSONstate);
+//    	sendServerMessage("SERVERMESSAGE--JSONSTATE--" + obj.toString());
+    }
+    
     /**
      * ASk for the current player if they would like to sponsor 
      * 
