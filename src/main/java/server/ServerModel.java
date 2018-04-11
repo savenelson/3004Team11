@@ -19,7 +19,6 @@ public class ServerModel extends AbstractModel {
 
 	ServerModel(Server server) {
 		
-		
 		logger.info("Model created");
 
 		this.server = server;
@@ -227,6 +226,7 @@ public class ServerModel extends AbstractModel {
 	 * to Player
 	 */
 	public void allysInPlay() {
+		logger.info("ServerModel - allysInPlay() called");
 		super.allysInPlay();
 	}
 

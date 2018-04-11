@@ -111,7 +111,6 @@ public class QuestManager implements StoryCardState {
 			}
 
 			if (questersReady) {
-
 				resolveStage();
 				for (int i = 0; i < serverModel.getNumPlayers(); ++i) {
 					logger.info("player" + i + " passed stage?: " + players[i].passedStage);
@@ -470,7 +469,7 @@ public class QuestManager implements StoryCardState {
 		 */
 		CardCollection<AdventureCard> currStage = serverModel.getStage().getStageAt(serverModel.getStage().getCurrentStage());
 		
-		
+		serverModel.allysInPlay();
 		logger.info("RESOLVING STAGE");
 		
 		int stageBP = 0;
@@ -483,11 +482,13 @@ public class QuestManager implements StoryCardState {
 		logger.info("STAGES POINTS "+stageBP);
 		players = serverModel.getPlayers();
 		for(int i = 0; i < serverModel.getPlayers().length; ++i){
-			logger.info("This player battle points " + serverModel.getPlayers()[i].getBattlePoint()+"This is the battle points "+serverModel.getPlayers()[i].getBattlePoint());
-			
+			logger.info("Player " + i + "'s QUEUE BPs = " + serverModel.getPlayers()[i].getBattlePoint());
+			logger.info("Player " + i + "'s PARTY BPs = " + serverModel.getPlayers()[i].getPartyBattlesPoint());
+			logger.info("Player " + i + "'s BONUS BPs = " + serverModel.getPlayers()[i].allyBonusBattlePoints);
 		
 				int playerBP = serverModel.getPlayers()[i].getBattlePoint();
 				playerBP += serverModel.getPlayers()[i].getPartyBattlesPoint();
+				playerBP += serverModel.getPlayers()[i].allyBonusBattlePoints;
 				
 				logger.info( "Player ally battle points "+serverModel.getPlayers()[i].getPartyBattlesPoint());
 				if (playerBP>=stageBP && serverModel.getPlayers()[i].isQuesting) {

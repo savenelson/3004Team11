@@ -10,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 import com.sun.jmx.remote.internal.ArrayQueue;
 
 import core.*;
-import core.StoryCardState;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -193,7 +192,6 @@ public class QuestManager implements StoryCardState{
 		
 			clientModel.setNextPlayer(questers.nextPlayer());													//set the NextPlayer
 			
-			
 			if(numOfRepsonders  >questers.size()) {														// every Quester Made their turn 
 					
 				numOfRepsonders = 0; 																	
@@ -224,6 +222,18 @@ public class QuestManager implements StoryCardState{
 			}	
 		}
 		return true;
+	}
+	
+	public boolean containsSameWeapon(CardCollection<AdventureCard> collection, String cardName) {
+		logger.debug("containsSameWeapon(" + cardName + ") called");
+
+		for (int i = 0; i < collection.size(); i++) {
+			if (((WeaponCard) collection.get(i)).getName().equals(cardName)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 	
 	/* Calculate the total Of Batte points in a stage
@@ -336,7 +346,7 @@ public class QuestManager implements StoryCardState{
 		boolean isHarder = stageHarder();
 		boolean foeInEachStage = isfoeEachStage();
 		boolean isHandSizeOk = checkHandSize();
-		
+//		boolean isThereTwoWeapons = containsSameWeapon();
 		
 		// check if its a sponsor and if it is then check if they sponsor correctly 
 		if(clientModel.getActivePlayer().isSponsor && !foeInEachStage){	    			
@@ -398,7 +408,6 @@ public class QuestManager implements StoryCardState{
 		//model.setNextPlayer(questers.nextPlayer());
 		
 	}
-	
 	
 	public int resolveQuest(){
 		//Left it here because of  one of the event cards 
@@ -463,14 +472,8 @@ public class QuestManager implements StoryCardState{
 		clientModel.setDoneQuestingMode(true);
 		return 0;
 			
-		}
-		
+	}
 
-		
-	
-		
-
-	
 	
 	public void resolveStage(){
 		/**
@@ -480,6 +483,8 @@ public class QuestManager implements StoryCardState{
 		 *    - players Rank
 		 *    - get a card if they pass
 		 */
+		
+		
 		logger.info("resolveStage() called");
 
 		
@@ -522,10 +527,7 @@ public class QuestManager implements StoryCardState{
 			
 		
 				}
-				
-				
-				
-				
+
 		//
 				
 
@@ -556,10 +558,8 @@ public class QuestManager implements StoryCardState{
 			resolveQuest();
 
 		}*/
-	
-
-
 	}
+	
 
 
 
