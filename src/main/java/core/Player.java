@@ -36,6 +36,8 @@ public class Player {
 	public CardCollection<AdventureCard> getQueue() {return queue;}
 	
 	private int shieldCount;
+
+	public boolean isTournamenting;
 	public int getShieldCount() {return shieldCount;}
 	
 	public void addShields(int num) {

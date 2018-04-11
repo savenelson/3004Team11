@@ -28,10 +28,7 @@ import javafx.scene.text.Font;
  * The class Purpose is to handle all Questing events 
  * Using the State Design Pattern 
  * Implements the StoryCardState to share similar roles 
- * 
- * 
- * 
- * 
+
  */
 public class QuestManager implements StoryCardState {
 	private static final Logger logger = LogManager.getLogger(QuestManager.class);

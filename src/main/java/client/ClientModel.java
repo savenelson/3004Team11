@@ -93,8 +93,7 @@ public class ClientModel extends AbstractModel {
 	
 	
 	public StoryCardState getQuesterManger() {return questManager;}
-	public Player getActivePlayer() {
-
+		public Player getActivePlayer() {
 		return super.players[this.currentPlayer];
 	}
 
