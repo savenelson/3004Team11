@@ -102,6 +102,7 @@ public class ServerThread extends Thread {
 			}else {
 				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.serverModel.getActivePlayer()+" has not decidied to sponsor");
 				server.serverModel.nextPlayer();
+				server.serverModel.currentState.handle();
 			}
 			break;
 			

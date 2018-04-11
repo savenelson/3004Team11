@@ -356,7 +356,7 @@ public abstract class AbstractModel {
 				players[i].passedStage = false;
 			}
 		}
-		state.stage = this.getStage().getStageAt(currentStage);
+		state.stage = this.getStage().getStageAt(this.getStage().getCurrentStage());
 		
 	}
 	
@@ -944,8 +944,8 @@ public abstract class AbstractModel {
 		// stages[0].add(this.adventureDeck.getByID("57"));
 		// stages[1].add(this.adventureDeck.getByID("86"));
 		
-		this.setCurrentStoryCard(this.storyDeck.getByID("136")); // SlayTheDragon
-//		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
+//		this.setCurrentStoryCard(this.storyDeck.getByID("136")); // SlayTheDragon
+		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
 //		this.setCurrentStoryCard(this.storyDeck.getByID("151")); // ChivalrousDeed
 //		this.setCurrentStoryCard(this.storyDeck.getByID("152")); // ProsparityTHroughTheLand
 //		this.setCurrentStoryCard(this.storyDeck.getByID("145")); // QueensFavor
