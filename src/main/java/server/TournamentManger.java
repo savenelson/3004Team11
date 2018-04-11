@@ -4,12 +4,7 @@ import core.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import core.Player;
-import core.QuesterQueque;
-import core.StoryCardState;
-
 public class TournamentManger implements StoryCardState {
-	
 	
 	private static final Logger logger = LogManager.getLogger(TournamentManger.class);
 	private static final String ENDTURN = "End turn";
@@ -18,9 +13,9 @@ public class TournamentManger implements StoryCardState {
 	
 	private boolean tournamentersReady = false;
 
-	private int numOfansewers;
-
 	private int numberOfCardsToReturn = 0;
+	
+	private int numberOfEndTurnsCalled = 0;		//the number of end turns
 
 	private int numberOfrequests = 0;
 
@@ -47,7 +42,6 @@ public class TournamentManger implements StoryCardState {
 
 	}
 
-
 	/**
 	 * 
 	 * This will handle the TournamentsEvents
@@ -59,7 +53,7 @@ public class TournamentManger implements StoryCardState {
 
 		int numOfPotential = serverModel.getPlayers().length ;
 		
-			if (numOfRepsonders == numOfPotential) {
+			if (numberOfEndTurnsCalled == numOfPotential) {
 					
 				serverModel.server.resolveTournament();
 			}else {
@@ -103,50 +97,37 @@ public class TournamentManger implements StoryCardState {
 	}
 
 	@Override
-	public void resolveStage() {
-		/**
-		 * To resolve a stage, we need to count the following data structures:
-		 *    - players Queue
-		 *    - players Party
-		 *    - players Rank
-		 *    - get a card if they pass
-		 */
-		
-		//TODO : need to get tournament gue
+	public void resolveTournament() {
+
 		Player winner =  serverModel.getPlayers()[0];
-		
 		int playerBP = serverModel.getPlayers()[0].getBattlePoint();
 		playerBP += serverModel.getPlayers()[0].getPartyBattlesPoint();
-		for(int i = 1; i < serverModel.getPlayers().length- 1; ++i){
-			logger.info("This player battle points " + serverModel.getPlayers()[i].getBattlePoint()+"This is the battle points "+serverModel.getPlayers()[i].getBattlePoint());
+		for(int i = 1; i < serverModel.getPlayers().length; ++i){
+			logger.info("Player " + i + "'s BP = " + serverModel.getPlayers()[i].getBattlePoint());
 			
 			int playerBP2 = serverModel.getPlayers()[i].getBattlePoint();
 			playerBP2 += serverModel.getPlayers()[i].getPartyBattlesPoint();
-				
-		
-				
-				
+
 				if (playerBP<=playerBP2) {
-					winner = serverModel.getPlayers()[i];
-					
-					
-		
+					if(i>0) {
+						serverModel.getPlayers()[i-1].isTournamentWinner = false;
 					}
-				
-					
+					winner = serverModel.getPlayers()[i];
+						serverModel.getPlayers()[i].isTournamentWinner = true;
+					}
 				}
 		
 		logger.info("The winner Of the Tournament is" +winner+ "and is getting this many shields :" + ((TournamentCard) serverModel.getCurrentStoryCard()).getNumShields());
 		winner.addShields(((TournamentCard) serverModel.getCurrentStoryCard()).getNumShields());
-
-		
 	}
 
 	public void increaseResponse() {
-		
-	
-			
-		
+		numberOfEndTurnsCalled++;
 	}
 
+	@Override
+	public void resolveStage() {
+		// TODO Auto-generated method stub
+		
+	}
 }

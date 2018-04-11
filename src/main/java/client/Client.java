@@ -164,11 +164,11 @@ public class Client {
 			getServerMessage();
 			break;
 		case "RESOLVETOURNAMENT":
-			clientModel.getQuesterManger().resolveStage();
+			clientModel.getTournamentManger().resolveTournament();
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					view.stageResolved();
+					view.tournamentResolved();
 				}
 			});
 
@@ -303,7 +303,6 @@ public class Client {
 			break;
 
 		case "GETKNIGHT":
-
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
@@ -390,6 +389,7 @@ public class Client {
 	}
 
 	public void getTournamentDecision() {
+		logger.info("getTournamentDecision() called" );
 		boolean isTournamenting = view
 				.popup("Player " + (playerNumber) + " - Would you like to participate in a Tournament ?");
 		clientModel.getActivePlayer().isTournamenting = isTournamenting;
@@ -545,6 +545,24 @@ public class Client {
 	public void nextStage() {
 		this.stageOver();
 		logger.info("Hello this is the model stage in the control " + clientModel.isDoneQuestingMode());
+		if (clientModel.isDoneQuestingMode()) {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					view.resolveQuest();
+
+				}
+			});
+
+		} else {
+			// move to the next stage
+			this.stageIncrement();
+
+		}
+	}
+	
+	public void nextStoryCard() {
+		this.stageOver();
 		if (clientModel.isDoneQuestingMode()) {
 			Platform.runLater(new Runnable() {
 				@Override

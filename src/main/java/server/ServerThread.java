@@ -119,7 +119,23 @@ public class ServerThread extends Thread {
 			}else {
 				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+playerNum+" has NOT decidied to quest");
 				server.serverModel.nextPlayer();
+			}
+			break;
 			
+		case "ISTOURNAMENTING":
+			int playerNum1 = server.serverModel.getActivePlayer().getPlayerNumber();
+			boolean isTournamenting = Boolean.parseBoolean(clientMessageComponents[2]);
+			server.serverModel.getActivePlayer().isTournamenting= isTournamenting;
+			if(isTournamenting) {
+				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+playerNum1+" has decidied to tournament");
+				server.sendServerMessage("SERVERMESSAGE--UPDATE--"+clientMessageComponents[2]+"--ISTOURNAMENTING"+"--"+server.serverModel.getActivePlayer().getPlayerNumber());
+				AdventureCard c = server.serverModel.getAdventureDeck().peek();
+				String ID = c.getID();
+				server.serverModel.draw(ID,playerNum1);
+				server.sendServerMessage("SERVERMESSAGE--DRAW--" + playerNum1 + "--" + ID);
+			}else {
+				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+playerNum1+" has NOT decidied to Tournament");
+				server.serverModel.nextPlayer();
 			}
 			break;
 			

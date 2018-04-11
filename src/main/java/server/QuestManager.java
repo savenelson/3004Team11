@@ -28,8 +28,8 @@ import javafx.scene.text.Font;
  * The class Purpose is to handle all Questing events 
  * Using the State Design Pattern 
  * Implements the StoryCardState to share similar roles 
-
  */
+
 public class QuestManager implements StoryCardState {
 	private static final Logger logger = LogManager.getLogger(QuestManager.class);
 	private static final String ENDTURN = "End turn";
@@ -41,7 +41,7 @@ public class QuestManager implements StoryCardState {
 	public boolean getHasSponsor() {
 		return this.hasSponsor;
 	}
-	
+
 	private boolean questersReady = false;
 
 
@@ -67,10 +67,10 @@ public class QuestManager implements StoryCardState {
 	private int nextPersonToDraw = 0;
 
 	/**
-	 * 
 	 * Constructor Takes a model gets its player and copies it make a new
 	 * Questerqueue
 	 */
+
 	public QuestManager(ServerModel serverModel) {
 		this.serverModel = serverModel;
 		this.players = serverModel.getPlayers();
@@ -544,5 +544,11 @@ public class QuestManager implements StoryCardState {
 		if(hasSponsor) {
 			numberOfEndTurnsCalled++;
 		}
+	}
+
+	@Override
+	public void resolveTournament() {
+		// TODO Auto-generated method stub
+		
 	}
 }

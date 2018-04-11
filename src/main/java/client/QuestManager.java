@@ -591,6 +591,14 @@ public class QuestManager implements StoryCardState{
 	}
 
 
+
+	@Override
+	public void resolveTournament() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	
 
 

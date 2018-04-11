@@ -36,11 +36,9 @@ public class ServerModel extends AbstractModel {
 
 		super.adventureDeck = new AdventureDeck();
 		super.storyDeck = new StoryDeck();
-
 		super.adventureDeckDiscard = new CardCollection<AdventureCard>();
 		super.storyDeckDiscard = new CardCollection<StoryCard>();
 
-	
 		super.currentStage = getStage().getCurrentStage();
 
 		currentPlayer = 0;
@@ -207,7 +205,6 @@ public class ServerModel extends AbstractModel {
 
 	public void endTurn() {
 		logger.debug("endTurn() called");
-		logger.info("I end turn called changing s ");
 		currentState.increaseResponse();
 		currentState.nextPlayer();
 		

@@ -60,7 +60,7 @@ public class Server {
 		serverModel.instantiatePlayers(playersPerGame);
 
 		serverModel.instantiateStages(); 	
-		
+
 //		serverModel.initialShuffle(); 		//COMMENT OUT FOR SET SCENEARIOS
 
 //		serverModel.deal(); 				//COMMENT OUT FOR SET SCENEARIOS
@@ -188,21 +188,16 @@ public class Server {
 	public void resolveQuest(){
 		logger.debug("resolveQuest() called");
 		sendServerMessage("SERVERMESSAGE--RESOLVEQUEST");
-
-//		
 	}
 	
 	public void resolveStage(){
 		logger.info("resolveStage() called");
 		sendServerMessage("SERVERMESSAGE--RESOLVESTAGE");
-
 	}
 	
 	public void resolveTournament(){
 		logger.info("resolveTournament() called");
-		sendServerMessage("SERVERMESSAGE--RESOLVESTAGE");
-
-//		
+		sendServerMessage("SERVERMESSAGE--RESOLVETOURNAMENT");
 	}
 
 	public void update() {

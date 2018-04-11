@@ -1032,7 +1032,6 @@ public class View extends Application {
 				logger.info("End Turn clicked");
 				state = control.getState();
 				control.buttonClick(ENDTURN);
-
 			}
 		});
 
@@ -1115,37 +1114,34 @@ public class View extends Application {
 		stage.setScene(scene);
 		// update(stage);
 	}
-	public void tounmentResolved() {
+	
+	
+	public void tournamentResolved() {
 			logger.info("Tournament resolving ");
 
 			final StackPane layout = new StackPane();
 			state = control.getState();
-
 			
 			for (int i = 0; i < state.numPlayers; ++i) {
 
-				
 					Label passed = new Label("Player " + i);
 					if (state.players[i].isTournamentWinner) {
-						passed.setText(passed.getText() + "  is the winner of the Tourament ");
-
+						passed.setText(passed.getText() + "  is the winner of the Tournament ");
 					} else {
 						passed.setText(passed.getText() + " has lost the tournament");
-
 					}
 					passed.setFont(new Font("Ariel", 30));
 					layout.getChildren().add(passed);
 					layout.setPrefHeight(720);
 					layout.setPrefWidth(1280);
 					passed.setTranslateY(-180 + (60 * i));
-					if (state.players[i].passedStage) {
-						logger.info("Player " + i + " passed stage  " + state.currentStage);
+					if (state.players[i].isTournamentWinner) {
+						logger.info("Player " + i + " won the Tournament!");
 					} else {
-						logger.info("Player " + i + " failed stage " + state.currentStage );
+						logger.info("Player " + i + " failed the Tournament");
 					}
-				
 			}
-			Button nextStageButton = new Button("Next Stage");
+			Button nextStageButton = new Button("Next");
 			nextStageButton.setFont(new Font("Ariel", 30));
 			layout.getChildren().add(nextStageButton);
 			nextStageButton.setTranslateY(65);
@@ -1154,7 +1150,6 @@ public class View extends Application {
 					logger.info("nextStageButton clicked");
 
 					control.nextStage();
-
 				}
 			});
 
