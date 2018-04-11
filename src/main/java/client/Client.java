@@ -238,8 +238,6 @@ public class Client {
 					int playerNum = Integer.parseInt(serverMessageComponents[4]);
 					 boolean isQuesting = Boolean.parseBoolean(serverMessageComponents[2]);
 					
-					
-					
 					clientModel.getPlayers()[playerNum].isQuesting = isQuesting;
 					break;
 					
