@@ -53,11 +53,14 @@ public class TournamentManger implements StoryCardState {
 
 		int numOfPotential = serverModel.getPlayers().length ;
 		
+			if (!this.serverModel.getActivePlayer().declinedToQuest) {
+				serverModel.server.getTournamentDecision();
+				this.serverModel.getActivePlayer().declinedToQuest = true;
+			}
+		
 			if (numberOfEndTurnsCalled == numOfPotential*2) {
 					
 				serverModel.server.resolveTournament();
-			}else {
-				serverModel.server.getTournamentDecision();
 			}
 	}
 
