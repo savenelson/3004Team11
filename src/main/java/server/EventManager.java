@@ -285,6 +285,7 @@ public class EventManager implements  StoryCardState {
 
 					if (players[i].getShieldCount() == lowestShieldSquire) {
 						players[i].addShields(3);
+						serverModel.server.sendServerMessage("SERVERMESSAGE--ADDSHIELDS--" +i + "--" + 3);
 					}
 				}
 			}
@@ -295,6 +296,7 @@ public class EventManager implements  StoryCardState {
 				if ((players[i].getRank()).getSubType().equals("Champion")) {
 					if (players[i].getShieldCount() == lowestShieldKnight) {
 						players[i].addShields(3);
+						serverModel.server.sendServerMessage("SERVERMESSAGE--ADDSHIELDS--" +i + "--" + 3);
 					}
 				}
 			}
@@ -304,6 +306,7 @@ public class EventManager implements  StoryCardState {
 				if ((players[i].getRank()).getSubType().equals("ChampionKnight")) {
 					if (players[i].getShieldCount() == lowestShieldChamp) {
 						players[i].addShields(3);
+						serverModel.server.sendServerMessage("SERVERMESSAGE--ADDSHIELDS--" +i + "--" + 3);
 					}
 				}
 			}
@@ -352,8 +355,9 @@ public class EventManager implements  StoryCardState {
 	@Override
 	public void nextPlayer() {
 		serverModel.nextPlayer();
+		serverModel.nextStory();
 		
-		// TODO Auto-generated method stub
+
 		
 	}
 

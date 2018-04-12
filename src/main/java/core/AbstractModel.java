@@ -343,14 +343,14 @@ public abstract class AbstractModel {
 		logger.info("stageOver() called");
 
 		for (int i = 0; i < this.getPlayers().length; ++i) {
-			if (!this.players[i].isSponsor && this.players[i].isQuesting) {
+			if (!this.players[i].isSponsor ) {
 
 				int size = this.players[i].getQueue().size();
 
 				for (int j = 0; j < size; ++j) {
 					adventureDeckDiscard.add(this.players[i].getQueue().pop());
 				}
-				players[i].passedStage = false;
+	
 			}
 		}
 		state.stage = this.getStage().getStageAt(this.getStage().getCurrentStage());
@@ -583,13 +583,16 @@ public abstract class AbstractModel {
 
 		this.setDoneQuestingMode(false);
 		
-		for (int i = 0; i < numPlayers; ++i) {
+		for (int i = 0; i < getPlayers().length; ++i) {
 
 			players[i].isSponsor = false;
 			players[i].isQuesting = false;
 			players[i].passedQuest = false;
 			players[i].passedStage = false;
-
+			players[i].isTournamentWinner = false;
+			players[i].isTournamenting= false;
+			players[i].declinedToQuest = false;
+			players[i].hasQueuedAgainstStage = false;
 			// remove stage cards
 			instantiateStages(); 
 
@@ -612,10 +615,10 @@ public abstract class AbstractModel {
 		this.currentStage = 0;
 		getStage().resetCurrentStage();
 
-		
+	
 		
 		playGame();
-		//currentState.handle();
+		currentState.handle();
 	}
 
 	public void setScenario1() {
@@ -642,11 +645,14 @@ public abstract class AbstractModel {
 		
 		// ID: 74, type: Adventure, subtype: Foe, name: SaxonKnight, battle points: 15,
 		// alternative battle points: 25, special: <NO SPECIAL>
-		System.out.println(this.storyDeck);
+		//System.out.println(this.storyDeck);
 		this.currentPlayer = 0;
-		this.setCurrentStoryCard(this.storyDeck.getByID("139")); // Camelot
-//		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
+		this.storyDeck = new StoryDeck(1);
+		this.setCurrentStoryCard(this.storyDeck.peek());
+		//this.setCurrentStoryCard(this.storyDeck.getByID("139")); // Camelot
+		//this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
 		//this.setCurrentStoryCard(new TournamentCard(TournamentCard.CAMELOT_NAME, TournamentCard.CAMELOT_SHIELDS)); // BOAR hUNT
+	
 		StoryCard sC = this.getStoryDeck().pop();
 		storyDeckDiscard.add(sC);
 		// ID: 58, type: Adventure, subtype: Foe, name: Boar, battle points: 5,
@@ -943,7 +949,7 @@ public abstract class AbstractModel {
 		// stages[1].add(this.adventureDeck.getByID("86"));
 		
 //		this.setCurrentStoryCard(this.storyDeck.getByID("136")); // SlayTheDragon
-		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
+//		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
 //		this.setCurrentStoryCard(this.storyDeck.getByID("151")); // ChivalrousDeed
 //		this.setCurrentStoryCard(this.storyDeck.getByID("152")); // ProsparityTHroughTheLand
 //		this.setCurrentStoryCard(this.storyDeck.getByID("145")); // QueensFavor

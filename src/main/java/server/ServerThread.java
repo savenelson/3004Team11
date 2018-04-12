@@ -147,6 +147,7 @@ public class ServerThread extends Thread {
 			break;
 			
 		case "SETSTORYCARD":
+			
 
 		case "ENDTURN":
 			//Platform.runLater(runnable);

@@ -48,11 +48,11 @@ public class Client {
 
 		// clientModel.deal(); //COMMENT OUT FOR SET SCENEARIOS
 
-//		clientModel.setScenario1(); // UNCOMMENT FOR SCEN 1
+		clientModel.setScenario1(); // UNCOMMENT FOR SCEN 1
 
 		// clientModel.setScenario2(); //UNCOMMENT FOR SCEN 2
 
-		 clientModel.setScenarioTest();
+//		 clientModel.setScenarioTest();
 		 
 		// clientModel.setScenarioTest();
 
@@ -199,6 +199,17 @@ public class Client {
 			getServerMessage();
 			break;
 
+		case "ADDSHIELDS":
+			
+			clientModel.addShields(Integer.parseInt(serverMessageComponents[3]),
+					Integer.parseInt(serverMessageComponents[2]));
+			updateViewState();
+			getServerMessage();
+			break;
+			
+		case "NEXTSTORY":
+			clientModel.nextStory();
+			break;
 		case "UPDATE":
 			if (serverMessageComponents[2].equals(Integer.toString(this.playerNumber))) {
 				logger.info("Message was instigated by this client and not processed");
@@ -523,8 +534,14 @@ public class Client {
 
 	public void alert(String message) {
 		logger.info("alert() called: " + message);
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				view.alert(message);
 
-		view.alert(message);
+			}
+		});
+	
 	}
 
 	public void nextPlayer() {

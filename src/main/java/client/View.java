@@ -416,7 +416,7 @@ public class View extends Application {
 			if (!state.players[i].isSponsor) {
 				Label passed = new Label("Player " + i);
 
-				if (state.players[i].passedQuest) {
+				if (state.players[i].passedStage) {
 
 					passed.setText(passed.getText() + " passed Quest and receives " + numShields + " shields!");
 				} else {
@@ -800,12 +800,18 @@ public class View extends Application {
 
 	public void alert(String message) {
 		logger.debug("alert() called ");
+		Platform.runLater( new Runnable() {
+			public void run() {
+				Alert alert = new Alert(AlertType.ERROR, message);
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.isPresent() && result.get() == ButtonType.OK) {
 
-		Alert alert = new Alert(AlertType.ERROR, message);
-		Optional<ButtonType> result = alert.showAndWait();
-		if (result.isPresent() && result.get() == ButtonType.OK) {
+				}
+				
+			}
+		});
 
-		}
+		
 	}
 
 	private void setHandCardControl(final ImageView anAdventure) {

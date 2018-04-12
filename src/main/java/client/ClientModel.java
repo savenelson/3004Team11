@@ -63,11 +63,6 @@ public class ClientModel extends AbstractModel {
 
 
 
-	public  ArrayList<CardCollection<AdventureCard>> getStages() {
-		return super.getStages();
-		
-	}
-
 	ClientModel(Client control) {
 
 		logger.info("Client Model created");
@@ -76,7 +71,7 @@ public class ClientModel extends AbstractModel {
 		super.state = new State();
 		
 		super.questManager = new QuestManager(this);
-		super.eventManager = new EventManager(this);
+		super.eventManager = new client.EventManager(this);
 		super.tournamentManager = new TournamentManger(this);
 
 		super.stage = new QuestingStage();
@@ -185,7 +180,7 @@ public class ClientModel extends AbstractModel {
 	}
 	
 	public void addShields(int numShields, int currentPlayer) {
-		logger.info("removeShields() called");
+		logger.info("adding called");
 		super.addShields(numShields, currentPlayer);
 	}
 
