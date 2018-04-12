@@ -63,11 +63,6 @@ public class ClientModel extends AbstractModel {
 
 
 
-	public  ArrayList<CardCollection<AdventureCard>> getStages() {
-		return super.getStages();
-		
-	}
-
 	ClientModel(Client control) {
 
 		logger.info("Client Model created");

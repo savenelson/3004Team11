@@ -48,11 +48,11 @@ public class Client {
 
 		// clientModel.deal(); //COMMENT OUT FOR SET SCENEARIOS
 
-//		clientModel.setScenario1(); // UNCOMMENT FOR SCEN 1
+		clientModel.setScenario1(); // UNCOMMENT FOR SCEN 1
 
 		// clientModel.setScenario2(); //UNCOMMENT FOR SCEN 2
 
-		 clientModel.setScenarioTest();
+//		 clientModel.setScenarioTest();
 		 
 		// clientModel.setScenarioTest();
 
@@ -523,8 +523,14 @@ public class Client {
 
 	public void alert(String message) {
 		logger.info("alert() called: " + message);
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				view.alert(message);
 
-		view.alert(message);
+			}
+		});
+	
 	}
 
 	public void nextPlayer() {

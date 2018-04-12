@@ -98,9 +98,6 @@ public class ServerModel extends AbstractModel {
 
 
 
-	public ArrayList<CardCollection<AdventureCard>> getStages() {
-		return super.getStages();
-	}
 
 
 

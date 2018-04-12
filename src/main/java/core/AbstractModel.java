@@ -343,14 +343,14 @@ public abstract class AbstractModel {
 		logger.info("stageOver() called");
 
 		for (int i = 0; i < this.getPlayers().length; ++i) {
-			if (!this.players[i].isSponsor && this.players[i].isQuesting) {
+			if (!this.players[i].isSponsor ) {
 
 				int size = this.players[i].getQueue().size();
 
 				for (int j = 0; j < size; ++j) {
 					adventureDeckDiscard.add(this.players[i].getQueue().pop());
 				}
-				players[i].passedStage = false;
+	
 			}
 		}
 		state.stage = this.getStage().getStageAt(this.getStage().getCurrentStage());
@@ -644,8 +644,8 @@ public abstract class AbstractModel {
 		// alternative battle points: 25, special: <NO SPECIAL>
 		System.out.println(this.storyDeck);
 		this.currentPlayer = 0;
-		this.setCurrentStoryCard(this.storyDeck.getByID("139")); // Camelot
-//		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
+//		this.setCurrentStoryCard(this.storyDeck.getByID("139")); // Camelot
+		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
 		//this.setCurrentStoryCard(new TournamentCard(TournamentCard.CAMELOT_NAME, TournamentCard.CAMELOT_SHIELDS)); // BOAR hUNT
 		StoryCard sC = this.getStoryDeck().pop();
 		storyDeckDiscard.add(sC);
@@ -943,7 +943,7 @@ public abstract class AbstractModel {
 		// stages[1].add(this.adventureDeck.getByID("86"));
 		
 //		this.setCurrentStoryCard(this.storyDeck.getByID("136")); // SlayTheDragon
-		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
+//		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
 //		this.setCurrentStoryCard(this.storyDeck.getByID("151")); // ChivalrousDeed
 //		this.setCurrentStoryCard(this.storyDeck.getByID("152")); // ProsparityTHroughTheLand
 //		this.setCurrentStoryCard(this.storyDeck.getByID("145")); // QueensFavor

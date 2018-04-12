@@ -150,7 +150,7 @@ logger.info("Handling questing info");
 
 	public void nextPlayer() {
 
-		if (serverModel.getActivePlayer().isSponsor) {
+		if (serverModel.getActivePlayer().isSponsor&& !questersReady ) {
 			// making sure the Stage starts at 1
 
 			serverModel.resetCurrentStage();
@@ -424,7 +424,7 @@ logger.info("Handling questing info");
 		CardCollection<AdventureCard> currStage = serverModel.getStage().getStageAt(serverModel.getStage().getCurrentStage());
 		
 		
-		serverModel.allysInPlay();
+		//serverModel.allysInPlay();
 		logger.info("Current Stage num"+serverModel.getStage().getCurrentStage());
 		
 		int stageBP = 0;
@@ -446,21 +446,23 @@ logger.info("Handling questing info");
 				playerBP += serverModel.getPlayers()[i].getAllyBonusBattlePoints();
 				
 				logger.info( serverModel.getPlayers()[i].getTotalBattlePoint()+" TotalPoints: " + serverModel.getPlayers()[i].getTotalBattlePoint()+ "vs Stage BP :" + stageBP);
-				if (playerBP>=stageBP && serverModel.getPlayers()[i].isQuesting) {
+				if (playerBP>=stageBP && serverModel.getPlayers()[i].isQuesting&& !serverModel.getPlayers()[i].isSponsor) {
 					logger.info(serverModel.getPlayers()[i] +" has passed the stage ");
-					
 					players[i].passedStage = true;
-					if(serverModel.getStage().getCurrentStage()+1 ==((QuestCard)serverModel.getState().currentStoryCard).getNumStages()) {
-						players[i].isQuesting = true;
-					}
 					
-					
-				
-					}else {
 						
+						logger.info("Player i"+ i + " is receving a card for the new stage");
+						AdventureCard c = this.serverModel.getAdventureDeck().peek();
+						String ID = c.getID();
+						serverModel.draw(ID,players[i].getPlayerNumber());
+						serverModel.server.sendServerMessage("SERVERMESSAGE--DRAW--" + players[i].getPlayerNumber() + "--" + ID);
+					}else {
+						logger.info("Did not make it ");
 						players[i].passedStage = false;
 						players[i].isQuesting = false;
 						
+						
+					
 					}
 				
 					
@@ -474,20 +476,7 @@ logger.info("Handling questing info");
 		
 			resolveQuest();
 		
-			
 		
-		}else {
-			
-			
-			for(int i = 0; i < serverModel.getPlayers().length; ++i) {
-				
-			if(players[i].passedStage&& (players[i].isQuesting)&& players[i].passedStage) {
-			logger.info("Player i"+ i + " is receving a card for the new stage");
-			AdventureCard c = this.serverModel.getAdventureDeck().peek();
-			String ID = c.getID();
-			serverModel.draw(ID,players[i].getPlayerNumber());
-			serverModel.server.sendServerMessage("SERVERMESSAGE--DRAW--" + players[i].getPlayerNumber() + "--" + ID);
-			}
 			}
 			
 		}
@@ -514,7 +503,7 @@ logger.info("Handling questing info");
 		 * }
 		 */
 
-	}
+	
 
 	@Override
 	public void increaseResponse() {
