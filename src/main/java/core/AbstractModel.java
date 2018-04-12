@@ -71,9 +71,6 @@ public abstract class AbstractModel {
 
 	protected ArrayList<CardCollection<AdventureCard>> stages;
 
-	public ArrayList<CardCollection<AdventureCard>> getStages() {
-		return stages;
-	}
 
 	protected QuestingStage stage;
 
@@ -293,7 +290,7 @@ public abstract class AbstractModel {
 			hand.remove(mordred);
 			adventureDeckDiscard.add(mordred);
 
-			logger.info("Player " + currentPlayer + " assaniated Player " + playerHoldingAlly + "s ally "
+			logger.info("Player " + currentPlayer + " assassinated Player " + playerHoldingAlly + "s ally "
 					+ c.getName());
 		}
 	}
@@ -345,7 +342,7 @@ public abstract class AbstractModel {
 	public void stageOver() {
 		logger.info("stageOver() called");
 
-		for (int i = 0; i < this.numPlayers; ++i) {
+		for (int i = 0; i < this.getPlayers().length; ++i) {
 			if (!this.players[i].isSponsor && this.players[i].isQuesting) {
 
 				int size = this.players[i].getQueue().size();
@@ -356,7 +353,7 @@ public abstract class AbstractModel {
 				players[i].passedStage = false;
 			}
 		}
-		state.stage = this.getStage().getStageAt(currentStage);
+		state.stage = this.getStage().getStageAt(this.getStage().getCurrentStage());
 		
 	}
 	
@@ -610,7 +607,7 @@ public abstract class AbstractModel {
 		storyDeckDiscard.add(this.getCurrentStoryCard());
 
 		this.setCurrentStoryCard(storyDeck.pop());
-		logger.info("Story card up next " + getCurrentStoryCard().getName());
+		//logger.info("Story card up next " + getCurrentStoryCard().getName());
 
 		this.currentStage = 0;
 		getStage().resetCurrentStage();
@@ -642,6 +639,7 @@ public abstract class AbstractModel {
 		 * player 4 discards a foe //third story card is Chivalrous deed //all players
 		 * BUT p3 get 3 shields
 		 */
+		
 		// ID: 74, type: Adventure, subtype: Foe, name: SaxonKnight, battle points: 15,
 		// alternative battle points: 25, special: <NO SPECIAL>
 		System.out.println(this.storyDeck);
@@ -944,8 +942,8 @@ public abstract class AbstractModel {
 		// stages[0].add(this.adventureDeck.getByID("57"));
 		// stages[1].add(this.adventureDeck.getByID("86"));
 		
-		this.setCurrentStoryCard(this.storyDeck.getByID("136")); // SlayTheDragon
-//		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
+//		this.setCurrentStoryCard(this.storyDeck.getByID("136")); // SlayTheDragon
+		this.setCurrentStoryCard(this.storyDeck.getByID("126")); // BOAR hUNT
 //		this.setCurrentStoryCard(this.storyDeck.getByID("151")); // ChivalrousDeed
 //		this.setCurrentStoryCard(this.storyDeck.getByID("152")); // ProsparityTHroughTheLand
 //		this.setCurrentStoryCard(this.storyDeck.getByID("145")); // QueensFavor

@@ -102,6 +102,7 @@ public class ServerThread extends Thread {
 			}else {
 				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+server.serverModel.getActivePlayer()+" has not decidied to sponsor");
 				server.serverModel.nextPlayer();
+				server.serverModel.currentState.handle();
 			}
 			break;
 			
@@ -116,10 +117,13 @@ public class ServerThread extends Thread {
 				String ID = c.getID();
 				server.serverModel.draw(ID,playerNum);
 				server.sendServerMessage("SERVERMESSAGE--DRAW--" + playerNum + "--" + ID);
+				server.serverModel.nextPlayer();
+				server.serverModel.currentState.handle();
 
 			} else {
 				server.sendServerMessage("SERVERMESSAGE--MESSAGE--"+playerNum+" has NOT decidied to quest");
 				server.serverModel.nextPlayer();
+				server.serverModel.currentState.handle();
 			}
 			break;
 			

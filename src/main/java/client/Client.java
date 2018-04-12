@@ -48,11 +48,11 @@ public class Client {
 
 		// clientModel.deal(); //COMMENT OUT FOR SET SCENEARIOS
 
-		clientModel.setScenario1(); // UNCOMMENT FOR SCEN 1
+//		clientModel.setScenario1(); // UNCOMMENT FOR SCEN 1
 
 		// clientModel.setScenario2(); //UNCOMMENT FOR SCEN 2
 
-//		 clientModel.setScenarioTest();
+		 clientModel.setScenarioTest();
 		 
 		// clientModel.setScenarioTest();
 
@@ -147,7 +147,9 @@ public class Client {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					view.info(serverMessageComponents[2]);
+					//TODO : "FIX ME IN DEMOS"
+					// FIXTO
+					//view.info(serverMessageComponents[2]);
 				}
 			});
 
@@ -439,7 +441,7 @@ public class Client {
 		}
 
 		else if (clickType.equals(View.STAGE)) {
-			if (clientModel.stage(ID, playerNumber, playerNumber + clientModel.getStage().getCurrentStage())) {
+			if (clientModel.stage(ID, playerNumber,clientModel.getStage().getCurrentStage())) {
 				sendClientMessage("CLIENTMESSAGE--STAGE--" + ID + "--" + playerNumber + "--"
 						+ clientModel.getStage().getCurrentStage());
 			}

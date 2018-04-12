@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 public class Player {
 	private static final Logger logger = LogManager.getLogger(Player.class);
 
-	private int allyBonusBattlePoints = 0;
+	public int allyBonusBattlePoints = 0;
 	
 	public int AllyBidBonus = 0;
 	
@@ -106,7 +106,9 @@ public class Player {
 		
 		return playerBP;
 	}
-	
+	public int getTotalBattlePoint() {
+		return getBattlePoint()+ getPartyBattlesPoint()+getAllyBonusBattlePoints();
+	}
 	public int getPartyBattlesPoint() {
 		int allypoints = 0;
 		if (this.getParty() != null) {
