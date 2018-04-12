@@ -470,13 +470,15 @@ logger.info("Handling questing info");
 		
 		serverModel.stageOver();
 		
-		serverModel.getStage().nextStage();
+		
 	
 		if(serverModel.getStage().getCurrentStage()+1==((QuestCard)serverModel.getState().currentStoryCard).getNumStages() ) {
 		
 			resolveQuest();
 		
 		
+			}else {
+				serverModel.getStage().nextStage();
 			}
 			
 		}
