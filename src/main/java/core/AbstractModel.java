@@ -585,6 +585,7 @@ public abstract class AbstractModel {
 		
 		for (int i = 0; i < getPlayers().length; ++i) {
 
+			this.stageOver();
 			players[i].isSponsor = false;
 			players[i].isQuesting = false;
 			players[i].passedQuest = false;
@@ -593,6 +594,8 @@ public abstract class AbstractModel {
 			players[i].isTournamenting= false;
 			players[i].declinedToQuest = false;
 			players[i].hasQueuedAgainstStage = false;
+			players[i].isTournamenting = false;
+			players[i].isTournamentWinner = false;
 			// remove stage cards
 			instantiateStages(); 
 

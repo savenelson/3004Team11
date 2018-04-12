@@ -364,7 +364,7 @@ public class ClientModel extends AbstractModel {
 	public void nextStory() {
 		logger.info("nextStory() called");
 		// get ready for the next person
-
+		this.getCurrentState().reset();
 		super.nextStory();
 		playGame();
 		control.updateViewState();
