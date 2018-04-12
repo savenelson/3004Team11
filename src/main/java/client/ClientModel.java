@@ -365,6 +365,7 @@ public class ClientModel extends AbstractModel {
 		// get ready for the next person
 
 		super.nextStory();
+		playGame();
 		control.updateViewState();
 	}
 

@@ -349,6 +349,8 @@ logger.info("Handling questing info");
 		numOfQuester = 0;
 
 		numOfRepsonders = 0;
+		
+		
 
 	}
 
@@ -406,6 +408,7 @@ logger.info("Handling questing info");
 					logger.info(players[i] +" has passed the quest and is receving  shields :"+ numShields );
 					serverModel.addShields(numShields,i);
 					serverModel.server.sendServerMessage("SERVERMESSAGE--ADDSHIELDS--" +i + "--" + numShields);
+					reset();
 					
 				}
 
@@ -413,7 +416,9 @@ logger.info("Handling questing info");
 		}
 		
 		
-		serverModel.nextStory();
+		numOfQuesterPotential =0;
+		
+		
 	
 
 		

@@ -156,7 +156,7 @@ public class Client {
 			getServerMessage();
 			break;
 		case "RESOLVESTAGE":
-			clientModel.getQuesterManger().resolveStage();
+			clientModel.getCurrentState().resolveStage();
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
@@ -208,6 +208,7 @@ public class Client {
 			break;
 			
 		case "NEXTSTORY":
+			clientModel.getCurrentState().reset();
 			clientModel.nextStory();
 			break;
 		case "UPDATE":

@@ -136,4 +136,27 @@ public class TournamentManger implements StoryCardState {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void reset() {
+	tournamentersReady = false;
+
+	numberOfCardsToReturn = 0;
+		
+	 numberOfEndTurnsCalled = 0;		//the number of end turns
+
+		numberOfrequests = 0;
+
+		
+
+		 numOfQuesterPotential = 0;
+
+	numOfQuester = 0;
+
+		numOfRepsonders = 0;
+
+		nextPersonToDraw = 0;
+
+		
+	}
 }

@@ -30,6 +30,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import server.ServerModel;
 import core.AdventureCard;
 import core.CardCollection;
 import core.FoeCard;
@@ -437,7 +438,11 @@ public class View extends Application {
 
 			public void handle(ActionEvent event) {
 				logger.info("nextStageButton clicked");
-				control.nextStory();
+			
+				control.stageOver();
+				control.clientModel.getCurrentState().reset();
+				
+				control.sendClientMessage("CLIENTMESSAGE--NEXTSTAGE--");
 				//update(stage);
 			}
 		});

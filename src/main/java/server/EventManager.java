@@ -360,7 +360,7 @@ public class EventManager implements  StoryCardState {
 
 	@Override
 	public boolean canEndTurn() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -383,6 +383,12 @@ public class EventManager implements  StoryCardState {
 
 	@Override
 	public void resolveTournament() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void reset() {
 		// TODO Auto-generated method stub
 		
 	}

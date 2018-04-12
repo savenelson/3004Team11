@@ -127,4 +127,11 @@ public class TournamentManger implements StoryCardState {
 		
 	}
 
+
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

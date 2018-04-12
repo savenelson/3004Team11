@@ -146,7 +146,9 @@ public class ServerThread extends Thread {
 		
 			break;
 			
-		case "SETSTORYCARD":
+		case "NEXTSTAGE":
+			server.serverModel.nextStory();
+			break;
 			
 
 		case "ENDTURN":

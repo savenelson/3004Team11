@@ -257,7 +257,7 @@ public void nextPlayer() {
 	// TODO Auto-generated method stub		
 			
 	//clientModel.nextPlayer();
-	clientModel.nextStory();
+
 	
 }
 
@@ -300,6 +300,13 @@ public void increaseResponse() {
 
 @Override
 public void resolveTournament() {
+	// TODO Auto-generated method stub
+	
+}
+
+
+@Override
+public void reset() {
 	// TODO Auto-generated method stub
 	
 }

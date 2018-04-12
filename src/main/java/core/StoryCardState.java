@@ -10,4 +10,5 @@ public interface StoryCardState {
 	void resolveTournament();
 	//void resolveQuest();
 	void increaseResponse();
+	void reset();
 }
