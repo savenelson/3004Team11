@@ -71,9 +71,6 @@ public abstract class AbstractModel {
 
 	protected ArrayList<CardCollection<AdventureCard>> stages;
 
-	public ArrayList<CardCollection<AdventureCard>> getStages() {
-		return stages;
-	}
 
 	protected QuestingStage stage;
 
