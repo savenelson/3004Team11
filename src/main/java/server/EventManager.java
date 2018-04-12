@@ -232,7 +232,7 @@ public class EventManager implements  StoryCardState {
 
 			if ((players[i].getRank()).getSubType().equals("Squire")) {
 				squireCount++;
-				lowestShieldSquire = players[i].getShieldCount();
+				
 				if (lowestShieldSquire > players[i].getShieldCount()) {
 					lowestShieldSquire = players[i].getShieldCount();
 				}

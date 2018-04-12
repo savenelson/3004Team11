@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import core.Player;
 import core.QuesterQueque;
 import core.StoryCardState;
+import server.ServerModel;
 
 public class TournamentManger implements StoryCardState {
 	
@@ -72,16 +73,17 @@ public class TournamentManger implements StoryCardState {
 
 	@Override
 	public boolean canEndTurn() {
-		//	public boolean checkHandSize() {
-		logger.debug("checkHandSize() called");
+//		public boolean checkHandSize() {
+			logger.debug("checkHandSize() called");
 
-		// if the hand is bigger then 12 then reurn false
-		if (clientModel.getActivePlayer().getHand().size() > 12) {
-			// clientModel.control.alert("Hand Size is too large, please discard");
-			logger.info("Player " + clientModel.getActivePlayer().getPlayerNumber() + " hand too large");
-			return false;
-		}
-		return true;
+			// if the hand is bigger then 12 then reurn false
+			if (clientModel.getActivePlayer().getHand().size() > 12) {
+				// clientModel.control.alert("Hand Size is too large, please discard");
+				logger.info("Player " + clientModel.getActivePlayer().getPlayerNumber() + " hand too large");
+				clientModel.control.alert("Your hand size is to big with "+ clientModel.getActivePlayer().getHand().size());
+				return false;
+			}
+			return true;
 	}
 
 	@Override

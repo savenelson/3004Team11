@@ -272,7 +272,7 @@ public void setPlayer() {
 @Override
 public boolean canEndTurn() {
 	// TODO Auto-generated method stub
-	clientModel.nextStory();
+
 	return true;
 }
 

@@ -139,6 +139,7 @@ public class ClientModel extends AbstractModel {
 
 		state.isQuesting = super.players[currentPlayer].isQuesting;
 
+		state.isTournamenting   = super.players[currentPlayer].isTournamenting;
 		state.currentSponsor = super.getCurrentSponsor();
 
 		state.inNextQ = super.inNextQ;
