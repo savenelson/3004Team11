@@ -147,7 +147,9 @@ public class Client {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					view.info(serverMessageComponents[2]);
+					//TODO : "FIX ME IN DEMOS"
+					// FIXTO
+					//view.info(serverMessageComponents[2]);
 				}
 			});
 

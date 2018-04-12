@@ -165,12 +165,12 @@ public class View extends Application {
 	public void info(String message) {
 		logger.debug("info() called");
 
-//		FIXME OPEN THEIS BACCK UP
-//		Alert alert = new Alert(AlertType.INFORMATION, message);
-//		Optional<ButtonType> result = alert.showAndWait();
-//		if (result.isPresent() && result.get() == ButtonType.OK) {
-//
-//		}
+
+		Alert alert = new Alert(AlertType.INFORMATION, message);
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.isPresent() && result.get() == ButtonType.OK) {
+
+		}
 	}
 
 	@Override

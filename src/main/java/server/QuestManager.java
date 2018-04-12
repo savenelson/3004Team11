@@ -108,196 +108,45 @@ logger.info("Handling questing info");
 		
 		}else {// I have went around all the players and no want to sponsor 
 			//go to next story Cards}
-			logger.info(" No one wanted to Sponsor lets go to the NEXT STORY GUY");
+			logger.info(" No one wanted to Sponsor lets go to the next story card");
 		}
 	}
 		
 		
 		// Questers asking
 		// if I have a sponsor and the quester are not ready then ask the current player
-		/*
+		
 		if(hasSponsor && !questersReady) {
 			// if I have a sponsor and the quester are not ready then ask the current plater
-			if(!this.model.getActivePlayer().declinedQuesting && !this.model.getActivePlayer().isSponsor) {
-				boolean isQuesting = model.control.getQuestingDecision();
-				
-				
-				if(isQuesting) {
-					logger.info("THe Player has decidied to quest ");
-					model.getActivePlayer().isQuesting = true;
-					questers.add(model.getActivePlayer().getPlayerNumber());
-					
-				}
-				//they have answered
-				this.model.getActivePlayer().declinedQuesting = true;
-				
-				numberOfrequests++;
-				
-			}
-			
-			
-		}if(numOfQuesterPotential == numberOfrequests ) {
-			// I return to the sponor 
-			if(questers.isEmpty()) {
-				numberOfrequests = 0;
-				
-				logger.info("I have no  any questers ");
-				// should go to the next story hard 
-			}else {
-				// The questers are ready adn we are ready to begin questing
-				
-				//logger.info("I do have some questers. Let us begin our adventures ");
-				questersReady = true;
-				logger.info("I do have some questers. Let us begin our adventures ");
-				
-				numberOfrequests = 0 ;
-				
-				
-			}
-			
-		}
-		if(questersReady ) {
-			//begins the stage
-			logger.info("Done  hh"+ numOfRepsonders);
-			
-			numOfQuester = questers.size();
-			if(numOfQuester==numOfRepsonders) {
-				//all the questers made their choice time to resolve stage;
-				logger.info("Done  hh"+ numOfRepsonders);
-				
-				
-				
-				
-			}else {
-				logger.info("Current "+ numOfRepsonders);
-				
-			}
-			
-			
-		}
-	}
-		if (!hasSponsor) {
-
-			// if I haven't ask to sponsor yet then ask ORIGINAL
-			if(!this.serverModel.getActivePlayer().declinedToSponsor) {
-			
-				this.serverModel.getActivePlayer().declinedToSponsor = true;
-
-				serverModel.server.getSponsorDecision();		
-		}else {
-			
-			logger.info("I SHOULD HAVE BEeN DONE ");
-			
-		}
-		}
-		
-		
-		if(!questersReady && hasSponsor &&!this.serverModel.getActivePlayer().declinedToQuest) {
-			logger.info(numberOfEndTurnsCalled+ "Num of end turns ");
-		
-			
-			// if I haven't ask to quester yet then ask
-	
-				this.serverModel.getActivePlayer().declinedToQuest = true;
+			if(!this.serverModel.getActivePlayer().declinedToQuest && !this.serverModel.getActivePlayer().isSponsor) {
 				serverModel.server.getQuesterDecison();
-			
-			// numOfQuesterPotential
-			if (numberOfEndTurnsCalled == numOfQuesterPotential) {
 				
-			}
+				//they have answered
+				this.serverModel.getActivePlayer().declinedToQuest = true;
+			}else {
 				questersReady = true;
-				numberOfEndTurnsCalled = 0;
 			}
+			
+			
+		}
+	
 
-			if (questersReady && numberOfEndTurnsCalled == numOfQuesterPotential) {
-				resolveStage();
-				for (int i = 0; i < serverModel.getNumPlayers(); ++i) {
-					
-					logger.info("player" + i + " passed stage?: " + players[i].passedStage + " number End  : "+ numberOfEndTurnsCalled);
-				}
-
-				serverModel.server.resolveStage();
+		if(questersReady &&numOfQuesterPotential == numOfRepsonders ) {
+			//begins the stage
+			resolveStage();
+			serverModel.server.resolveStage();
+			for (int i = 0; i < serverModel.getPlayers().length; ++i) {
+				
+				logger.info("player" + i + " passed stage?: " + players[i].passedStage + " number End  : "+ numOfRepsonders);
 				
 			}
-		}
-		*/
 
-		/*
-		 * if(numberOfEndTurnsCalled == 0 ) { nextPersonToDraw =
-		 * model.getActivePlayer().getPlayerNumber() +1; if(nextPersonToDraw>
-		 * model.getPlayers().length){nextPersonToDraw = 0;} }
-		 * 
-		 * numberOfEndTurnsCalled++;
-		 * 
-		 * // if they do want to sponsor then make them the sponsors if(wantToSponsor) {
-		 * logger.info("Found a sponsor "); hasSponsor = true;
-		 * 
-		 * model.getActivePlayer().isSponsor = true; numberOfEndTurnsCalled = 0;
-		 * 
-		 * wantToSponsor = false;
-		 * 
-		 * model.control.updateViewState();
-		 * 
-		 * } // changed that they have asked model.getActivePlayer().declinedToSponsor =
-		 * true;
-		 * 
-		 * }else {// I have went around all the players and no want to sponsor //go to
-		 * next story Cards}
-		 * logger.info(" No one wanted to Sponsor lets go to the NEXT STORY GUY"); } }
-		 * 
-		 * 
-		 * // Questers asking // if I have a sponsor and the quester are not ready then
-		 * ask the current player if(hasSponsor && !questersReady) { // if I have a
-		 * sponsor and the quester are not ready then ask the current plater
-		 * if(!this.model.getActivePlayer().declinedQuesting &&
-		 * !this.model.getActivePlayer().isSponsor) { boolean isQuesting =
-		 * model.control.getQuestingDecision();
-		 * 
-		 * 
-		 * if(isQuesting) { logger.info("THe Player has decidied to quest ");
-		 * model.getActivePlayer().isQuesting = true;
-		 * questers.add(model.getActivePlayer().getPlayerNumber());
-		 * 
-		 * } //they have answered this.model.getActivePlayer().declinedQuesting = true;
-		 * 
-		 * numberOfEndTurnsCalled++;
-		 * 
-		 * }
-		 * 
-		 * 
-		 * }if(numOfQuesterPotential == numberOfEndTurnsCalled ) { // I return to the sponor
-		 * if(questers.isEmpty()) { numberOfEndTurnsCalled = 0;
-		 * 
-		 * logger.info("I have no  any questers "); // should go to the next story hard
-		 * }else { // The questers are ready adn we are ready to begin questing
-		 * 
-		 * //logger.info("I do have some questers. Let us begin our adventures ");
-		 * questersReady = true;
-		 * logger.info("I do have some questers. Let us begin our adventures ");
-		 * 
-		 * numberOfEndTurnsCalled = 0 ;
-		 * 
-		 * 
-		 * }
-		 * 
-		 * } if(questersReady ) { //begins the stage logger.info("Done  hh"+
-		 * numOfRepsonders);
-		 * 
-		 * numOfQuester = questers.size(); if(numOfQuester==numOfRepsonders) { //all the
-		 * questers made their choice time to resolve stage; logger.info("Done  hh"+
-		 * numOfRepsonders);
-		 * 
-		 * 
-		 * 
-		 * 
-		 * }else { logger.info("Current "+ numOfRepsonders);
-		 * 
-		 * }
-		 * 
-		 * 
-		 * }
-		 */
-	}
+			numOfRepsonders =0;
+			}
+		
+		}
+		
+		
 
 	public void nextPlayer() {
 
@@ -305,7 +154,7 @@ logger.info("Handling questing info");
 			// making sure the Stage starts at 1
 
 			serverModel.resetCurrentStage();
-
+			numberOfCardsToReturn = numberOfCardsForSponsor();
 		}
 		if (!questersReady) {
 			// If not ready for sponsor then loop
@@ -412,6 +261,7 @@ logger.info("Handling questing info");
 		 * check each stage if they us a weapon card
 		 * 
 		 */
+	
 		int numOfCardsInStaging = 0;
 		int numStages = ((QuestCard) serverModel.getCurrentStoryCard()).getNumStages();
 		for (int i = 0; i < numStages; ++i) {
@@ -428,6 +278,7 @@ logger.info("Handling questing info");
 				}
 			}
 		}
+		logger.info("num for sponsors is "+ numOfCardsInStaging);
 		return numOfCardsInStaging;
 	}
 
@@ -509,6 +360,8 @@ logger.info("Handling questing info");
 
 	public int resolveQuest() {
 		// Left it here because of one of the event cards
+		
+		players = serverModel.getPlayers();
 
 		/**
 		 * To resolve a Quest, we need to count the following data structures: - players
@@ -516,49 +369,49 @@ logger.info("Handling questing info");
 		 */
 		logger.info("resolveQuest() called");
 
-		int numStages = serverModel.numStages;
 
-		boolean inNextQ = false;
-		if (inNextQ) {
+		boolean isKingRecognition = serverModel.isKingRecognition();
+		if(isKingRecognition) {
+			
+			for (int i = 0; i <serverModel.getPlayers().length; i++) {
+				if(!players[i].isSponsor && players[i].passedStage && players[i].isQuesting){
 
-			for (int i = 0; i < serverModel.getNumPlayers(); i++) {
-				if (!players[i].isSponsor) {
-
-					this.players[i].addShields(2);
-				}
-				inNextQ = false;
+				this.players[i].addShields(2);
+			}
+				serverModel.setKingRecognition(false);;
 			}
 		}
+
+		
 
 		int numShields = ((QuestCard) serverModel.getCurrentStoryCard()).getNumStages();
 		logger.info("Number of Stages: " + numShields);
 
 		// TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
-		for (int i = 0; i < serverModel.getNumPlayers(); ++i) {
+		for (int i = 0; i < serverModel.getPlayers().length; ++i) {
+			logger.info("Sponsor is getting " + numberOfCardsToReturn);
 			if (players[i].isSponsor) {
-				logger.info("Sponsor is getting " + numberOfCardsToReturn);
+				
 				for (int j = 0; j < numberOfCardsToReturn; j++) {
-
-					// players[i].addToHand(new WeaponCard(WeaponCard.SWORD_NAME,
-					// WeaponCard.SWORD_BATTLE_POINTS));
-					players[j].addToHand(serverModel.getAdventureDeck().pop());
+					AdventureCard c = this.serverModel.getAdventureDeck().peek();
+					String ID = c.getID();
+					serverModel.draw(ID,players[i].getPlayerNumber());
+					serverModel.server.sendServerMessage("SERVERMESSAGE--DRAW--" + players[i].getPlayerNumber() + "--" + ID);
 				}
 			}
-			if (!players[i].isSponsor && players[i].passedStage) {
-
+			if (!players[i].isSponsor && players[i].passedStage && players[i].isQuesting) {
+		
+				players[i].passedQuest = true;
 				if (players[i].passedQuest) {
+					logger.info(players[i] +" has passed the quest and is receving  shields :"+ numShields );
 					players[i].addShields(numShields);
-					for (int j = 0; j < numStages; j++) {
-						AdventureCard c = serverModel.getAdventureDeck().pop();
-						this.players[i].addToHand(c);
-						serverModel.getAdventureDeckDiscard().add(c);
-					}
+					
 				}
 
 			}
 		}
 
-		// serverModel.control.resolveQuest();
+		
 
 		return 0;
 	}
@@ -570,8 +423,9 @@ logger.info("Handling questing info");
 		 */
 		CardCollection<AdventureCard> currStage = serverModel.getStage().getStageAt(serverModel.getStage().getCurrentStage());
 		
+		
 		serverModel.allysInPlay();
-		logger.info("RESOLVING STAGE");
+		logger.info("Current Stage num"+serverModel.getStage().getCurrentStage());
 		
 		int stageBP = 0;
 		
@@ -591,10 +445,12 @@ logger.info("Handling questing info");
 				playerBP += serverModel.getPlayers()[i].getPartyBattlesPoint();
 				playerBP += serverModel.getPlayers()[i].getAllyBonusBattlePoints();
 				
-				logger.info( "Player ally battle points "+serverModel.getPlayers()[i].getPartyBattlesPoint());
+				logger.info( serverModel.getPlayers()[i].getTotalBattlePoint()+" TotalPoints: " + serverModel.getPlayers()[i].getTotalBattlePoint()+ "vs Stage BP :" + stageBP);
 				if (playerBP>=stageBP && serverModel.getPlayers()[i].isQuesting) {
+					logger.info(serverModel.getPlayers()[i] +" has passed the stage ");
+					
 					players[i].passedStage = true;
-					if(serverModel.getState().currentStage+1 ==((QuestCard)serverModel.getState().currentStoryCard).getNumStages()) {
+					if(serverModel.getStage().getCurrentStage()+1 ==((QuestCard)serverModel.getState().currentStoryCard).getNumStages()) {
 						players[i].isQuesting = true;
 					}
 					
@@ -609,13 +465,31 @@ logger.info("Handling questing info");
 				
 					
 				}
+		
+		serverModel.stageOver();
+		
+		serverModel.getStage().nextStage();
 	
-		if(serverModel.getState().currentStage+1 ==((QuestCard)serverModel.getState().currentStoryCard).getNumStages() ) {
-			
+		if(serverModel.getStage().getCurrentStage()+1==((QuestCard)serverModel.getState().currentStoryCard).getNumStages() ) {
+		
 			resolveQuest();
 		
 			
 		
+		}else {
+			
+			
+			for(int i = 0; i < serverModel.getPlayers().length; ++i) {
+				
+			if(players[i].passedStage&& (players[i].isQuesting)&& players[i].passedStage) {
+			logger.info("Player i"+ i + " is receving a card for the new stage");
+			AdventureCard c = this.serverModel.getAdventureDeck().peek();
+			String ID = c.getID();
+			serverModel.draw(ID,players[i].getPlayerNumber());
+			serverModel.server.sendServerMessage("SERVERMESSAGE--DRAW--" + players[i].getPlayerNumber() + "--" + ID);
+			}
+			}
+			
 		}
 
 
@@ -645,8 +519,11 @@ logger.info("Handling questing info");
 	@Override
 	public void increaseResponse() {
 		
-		if(hasSponsor) {
-			numberOfEndTurnsCalled++;
+		if(hasSponsor && !questersReady) {
+			numOfRepsonders++;
+		}
+		if(hasSponsor && questersReady) {
+			numOfRepsonders++;
 		}
 	}
 

@@ -345,7 +345,7 @@ public abstract class AbstractModel {
 	public void stageOver() {
 		logger.info("stageOver() called");
 
-		for (int i = 0; i < this.numPlayers; ++i) {
+		for (int i = 0; i < this.getPlayers().length; ++i) {
 			if (!this.players[i].isSponsor && this.players[i].isQuesting) {
 
 				int size = this.players[i].getQueue().size();
@@ -610,7 +610,7 @@ public abstract class AbstractModel {
 		storyDeckDiscard.add(this.getCurrentStoryCard());
 
 		this.setCurrentStoryCard(storyDeck.pop());
-		logger.info("Story card up next " + getCurrentStoryCard().getName());
+		//logger.info("Story card up next " + getCurrentStoryCard().getName());
 
 		this.currentStage = 0;
 		getStage().resetCurrentStage();

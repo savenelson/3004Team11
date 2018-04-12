@@ -106,7 +106,9 @@ public class Player {
 		
 		return playerBP;
 	}
-	
+	public int getTotalBattlePoint() {
+		return getBattlePoint()+ getPartyBattlesPoint()+getAllyBonusBattlePoints();
+	}
 	public int getPartyBattlesPoint() {
 		int allypoints = 0;
 		if (this.getParty() != null) {

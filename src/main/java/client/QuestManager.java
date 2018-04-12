@@ -494,7 +494,7 @@ public class QuestManager implements StoryCardState{
 			logger.info(currStage.size());
 			stageBP += currStage.get(i).getBattlePoints();
 		}
-		// clientModel.allysInPlay();
+		
 		logger.info("STAGES POINTS "+stageBP);
 		players = clientModel.getPlayers();
 		for(int i = 0; i < clientModel.getPlayers().length; ++i){
@@ -509,7 +509,7 @@ public class QuestManager implements StoryCardState{
 				logger.info( "Player ally battle points "+clientModel.getPlayers()[i].getPartyBattlesPoint());
 				if (playerBP>=stageBP && clientModel.getPlayers()[i].isQuesting) {
 					players[i].passedStage = true;
-					if(clientModel.getState().currentStage+1 ==((QuestCard)clientModel.getState().currentStoryCard).getNumStages()) {
+					if(clientModel.getStage().getCurrentStage()+1 ==((QuestCard)clientModel.getState().currentStoryCard).getNumStages()) {
 						players[i].isQuesting = true;
 					}
 					
@@ -525,44 +525,15 @@ public class QuestManager implements StoryCardState{
 					
 				}
 	
-		if(clientModel.getState().currentStage+1 ==((QuestCard)clientModel.getState().currentStoryCard).getNumStages() ) {
+		if(clientModel.getStage().getCurrentStage()+1 ==((QuestCard)clientModel.getState().currentStoryCard).getNumStages() ) {
 			
 			resolveQuest();
 		
-			
-		
+
 		}
+		
 
-		//
-				
-
-			
-		/*
-		if(clientModel.getStage().getCurrentStage()+1== ((QuestCard) clientModel.currentStoryCard).getNumStages()){
-			//restart the Questmanger
-			hasSponsor = false;
-			questersReady = false;
-			
-			numOfansewers =0 ;
-			
-			numberOfrequests = 0;
-			
-			questers.clear(); 
-			numOfQuesterPotential = 0;
-			
-			numOfQuester = 0;
-			numOfRepsonders = 0 ;
-			nextPersonToDraw= 0;
-			
-			
-			
-			
-			clientModel.setDoneQuestingMode(true);
-			
-
-			resolveQuest();
-
-		}*/
+	
 	}
 	
 

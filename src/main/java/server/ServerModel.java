@@ -94,6 +94,8 @@ public class ServerModel extends AbstractModel {
 	private int numPlayers;
 	int numStages;
 
+	private boolean isKingRecognition = false;
+
 
 
 	public ArrayList<CardCollection<AdventureCard>> getStages() {
@@ -204,11 +206,11 @@ public class ServerModel extends AbstractModel {
 	}
 
 	public void endTurn() {
-		logger.debug("endTurn() called");
+		
 
 		currentState.increaseResponse();
 
-		logger.info("I end turn called changing s ");
+		logger.info("I end turn called changing ");
 
 		currentState.nextPlayer();
 		
@@ -316,5 +318,11 @@ public class ServerModel extends AbstractModel {
 	}
 	public void setNumPlayers(int numPlayers) {
 		this.numPlayers = numPlayers;
+	}
+	public boolean isKingRecognition() {
+		return isKingRecognition;
+	}
+	public void setKingRecognition(boolean isKingRecognition) {
+		this.isKingRecognition = isKingRecognition;
 	}
 }

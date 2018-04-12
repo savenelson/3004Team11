@@ -97,7 +97,7 @@ public class EventManager implements  StoryCardState {
 	// execute the special in event here
 	public void KingsRecognition() {
 		logger.info("KingsRecognition is in play and gives the next players to complete a quest 2 shields");
-		this.nextQ = true;
+	     serverModel.setKingRecognition(true);
 
 	}
 
@@ -351,6 +351,8 @@ public class EventManager implements  StoryCardState {
 
 	@Override
 	public void nextPlayer() {
+		serverModel.nextPlayer();
+		
 		// TODO Auto-generated method stub
 		
 	}
