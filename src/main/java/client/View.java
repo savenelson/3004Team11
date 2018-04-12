@@ -30,6 +30,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import server.ServerModel;
 import core.AdventureCard;
 import core.CardCollection;
 import core.FoeCard;
@@ -336,7 +337,7 @@ public class View extends Application {
 			tile.relocate(colStage, rowStage);
 
 			canvas.getChildren().add(tile);
-		} else if (state.isQuesting && ((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)) {
+		} else if (state.isTournamenting && ((StoryCard) state.currentStoryCard).getSubType().equals(StoryCard.TOURNAMENT)) {
 			
 
 			state = control.getState();
@@ -344,7 +345,7 @@ public class View extends Application {
 			Label queueCardsLabel;
 			Label stageLabel;
 		
-			stageLabel = new Label("You Have entered the Tournament Good Luck");
+			stageLabel = new Label("You Have entered the Tournament ");
 	
 
 			stageLabel.setFont(Font.font("Serif", FontWeight.BOLD, 60));
@@ -437,7 +438,11 @@ public class View extends Application {
 
 			public void handle(ActionEvent event) {
 				logger.info("nextStageButton clicked");
-				control.nextStory();
+			
+				control.stageOver();
+				control.clientModel.getCurrentState().reset();
+				
+				control.sendClientMessage("CLIENTMESSAGE--NEXTSTAGE--");
 				//update(stage);
 			}
 		});
@@ -1155,7 +1160,10 @@ public class View extends Application {
 				public void handle(ActionEvent event) {
 					logger.info("nextStageButton clicked");
 
-					control.nextStage();
+					control.stageOver();
+					control.clientModel.getCurrentState().reset();
+					
+					control.sendClientMessage("CLIENTMESSAGE--NEXTSTAGE--");
 				}
 			});
 

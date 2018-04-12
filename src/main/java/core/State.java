@@ -39,6 +39,10 @@ public class State {
 	public int stageOverCount;
 	
 	public boolean isQuesting;
+
+	public boolean isTournamenting;
+	
+
 	
 	@Override
 	public String toString() {

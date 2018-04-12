@@ -56,7 +56,7 @@ public class ServerModel extends AbstractModel {
 	private CardCollection<AdventureCard> adventureDeckDiscard;
 
 	public CardCollection<AdventureCard> getAdventureDeckDiscard() {
-		return super.adventureDeck;
+		return super.adventureDeckDiscard;
 	}
 
 
@@ -291,7 +291,7 @@ public class ServerModel extends AbstractModel {
 		// get ready for the next person
 		server.sendServerMessage("SERVERMESSAGE--NEXTSTORY--");
 		super.nextStory();
-		
+		playGame();
 	}
 
 	public void setScenario1() {

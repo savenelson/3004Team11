@@ -581,10 +581,11 @@ public abstract class AbstractModel {
 		logger.info("nextStory() called");
 		// get ready for the next person
 
-		this.setDoneQuestingMode(false);
+		//this.setDoneQuestingMode(false);
 		
 		for (int i = 0; i < getPlayers().length; ++i) {
 
+			this.stageOver();
 			players[i].isSponsor = false;
 			players[i].isQuesting = false;
 			players[i].passedQuest = false;
@@ -593,6 +594,8 @@ public abstract class AbstractModel {
 			players[i].isTournamenting= false;
 			players[i].declinedToQuest = false;
 			players[i].hasQueuedAgainstStage = false;
+			players[i].isTournamenting = false;
+			players[i].isTournamentWinner = false;
 			// remove stage cards
 			instantiateStages(); 
 
@@ -610,15 +613,13 @@ public abstract class AbstractModel {
 		storyDeckDiscard.add(this.getCurrentStoryCard());
 
 		this.setCurrentStoryCard(storyDeck.pop());
-		//logger.info("Story card up next " + getCurrentStoryCard().getName());
-
-		this.currentStage = 0;
-		getStage().resetCurrentStage();
-
 	
+
+
+		getStage().resetCurrentStage();
 		
-		playGame();
-		currentState.handle();
+	
+	
 	}
 
 	public void setScenario1() {
