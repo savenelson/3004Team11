@@ -242,32 +242,7 @@ public void Plague() {
 public void handle() {
 	// TODO Auto-generated method stub
 	
-	String eventName = clientModel.currentStoryCard.getName();
-	System.out.println(clientModel.currentStoryCard.getName());
 
-
-	if(eventName.equals("KingsRecognition")) {
-		KingsRecognition();
-	}else if(eventName.equals("QueensFavor")) {
-		QueenFavor();
-		
-	}else if(eventName.equals("Pox")) {
-		Pox();
-	}else if(eventName.equals("KingsCallToArms")) {
-		KingCallToArms();
-	}else if(eventName.equals("ProsperityThroughoutTheRealm")) {
-		ProsperityThroughoutTheRealm();
-		
-	}else if(eventName.equals("ChivalrousDeed")) {
-		ChilvarousDeed();
-	
-	}else if(eventName.equals("Plague")) {
-		Plague();
-		
-	}else if(eventName.equals("CourtCalled")) {
-		CourtCalled();
-	}
-	
 	
 }
 
@@ -281,7 +256,7 @@ public Player nextPlayer1() {
 public void nextPlayer() {
 	// TODO Auto-generated method stub		
 			
-	clientModel.nextPlayer();
+	//clientModel.nextPlayer();
 	clientModel.nextStory();
 	
 }
@@ -297,7 +272,8 @@ public void setPlayer() {
 @Override
 public boolean canEndTurn() {
 	// TODO Auto-generated method stub
-	return false;
+
+	return true;
 }
 
 

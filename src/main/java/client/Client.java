@@ -199,6 +199,17 @@ public class Client {
 			getServerMessage();
 			break;
 
+		case "ADDSHIELDS":
+			
+			clientModel.addShields(Integer.parseInt(serverMessageComponents[3]),
+					Integer.parseInt(serverMessageComponents[2]));
+			updateViewState();
+			getServerMessage();
+			break;
+			
+		case "NEXTSTORY":
+			clientModel.nextStory();
+			break;
 		case "UPDATE":
 			if (serverMessageComponents[2].equals(Integer.toString(this.playerNumber))) {
 				logger.info("Message was instigated by this client and not processed");

@@ -440,34 +440,10 @@ public class QuestManager implements StoryCardState{
 		logger.info("Number of Stages: " + numShields);*/
 
 		//TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
-		
-		for (int i = 0; i < clientModel.getPlayers().length; ++i){
-			if(players[i].isSponsor) {
-				logger.info("Sponsor is getting "+ numberOfCardsToReturn);
-				for(int j = 0 ; j< numberOfCardsToReturn; j ++) {
 	
-					
-					//players[j].addToHand(clientModel.getAdventureDeck().pop());
-				}
-			}	
 			
 
-			if(!players[i].isSponsor){
-
-				
-
-				//if(players[i].passedQuest) {
-//				//	players[i].addShields(numShields);
-				//	for(int j=0;j<numStages;j++) {
-						//AdventureCard c = clientModel.getAdventureDeck().pop();
-						//this.players[i].addToHand(c);
-						//clientModel.getAdventureDeckDiscard().add(c);
-					
-				//}
-
-			}
 			
-		}
 	
 		clientModel.setDoneQuestingMode(true);
 		return 0;

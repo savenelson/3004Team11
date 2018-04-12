@@ -289,7 +289,7 @@ public class ServerModel extends AbstractModel {
 	public void nextStory() {
 		logger.info("nextStory() called");
 		// get ready for the next person
-
+		server.sendServerMessage("SERVERMESSAGE--NEXTSTORY--");
 		super.nextStory();
 		
 	}

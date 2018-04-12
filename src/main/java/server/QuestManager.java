@@ -404,12 +404,17 @@ logger.info("Handling questing info");
 				players[i].passedQuest = true;
 				if (players[i].passedQuest) {
 					logger.info(players[i] +" has passed the quest and is receving  shields :"+ numShields );
-					players[i].addShields(numShields);
+					serverModel.addShields(numShields,i);
+					serverModel.server.sendServerMessage("SERVERMESSAGE--ADDSHIELDS--" +i + "--" + numShields);
 					
 				}
 
 			}
 		}
+		
+		
+		serverModel.nextStory();
+	
 
 		
 
