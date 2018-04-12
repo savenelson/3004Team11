@@ -50,10 +50,11 @@ public class StoryDeck extends CardCollection<StoryCard>{
 	
 	public StoryDeck(int demos) {
 
-
+		
+		cards.add(new QuestCard(QuestCard.BOAR_HUNT,QuestCard.BOAR_HUNT_STAGES,QuestCard.BOAR_HUNT_FOE));
 		cards.add(new EventCard(EventCard.CHIVALROUS_DEED_NAME));
 		cards.add(new EventCard(EventCard.PROSPERITY_NAME));
-		cards.add(new QuestCard(QuestCard.BOAR_HUNT,QuestCard.BOAR_HUNT_STAGES,QuestCard.BOAR_HUNT_FOE));
+		
 		cards.add(new TournamentCard(TournamentCard.CAMELOT_NAME, TournamentCard.CAMELOT_SHIELDS));
 		cards.add(new QuestCard(QuestCard.SLAY_DRAGON,QuestCard.SLAY_DRAGON_STAGES,QuestCard.SLAY_DRAGON_FOE));
 	}

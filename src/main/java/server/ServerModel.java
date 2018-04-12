@@ -56,7 +56,7 @@ public class ServerModel extends AbstractModel {
 	private CardCollection<AdventureCard> adventureDeckDiscard;
 
 	public CardCollection<AdventureCard> getAdventureDeckDiscard() {
-		return super.adventureDeck;
+		return super.adventureDeckDiscard;
 	}
 
 

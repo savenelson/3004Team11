@@ -25,17 +25,7 @@ public class EventManager implements  StoryCardState {
 	int currentPlayer;
 	ServerModel serverModel;
 
-	public EventManager(AbstractModel model) {
-		/*
-		 * his.serverModel = clientModel;
-		this.players = clientModel.getPlayers();
-		this.numPlayers = clientModel.getNumPlayers();
-		this.adventureDeck = clientModel.getAdventureDeck();
-		this.nextQ = clientModel.inNextQ;
-		this.currentPlayer = clientModel.currentPlayer;
-		 */
-	}
-	
+
 	public EventManager(ServerModel serverModel) {
 		this.serverModel = serverModel;
 		this.players = serverModel.getPlayers();
@@ -354,6 +344,7 @@ public class EventManager implements  StoryCardState {
 
 	@Override
 	public void nextPlayer() {
+		
 		serverModel.nextPlayer();
 		serverModel.nextStory();
 		
