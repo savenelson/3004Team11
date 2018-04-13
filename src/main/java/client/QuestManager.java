@@ -421,15 +421,7 @@ public class QuestManager implements StoryCardState{
 		 *    - get a card if they pass
 		 */
 		logger.info("resolveQuest() called");
-		for(int i = 0; i<clientModel.getPlayers().length; i++) {
-		CardCollection<AdventureCard> queue = players[i].getParty();
-		for (int j = 0; j < queue.size(); ++j) {
-			if (queue.get(j).getSubType().equals(AdventureCard.AMOUR)) {
-				AdventureCard c = queue.get(j);
-				queue.remove(j);
-		
-			}
-		}}
+	
 /*
 		int numStages, numShields = ((QuestCard) clientModel.currentStoryCard).getNumStages();
 

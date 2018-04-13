@@ -600,7 +600,7 @@ public abstract class AbstractModel {
 			instantiateStages(); 
 
 			// remove amours
-			CardCollection<AdventureCard> queue = players[i].getQueue();
+			CardCollection<AdventureCard> queue = players[i].getParty();
 			for (int j = 0; j < queue.size(); ++j) {
 				if (queue.get(j).getSubType().equals(AdventureCard.AMOUR)) {
 					AdventureCard c = queue.get(j);
