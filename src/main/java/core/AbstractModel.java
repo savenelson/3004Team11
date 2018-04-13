@@ -581,7 +581,7 @@ public abstract class AbstractModel {
 		logger.info("nextStory() called");
 		// get ready for the next person
 
-		//this.setDoneQuestingMode(false);
+		this.isDoneQuestingMode =false;
 		
 		for (int i = 0; i < getPlayers().length; ++i) {
 
