@@ -32,9 +32,9 @@ public abstract class AbstractModel {
 		return this.adventureDeck;
 	}
 
-	protected StoryDeck storyDeck;
+	protected CardCollection<StoryCard> storyDeck;
 
-	public StoryDeck getStoryDeck() {
+	public CardCollection<StoryCard> getStoryDeck() {
 		return storyDeck;
 	}
 
@@ -586,6 +586,7 @@ public abstract class AbstractModel {
 		for (int i = 0; i < getPlayers().length; ++i) {
 
 			this.stageOver();
+			players[i].declinedToSponsor =false;
 			players[i].isSponsor = false;
 			players[i].isQuesting = false;
 			players[i].passedQuest = false;
@@ -611,7 +612,8 @@ public abstract class AbstractModel {
 		}
 
 		storyDeckDiscard.add(this.getCurrentStoryCard());
-
+		if(storyDeck.size()== 0) storyDeck = storyDeckDiscard;
+		
 		this.setCurrentStoryCard(storyDeck.pop());
 	
 

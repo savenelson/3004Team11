@@ -391,14 +391,7 @@ logger.info("Handling questing info");
 
 		// TODO ADD THE BOOLEAN SETTING FOR PASSING QUEST HERE
 		for (int i = 0; i < serverModel.getPlayers().length; ++i) {
-			CardCollection<AdventureCard> queue = players[i].getParty();
-			for (int j = 0; j < queue.size(); ++j) {
-				if (queue.get(j).getSubType().equals(AdventureCard.AMOUR)) {
-					AdventureCard c = queue.get(j);
-					queue.remove(j);
-					serverModel.getAdventureDeckDiscard().add(c);
-				}
-			}
+	
 			logger.info("Sponsor is getting " + numberOfCardsToReturn);
 			if (players[i].isSponsor) {
 				
