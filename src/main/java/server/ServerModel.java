@@ -61,7 +61,7 @@ public class ServerModel extends AbstractModel {
 
 
 
-	public StoryDeck getStoryDeck() {
+	public CardCollection<StoryCard> getStoryDeck() {
 		return super.storyDeck;
 	}
 
@@ -211,7 +211,7 @@ public class ServerModel extends AbstractModel {
 
 		currentState.nextPlayer();
 		
-		currentState.handle();
+		playGame();
 	}
 
 	public void stageOver() {
@@ -291,7 +291,7 @@ public class ServerModel extends AbstractModel {
 		// get ready for the next person
 		server.sendServerMessage("SERVERMESSAGE--NEXTSTORY--");
 		super.nextStory();
-		playGame();
+		
 	}
 
 	public void setScenario1() {

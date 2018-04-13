@@ -80,7 +80,7 @@ public class ServerThread extends Thread {
 			break;
 			
 		case "UNSTAGE":
-			server.serverModel.unstage(clientMessageComponents[4], Integer.parseInt(clientMessageComponents[2]),Integer.parseInt(clientMessageComponents[4]));
+			server.serverModel.unstage(clientMessageComponents[2], Integer.parseInt(clientMessageComponents[3]),Integer.parseInt(clientMessageComponents[4]));
 			server.sendServerMessage("SERVERMESSAGE--UPDATE--" + clientMessageComponents[3] + "--" + clientMessageComponents[1] + "--" + clientMessageComponents[2]+"--"+clientMessageComponents[4]);
 			break;
 		case "DISCARD":

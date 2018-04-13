@@ -590,6 +590,7 @@ public class Client {
 				@Override
 				public void run() {
 					view.resolveQuest();
+					clientModel.setDoneQuestingMode(false);
 
 				}
 			});
